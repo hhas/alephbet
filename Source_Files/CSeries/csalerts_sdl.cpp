@@ -1,7 +1,7 @@
 /*
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -276,12 +276,12 @@ void vhalt(const char *message)
 
 static char assert_text[256];
 
-void _alephone_assert(const char *file, int32 line, const char *what)
+void _alephbet_assert(const char *file, int32 line, const char *what)
 {
 	vhalt(csprintf(assert_text, "%s:%d: %s", file, line, what));
 }
 
-void _alephone_warn(const char *file, int32 line, const char *what)
+void _alephbet_warn(const char *file, int32 line, const char *what)
 {
 	vpause(csprintf(assert_text, "%s:%d: %s", file, line, what));
 }

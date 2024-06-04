@@ -1,7 +1,7 @@
 /*
 
-	Copyright (C) 1991-2001 and beyond by Bo Lindbergh
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bo Lindbergh,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 #include "byte_swapping.h"
 
 
-#ifdef ALEPHONE_LITTLE_ENDIAN
+#ifdef ALEPHBET_LITTLE_ENDIAN
 
 // Fieldcount is "int" because it can become negative in the code
 void byte_swap_memory(

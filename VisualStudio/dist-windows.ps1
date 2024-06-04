@@ -3,12 +3,12 @@
 #Our optional parameters
 param(
 [bool]$x64=$true, #Package 64 or 32 bits version
-[bool]$a1=$true, #Package AlephOne
-[bool]$m1=$false, #Package Marathon
-[bool]$m2=$false, #Package Marathon 2
-[bool]$m3=$false, #Package Marathon Infinity
+[bool]$a1=$true, #Package AlephBet
+# [bool]$m1=$false, #Package Marathon
+# [bool]$m2=$false, #Package Marathon 2
+# [bool]$m3=$false, #Package Marathon Infinity
 [int]$data=0, #0 or whatever is for building packages with data and without, 1 is build only with data (except for A1), 2 is build only without data
-[string]$input_path="./AlephOne.sln", #Path to the AlephOne solution (must include the solution file in the path)
+[string]$input_path="./AlephBet.sln", #Path to the AlephBet solution (must include the solution file in the path)
 [string]$output_path="./" #Path to the directory where save built packages
 )
 
@@ -62,12 +62,12 @@ function Package {
 	
 	$os_target = if($x64) {""} else {"32"}
 	#we can already pack what we have if we wanna pack without data
-	if(($data -ne 1) -and ($package_name -ne "AlephOne")) {		
+	if(($data -ne 1) -and ($package_name -ne "AlephBet")) {		
 		$zip_name = "${package_fullname}-Exe-Win${os_target}.zip"
 		Compress-Archive -Path $output_package_folder -DestinationPath (Join-Path -Path $output_path -ChildPath $zip_name) -Force
 	}
 	
-	if(($data -ne 2) -or ($package_name -eq "AlephOne")) {
+	if(($data -ne 2) -or ($package_name -eq "AlephBet")) {
 		switch($package_name) {
 		"Marathon" {
 			Copy-Item (Join-Path -Path $root_directory -ChildPath "/data/Scenarios/Marathon/*") -Destination $output_package_folder -Recurse -Exclude $array_exclude_copy
@@ -118,10 +118,10 @@ if(!(Test-Path -Path $output_path -PathType Container)) {
 $array_exclude_copy = @('Makefile','Makefile.*','*.svn','*.git')
 $array_exe_name = @()
 $array_package_name = @()
-if($a1) {$array_exe_name += "Aleph One.exe"; $array_package_name += "AlephOne"}
-if($m1) {$array_exe_name += "Classic Marathon.exe"; $array_package_name += "Marathon"}
-if($m2) {$array_exe_name += "Classic Marathon 2.exe"; $array_package_name += "Marathon2"}
-if($m3) {$array_exe_name += "Classic Marathon Infinity.exe"; $array_package_name += "MarathonInfinity"}
+if($a1) {$array_exe_name += "Aleph Bet.exe"; $array_package_name += "AlephBet"}
+# if($m1) {$array_exe_name += "Classic Marathon.exe"; $array_package_name += "Marathon"}
+# if($m2) {$array_exe_name += "Classic Marathon 2.exe"; $array_package_name += "Marathon2"}
+# if($m3) {$array_exe_name += "Classic Marathon Infinity.exe"; $array_package_name += "MarathonInfinity"}
 
 for (($i = 0); $i -lt $array_exe_name.Count; $i++) {
 	$package_name = $array_package_name[$i]

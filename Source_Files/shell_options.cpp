@@ -211,7 +211,7 @@ std::unordered_map<int, bool> ShellOptions::parse(int argc, char** argv, bool ig
 void print_version()
 {
 	char app_name_version[256];
-	expand_app_variables(app_name_version, "Aleph One $appLongVersion$");
+	expand_app_variables(app_name_version, "Aleph Bet $appLongVersion$");
 	std::cout << app_name_version << std::endl;
 }
 
@@ -246,7 +246,7 @@ void print_usage()
 		<< "\tfile" << spaces(help_tab_stop - strlen("file") - 8)
 		<< "Saved game to load or film to play\n"
 		<< "\n"
-		<< "You can also use the ALEPHONE_DATA environment variable to specify\n"
+		<< "You can also use the ALEPHBET_DATA environment variable to specify\n"
 		<< "the data directory.\n";
 
 #ifdef __WIN32__

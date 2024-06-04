@@ -1,7 +1,7 @@
 /*
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -531,7 +531,7 @@ TimeType FileSpecifier::GetDate()
 	return err == 0 ? mtime : 0;
 }
 
-static const char * alephone_extensions[] = {
+static const char * alephbet_extensions[] = {
 	".sceA",
 	".sgaA",
 	".filA",
@@ -545,7 +545,7 @@ std::string FileSpecifier::HideExtension(const std::string& filename)
 {
 	if (environment_preferences->hide_extensions)
 	{
-		const char **extension = alephone_extensions;
+		const char **extension = alephbet_extensions;
 		while (*extension)
 		{
 			if (boost::algorithm::ends_with(filename, *extension))

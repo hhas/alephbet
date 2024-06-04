@@ -4,8 +4,8 @@
  *    https://sourceforge.net/projects/sdlresize/
  *
  * Unless otherwise stated, modifications to this source file by
- * Jeremiah Morris or other Aleph One developers are also released
- * into the public domain.
+ * Jeremiah Morris, other Aleph One developers, or other Aleph Bet
+ * developers are also released into the public domain.
  */
 
 /*resize++.cpp : 

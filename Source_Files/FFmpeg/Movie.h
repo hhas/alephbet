@@ -3,8 +3,8 @@
 
 /*
 
-  Copyright (C) 2012 and beyond by Jeremiah Morris
-  and the "Aleph One" developers.
+  Copyright (C) 2012 and beyond by Jeremiah Morris,
+  the "Aleph One" developers, and the "Aleph Bet" developers.
   
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by

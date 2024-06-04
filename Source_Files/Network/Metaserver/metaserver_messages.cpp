@@ -1,8 +1,8 @@
 /*
  *  metaserver_messages.cpp - TCPMess message types for metaserver client
 
-	Copyright (C) 2004 and beyond by Woody Zenfell, III
-	and the "Aleph One" developers.
+	Copyright (C) 2004 and beyond by Woody Zenfell, III,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -112,7 +112,7 @@ enum
 };
 
 static const uint8 kPlayerIcon = 0;
-static const uint16 kAlephOneClientVersion = 5000;
+static const uint16 kAlephBetClientVersion = 5000;
 
 static void
 write_padded_bytes(AOStream& inStream, const char* inBytes, size_t inByteCount, size_t inTargetLength)
@@ -223,7 +223,7 @@ write_player_aux_data(AOStream& out, string name, const string& team, bool away,
 		<< secondaryColor[2]
 		<< unused16
 		<< orderIndex
-		<< kAlephOneClientVersion;
+		<< kAlephBetClientVersion;
 
 	write_padded_bytes(out, NULL, 0, 14);
 
@@ -682,7 +682,7 @@ operator >>(AIStream& stream, GameDescription& desc)
 		>> pluginFlag;
 	
 	if (pluginFlag & 0x1) {
-		desc.m_alephoneBuildString = read_padded_string(stream, 32);
+		desc.m_alephbetBuildString = read_padded_string(stream, 32);
 		desc.m_networkSetupProtocolID = read_padded_string(stream, 32);
 		desc.m_scenarioName = read_padded_string(stream, 32);
 		desc.m_scenarioID = read_padded_string(stream, 24);
@@ -769,7 +769,7 @@ operator <<(AOStream& stream, const GameDescription& desc)
 	// plugin flag 0x1 stuff
 	const int pluginFlag1Size = 32 + 32 + 32 + 24 + 8 + 32;
 	{
-		write_padded_string(stream, desc.m_alephoneBuildString.c_str(), 32);
+		write_padded_string(stream, desc.m_alephbetBuildString.c_str(), 32);
 		write_padded_string(stream, desc.m_networkSetupProtocolID.c_str(), 32);
 		write_padded_string(stream, desc.m_scenarioName.c_str(), 32);
 		write_padded_string(stream, desc.m_scenarioID.c_str(), 24);

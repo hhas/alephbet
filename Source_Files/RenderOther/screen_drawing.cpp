@@ -1,8 +1,8 @@
 /*
 	SCREEN_DRAWING.C
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -112,14 +112,14 @@ static screen_rectangle interface_rectangles[NUMBER_OF_INTERFACE_RECTANGLES] =
 	{0, 0, 0, 0}
 };
 
-void set_about_alephone_rect(int width, int height)
+void set_about_alephbet_rect(int width, int height)
 {
 	if (!width || !height) return;
 
-	interface_rectangles[_about_alephone_rect].top = 480 - height;
-	interface_rectangles[_about_alephone_rect].left = 640 - width;
-	interface_rectangles[_about_alephone_rect].bottom = 480;
-	interface_rectangles[_about_alephone_rect].right = 640;
+	interface_rectangles[_about_alephbet_rect].top = 480 - height;
+	interface_rectangles[_about_alephbet_rect].left = 640 - width;
+	interface_rectangles[_about_alephbet_rect].bottom = 480;
+	interface_rectangles[_about_alephbet_rect].right = 640;
 }
 
 // static screen_rectangle *interface_rectangles;

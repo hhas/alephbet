@@ -2,7 +2,8 @@
  *  CircularByteBuffer.h
  *  created for Marathon: Aleph One <http://source.bungie.org/>
 
-	Copyright (C) 2003 Woody Zenfell, III
+	Copyright (C) 2003 Woody Zenfell, III, the "Aleph One" developers, and
+	the "Aleph Bet" developers.
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by

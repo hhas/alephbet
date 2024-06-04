@@ -1,7 +1,8 @@
 /*
 HUD_RENDERER_LUA.CPP
 
-    Copyright (C) 2009 by Jeremiah Morris and the Aleph One developers
+    Copyright (C) 2009 by Jeremiah Morris, the Aleph One developers,
+    and the Aleph Bet developers.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -100,7 +101,7 @@ blip_info HUD_Lua_Class::entity_blip(size_t index)
 
 void HUD_Lua_Class::start_draw(void)
 {
-	alephone::Screen *scr = alephone::Screen::instance();
+	alephbet::Screen *scr = alephbet::Screen::instance();
 	scr->bound_screen();
     m_wr = scr->window_rect();
 	m_opengl = (get_screen_mode()->acceleration != _no_acceleration);
@@ -164,7 +165,7 @@ void HUD_Lua_Class::end_draw(void)
 
 void HUD_Lua_Class::apply_clip(void)
 {
-	alephone::Screen *scr = alephone::Screen::instance();
+	alephbet::Screen *scr = alephbet::Screen::instance();
 	
     SDL_Rect r;
     r.x = m_wr.x + scr->lua_clip_rect.x;

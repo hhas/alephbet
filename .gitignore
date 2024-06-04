@@ -10,7 +10,7 @@ lib*.a
 *.o
 
 /aclocal.m4
-/AlephOne.spec
+/AlephBet.spec
 /autom4te.cache
 /compile
 /config.guess
@@ -27,7 +27,7 @@ lib*.a
 /stamp-h1
 /Source_Files/CSeries/confpaths.h
 
-/Source_Files/alephone
+/Source_Files/alephbet
 /Source_Files/*.exe
 /*.zip
 /*.tar.bz2

@@ -3,7 +3,8 @@
 /*
  OGL_SHADER.H
  
- Copyright (C) 2009 by Clemens Unterkofler and the Aleph One developers
+ Copyright (C) 2009 by Clemens Unterkofler, the Aleph One developers,
+ and the Aleph Bet developers
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by

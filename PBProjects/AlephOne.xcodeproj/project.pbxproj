@@ -77,10 +77,10 @@
 		276BED1E1A846FF600AE52F4 /* VecOps.h in Headers */ = {isa = PBXBuildFile; fileRef = 276BED1C1A846FF600AE52F4 /* VecOps.h */; };
 		276BED1F1A846FF600AE52F4 /* VecOps.h in Headers */ = {isa = PBXBuildFile; fileRef = 276BED1C1A846FF600AE52F4 /* VecOps.h */; };
 		276BED201A846FF600AE52F4 /* VecOps.h in Headers */ = {isa = PBXBuildFile; fileRef = 276BED1C1A846FF600AE52F4 /* VecOps.h */; };
-		276BED221A84701E00AE52F4 /* powered_by_alephone.h in Headers */ = {isa = PBXBuildFile; fileRef = 276BED211A84701E00AE52F4 /* powered_by_alephone.h */; };
-		276BED231A84701E00AE52F4 /* powered_by_alephone.h in Headers */ = {isa = PBXBuildFile; fileRef = 276BED211A84701E00AE52F4 /* powered_by_alephone.h */; };
-		276BED241A84701E00AE52F4 /* powered_by_alephone.h in Headers */ = {isa = PBXBuildFile; fileRef = 276BED211A84701E00AE52F4 /* powered_by_alephone.h */; };
-		276BED251A84701E00AE52F4 /* powered_by_alephone.h in Headers */ = {isa = PBXBuildFile; fileRef = 276BED211A84701E00AE52F4 /* powered_by_alephone.h */; };
+		276BED221A84701E00AE52F4 /* powered_by_alephbet.h in Headers */ = {isa = PBXBuildFile; fileRef = 276BED211A84701E00AE52F4 /* powered_by_alephbet.h */; };
+		276BED231A84701E00AE52F4 /* powered_by_alephbet.h in Headers */ = {isa = PBXBuildFile; fileRef = 276BED211A84701E00AE52F4 /* powered_by_alephbet.h */; };
+		276BED241A84701E00AE52F4 /* powered_by_alephbet.h in Headers */ = {isa = PBXBuildFile; fileRef = 276BED211A84701E00AE52F4 /* powered_by_alephbet.h */; };
+		276BED251A84701E00AE52F4 /* powered_by_alephbet.h in Headers */ = {isa = PBXBuildFile; fileRef = 276BED211A84701E00AE52F4 /* powered_by_alephbet.h */; };
 		276BED2D1A8470A900AE52F4 /* binders.h in Headers */ = {isa = PBXBuildFile; fileRef = 276BED2B1A8470A900AE52F4 /* binders.h */; };
 		276BED2E1A8470A900AE52F4 /* binders.h in Headers */ = {isa = PBXBuildFile; fileRef = 276BED2B1A8470A900AE52F4 /* binders.h */; };
 		276BED2F1A8470A900AE52F4 /* binders.h in Headers */ = {isa = PBXBuildFile; fileRef = 276BED2B1A8470A900AE52F4 /* binders.h */; };
@@ -351,11 +351,11 @@
 		AE120C102BC77645001873DD /* HUDRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CC93750240D85D01A80001 /* HUDRenderer.h */; };
 		AE120C112BC77645001873DD /* HUDRenderer_OGL.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CC93760240D85D01A80001 /* HUDRenderer_OGL.h */; };
 		AE120C122BC77645001873DD /* HUDRenderer_SW.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CC93770240D85D01A80001 /* HUDRenderer_SW.h */; };
-		AE120C132BC77645001873DD /* powered_by_alephone_h.h in Headers */ = {isa = PBXBuildFile; fileRef = AED959AF2BC23591008EFCA2 /* powered_by_alephone_h.h */; };
+		AE120C132BC77645001873DD /* powered_by_alephbet_h.h in Headers */ = {isa = PBXBuildFile; fileRef = AED959AF2BC23591008EFCA2 /* powered_by_alephbet_h.h */; };
 		AE120C142BC77645001873DD /* OGL_FBO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2710CC601B8F94FC00CE2EAE /* OGL_FBO.h */; };
 		AE120C152BC77645001873DD /* images.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CC93780240D85D01A80001 /* images.h */; };
 		AE120C162BC77645001873DD /* motion_sensor.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CC93790240D85D01A80001 /* motion_sensor.h */; };
-		AE120C172BC77645001873DD /* powered_by_alephone.h in Headers */ = {isa = PBXBuildFile; fileRef = 276BED211A84701E00AE52F4 /* powered_by_alephone.h */; };
+		AE120C172BC77645001873DD /* powered_by_alephbet.h in Headers */ = {isa = PBXBuildFile; fileRef = 276BED211A84701E00AE52F4 /* powered_by_alephbet.h */; };
 		AE120C182BC77645001873DD /* overhead_map.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CC937A0240D85D01A80001 /* overhead_map.h */; };
 		AE120C192BC77645001873DD /* OverheadMap_OGL.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CC937B0240D85D01A80001 /* OverheadMap_OGL.h */; };
 		AE120C1A2BC77645001873DD /* OverheadMap_SDL.h in Headers */ = {isa = PBXBuildFile; fileRef = F5CC938B0240D85D01A80001 /* OverheadMap_SDL.h */; };
@@ -1730,7 +1730,7 @@
 		AEC3C7BF09AD68AC003258E4 /* shared_widgets.h in Headers */ = {isa = PBXBuildFile; fileRef = AE437C8B08779BC900038E30 /* shared_widgets.h */; };
 		AEC3C7C009AD68AC003258E4 /* Console.h in Headers */ = {isa = PBXBuildFile; fileRef = AEC6C89E0879A6020055EC57 /* Console.h */; };
 		AEC3C7C309AD68AC003258E4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
-		AEC3C7C409AD68AC003258E4 /* AlephOne.icns in Resources */ = {isa = PBXBuildFile; fileRef = F53AB44B01F3CB1D01EF2901 /* AlephOne.icns */; };
+		AEC3C7C409AD68AC003258E4 /* AlephBet.icns in Resources */ = {isa = PBXBuildFile; fileRef = F53AB44B01F3CB1D01EF2901 /* AlephBet.icns */; };
 		AEC3C7C509AD68AC003258E4 /* ImagesIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = F56AEB6B01F8AA1201780311 /* ImagesIcon.icns */; };
 		AEC3C7C609AD68AC003258E4 /* ShapesIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = F56AEB6C01F8AA1201780311 /* ShapesIcon.icns */; };
 		AEC3C7C709AD68AC003258E4 /* SoundsIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = F56AEB6D01F8AA1201780311 /* SoundsIcon.icns */; };
@@ -1869,10 +1869,10 @@
 		AEC3C86C09AD68AC003258E4 /* Console.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AEC6C89B0879A5DE0055EC57 /* Console.cpp */; };
 		AEC3C86D09AD68AC003258E4 /* ImageLoader_Shared.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE791CD60968E16600350190 /* ImageLoader_Shared.cpp */; };
 		AEC3C86E09AD68AC003258E4 /* OGL_LoadScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AEF5025E09A825E2004B0179 /* OGL_LoadScreen.cpp */; };
-		AED959B22BC23591008EFCA2 /* powered_by_alephone_h.h in Headers */ = {isa = PBXBuildFile; fileRef = AED959AF2BC23591008EFCA2 /* powered_by_alephone_h.h */; };
-		AED959B32BC23591008EFCA2 /* powered_by_alephone_h.h in Headers */ = {isa = PBXBuildFile; fileRef = AED959AF2BC23591008EFCA2 /* powered_by_alephone_h.h */; };
-		AED959B42BC23591008EFCA2 /* powered_by_alephone_h.h in Headers */ = {isa = PBXBuildFile; fileRef = AED959AF2BC23591008EFCA2 /* powered_by_alephone_h.h */; };
-		AED959B52BC23591008EFCA2 /* powered_by_alephone_h.h in Headers */ = {isa = PBXBuildFile; fileRef = AED959AF2BC23591008EFCA2 /* powered_by_alephone_h.h */; };
+		AED959B22BC23591008EFCA2 /* powered_by_alephbet_h.h in Headers */ = {isa = PBXBuildFile; fileRef = AED959AF2BC23591008EFCA2 /* powered_by_alephbet_h.h */; };
+		AED959B32BC23591008EFCA2 /* powered_by_alephbet_h.h in Headers */ = {isa = PBXBuildFile; fileRef = AED959AF2BC23591008EFCA2 /* powered_by_alephbet_h.h */; };
+		AED959B42BC23591008EFCA2 /* powered_by_alephbet_h.h in Headers */ = {isa = PBXBuildFile; fileRef = AED959AF2BC23591008EFCA2 /* powered_by_alephbet_h.h */; };
+		AED959B52BC23591008EFCA2 /* powered_by_alephbet_h.h in Headers */ = {isa = PBXBuildFile; fileRef = AED959AF2BC23591008EFCA2 /* powered_by_alephbet_h.h */; };
 		AED959B62BC23591008EFCA2 /* m1_achievements.lua in Resources */ = {isa = PBXBuildFile; fileRef = AED959B02BC23591008EFCA2 /* m1_achievements.lua */; };
 		AED959B72BC23591008EFCA2 /* m1_achievements.lua in Resources */ = {isa = PBXBuildFile; fileRef = AED959B02BC23591008EFCA2 /* m1_achievements.lua */; };
 		AED959B82BC23591008EFCA2 /* m1_achievements.lua in Resources */ = {isa = PBXBuildFile; fileRef = AED959B02BC23591008EFCA2 /* m1_achievements.lua */; };
@@ -2307,7 +2307,7 @@
 		276BED021A846FD900AE52F4 /* CourierPrimeItalic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CourierPrimeItalic.h; path = ../Source_Files/Misc/CourierPrimeItalic.h; sourceTree = "<group>"; };
 		276BED031A846FD900AE52F4 /* ProFontAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProFontAO.h; path = ../Source_Files/Misc/ProFontAO.h; sourceTree = "<group>"; };
 		276BED1C1A846FF600AE52F4 /* VecOps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VecOps.h; path = ../Source_Files/Misc/VecOps.h; sourceTree = "<group>"; };
-		276BED211A84701E00AE52F4 /* powered_by_alephone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = powered_by_alephone.h; path = ../Source_Files/Misc/powered_by_alephone.h; sourceTree = "<group>"; };
+		276BED211A84701E00AE52F4 /* powered_by_alephbet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = powered_by_alephbet.h; path = ../Source_Files/Misc/powered_by_alephbet.h; sourceTree = "<group>"; };
 		276BED2B1A8470A900AE52F4 /* binders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = binders.h; path = ../Source_Files/Misc/binders.h; sourceTree = "<group>"; };
 		276BED2C1A8470A900AE52F4 /* PlayerImage_sdl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerImage_sdl.h; path = ../Source_Files/Misc/PlayerImage_sdl.h; sourceTree = "<group>"; };
 		276D4E751A2E710F00C16CF5 /* QuickSave.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickSave.h; sourceTree = "<group>"; };
@@ -2504,7 +2504,7 @@
 		AE7C21D40BFF686200CE63EC /* Update.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Update.h; path = ../Source_Files/Network/Update.h; sourceTree = "<group>"; };
 		AE7C21D50BFF688000CE63EC /* Update.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Update.cpp; path = ../Source_Files/Network/Update.cpp; sourceTree = "<group>"; };
 		AE8729C12BD1FBEA00426095 /* Classic Marathon Launcher */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Classic Marathon Launcher"; sourceTree = BUILT_PRODUCTS_DIR; };
-		AE941DE713E783F30077218A /* Info-AlephOne-Xcode4.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-AlephOne-Xcode4.plist"; sourceTree = "<group>"; };
+		AE941DE713E783F30077218A /* Info-AlephBet-Xcode4.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-AlephBet-Xcode4.plist"; sourceTree = "<group>"; };
 		AE96370A2A39577800DE43FF /* lua_music.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lua_music.h; sourceTree = "<group>"; };
 		AE96370B2A39578600DE43FF /* lua_music.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_music.cpp; sourceTree = "<group>"; };
 		AE9974FD2661D49E00DDD370 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -2524,7 +2524,7 @@
 		AEA26AD225E3364A008895CC /* interpolated_world.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = interpolated_world.cpp; sourceTree = "<group>"; };
 		AEA26AD725E33656008895CC /* interpolated_world.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = interpolated_world.h; sourceTree = "<group>"; };
 		AEA31D2B113C9DF700266621 /* csalerts.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = csalerts.mm; path = ../Source_Files/CSeries/csalerts.mm; sourceTree = SOURCE_ROOT; };
-		AEA85F5324DF26F800BB7827 /* Aleph One.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Aleph One.entitlements"; sourceTree = "<group>"; };
+		AEA85F5324DF26F800BB7827 /* Aleph Bet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Aleph Bet.entitlements"; sourceTree = "<group>"; };
 		AEA85F5424DF275300BB7827 /* Marathon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Marathon.entitlements; sourceTree = "<group>"; };
 		AEA85F5524DF276600BB7827 /* Marathon 2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Marathon 2.entitlements"; sourceTree = "<group>"; };
 		AEA85F5624DF277300BB7827 /* Marathon Infinity.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Marathon Infinity.entitlements"; sourceTree = "<group>"; };
@@ -2538,10 +2538,10 @@
 		AEB4A2B214296DC000537AE7 /* Marathon Infinity.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "Marathon Infinity.icns"; path = "AppStore/Marathon Infinity/Marathon Infinity.icns"; sourceTree = "<group>"; };
 		AEB4A2B714296DCF00537AE7 /* Info-MAS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Info-MAS.plist"; path = "AppStore/Marathon Infinity/Info-MAS.plist"; sourceTree = "<group>"; };
 		AEC02F900B6D8B310095E8C9 /* SW_Texture_Extras.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SW_Texture_Extras.cpp; sourceTree = "<group>"; };
-		AEC3C89609AD68AE003258E4 /* Aleph One.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Aleph One.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AEC3C89609AD68AE003258E4 /* Aleph Bet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Aleph Bet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEC6C89B0879A5DE0055EC57 /* Console.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Console.cpp; path = ../Source_Files/Misc/Console.cpp; sourceTree = SOURCE_ROOT; };
 		AEC6C89E0879A6020055EC57 /* Console.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Console.h; path = ../Source_Files/Misc/Console.h; sourceTree = SOURCE_ROOT; };
-		AED959AF2BC23591008EFCA2 /* powered_by_alephone_h.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = powered_by_alephone_h.h; path = ../Source_Files/Misc/powered_by_alephone_h.h; sourceTree = "<group>"; };
+		AED959AF2BC23591008EFCA2 /* powered_by_alephbet_h.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = powered_by_alephbet_h.h; path = ../Source_Files/Misc/powered_by_alephbet_h.h; sourceTree = "<group>"; };
 		AED959B02BC23591008EFCA2 /* m1_achievements.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = m1_achievements.lua; path = ../Source_Files/Misc/m1_achievements.lua; sourceTree = "<group>"; };
 		AED959B12BC23591008EFCA2 /* achievements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = achievements.h; path = ../Source_Files/Misc/achievements.h; sourceTree = "<group>"; };
 		AED959BE2BC235B2008EFCA2 /* achievements.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = achievements.cpp; path = ../Source_Files/Misc/achievements.cpp; sourceTree = "<group>"; };
@@ -2628,7 +2628,7 @@
 		F522138E0136ABAE01000001 /* network_udp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = network_udp.cpp; path = ../Source_Files/Network/network_udp.cpp; sourceTree = SOURCE_ROOT; };
 		F522138F0136ABAE01000001 /* network.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = network.cpp; path = ../Source_Files/Network/network.cpp; sourceTree = SOURCE_ROOT; };
 		F52213900136ABAE01000001 /* network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = network.h; path = ../Source_Files/Network/network.h; sourceTree = SOURCE_ROOT; };
-		F53AB44B01F3CB1D01EF2901 /* AlephOne.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AlephOne.icns; sourceTree = "<group>"; };
+		F53AB44B01F3CB1D01EF2901 /* AlephBet.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AlephBet.icns; sourceTree = "<group>"; };
 		F53DC61D022179A801A80001 /* network_dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = network_dialogs.h; path = ../Source_Files/Network/network_dialogs.h; sourceTree = SOURCE_ROOT; };
 		F53DC62002219A3D01A80001 /* network_lookup_sdl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = network_lookup_sdl.h; path = ../Source_Files/Network/network_lookup_sdl.h; sourceTree = SOURCE_ROOT; };
 		F5574EEE01F4EB1E01FEABBD /* csdialogs_sdl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = csdialogs_sdl.cpp; path = ../Source_Files/CSeries/csdialogs_sdl.cpp; sourceTree = SOURCE_ROOT; };
@@ -2929,7 +2929,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AEC3C89609AD68AE003258E4 /* Aleph One.app */,
+				AEC3C89609AD68AE003258E4 /* Aleph Bet.app */,
 				AEFD87C313EB84CF00C1E687 /* Classic Marathon.app */,
 				AE505D0B141D45E600915344 /* Classic Marathon 2.app */,
 				AEB4A2AD14296CAE00537AE7 /* Classic Marathon Infinity.app */,
@@ -2964,7 +2964,7 @@
 				AEA85F5624DF277300BB7827 /* Marathon Infinity.entitlements */,
 				AEA85F5524DF276600BB7827 /* Marathon 2.entitlements */,
 				AEA85F5424DF275300BB7827 /* Marathon.entitlements */,
-				AEA85F5324DF26F800BB7827 /* Aleph One.entitlements */,
+				AEA85F5324DF26F800BB7827 /* Aleph Bet.entitlements */,
 				AE5A16B42BCF634900931FEE /* Steamshim.entitlements */,
 				F52214490136C0C401000001 /* Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -2978,7 +2978,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				AE941DE713E783F30077218A /* Info-AlephOne-Xcode4.plist */,
+				AE941DE713E783F30077218A /* Info-AlephBet-Xcode4.plist */,
 				AE0E4EC0141D144000AAA02F /* Marathon */,
 				AE505D0F141D466F00915344 /* Marathon 2 */,
 				AEB4A2B114296D8800537AE7 /* Marathon Infinity */,
@@ -2986,7 +2986,7 @@
 				F56AEB6B01F8AA1201780311 /* ImagesIcon.icns */,
 				F56AEB6C01F8AA1201780311 /* ShapesIcon.icns */,
 				F56AEB6D01F8AA1201780311 /* SoundsIcon.icns */,
-				F53AB44B01F3CB1D01EF2901 /* AlephOne.icns */,
+				F53AB44B01F3CB1D01EF2901 /* AlephBet.icns */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				F5CFAD3D0200FA6B01D80110 /* FilmIcon.icns */,
 				F5CFAD3E0200FA6B01D80110 /* MapIcon.icns */,
@@ -3311,8 +3311,8 @@
 				276BED021A846FD900AE52F4 /* CourierPrimeItalic.h */,
 				AED959B02BC23591008EFCA2 /* m1_achievements.lua */,
 				276BED2C1A8470A900AE52F4 /* PlayerImage_sdl.h */,
-				276BED211A84701E00AE52F4 /* powered_by_alephone.h */,
-				AED959AF2BC23591008EFCA2 /* powered_by_alephone_h.h */,
+				276BED211A84701E00AE52F4 /* powered_by_alephbet.h */,
+				AED959AF2BC23591008EFCA2 /* powered_by_alephbet_h.h */,
 				276BED031A846FD900AE52F4 /* ProFontAO.h */,
 				276BED1C1A846FF600AE52F4 /* VecOps.h */,
 				AE48F3551421900900051D61 /* Statistics.h */,
@@ -3935,11 +3935,11 @@
 				AE120C102BC77645001873DD /* HUDRenderer.h in Headers */,
 				AE120C112BC77645001873DD /* HUDRenderer_OGL.h in Headers */,
 				AE120C122BC77645001873DD /* HUDRenderer_SW.h in Headers */,
-				AE120C132BC77645001873DD /* powered_by_alephone_h.h in Headers */,
+				AE120C132BC77645001873DD /* powered_by_alephbet_h.h in Headers */,
 				AE120C142BC77645001873DD /* OGL_FBO.h in Headers */,
 				AE120C152BC77645001873DD /* images.h in Headers */,
 				AE120C162BC77645001873DD /* motion_sensor.h in Headers */,
-				AE120C172BC77645001873DD /* powered_by_alephone.h in Headers */,
+				AE120C172BC77645001873DD /* powered_by_alephbet.h in Headers */,
 				AE120C182BC77645001873DD /* overhead_map.h in Headers */,
 				AE120C192BC77645001873DD /* OverheadMap_OGL.h in Headers */,
 				AE120C1A2BC77645001873DD /* OverheadMap_SDL.h in Headers */,
@@ -4150,11 +4150,11 @@
 				AE505BA8141D45E600915344 /* HUDRenderer.h in Headers */,
 				AE505BA9141D45E600915344 /* HUDRenderer_OGL.h in Headers */,
 				AE505BAA141D45E600915344 /* HUDRenderer_SW.h in Headers */,
-				AED959B42BC23591008EFCA2 /* powered_by_alephone_h.h in Headers */,
+				AED959B42BC23591008EFCA2 /* powered_by_alephbet_h.h in Headers */,
 				2710CC671B8F94FC00CE2EAE /* OGL_FBO.h in Headers */,
 				AE505BAB141D45E600915344 /* images.h in Headers */,
 				AE505BAC141D45E600915344 /* motion_sensor.h in Headers */,
-				276BED241A84701E00AE52F4 /* powered_by_alephone.h in Headers */,
+				276BED241A84701E00AE52F4 /* powered_by_alephbet.h in Headers */,
 				AE505BAD141D45E600915344 /* overhead_map.h in Headers */,
 				AE505BAE141D45E600915344 /* OverheadMap_OGL.h in Headers */,
 				AE505BAF141D45E600915344 /* OverheadMap_SDL.h in Headers */,
@@ -4364,11 +4364,11 @@
 				AEB4A14814296CAE00537AE7 /* HUDRenderer.h in Headers */,
 				AEB4A14914296CAE00537AE7 /* HUDRenderer_OGL.h in Headers */,
 				AEB4A14A14296CAE00537AE7 /* HUDRenderer_SW.h in Headers */,
-				AED959B52BC23591008EFCA2 /* powered_by_alephone_h.h in Headers */,
+				AED959B52BC23591008EFCA2 /* powered_by_alephbet_h.h in Headers */,
 				2710CC681B8F94FC00CE2EAE /* OGL_FBO.h in Headers */,
 				AEB4A14B14296CAE00537AE7 /* images.h in Headers */,
 				AEB4A14C14296CAE00537AE7 /* motion_sensor.h in Headers */,
-				276BED251A84701E00AE52F4 /* powered_by_alephone.h in Headers */,
+				276BED251A84701E00AE52F4 /* powered_by_alephbet.h in Headers */,
 				AEB4A14D14296CAE00537AE7 /* overhead_map.h in Headers */,
 				AEB4A14E14296CAE00537AE7 /* OverheadMap_OGL.h in Headers */,
 				AEB4A14F14296CAE00537AE7 /* OverheadMap_SDL.h in Headers */,
@@ -4578,7 +4578,7 @@
 				276BED0C1A846FD900AE52F4 /* CourierPrimeBold.h in Headers */,
 				AEC3C77E09AD68AC003258E4 /* HUDRenderer_OGL.h in Headers */,
 				AEC3C77F09AD68AC003258E4 /* HUDRenderer_SW.h in Headers */,
-				AED959B22BC23591008EFCA2 /* powered_by_alephone_h.h in Headers */,
+				AED959B22BC23591008EFCA2 /* powered_by_alephbet_h.h in Headers */,
 				AEC3C78009AD68AC003258E4 /* images.h in Headers */,
 				AEC3C78209AD68AC003258E4 /* motion_sensor.h in Headers */,
 				AEC3C78309AD68AC003258E4 /* overhead_map.h in Headers */,
@@ -4587,7 +4587,7 @@
 				AEC3C78509AD68AC003258E4 /* OverheadMap_SDL.h in Headers */,
 				AEC3C78609AD68AC003258E4 /* OverheadMapRenderer.h in Headers */,
 				AEC3C78709AD68AC003258E4 /* screen.h in Headers */,
-				276BED221A84701E00AE52F4 /* powered_by_alephone.h in Headers */,
+				276BED221A84701E00AE52F4 /* powered_by_alephbet.h in Headers */,
 				AEC3C78809AD68AC003258E4 /* screen_definitions.h in Headers */,
 				AEC3C78909AD68AC003258E4 /* screen_drawing.h in Headers */,
 				AEC3C78B09AD68AC003258E4 /* screen_shared.h in Headers */,
@@ -4792,11 +4792,11 @@
 				AEFD865613EB84CF00C1E687 /* HUDRenderer.h in Headers */,
 				AEFD865713EB84CF00C1E687 /* HUDRenderer_OGL.h in Headers */,
 				AEFD865813EB84CF00C1E687 /* HUDRenderer_SW.h in Headers */,
-				AED959B32BC23591008EFCA2 /* powered_by_alephone_h.h in Headers */,
+				AED959B32BC23591008EFCA2 /* powered_by_alephbet_h.h in Headers */,
 				2710CC661B8F94FC00CE2EAE /* OGL_FBO.h in Headers */,
 				AEFD865913EB84CF00C1E687 /* images.h in Headers */,
 				AEFD865A13EB84CF00C1E687 /* motion_sensor.h in Headers */,
-				276BED231A84701E00AE52F4 /* powered_by_alephone.h in Headers */,
+				276BED231A84701E00AE52F4 /* powered_by_alephbet.h in Headers */,
 				AEFD865B13EB84CF00C1E687 /* overhead_map.h in Headers */,
 				AEFD865C13EB84CF00C1E687 /* OverheadMap_OGL.h in Headers */,
 				AEFD865D13EB84CF00C1E687 /* OverheadMap_SDL.h in Headers */,
@@ -4959,9 +4959,9 @@
 			productReference = AEB4A2AD14296CAE00537AE7 /* Classic Marathon Infinity.app */;
 			productType = "com.apple.product-type.application";
 		};
-		AEC3C6FE09AD68AC003258E4 /* Aleph One */ = {
+		AEC3C6FE09AD68AC003258E4 /* Aleph Bet */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AEC3C87B09AD68AC003258E4 /* Build configuration list for PBXNativeTarget "Aleph One" */;
+			buildConfigurationList = AEC3C87B09AD68AC003258E4 /* Build configuration list for PBXNativeTarget "Aleph Bet" */;
 			buildPhases = (
 				AEC3C6FF09AD68AC003258E4 /* Headers */,
 				AEC3C7C209AD68AC003258E4 /* Resources */,
@@ -4974,9 +4974,9 @@
 			);
 			dependencies = (
 			);
-			name = "Aleph One";
+			name = "Aleph Bet";
 			productName = "SDL Application";
-			productReference = AEC3C89609AD68AE003258E4 /* Aleph One.app */;
+			productReference = AEC3C89609AD68AE003258E4 /* Aleph Bet.app */;
 			productType = "com.apple.product-type.application";
 		};
 		AEFD85E813EB84CF00C1E687 /* Marathon */ = {
@@ -5033,7 +5033,7 @@
 					};
 				};
 			};
-			buildConfigurationList = AE097FDD08800A9F00C690F9 /* Build configuration list for PBXProject "AlephOne" */;
+			buildConfigurationList = AE097FDD08800A9F00C690F9 /* Build configuration list for PBXProject "AlephBet" */;
 			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 1;
@@ -5045,7 +5045,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AEC3C6FE09AD68AC003258E4 /* Aleph One */,
+				AEC3C6FE09AD68AC003258E4 /* Aleph Bet */,
 				AEFD85E813EB84CF00C1E687 /* Marathon */,
 				AE505B3A141D45E600915344 /* Marathon 2 */,
 				AEB4A0DA14296CAE00537AE7 /* Marathon Infinity */,
@@ -5118,7 +5118,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AEC3C7C309AD68AC003258E4 /* InfoPlist.strings in Resources */,
-				AEC3C7C409AD68AC003258E4 /* AlephOne.icns in Resources */,
+				AEC3C7C409AD68AC003258E4 /* AlephBet.icns in Resources */,
 				AEC3C7C509AD68AC003258E4 /* ImagesIcon.icns in Resources */,
 				AEC3C7C609AD68AC003258E4 /* ShapesIcon.icns in Resources */,
 				AED959B62BC23591008EFCA2 /* m1_achievements.lua in Resources */,
@@ -6517,7 +6517,7 @@
 		AE2A41530B5EFC1F00C567E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Aleph One.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Aleph Bet.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = E8K89CXZE7;
@@ -6527,9 +6527,9 @@
 					HAVE_BUNDLE_NAME,
 					HAVE_CONFIG_H,
 				);
-				INFOPLIST_FILE = "Info-AlephOne-Xcode4.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = org.bungie.source.AlephOne;
-				PRODUCT_NAME = "Aleph One";
+				INFOPLIST_FILE = "Info-AlephBet-Xcode4.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = org.bungie.source.AlephBet;
+				PRODUCT_NAME = "Aleph Bet";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -6585,7 +6585,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				"HEADER_SEARCH_PATHS[arch=arm64]" = "$(SRCROOT)/../vcpkg/installed-arm64-osx/arm64-osx/include";
 				"HEADER_SEARCH_PATHS[arch=x86_64]" = "$(SRCROOT)/../vcpkg/installed-x64-osx/x64-osx/include";
-				INFOPLIST_FILE = "Info-AlephOne-Xcode4.plist";
+				INFOPLIST_FILE = "Info-AlephBet-Xcode4.plist";
 				"LIBRARY_SEARCH_PATHS[arch=arm64]" = "$(SRCROOT)/../vcpkg/installed-arm64-osx/arm64-osx/lib";
 				"LIBRARY_SEARCH_PATHS[arch=x86_64]" = "$(SRCROOT)/../vcpkg/installed-x64-osx/x64-osx/lib";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
@@ -6665,7 +6665,7 @@
 		AE2A41760B5EFEA000C567E6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Aleph One.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Aleph Bet.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = E8K89CXZE7;
@@ -6675,9 +6675,9 @@
 					HAVE_BUNDLE_NAME,
 					HAVE_CONFIG_H,
 				);
-				INFOPLIST_FILE = "Info-AlephOne-Xcode4.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = org.bungie.source.AlephOne;
-				PRODUCT_NAME = "Aleph One";
+				INFOPLIST_FILE = "Info-AlephBet-Xcode4.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = org.bungie.source.AlephBet;
+				PRODUCT_NAME = "Aleph Bet";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -6733,7 +6733,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				"HEADER_SEARCH_PATHS[arch=arm64]" = "$(SRCROOT)/../vcpkg/installed-arm64-osx/arm64-osx/include";
 				"HEADER_SEARCH_PATHS[arch=x86_64]" = "$(SRCROOT)/../vcpkg/installed-x64-osx/x64-osx/include";
-				INFOPLIST_FILE = "Info-AlephOne-Xcode4.plist";
+				INFOPLIST_FILE = "Info-AlephBet-Xcode4.plist";
 				"LIBRARY_SEARCH_PATHS[arch=arm64]" = "$(SRCROOT)/../vcpkg/installed-arm64-osx/arm64-osx/lib";
 				"LIBRARY_SEARCH_PATHS[arch=x86_64]" = "$(SRCROOT)/../vcpkg/installed-x64-osx/x64-osx/lib";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
@@ -7050,7 +7050,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AE097FDD08800A9F00C690F9 /* Build configuration list for PBXProject "AlephOne" */ = {
+		AE097FDD08800A9F00C690F9 /* Build configuration list for PBXProject "AlephBet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AE2A41770B5EFEA000C567E6 /* Release */,
@@ -7095,7 +7095,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AEC3C87B09AD68AC003258E4 /* Build configuration list for PBXNativeTarget "Aleph One" */ = {
+		AEC3C87B09AD68AC003258E4 /* Build configuration list for PBXNativeTarget "Aleph Bet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AE2A41760B5EFEA000C567E6 /* Release */,

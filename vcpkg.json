@@ -1,6 +1,6 @@
 {
-   "name":"alephone",
-   "version-date":"2024-05-13",
+   "name":"alephbet",
+   "version-date":"2024-06-03",
    "dependencies":[
       {
          "name":"boost-algorithm"
@@ -71,9 +71,6 @@
       },
       {
          "name":"catch2"
-      },
-      {
-         "name":"steamworks-sdk"
       }
    ],
    "overrides":[

@@ -1,8 +1,8 @@
 /*
  *  metaserver_messages.h - TCPMess message types for metaserver client
 
-	Copyright (C) 2004 and beyond by Woody Zenfell, III
-	and the "Aleph One" developers.
+	Copyright (C) 2004 and beyond by Woody Zenfell, III,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -109,7 +109,7 @@ struct GameDescription
 	// while these are purely for display purposes
 	std::string m_scenarioName;
 	std::string m_scenarioVersion;
-	std::string m_alephoneBuildString;
+	std::string m_alephbetBuildString;
 	std::string m_netScript;
 
 	// more stuff

@@ -1,7 +1,7 @@
 /*
  
-  Copyright (C) 2012 and beyond by Jeremiah Morris
-  and the "Aleph One" developers.
+  Copyright (C) 2012 and beyond by Jeremiah Morris,
+  the "Aleph One" developers, and the "Aleph Bet" developers.
   
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -204,7 +204,7 @@ bool Movie::Setup()
     if (!OpenALManager::Get())
         return false;
 
-    alephone::Screen* scr = alephone::Screen::instance();
+    alephbet::Screen* scr = alephbet::Screen::instance();
     view_rect = scr->window_rect();
 
     const float pixel_scale = scr->pixel_scale();
@@ -398,7 +398,7 @@ void Movie::AddFrame(FrameType ftype)
 #ifdef HAVE_OPENGL
 	else
 	{
-        SDL_Rect viewportDimensions = alephone::Screen::instance()->OpenGLViewPort();
+        SDL_Rect viewportDimensions = alephbet::Screen::instance()->OpenGLViewPort();
         GLint fbx = viewportDimensions.x, fby = viewportDimensions.y, fbWidth = viewportDimensions.w, fbHeight = viewportDimensions.h;
 
         // Copy default frame buffer to another one with correct viewport resized/pixels rescaled

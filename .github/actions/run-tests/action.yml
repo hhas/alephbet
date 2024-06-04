@@ -1,5 +1,5 @@
 name: run-tests
-description: cross-platform action to run Aleph One tests
+description: cross-platform action to run Aleph Bet tests
 
 inputs:
  test_application_path:

@@ -1,7 +1,7 @@
 /*
 
-	Copyright (C) 1991-2001 and beyond by Bo Lindbergh
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bo Lindbergh,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ extern void byte_swap_memory(
 	_bs_field type,
 	int fieldcount);
 
-#ifndef ALEPHONE_LITTLE_ENDIAN
+#ifndef ALEPHBET_LITTLE_ENDIAN
 #define byte_swap_memory(memory,type,elcount) ((void)0)
 #endif
 

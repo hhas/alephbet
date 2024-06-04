@@ -31,7 +31,7 @@
     <ProjectGuid>{D1A548FF-F15F-43CA-8891-F4B367122282}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>LibAlephOne</ProjectName>
+    <ProjectName>LibAlephBet</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="Configuration">
@@ -524,7 +524,7 @@
     <ClInclude Include="..\..\Source_Files\Misc\Logging.h" />
     <ClInclude Include="..\..\Source_Files\Misc\PlayerImage_sdl.h" />
     <ClInclude Include="..\..\Source_Files\Misc\PlayerName.h" />
-    <ClInclude Include="..\..\Source_Files\Misc\powered_by_alephone.h" />
+    <ClInclude Include="..\..\Source_Files\Misc\powered_by_alephbet.h" />
     <ClInclude Include="..\..\Source_Files\Misc\preferences.h" />
     <ClInclude Include="..\..\Source_Files\Misc\preferences_widgets_sdl.h" />
     <ClInclude Include="..\..\Source_Files\Misc\preference_dialogs.h" />

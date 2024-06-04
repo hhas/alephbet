@@ -1,8 +1,8 @@
 /*
  *  metaserver_dialogs.cpp - UI for metaserver client
 
-	Copyright (C) 2004 and beyond by Woody Zenfell, III
-	and the "Aleph One" developers.
+	Copyright (C) 2004 and beyond by Woody Zenfell, III,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -127,9 +127,9 @@ GameAvailableMetaserverAnnouncer::GameAvailableMetaserverAnnouncer(const game_in
 	description.m_name = gMetaserverClient->playerName() + "'s Game";
 	description.m_teamsAllowed = !(info.game_options & _force_unique_teams);
 	
-	// description's constructor gets scenario info, aleph one's protocol ID for us
+	// description's constructor gets scenario info, aleph bet's protocol ID for us
 	
-	description.m_alephoneBuildString = string(A1_DISPLAY_VERSION) + " (" + A1_DISPLAY_PLATFORM + ")";
+	description.m_alephbetBuildString = string(A1_DISPLAY_VERSION) + " (" + A1_DISPLAY_PLATFORM + ")";
 
 	bool HasPhysics, HasLua;
 	level_has_embedded_physics_lua(info.level_number, HasPhysics, HasLua);

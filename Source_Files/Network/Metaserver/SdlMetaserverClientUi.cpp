@@ -1,8 +1,8 @@
 /*
  *  SdlMetaserverClientUi.cpp - UI for metaserver client, SDL UI specialization
 
-	Copyright (C) 2004 and beyond by Woody Zenfell, III
-	and the "Aleph One" developers.
+	Copyright (C) 2004 and beyond by Woody Zenfell, III,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -184,7 +184,7 @@ public:
 				table->add(new w_spacer(), true);
 			}
 			table->dual_add(new w_label("Version"), info_dialog);
-			table->dual_add(new w_static_text(game->m_description.m_alephoneBuildString.c_str()), info_dialog);
+			table->dual_add(new w_static_text(game->m_description.m_alephbetBuildString.c_str()), info_dialog);
 
 			table->add_row(new w_spacer(), true);
 			table->dual_add_row(new w_static_text("Scenario"), info_dialog);

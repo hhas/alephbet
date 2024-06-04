@@ -14,7 +14,7 @@ jobs:
       uses: ./.github/actions/build-windows
       with:
         platform: x64
-        configurations: "Release, Marathon, Marathon 2, Marathon Infinity"
+        configurations: "Release"
         vcpkg_installed_folder: installed-x64-windows
         
     - name: Build archives
@@ -25,7 +25,7 @@ jobs:
     - name: Upload
       uses: actions/upload-artifact@v4
       with:
-        name: alephone-windows-release-x64
+        name: alephbet-windows-release-x64
         if-no-files-found: error
         path: 'VisualStudio/windows-build-archives/*.zip'
         
@@ -51,6 +51,6 @@ jobs:
     - name: Upload
       uses: actions/upload-artifact@v4
       with:
-        name: alephone-windows-release-x86
+        name: alephbet-windows-release-x86
         if-no-files-found: error
         path: 'VisualStudio/windows-build-archives/*.zip'

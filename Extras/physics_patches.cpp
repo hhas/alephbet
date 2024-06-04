@@ -217,7 +217,7 @@ static boolean create_delta_wad_file(
 		boolean had_deltas= FALSE;
 		struct wad_data *delta_wad= create_empty_wad();
 
-		fprintf(stderr, "Opened both files…\n");
+		fprintf(stderr, "Opened both files‚Ä¶\n");
 
 		/* Loop through all the wads. */		
 		for(index= 0; index<NUMBER_OF_DEFINITIONS; ++index)

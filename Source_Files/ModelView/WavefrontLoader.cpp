@@ -1,7 +1,7 @@
 /*
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -643,7 +643,7 @@ char *GetVertIndx(char *Buffer, bool& WasFound, short& Val, bool& HitEnd)
 }
 
 // Load a Wavefront model and convert its vertex and texture coordinates from
-// OBJ's right-handed coordinate system to Aleph One's left-handed system.
+// OBJ's right-handed coordinate system to Aleph Bet's left-handed system.
 bool LoadModel_Wavefront_RightHand(FileSpecifier& Spec, Model3D& Model)
 {
 	bool Result = LoadModel_Wavefront(Spec, Model);
@@ -654,7 +654,7 @@ bool LoadModel_Wavefront_RightHand(FileSpecifier& Spec, Model3D& Model)
 	// OBJ files produced by Blender and Wings 3D are oriented with
 	// y increasing upwards, and the front of a Blender model faces in the
 	// positive-Z direction.  (Wings 3D does not distinguish a "front"
-	// view.)  In Aleph One's coordinate system Z increases upwards, and
+	// view.)  In Aleph Bet's coordinate system Z increases upwards, and
 	// items that have been placed with 0 degrees of rotation face in the
 	// positive-x direction.
 	for (unsigned XPos = 0; XPos < Model.Positions.size(); XPos += 3)

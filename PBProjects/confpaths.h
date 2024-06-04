@@ -1,1 +1,1 @@
-//#define PKGDATADIR "AlephOneSDL.app/Contents/Resources/DataFiles/"
+//#define PKGDATADIR "Aleph Bet.app/Contents/Resources/DataFiles/"

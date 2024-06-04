@@ -2,8 +2,8 @@
 
 NETWORK_MESSAGES.CPP
 
-	Copyright (C) 2005 and beyond by Gregory Smith
-	and the "Aleph One" developers.
+	Copyright (C) 2005 and beyond by Gregory Smith,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by

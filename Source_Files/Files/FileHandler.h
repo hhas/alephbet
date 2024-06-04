@@ -2,8 +2,8 @@
 #define _FILE_HANDLER_
 /*
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -306,7 +306,7 @@ public:
 	// Copy file specification
 	const FileSpecifier &operator=(const FileSpecifier &other);
 
-	// hide extensions known to Aleph One
+	// hide extensions known to Aleph Bet
 	static std::string HideExtension(const std::string& filename);
 	
 	const char *GetPath(void) const {return name.c_str();}

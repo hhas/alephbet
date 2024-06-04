@@ -2,8 +2,8 @@
 #define _OGL_SETUP_
 /*
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -77,7 +77,7 @@ Aug 21, 2001 (Loren Petrich):
    find except Mesa's. Adding them here is harmless as the tokens are
    standardized, and not used unless the extensions are detected, and has the
    benefit of simplifying the sRGB code and making it so that when Apple adds
-   support to its OpenGL renderer AlephOnes built on older versions of OSX will
+   support to its OpenGL renderer AlephBets built on older versions of OSX will
    still be able to make use of it (ditto other OSes) -SB */
 #ifndef GL_FRAMEBUFFER_SRGB_EXT
 #define GL_FRAMEBUFFER_SRGB_EXT           0x8DB9

@@ -11,13 +11,13 @@ FILETYPE 1
  {
   BLOCK "040904E4"
   {
-   VALUE "FileDescription", "Aleph One"
+   VALUE "FileDescription", "Aleph Bet"
    VALUE "FileVersion", WIN_VERSION_STRING "\0"
    VALUE "LegalCopyright", "GNU General Public License Version 3"
-   VALUE "OriginalFilename", "AlephOne.exe"
-   VALUE "ProductName", "Aleph One"
+   VALUE "OriginalFilename", "AlephBet.exe"
+   VALUE "ProductName", "Aleph Bet"
    VALUE "ProductVersion", A1_DISPLAY_VERSION "\0"
-   VALUE "URL", "http://marathon.sourceforge.net"
+   VALUE "URL", "https://aleph-bet-marathon.github.io/"
   }
  }
  BLOCK "VarFileInfo"
@@ -26,7 +26,7 @@ FILETYPE 1
  }
 }
 
-AppIcon ICON "alephone.ico"
+AppIcon ICON "alephbet.ico"
 FilmIcon ICON "FilmIcon.ico"
 ImagesIcon ICON "ImagesIcon.ico"
 MMLIcon ICON "MMLIcon.ico"

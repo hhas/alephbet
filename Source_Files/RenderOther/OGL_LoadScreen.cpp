@@ -1,7 +1,7 @@
 /*
 
-	Copyright (C) 2006 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 2006 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ bool OGL_LoadScreen::Start()
 
 	int screenWidth = 640;
 	int screenHeight = 480;
-	alephone::Screen::instance()->bound_screen(true);
+	alephbet::Screen::instance()->bound_screen(true);
 	
 	// the true width/height
 	int imageWidth = static_cast<int>(image.GetWidth() * image.GetVScale());

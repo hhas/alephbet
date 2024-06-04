@@ -1,6 +1,6 @@
 /*
  *  thread_priority_sdl_macosx.cpp
- *  AlephOne-OSX
+ *  AlephBet-OSX
  *
  *  Created by woody on Sat Dec 01 2001.
  *  Copyright (c) 2001 __MyCompanyName__. All rights reserved.

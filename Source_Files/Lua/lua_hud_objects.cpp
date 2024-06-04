@@ -1,7 +1,8 @@
 /*
 LUA_HUD_OBJECTS.CPP
 
-	Copyright (C) 2009 by Jeremiah Morris
+	Copyright (C) 2009 by Jeremiah Morris, the "Aleph One" developers,
+	and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -963,7 +964,7 @@ int Lua_Fonts_New(lua_State *L)
 	FontSpecifier *ff = new FontSpecifier(f);
 	ff->Init();
 #ifdef HAVE_OPENGL	
-	if (alephone::Screen::instance()->openGL())
+	if (alephbet::Screen::instance()->openGL())
 		ff->OGL_Reset(true);
 #endif	
 	if (ff->LineSpacing <= 0)
@@ -2179,49 +2180,49 @@ typedef L_Class<Lua_Screen_Clip_Rect_Name> Lua_Screen_Clip_Rect;
 
 static int Lua_Screen_Clip_Rect_Get_X(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_clip_rect.x);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_clip_rect.x);
 	return 1;
 }
 
 static int Lua_Screen_Clip_Rect_Get_Y(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_clip_rect.y);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_clip_rect.y);
 	return 1;
 }
 
 static int Lua_Screen_Clip_Rect_Get_Width(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_clip_rect.w);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_clip_rect.w);
 	return 1;
 }
 
 static int Lua_Screen_Clip_Rect_Get_Height(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_clip_rect.h);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_clip_rect.h);
 	return 1;
 }
 
 static int Lua_Screen_Clip_Rect_Set_X(lua_State *L)
 {
-	alephone::Screen::instance()->lua_clip_rect.x = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_clip_rect.x = lua_tointeger(L, 2);
   return 0;
 }
 
 static int Lua_Screen_Clip_Rect_Set_Y(lua_State *L)
 {
-	alephone::Screen::instance()->lua_clip_rect.y = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_clip_rect.y = lua_tointeger(L, 2);
   return 0;
 }
 
 static int Lua_Screen_Clip_Rect_Set_Width(lua_State *L)
 {
-	alephone::Screen::instance()->lua_clip_rect.w = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_clip_rect.w = lua_tointeger(L, 2);
   return 0;
 }
 
 static int Lua_Screen_Clip_Rect_Set_Height(lua_State *L)
 {
-	alephone::Screen::instance()->lua_clip_rect.h = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_clip_rect.h = lua_tointeger(L, 2);
   return 0;
 }
 
@@ -2246,49 +2247,49 @@ typedef L_Class<Lua_Screen_World_Rect_Name> Lua_Screen_World_Rect;
 
 static int Lua_Screen_World_Rect_Get_X(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_view_rect.x);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_view_rect.x);
 	return 1;
 }
 
 static int Lua_Screen_World_Rect_Get_Y(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_view_rect.y);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_view_rect.y);
 	return 1;
 }
 
 static int Lua_Screen_World_Rect_Get_Width(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_view_rect.w);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_view_rect.w);
 	return 1;
 }
 
 static int Lua_Screen_World_Rect_Get_Height(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_view_rect.h);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_view_rect.h);
 	return 1;
 }
 
 static int Lua_Screen_World_Rect_Set_X(lua_State *L)
 {
-	alephone::Screen::instance()->lua_view_rect.x = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_view_rect.x = lua_tointeger(L, 2);
   return 0;
 }
 
 static int Lua_Screen_World_Rect_Set_Y(lua_State *L)
 {
-	alephone::Screen::instance()->lua_view_rect.y = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_view_rect.y = lua_tointeger(L, 2);
   return 0;
 }
 
 static int Lua_Screen_World_Rect_Set_Width(lua_State *L)
 {
-	alephone::Screen::instance()->lua_view_rect.w = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_view_rect.w = lua_tointeger(L, 2);
   return 0;
 }
 
 static int Lua_Screen_World_Rect_Set_Height(lua_State *L)
 {
-	alephone::Screen::instance()->lua_view_rect.h = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_view_rect.h = lua_tointeger(L, 2);
   return 0;
 }
 
@@ -2313,49 +2314,49 @@ typedef L_Class<Lua_Screen_Map_Rect_Name> Lua_Screen_Map_Rect;
 
 static int Lua_Screen_Map_Rect_Get_X(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_map_rect.x);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_map_rect.x);
 	return 1;
 }
 
 static int Lua_Screen_Map_Rect_Get_Y(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_map_rect.y);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_map_rect.y);
 	return 1;
 }
 
 static int Lua_Screen_Map_Rect_Get_Width(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_map_rect.w);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_map_rect.w);
 	return 1;
 }
 
 static int Lua_Screen_Map_Rect_Get_Height(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_map_rect.h);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_map_rect.h);
 	return 1;
 }
 
 static int Lua_Screen_Map_Rect_Set_X(lua_State *L)
 {
-	alephone::Screen::instance()->lua_map_rect.x = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_map_rect.x = lua_tointeger(L, 2);
   return 0;
 }
 
 static int Lua_Screen_Map_Rect_Set_Y(lua_State *L)
 {
-	alephone::Screen::instance()->lua_map_rect.y = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_map_rect.y = lua_tointeger(L, 2);
   return 0;
 }
 
 static int Lua_Screen_Map_Rect_Set_Width(lua_State *L)
 {
-	alephone::Screen::instance()->lua_map_rect.w = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_map_rect.w = lua_tointeger(L, 2);
   return 0;
 }
 
 static int Lua_Screen_Map_Rect_Set_Height(lua_State *L)
 {
-	alephone::Screen::instance()->lua_map_rect.h = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_map_rect.h = lua_tointeger(L, 2);
   return 0;
 }
 
@@ -2380,49 +2381,49 @@ typedef L_Class<Lua_Screen_Term_Rect_Name> Lua_Screen_Term_Rect;
 
 static int Lua_Screen_Term_Rect_Get_X(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_term_rect.x);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_term_rect.x);
 	return 1;
 }
 
 static int Lua_Screen_Term_Rect_Get_Y(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_term_rect.y);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_term_rect.y);
 	return 1;
 }
 
 static int Lua_Screen_Term_Rect_Get_Width(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_term_rect.w);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_term_rect.w);
 	return 1;
 }
 
 static int Lua_Screen_Term_Rect_Get_Height(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_term_rect.h);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_term_rect.h);
 	return 1;
 }
 
 static int Lua_Screen_Term_Rect_Set_X(lua_State *L)
 {
-	alephone::Screen::instance()->lua_term_rect.x = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_term_rect.x = lua_tointeger(L, 2);
   return 0;
 }
 
 static int Lua_Screen_Term_Rect_Set_Y(lua_State *L)
 {
-	alephone::Screen::instance()->lua_term_rect.y = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_term_rect.y = lua_tointeger(L, 2);
   return 0;
 }
 
 static int Lua_Screen_Term_Rect_Set_Width(lua_State *L)
 {
-	alephone::Screen::instance()->lua_term_rect.w = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_term_rect.w = lua_tointeger(L, 2);
   return 0;
 }
 
 static int Lua_Screen_Term_Rect_Set_Height(lua_State *L)
 {
-	alephone::Screen::instance()->lua_term_rect.h = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_term_rect.h = lua_tointeger(L, 2);
   return 0;
 }
 
@@ -2447,49 +2448,49 @@ typedef L_Class<Lua_Screen_Text_Margins_Name> Lua_Screen_Text_Margins;
 
 static int Lua_Screen_Text_Margins_Get_Bottom(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_text_margins.bottom);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_text_margins.bottom);
 	return 1;
 }
 
 static int Lua_Screen_Text_Margins_Get_Left(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_text_margins.left);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_text_margins.left);
 	return 1;
 }
 
 static int Lua_Screen_Text_Margins_Get_Right(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_text_margins.right);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_text_margins.right);
 	return 1;
 }
 
 static int Lua_Screen_Text_Margins_Get_Top(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->lua_text_margins.top);
+	lua_pushnumber(L, alephbet::Screen::instance()->lua_text_margins.top);
 	return 1;
 }
 
 static int Lua_Screen_Text_Margins_Set_Bottom(lua_State *L)
 {
-	alephone::Screen::instance()->lua_text_margins.bottom = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_text_margins.bottom = lua_tointeger(L, 2);
 	return 0;
 }
 
 static int Lua_Screen_Text_Margins_Set_Left(lua_State *L)
 {
-	alephone::Screen::instance()->lua_text_margins.left = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_text_margins.left = lua_tointeger(L, 2);
 	return 0;
 }
 
 static int Lua_Screen_Text_Margins_Set_Right(lua_State *L)
 {
-	alephone::Screen::instance()->lua_text_margins.right = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_text_margins.right = lua_tointeger(L, 2);
 	return 0;
 }
 
 static int Lua_Screen_Text_Margins_Set_Top(lua_State *L)
 {
-	alephone::Screen::instance()->lua_text_margins.top = lua_tointeger(L, 2);
+	alephbet::Screen::instance()->lua_text_margins.top = lua_tointeger(L, 2);
 	return 0;
 }
 
@@ -2585,13 +2586,13 @@ typedef L_Class<Lua_Screen_Name> Lua_Screen;
 
 static int Lua_Screen_Get_Width(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->window_width());
+	lua_pushnumber(L, alephbet::Screen::instance()->window_width());
 	return 1;
 }
 
 static int Lua_Screen_Get_Height(lua_State *L)
 {
-	lua_pushnumber(L, alephone::Screen::instance()->window_height());
+	lua_pushnumber(L, alephbet::Screen::instance()->window_height());
 	return 1;
 }
 

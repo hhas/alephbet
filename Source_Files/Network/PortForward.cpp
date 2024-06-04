@@ -39,7 +39,7 @@ PortForward::PortForward(uint16_t port) :
 	auto result = UPNP_AddPortMapping(urls_.controlURL,
 									  data_.first.servicetype,
 									  port_.c_str(), port_.c_str(), lanaddr,
-									  "Aleph One", "TCP", nullptr, nullptr);
+									  "Aleph Bet", "TCP", nullptr, nullptr);
 
 	if (result != UPNPCOMMAND_SUCCESS)
 	{
@@ -51,7 +51,7 @@ PortForward::PortForward(uint16_t port) :
 	result = UPNP_AddPortMapping(urls_.controlURL,
 								 data_.first.servicetype,
 								 port_.c_str(), port_.c_str(), lanaddr,
-								 "Aleph One", "UDP", nullptr, nullptr);
+								 "Aleph Bet", "UDP", nullptr, nullptr);
 
 	if (result != UPNPCOMMAND_SUCCESS)
 	{

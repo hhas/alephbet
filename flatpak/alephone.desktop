@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Name=Aleph One
+Name=Aleph Bet
 Exec=run.sh
-Icon=org.bungie.source.AlephOne
+Icon=io.github.aleph_bet_marathon.AlephBet
 Categories=Game

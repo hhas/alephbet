@@ -131,34 +131,34 @@
 #define LUA_USE_MKSTEMP 1
 
 /* Name of package */
-#define PACKAGE "AlephOne"
+#define PACKAGE "AlephBet"
 
 /* Define to the address where bug reports for this package should be sent. */
-#define PACKAGE_BUGREPORT "http://sourceforge.net/p/marathon/bugs/"
+#define PACKAGE_BUGREPORT "https://github.com/Aleph-Bet-Marathon/alephbet/issues"
 
 /* Define to the full name of this package. */
-#define PACKAGE_NAME "Aleph One"
+#define PACKAGE_NAME "Aleph Bet"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "Aleph One 20140104"
+#define PACKAGE_STRING "Aleph Bet 20240603"
 
 /* Define to the one symbol short name of this package. */
-#define PACKAGE_TARNAME "AlephOne"
+#define PACKAGE_TARNAME "AlephBet"
 
 /* Define to the home page for this package. */
-#define PACKAGE_URL "http://marathon.sourceforge.net/"
+#define PACKAGE_URL "http://aleph-bet-marathon.github.io"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "20140104"
+#define PACKAGE_VERSION "20240603"
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
 
 /* Target platform name */
-#define TARGET_PLATFORM "darwin14.0.0 x86_64"
+#define TARGET_PLATFORM "generic"
 
 /* Version number of package */
-#define VERSION "20140104"
+#define VERSION "20240603"
 
 /* Win32 music disabled */
 /* #undef WIN32_DISABLE_MUSIC */

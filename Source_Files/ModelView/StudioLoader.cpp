@@ -1,7 +1,7 @@
 /*
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -467,7 +467,7 @@ void LoadFloats(int NVals, uint8 *Stream, GLfloat *Floats)
 }
 
 // Load a 3D Studio MAX model and convert its vertex and texture coordinates
-// from 3DS' right-handed coordinate system to Aleph One's left-handed system.
+// from 3DS' right-handed coordinate system to Aleph Bet's left-handed system.
 bool LoadModel_Studio_RightHand(FileSpecifier& Spec, Model3D& Model)
 {
 	bool Result = LoadModel_Studio(Spec, Model);
@@ -476,7 +476,7 @@ bool LoadModel_Studio_RightHand(FileSpecifier& Spec, Model3D& Model)
 	logTrace("Converting handedness.");
 
 	// Wings 3d and Blender produce 3DS models with a z-up orientation,
-	// and for Blender models y increases towards the back. In Aleph One,
+	// and for Blender models y increases towards the back. In Aleph Bet,
 	// z increases upward, and items that have been placed with 0 degrees
 	// of rotation face in the positive-x direction.
 	// Preserve the orientation and switch handedness by swapping and

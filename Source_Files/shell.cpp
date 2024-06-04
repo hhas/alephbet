@@ -1,7 +1,7 @@
 /*
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -98,9 +98,9 @@
 #ifdef HAVE_SDL_IMAGE
 #include <SDL2/SDL_image.h>
 #if defined(__WIN32__)
-#include "alephone32.xpm"
+#include "alephbet32.xpm"
 #elif !(defined(__APPLE__) && defined(__MACH__))
-#include "alephone.xpm"
+#include "alephbet.xpm"
 #endif
 #endif
 
@@ -137,7 +137,7 @@ DirectorySpecifier quick_saves_dir;   // Directory for auto-named saved games
 DirectorySpecifier image_cache_dir;   // Directory for image cache
 DirectorySpecifier recordings_dir;    // Directory for recordings (except film buffer, which is stored in local_data_dir)
 DirectorySpecifier screenshots_dir;   // Directory for screenshots
-DirectorySpecifier log_dir;           // Directory for Aleph One Log.txt
+DirectorySpecifier log_dir;           // Directory for Aleph Bet Log.txt
 
 /*
 // Command-line options
@@ -320,7 +320,10 @@ void initialize_application(void)
 	size_t dsp_insert_pos = data_search_path.size();
 	size_t dsp_delete_pos = (size_t)-1;
 	
-	const string default_data_env = a1_getenv("ALEPHONE_DEFAULT_DATA");
+	const string default_data_env = a1_getenv("ALEPHBET_DEFAULT_DATA");
+	if(default_data_env.empty()) {
+		default_data_env = a1_getenv("ALEPHONE_DEFAULT_DATA");
+	}
 	if (shell_options.directory != "")
 	{
 		default_data_dir = shell_options.directory;
@@ -334,7 +337,10 @@ void initialize_application(void)
 		data_search_path.push_back(default_data_env);
 	}
 
-	const string data_env = a1_getenv("ALEPHONE_DATA");
+	const string data_env = a1_getenv("ALEPHBET_DATA");
+	if(data_env.empty()) {
+		data_env = a1_getenv("ALEPHONE_DATA");
+	}
 	if (!data_env.empty()) {
 		// Read colon-separated list of directories
 		string path = data_env;
@@ -440,7 +446,7 @@ void initialize_application(void)
 //	SDL_WM_SetCaption(application_name, application_name);
 
 // #if defined(HAVE_SDL_IMAGE) && !(defined(__APPLE__) && defined(__MACH__))
-// 	SDL_WM_SetIcon(IMG_ReadXPMFromArray(const_cast<char**>(alephone_xpm)), 0);
+// 	SDL_WM_SetIcon(IMG_ReadXPMFromArray(const_cast<char**>(alephbet_xpm)), 0);
 // #endif
 
 #if !defined(DISABLE_NETWORKING)
@@ -479,7 +485,7 @@ void initialize_application(void)
 	initialize_keyboard_controller();
 	initialize_joystick();
 	initialize_gamma();
-	alephone::Screen::instance()->Initialize(&graphics_preferences->screen_mode);
+	alephbet::Screen::instance()->Initialize(&graphics_preferences->screen_mode);
 	initialize_marathon();
 	initialize_screen_drawing();
 	initialize_dialogs();
@@ -753,7 +759,7 @@ static bool event_has_cheat_modifiers(const SDL_Event &event)
 static void process_screen_click(const SDL_Event &event)
 {
 	int x = event.button.x, y = event.button.y;
-	alephone::Screen::instance()->window_to_screen(x, y);
+	alephbet::Screen::instance()->window_to_screen(x, y);
 	portable_process_screen_click(x, y, has_cheat_modifiers());
 }
 
@@ -954,12 +960,12 @@ static void handle_game_key(const SDL_Event &event)
 			}
 			else
 			{
-				int mode = alephone::Screen::instance()->FindMode(get_screen_mode()->width, get_screen_mode()->height);
-				if (mode < alephone::Screen::instance()->GetModes().size() - 1)
+				int mode = alephbet::Screen::instance()->FindMode(get_screen_mode()->width, get_screen_mode()->height);
+				if (mode < alephbet::Screen::instance()->GetModes().size() - 1)
 				{
 					PlayInterfaceButtonSound(Sound_ButtonSuccess());
-					graphics_preferences->screen_mode.width = alephone::Screen::instance()->ModeWidth(mode + 1);
-					graphics_preferences->screen_mode.height = alephone::Screen::instance()->ModeHeight(mode + 1);
+					graphics_preferences->screen_mode.width = alephbet::Screen::instance()->ModeWidth(mode + 1);
+					graphics_preferences->screen_mode.height = alephbet::Screen::instance()->ModeHeight(mode + 1);
 					graphics_preferences->screen_mode.auto_resolution = false;
 					graphics_preferences->screen_mode.hud = false;
 					changed_screen_mode = changed_prefs = changed_resolution = true;
@@ -977,13 +983,13 @@ static void handle_game_key(const SDL_Event &event)
 			}
 			else
 			{
-				int mode = alephone::Screen::instance()->FindMode(get_screen_mode()->width, get_screen_mode()->height);
+				int mode = alephbet::Screen::instance()->FindMode(get_screen_mode()->width, get_screen_mode()->height);
 				int automode = get_screen_mode()->fullscreen ? 0 : 1;
 				if (mode > automode)
 				{
 					PlayInterfaceButtonSound(Sound_ButtonSuccess());
-					graphics_preferences->screen_mode.width = alephone::Screen::instance()->ModeWidth(mode - 1);
-					graphics_preferences->screen_mode.height = alephone::Screen::instance()->ModeHeight(mode - 1);
+					graphics_preferences->screen_mode.width = alephbet::Screen::instance()->ModeWidth(mode - 1);
+					graphics_preferences->screen_mode.height = alephbet::Screen::instance()->ModeHeight(mode - 1);
 					if ((mode - 1) == automode)
 						graphics_preferences->screen_mode.auto_resolution = true;
 					graphics_preferences->screen_mode.hud = true;

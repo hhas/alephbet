@@ -6,7 +6,7 @@ mmldir = $(pkgdatadir)/MML
 mml_DATA = Interface_Rects.mml Transparent_Liquids.mml \
   Transparent_Sprites.mml
 
-EXTRA_DIST = $(mml_DATA) alephone.xml
+EXTRA_DIST = $(mml_DATA) alephbet.xml
 
 
 if INSTALL_MIME
@@ -23,7 +23,7 @@ mime_icons = \
   text-x-alephone-mml.png
 icon_sizes = 16 22 24 32 48 64 96 128 256
 mimedir = $(datarootdir)/mime/packages
-mime_DATA = alephone.xml
+mime_DATA = alephbet.xml
 
 install-icons:
 	for size in $(icon_sizes); do \

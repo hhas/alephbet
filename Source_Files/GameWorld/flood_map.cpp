@@ -1,8 +1,8 @@
 /*
 FLOOD_MAP.C
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -58,7 +58,7 @@ on very small maps, choose_random_flood_node() may not terminate
 #define NODE_IS_UNEXPANDED(n) (!NODE_IS_EXPANDED(n))
 #define MARK_NODE_AS_EXPANDED(n) ((n)->flags|=(uint16)0x8000)
 
-namespace alephone {
+namespace alephbet {
 namespace flood_map {
 
 struct node_data /* 16 bytes */
@@ -77,7 +77,7 @@ struct node_data /* 16 bytes */
 }
 }
 
-using namespace alephone::flood_map;
+using namespace alephbet::flood_map;
 
 /* ---------- globals */
 

@@ -2,8 +2,8 @@
 #define _FILM_PROFILE_
 /*
 
-	Copyright (C) 2011 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 2011 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 	which is included with this source code; it is available online at
 	http://www.gnu.org/licenses/gpl.html
 	
-	Film profiles tell Aleph One exactly how to behave when
+	Film profiles tell Aleph One/Bet exactly how to behave when
 	playing back films
 
 	Written by Gregory Smith, 2011
@@ -59,7 +59,7 @@ struct FilmProfile
 	// Infinity has an improved line_is_obstructed
 	bool line_is_obstructed_fix;
 
-	// Aleph One implements pass_media_boundary one way
+	// Aleph One/Bet implements pass_media_boundary one way
 	bool a1_smg;
 
 	// Marathon Infinity implements pass_media_boundary a different way

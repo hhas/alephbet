@@ -1,3 +1,3 @@
 #!/bin/sh
-/app/bin/alephone /app/game-data
+/app/bin/alephbet /app/game-data
 

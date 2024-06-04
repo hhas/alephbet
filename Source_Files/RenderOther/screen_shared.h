@@ -1,7 +1,7 @@
 /*
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -457,7 +457,7 @@ screen_mode_data *get_screen_mode(
 bool game_window_is_full_screen(
 	void)
 {
-	return !alephone::Screen::instance()->hud();
+	return !alephbet::Screen::instance()->hud();
 }
 
 
@@ -563,7 +563,7 @@ static void update_fps_display(SDL_Surface *s)
 		DisplayTextFont = Font.Info;
 		DisplayTextStyle = Font.Style;
 
-		auto text_margins = alephone::Screen::instance()->lua_text_margins;
+		auto text_margins = alephbet::Screen::instance()->lua_text_margins;
 		short X0 = text_margins.left;
 		short Y0 = s->h - text_margins.bottom;
 
@@ -595,7 +595,7 @@ static void DisplayPosition(SDL_Surface *s)
 	DisplayTextFont = Font.Info;
 	DisplayTextStyle = Font.Style;
 
-	auto text_margins = alephone::Screen::instance()->lua_text_margins;
+	auto text_margins = alephbet::Screen::instance()->lua_text_margins;
 	short X0 = text_margins.left;
 	short Y0 = text_margins.top;
 	
@@ -638,7 +638,7 @@ static void DisplayInputLine(SDL_Surface *s)
   DisplayTextFont = Font.Info;
   DisplayTextStyle = Font.Style;
   
-  auto text_margins = alephone::Screen::instance()->lua_text_margins;
+  auto text_margins = alephbet::Screen::instance()->lua_text_margins;
   short X0 = text_margins.left;
   short Y0 = s->h - text_margins.bottom;
 
@@ -659,7 +659,7 @@ static void DisplayMessages(SDL_Surface *s)
 	DisplayTextFont = Font.Info;
 	DisplayTextStyle = Font.Style;
 
-	auto text_margins = alephone::Screen::instance()->lua_text_margins;
+	auto text_margins = alephbet::Screen::instance()->lua_text_margins;
 	short X0 = text_margins.left;
 	short Y0 = text_margins.top;
 	
@@ -797,7 +797,7 @@ static void DisplayScores(SDL_Surface *s)
 	int H = Font.LineSpacing * (dynamic_world->player_count + 1);
 	int W = WName + WScore + WPing + WJitter + WErrors + WId;
 
-	auto text_margins = alephone::Screen::instance()->lua_text_margins;
+	auto text_margins = alephbet::Screen::instance()->lua_text_margins;
 	int X = text_margins.left + (s->w - text_margins.right - W) / 2;
 	int Y = std::max(text_margins.top + (s->h - text_margins.bottom - H) / 2, Font.LineSpacing * NumScreenMessages) + Font.LineSpacing;
 

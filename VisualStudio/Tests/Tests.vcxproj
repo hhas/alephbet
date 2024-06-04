@@ -164,7 +164,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LibAlephOne\LibAlephOne.vcxproj">
+    <ProjectReference Include="..\LibAlephBet\LibAlephBet.vcxproj">
       <Project>{d1a548ff-f15f-43ca-8891-f4b367122282}</Project>
     </ProjectReference>
   </ItemGroup>

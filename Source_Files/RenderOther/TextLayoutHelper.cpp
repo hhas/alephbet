@@ -2,8 +2,8 @@
  *  TextLayoutHelper.cpp
  *  created for Marathon: Aleph One <http://source.bungie.org/>
 
-	Copyright (C) 2001 and beyond by Woody Zenfell, III
-	and the "Aleph One" developers.
+	Copyright (C) 2001 and beyond by Woody Zenfell, III,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by

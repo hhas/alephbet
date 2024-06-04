@@ -34,7 +34,7 @@ make_dmg()
     diskdir=`mktemp -d -t Aleph`
     rsync -a "$TARGET_BUILD_DIR/$appname.app" "$diskdir"
     ln -s /Applications "$diskdir"
-    create_webloc "https://alephone.lhowon.org/" "$diskdir/Aleph One home page"
+    # create_webloc "https://alephone.lhowon.org/" "$diskdir/Aleph One home page"
     cp "$SRCROOT/../COPYING" "$diskdir/COPYING.txt"
     cp "$SRCROOT/../docs/README.txt" "$diskdir/README.txt"
 
@@ -69,7 +69,7 @@ make_dmg()
     rm -rf "$diskdir"
 }
 
-make_dmg "AlephOne" "Aleph One" "extras"
-make_dmg "Marathon" "Classic Marathon"
-make_dmg "Marathon2" "Classic Marathon 2"
-make_dmg "MarathonInfinity" "Classic Marathon Infinity"
+make_dmg "AlephBet" "Aleph Bet" "extras"
+# make_dmg "Marathon" "Classic Marathon"
+# make_dmg "Marathon2" "Classic Marathon 2"
+# make_dmg "MarathonInfinity" "Classic Marathon Infinity"

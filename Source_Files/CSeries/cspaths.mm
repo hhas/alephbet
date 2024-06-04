@@ -1,7 +1,7 @@
 /*
  
-	Copyright (C) 2017 and beyond by Jeremiah Morris
-	and the "Aleph One" developers.
+	Copyright (C) 2017 and beyond by Jeremiah Morris,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ static std::string _add_app_name(std::string parent)
 #ifdef PREFER_APP_NAME_TO_BUNDLE_ID
 	return parent + "/" + get_application_name();
 #else
-	return parent + "/" + "AlephOne";
+	return parent + "/" + "AlephBet";
 #endif
 }
 

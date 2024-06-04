@@ -1,7 +1,7 @@
 /*
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -118,7 +118,7 @@ May 22, 2003 (Woody Zenfell):
 // 8-bit support is still here if you undefine this, but you'll need to fix it
 // #define TRUE_COLOR_ONLY 1
 
-using namespace alephone;
+using namespace alephbet;
 
 static const char sPasswordMask[] = "reverof nohtaram";
 
@@ -2853,7 +2853,7 @@ static void controls_dialog(void *arg)
 		"P", "Preferences",
 		"Q", "Quit",
 		"C", "Scenario credits",
-		"A", "About Aleph One",
+		"A", "About Aleph Bet",
 #if (defined(__APPLE__) && defined(__MACH__))
 		"Cmd-Return", "Toggle fullscreen",
 #else
@@ -3946,6 +3946,7 @@ InfoTree environment_preferences_tree()
 	root.put_attr_path("solo_lua_file", environment_preferences->solo_lua_file);
 	root.put_attr("use_solo_lua", environment_preferences->use_solo_lua);
 	root.put_attr("use_replay_net_lua", environment_preferences->use_replay_net_lua);
+	// We have to include "alephone" here for compatibility.
 	root.put_attr("hide_alephone_extensions", environment_preferences->hide_extensions);
 	root.put_attr("film_profile", static_cast<uint32>(environment_preferences->film_profile));
 	root.put_attr("maximum_quick_saves", environment_preferences->maximum_quick_saves);

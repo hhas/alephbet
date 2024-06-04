@@ -3,8 +3,8 @@
 
 /*
 
-	Copyright (C) 2009 by Gregory Smith
-	and the "Aleph One" developers.
+	Copyright (C) 2009 by Gregory Smith,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,8 +20,9 @@
 	which is included with this source code; it is available online at
 	http://www.gnu.org/licenses/gpl.html
 
-	Uniform header for all Aleph One OpenGL users
 */
+
+// Uniform header for all Aleph Bet OpenGL users
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"

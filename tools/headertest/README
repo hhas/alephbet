@@ -2,7 +2,7 @@
 
 Requires GNU Make 3.81+
 
-This makefile compiles Aleph One headers individually in order to catch 
+This makefile compiles Aleph Bet headers individually in order to catch 
 missing #include dependencies for the current build configuration.
 
 Usage: run configure to generate the build configuration-specific makefile in 

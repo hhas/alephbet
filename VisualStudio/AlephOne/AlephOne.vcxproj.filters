@@ -15,16 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\Resources\Windows\alephone.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
-    <ResourceCompile Include="..\..\Resources\Windows\marathon.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
-    <ResourceCompile Include="..\..\Resources\Windows\marathon2.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
-    <ResourceCompile Include="..\..\Resources\Windows\marathon-infinity.rc">
+    <ResourceCompile Include="..\..\Resources\Windows\alephbet.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

@@ -1,7 +1,7 @@
 /*
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -123,7 +123,7 @@ static bool passed_shader = false;      // remember when we passed Shader tests
 
 #include "screen_shared.h"
 
-using namespace alephone;
+using namespace alephbet;
 
 Screen Screen::m_instance;
 

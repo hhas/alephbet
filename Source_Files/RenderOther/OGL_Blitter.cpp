@@ -1,7 +1,7 @@
 /*
 
-	Copyright (C) 2006 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 2006 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -182,12 +182,12 @@ int OGL_Blitter::ScreenHeight()
 
 void OGL_Blitter::BoundScreen(bool in_game)
 {
-	alephone::Screen::instance()->bound_screen(in_game);
+	alephbet::Screen::instance()->bound_screen(in_game);
 }
 
 void OGL_Blitter::WindowToScreen(int& x, int& y, bool in_game)
 {
-	alephone::Screen::instance()->window_to_screen(x, y);
+	alephbet::Screen::instance()->window_to_screen(x, y);
 }
 
 void OGL_Blitter::Draw(const Image_Rect& dst, const Image_Rect& raw_src)

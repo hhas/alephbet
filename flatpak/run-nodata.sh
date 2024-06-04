@@ -1,4 +1,4 @@
 #!/bin/sh
-/app/bin/alephone "$@"
+/app/bin/alephbet "$@"
 
 

@@ -1,7 +1,7 @@
 /*
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@
 #include "Logging.h"
 
 /* by using static variable initialization time as the epoch, we ensure that
-   Aleph One can run for ~49 days without timing issues cropping up */
+   Aleph Bet can run for ~49 days without timing issues cropping up */
 /* TODO: Every single place machine tick counts are used, switch to uint64 */
 static auto epoch = std::chrono::high_resolution_clock::now();
 

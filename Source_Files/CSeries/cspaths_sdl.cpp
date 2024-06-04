@@ -1,7 +1,7 @@
 /*
  
-	Copyright (C) 2017 and beyond by Jeremiah Morris
-	and the "Aleph One" developers.
+	Copyright (C) 2017 and beyond by Jeremiah Morris,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ static std::string _get_local_data_path()
 						NULL,
 						0,
 						file_name);
-		local_dir = wide_to_utf8(file_name) + "\\AlephOne";
+		local_dir = wide_to_utf8(file_name) + "\\AlephBet";
 	}
 	return local_dir;
 }
@@ -90,7 +90,7 @@ static std::string _get_prefs_path()
 						NULL,
 						0,
 						file_name);
-		prefs_dir = wide_to_utf8(file_name) + "\\AlephOne";
+		prefs_dir = wide_to_utf8(file_name) + "\\AlephBet";
 	}
 	return prefs_dir;
 }
@@ -159,7 +159,7 @@ std::string get_application_name()
 
 std::string get_application_identifier()
 {
-	return std::string("org.bungie.source.AlephOne");
+	return std::string("io.github.aleph_bet_marathon.AlephBet");
 }
 
 #else
@@ -178,7 +178,7 @@ static std::string _get_local_data_path()
 	{
 		const char *home = getenv("HOME");
 		if (home)
-			local_dir = std::string(home) + "/.alephone";
+			local_dir = std::string(home) + "/.alephbet";
 	}
 	return local_dir;
 }
@@ -229,7 +229,7 @@ std::string get_application_name()
 
 std::string get_application_identifier()
 {
-	return std::string("org.bungie.source.AlephOne");
+	return std::string("io.github.aleph_bet_marathon.AlephBet");
 }
 
 

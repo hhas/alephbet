@@ -1,8 +1,8 @@
 /*
 	images.c
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -673,7 +673,7 @@ std::unique_ptr<SDL_Surface, decltype(&SDL_FreeSurface)> picture_to_surface(Load
 				// Allocate surface for complete (but possibly banded) picture
 				if (!s) {
 					s.reset(SDL_CreateRGBSurface(SDL_SWSURFACE, pic_width, pic_height, 32,
-#ifdef ALEPHONE_LITTLE_ENDIAN
+#ifdef ALEPHBET_LITTLE_ENDIAN
 								 0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000
 #else
 								 0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff

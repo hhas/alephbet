@@ -996,7 +996,7 @@
     <ClInclude Include="..\..\Source_Files\Misc\PlayerName.h">
       <Filter>Misc\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source_Files\Misc\powered_by_alephone.h">
+    <ClInclude Include="..\..\Source_Files\Misc\powered_by_alephbet.h">
       <Filter>Misc\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source_Files\Misc\preference_dialogs.h">

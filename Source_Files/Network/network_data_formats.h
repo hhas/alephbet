@@ -1,8 +1,8 @@
 /*
  *  network_data_formats.h
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@
 #ifndef	NETWORK_DATA_FORMATS_H
 #define	NETWORK_DATA_FORMATS_H
 
-#include	"cseries.h"		// Need ALEPHONE_LITTLE_ENDIAN, if appropriate.
+#include	"cseries.h"		// Need ALEPHBET_LITTLE_ENDIAN, if appropriate.
 #include	"network.h"
 #include	"network_private.h"
 
@@ -78,7 +78,7 @@ extern void netcpy(NetPacket* dest, const NetPacket_NET* src);
 // i.e. same function is used to copy from _NET to unpacked as the other way around.
 // Note, since there is no packing to do - only byte swapping - we can pass along to memcpy if we're
 // on a big-endian architecture.
-#ifdef ALEPHONE_LITTLE_ENDIAN
+#ifdef ALEPHBET_LITTLE_ENDIAN
 extern void netcpy(uint32* dest, const uint32* src, size_t length);
 #else
 __inline__ void netcpy(uint32* dest, const uint32* src, size_t length) { memcpy(dest, src, length); }

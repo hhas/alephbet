@@ -4,8 +4,8 @@
 /*
 	SCREEN_DRAWING.H
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ enum {
 	_quit_button_rect,
 	_center_button_rect,
 	_singleton_game_button_rect,
-	_about_alephone_rect,
+	_about_alephbet_rect,
 	END_OF_MENU_INTERFACE_RECTS,
 	
 	/* Marathon compatibility rectangles */

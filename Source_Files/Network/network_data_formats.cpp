@@ -1,8 +1,8 @@
 /*
  *  network_data_formats.cpp
 
-	Copyright (C) 2001 and beyond by Woody Zenfell, III
-	and the "Aleph One" developers.
+	Copyright (C) 2001 and beyond by Woody Zenfell, III,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -76,8 +76,8 @@ netcpy(NetPacket* dest, const NetPacket_NET* src)
 	assert(S == src->data + SIZEOF_NetPacket);
 }
 
-// (if not ALEPHONE_LITTLE_ENDIAN, this is unnecessary as memcpy is used instead.)
-#ifdef ALEPHONE_LITTLE_ENDIAN
+// (if not ALEPHBET_LITTLE_ENDIAN, this is unnecessary as memcpy is used instead.)
+#ifdef ALEPHBET_LITTLE_ENDIAN
 void
 netcpy(uint32* dest, const uint32* src, size_t length) {
     assert(length % sizeof(uint32) == 0);

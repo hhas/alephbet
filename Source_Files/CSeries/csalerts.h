@@ -1,7 +1,7 @@
 /*
 
-	Copyright (C) 1991-2001 and beyond by Bo Lindbergh
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bo Lindbergh,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -60,11 +60,11 @@ extern void halt(void) NORETURN;
 extern void vhalt(
 	const char *message) NORETURN;
 
-extern void _alephone_assert(
+extern void _alephbet_assert(
 	const char *file,
 	int32 line,
 	const char *what) NORETURN;
-extern void _alephone_warn(
+extern void _alephbet_warn(
 	const char *file,
 	int32 line,
 	const char *what);
@@ -82,10 +82,10 @@ void alert_corrupted_map(int error) { alert_user_fatal(128, 23, error); }
 
 #undef assert
 #ifdef DEBUG
-#define assert(what) ((what) ? (void)0 : _alephone_assert(__FILE__,__LINE__,"Assertion failed: " #what))
-#define vassert(what,message) ((what) ? (void)0 : _alephone_assert(__FILE__,__LINE__,(message)))
-#define warn(what) ((what) ? (void)0 : _alephone_warn(__FILE__,__LINE__,"Assertion failed: " #what))
-#define vwarn(what,message) ((what) ? (void)0 : _alephone_warn(__FILE__,__LINE__,(message)))
+#define assert(what) ((what) ? (void)0 : _alephbet_assert(__FILE__,__LINE__,"Assertion failed: " #what))
+#define vassert(what,message) ((what) ? (void)0 : _alephbet_assert(__FILE__,__LINE__,(message)))
+#define warn(what) ((what) ? (void)0 : _alephbet_warn(__FILE__,__LINE__,"Assertion failed: " #what))
+#define vwarn(what,message) ((what) ? (void)0 : _alephbet_warn(__FILE__,__LINE__,(message)))
 #else
 #define assert(what) ((void) 0)
 #define vassert(what,message) ((void) 0)

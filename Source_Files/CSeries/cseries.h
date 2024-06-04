@@ -1,7 +1,7 @@
 /*
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -44,18 +44,18 @@
  */
 
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
-#define ALEPHONE_LITTLE_ENDIAN 1
+#define ALEPHBET_LITTLE_ENDIAN 1
 #else
-#undef ALEPHONE_LITTLE_ENDIAN
+#undef ALEPHBET_LITTLE_ENDIAN
 #endif
 
 
 constexpr bool PlatformIsLittleEndian() noexcept {
-#ifdef ALEPHONE_LITTLE_ENDIAN
+#ifdef ALEPHBET_LITTLE_ENDIAN
 	return true;
 #else
 	return false;
-#endif // end ALEPHONE_LITTLE_ENDIAN
+#endif // end ALEPHBET_LITTLE_ENDIAN
 }
 /*
  *  Data types with specific bit width

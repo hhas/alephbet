@@ -1,8 +1,8 @@
 /*
 GAME_WINDOW.C
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -277,7 +277,7 @@ void initialize_game_window(void)
 /* draws the entire interface */
 void draw_interface(void)
 {
-	if (alephone::Screen::instance()->openGL())
+	if (alephbet::Screen::instance()->openGL())
 		return;
 
 	if (!game_window_is_full_screen())
@@ -295,7 +295,7 @@ void update_interface(short time_elapsed)
 {
 	if (time_elapsed == NONE)
         reset_motion_sensor(current_player_index);
-	if (alephone::Screen::instance()->openGL() || alephone::Screen::instance()->lua_hud())
+	if (alephbet::Screen::instance()->openGL() || alephbet::Screen::instance()->lua_hud())
         return;
 
 	if (!game_window_is_full_screen())
@@ -486,7 +486,7 @@ extern int LuaTexturePaletteSize();
 
 void draw_panels(void)
 {
-	if (alephone::Screen::instance()->openGL())
+	if (alephbet::Screen::instance()->openGL())
 		return;
 
 	ensure_HUD_buffer();

@@ -1,8 +1,8 @@
 /*
 	INTERFACE.C
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.
-	and the "Aleph One" developers.
+	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
+	the "Aleph One" developers, and the "Aleph Bet" developers.
  
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -199,7 +199,7 @@ const short max_handled_recording= RECORDING_VERSION_ALEPH_ONE_1_7;
 
 #include "lua_hud_script.h"
 
-using alephone::Screen;
+using alephbet::Screen;
 
 /* ------------- enums */
 
@@ -311,7 +311,7 @@ extern bool choose_saved_game_to_load(FileSpecifier& File);
 /* ---------------------- prototypes */
 static void display_credits(void);
 static void draw_button(short index, bool pressed);
-static void draw_powered_by_aleph_one(bool pressed);
+static void draw_powered_by_aleph_bet(bool pressed);
 static void handle_replay(bool last_replay);
 static bool begin_game(short user, bool cheat);
 static void start_game(short user, bool changing_level);
@@ -1091,7 +1091,7 @@ void update_interface_display(
 		{
 			draw_button(game_state.highlighted_main_menu_item + START_OF_MENU_INTERFACE_RECTS - 1, true);
 		}
-		draw_powered_by_aleph_one(game_state.highlighted_main_menu_item == iAbout);
+		draw_powered_by_aleph_bet(game_state.highlighted_main_menu_item == iAbout);
 	}
 
 	draw_intro_screen();
@@ -1273,37 +1273,37 @@ void set_game_focus_gained()
 extern SDL_Surface *draw_surface;	// from screen_drawing.cpp
 //void draw_intro_screen(void);		// from screen.cpp
 
-static SDL_Surface *powered_by_alephone_surface[] = {nullptr, nullptr};
-#include "powered_by_alephone.h"
-#include "powered_by_alephone_h.h"
+static SDL_Surface *powered_by_alephbet_surface[] = {nullptr, nullptr};
+#include "powered_by_alephbet.h"
+#include "powered_by_alephbet_h.h"
 
-extern void set_about_alephone_rect(int width, int height);
+extern void set_about_alephbet_rect(int width, int height);
 
-static void draw_powered_by_aleph_one(bool pressed)
+static void draw_powered_by_aleph_bet(bool pressed)
 {
-	if (!powered_by_alephone_surface[0])
+	if (!powered_by_alephbet_surface[0])
 	{
-		SDL_RWops *rw = SDL_RWFromConstMem(powered_by_alephone_bmp, sizeof(powered_by_alephone_bmp));
-		powered_by_alephone_surface[0] = SDL_LoadBMP_RW(rw, 0);
+		SDL_RWops *rw = SDL_RWFromConstMem(powered_by_alephbet_bmp, sizeof(powered_by_alephbet_bmp));
+		powered_by_alephbet_surface[0] = SDL_LoadBMP_RW(rw, 0);
 		SDL_RWclose(rw);
 
-		set_about_alephone_rect(powered_by_alephone_surface[0]->w, powered_by_alephone_surface[0]->h);
+		set_about_alephbet_rect(powered_by_alephbet_surface[0]->w, powered_by_alephbet_surface[0]->h);
 
-		rw = SDL_RWFromConstMem(powered_by_alephone_h_bmp, sizeof(powered_by_alephone_h_bmp));
-		powered_by_alephone_surface[1] = SDL_LoadBMP_RW(rw, 0);
+		rw = SDL_RWFromConstMem(powered_by_alephbet_h_bmp, sizeof(powered_by_alephbet_h_bmp));
+		powered_by_alephbet_surface[1] = SDL_LoadBMP_RW(rw, 0);
 		SDL_RWclose(rw);
 	}
 
 	auto i = pressed ? 1 : 0;
 
 	SDL_Rect rect;
-	rect.x = 640 - powered_by_alephone_surface[i]->w;
-	rect.y = 480 - powered_by_alephone_surface[i]->h;
-	rect.w = powered_by_alephone_surface[i]->w;
-	rect.h = powered_by_alephone_surface[i]->h;
+	rect.x = 640 - powered_by_alephbet_surface[i]->w;
+	rect.y = 480 - powered_by_alephbet_surface[i]->h;
+	rect.w = powered_by_alephbet_surface[i]->w;
+	rect.h = powered_by_alephbet_surface[i]->h;
 
 	_set_port_to_intro();
-	SDL_BlitSurface(powered_by_alephone_surface[i], NULL, draw_surface, &rect);
+	SDL_BlitSurface(powered_by_alephbet_surface[i], NULL, draw_surface, &rect);
 	_restore_port();
 }
 
@@ -1328,7 +1328,7 @@ void display_main_menu(
 		Music::instance()->RestartIntroMusic();
 	}
 
-	draw_powered_by_aleph_one(false);
+	draw_powered_by_aleph_bet(false);
 
 	game_state.main_menu_display_count++;
 }
@@ -1820,7 +1820,7 @@ static void display_about_dialog()
 	labels.push_back("AUTHORS");
 	w_tab *tab_w = new w_tab(labels, tabs);
 	
-	placer->dual_add(new w_title("ALEPH ONE"), d);
+	placer->dual_add(new w_title("ALEPH BET"), d);
 	placer->add(new w_spacer, true);
 
 	placer->dual_add(tab_w, d);
@@ -1828,14 +1828,14 @@ static void display_about_dialog()
 
 	vertical_placer* about_placer = new vertical_placer;
 	
-	if (strcmp(get_application_name().c_str(), "Aleph One") != 0)
+	if (strcmp(get_application_name().c_str(), "Aleph Bet") != 0)
 	{
 		about_placer->dual_add(new w_static_text(expand_app_variables("$appName$ is powered by").c_str()), d);
 	}
 #ifdef HAVE_STEAM
-	about_placer->dual_add(new w_static_text(expand_app_variables("Aleph One $appVersion$ Steam ($appDate$)").c_str()), d);
+	about_placer->dual_add(new w_static_text(expand_app_variables("Aleph Bet $appVersion$ Steam ($appDate$)").c_str()), d);
 #else
-	about_placer->dual_add(new w_static_text(expand_app_variables("Aleph One $appVersion$ ($appDate$)").c_str()), d);
+	about_placer->dual_add(new w_static_text(expand_app_variables("Aleph Bet $appVersion$ ($appDate$)").c_str()), d);
 #endif
 
 	about_placer->add(new w_spacer, true);
@@ -1844,7 +1844,7 @@ static void display_about_dialog()
 
 	about_placer->add(new w_spacer(2 * get_theme_space(SPACER_WIDGET)), true);
 	
-	about_placer->dual_add(new w_static_text(expand_app_variables("Aleph One is free software with ABSOLUTELY NO WARRANTY.").c_str()), d);
+	about_placer->dual_add(new w_static_text(expand_app_variables("Aleph Bet is free software with ABSOLUTELY NO WARRANTY.").c_str()), d);
 	about_placer->dual_add(new w_static_text("You are welcome to redistribute it under certain conditions."), d);
 	about_placer->dual_add(new w_hyperlink("http://www.gnu.org/licenses/gpl-3.0.html"), d);
 
@@ -1858,12 +1858,12 @@ static void display_about_dialog()
 
 	vertical_placer *authors_placer = new vertical_placer();
 	
-	authors_placer->dual_add(new w_static_text("Aleph One is based on the source code for Marathon 2 and"), d);
+	authors_placer->dual_add(new w_static_text("Aleph Bet is based on the source code for Marathon 2 and"), d);
 	authors_placer->dual_add(new w_static_text("Marathon Infinity, which was developed by Bungie software."), d);
 	authors_placer->add(new w_spacer, true);
 	
 	authors_placer->dual_add(new w_static_text("The enhancements and extensions to Marathon 2 and Marathon"), d);
-	authors_placer->dual_add(new w_static_text("Infinity that constitute Aleph One have been made by:"), d);
+	authors_placer->dual_add(new w_static_text("Infinity that constitute Aleph Bet have been made by:"), d);
 
 	authors_placer->add(new w_spacer, true);
 
@@ -2048,9 +2048,9 @@ static void draw_button(
 	short index, 
 	bool pressed)
 {
-	if (index == _about_alephone_rect)
+	if (index == _about_alephbet_rect)
 	{
-		draw_powered_by_aleph_one(pressed);
+		draw_powered_by_aleph_bet(pressed);
 		return;
 	}
 
@@ -2845,7 +2845,7 @@ static void handle_interface_menu_screen_click(
 				}
 				if (mouse_changed)
 				{
-					alephone::Screen::instance()->window_to_screen(mx, my);
+					alephbet::Screen::instance()->window_to_screen(mx, my);
 					bool state = point_in_rectangle(mx - xoffset, my - yoffset, screen_rect);
 					if (state != last_state)
 					{
