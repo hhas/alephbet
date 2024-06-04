@@ -147,24 +147,6 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>pfhr</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>PFIcon.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>Aleph One Pfhortran Script</string>
-			<key>CFBundleTypeRole</key>
-			<string>None</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>org.bungie.source.pfhortran</string>
-			</array>
-			<key>NSDocumentClass</key>
-			<string></string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
 				<string>phyA</string>
 				<string>phys</string>
 				<string>*</string>
@@ -286,15 +268,15 @@
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
-	<string>Aleph One</string>
+	<string>Aleph Bet</string>
 	<key>CFBundleIconFile</key>
-	<string>AlephOne.icns</string>
+	<string>AlephBet.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Aleph One</string>
+	<string>Aleph Bet</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

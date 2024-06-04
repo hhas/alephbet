@@ -1,7 +1,8 @@
 dnl Process this file with autoconf to produce a configure script.
-dnl Written by Christian Bauer and the Aleph One developers.
+dnl Written by Christian Bauer, the Aleph One developers, and
+dnl the Aleph Bet developers.
 
-AC_INIT([Aleph One],m4_esyscmd([grep '^#define A1_DATE_VERSION' Source_Files/Misc/alephversion.h | sed -e 's/\(.*\"\)\(.*\)\(\"\)/\2/g' | tr -d '\n']),[https://github.com/Aleph-One-Marathon/alephone/issues],[AlephOne],[https://alephone.lhowon.org/])
+AC_INIT([Aleph Bet],m4_esyscmd([grep '^#define A1_DATE_VERSION' Source_Files/Misc/alephversion.h | sed -e 's/\(.*\"\)\(.*\)\(\"\)/\2/g' | tr -d '\n']),[https://github.com/Aleph-Bet-Marathon/alephbet/issues],[AlephBet],[https://aleph-bet-marathon.github.io/])
 AC_CONFIG_SRCDIR([Source_Files/shell.cpp])
 AC_CONFIG_MACRO_DIR([m4])
 AC_PREREQ([2.69])
@@ -74,19 +75,19 @@ AC_CHECK_HEADERS([unistd.h pwd.h])
 dnl Check for boost functions and libraries.
 AX_BOOST_BASE([1.65.0],
               ,
-              [AC_MSG_ERROR([You need Boost 1.65.0 or higher to build Aleph One.])])
+              [AC_MSG_ERROR([You need Boost 1.65.0 or higher to build Aleph Bet.])])
 AX_BOOST_SYSTEM
 AS_IF([ test "x$BOOST_SYSTEM_LIB" != "x" ],
       [ LIBS="$BOOST_SYSTEM_LIB $LIBS" ],
-      [AC_MSG_ERROR([You need the Boost::System library to run Aleph One.])])
+      [AC_MSG_ERROR([You need the Boost::System library to run Aleph Bet.])])
 AX_BOOST_FILESYSTEM
 AS_IF([ test "x$BOOST_FILESYSTEM_LIB" != "x" ],
       [ LIBS="$BOOST_FILESYSTEM_LIB $LIBS" ],
-      [AC_MSG_ERROR([You need the Boost::Filesystem library to run Aleph One.])])
+      [AC_MSG_ERROR([You need the Boost::Filesystem library to run Aleph Bet.])])
       
 AC_DEFUN([AX_CHECK_BOOST_HEADER],
          [ AC_LANG_PUSH(C++)
-           AC_CHECK_HEADER([$1], , [AC_MSG_ERROR([You need $1 from the Boost library to build Aleph One.])])
+           AC_CHECK_HEADER([$1], , [AC_MSG_ERROR([You need $1 from the Boost library to build Aleph Bet.])])
            AC_LANG_POP(C++) ])
 
 dnl Some checks suppressed to speed configuration.
@@ -112,7 +113,7 @@ dnl AX_CHECK_BOOST_HEADER([boost/uuid/uuid_generators.hpp])
 dnl AX_CHECK_BOOST_HEADER([boost/uuid/uuid_io.hpp])
 
 dnl Check for library functions.
-AC_CHECK_FUNCS([snprintf vsnprintf], , AC_MSG_ERROR([You need snprintf and vsnprintf to run Aleph One.]))     
+AC_CHECK_FUNCS([snprintf vsnprintf], , AC_MSG_ERROR([You need snprintf and vsnprintf to run Aleph Bet.]))     
 AC_CHECK_FUNCS([sysconf sysctlbyname])
 AC_CHECK_FUNC([mkstemp],
               [AC_DEFINE([LUA_USE_MKSTEMP], [1], [mkstemp() available])])
@@ -135,10 +136,10 @@ AC_DEFUN([AX_REQUIRE_PKG],
                                LIBS="${[$2]_LIBS} $LIBS"
                                have_$1=true
                                AC_DEFINE([HAVE_$2], [1], [$1 support enabled]) ],
-                             [ AC_MSG_ERROR([You need $1 to run Aleph One.]) ]) ])
+                             [ AC_MSG_ERROR([You need $1 to run Aleph Bet.]) ]) ])
 
 dnl Check for required SDL dependencies.
-AM_PATH_SDL2(2.0.2, , AC_MSG_ERROR([You need SDL 2 to run Aleph One.]))
+AM_PATH_SDL2(2.0.2, , AC_MSG_ERROR([You need SDL 2 to run Aleph Bet.]))
 CPPFLAGS="$CPPFLAGS $SDL_CFLAGS -DSDL"
 LIBS="$LIBS $SDL_LIBS"
 
@@ -243,7 +244,6 @@ AX_CHECK_FEATURE_LIB([miniupnpc], [MINIUPNPC], [miniupnpc/miniupnpc.h], [miniupn
 dnl Generate Makefiles.
 AC_CONFIG_FILES([
 Makefile
-AlephOne.spec
 Source_Files/Makefile
 Source_Files/CSeries/Makefile
 Source_Files/FFmpeg/Makefile
