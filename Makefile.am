@@ -20,7 +20,7 @@ EXTRA_DIST = docs/MML.html docs/Lua.html docs/Lua_HUD.html		\
   PBProjects/config.h PBProjects/confpaths.h	\
   data/AlephSansMono-Bold.ttf data/AlephSansMonoLicense.txt		\
   data/ProFontAO.ttf data/ProFontAOLicense.txt		\
-  docs/alephbet.6 examples/lua/Cheats.lua THANKS README.md		\
+  docs/alephbet.6 examples/lua/Cheats.lua A1-THANKS README.md		\
   data/powered-by-alephbet.svg						\
   PBProjects/Info-AlephBet-Xcode4.plist\
   flatpak/alephbet.desktop flatpak/alephbet.png \
