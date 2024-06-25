@@ -1,78 +1,26 @@
 /*
-MARATHON.C
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Friday, December 3, 1993 10:00:32 AM
-
-Monday, September 5, 1994 2:42:28 PM (ajr)
-	fixed kill_limit.
-Saturday, September 17, 1994 6:04:59 PM   (alain)
-	fixed autotriggering of platforms
-Thursday, December 8, 1994 3:58:12 PM  (Jason)
-	only players trigger platforms.
-
-Feb 6, 2000 (Loren Petrich):
-	Added typecode initialization
-
-Feb 10, 2000 (Loren Petrich):
-	Added dynamic-limits initialization
-
-Feb 15, 2000 (Loren Petrich):
-	Added item-initialization and item-animation stuff
-
-Mar 12, 2000 (Loren Petrich):
-	Added OpenGL initializer
-
-May 11, 2000 (Loren Petrich):
-	Rewrote to get rid of dynamic-limit and animated-texture initializers;
-	also used new animated-texture update function.
-
-June 15, 2000 (Loren Petrich):
-	Added support for Chris Pruett's Pfhortran
-
-Aug 10, 2000 (Loren Petrich):
-	Added Chris Pruett's Pfhortran changes
-
-Feb 4, 2002 (Br'fin (Jeremy Parsons)):
-	Moved Macintosh call to OGL_Initialize to shell_macintosh.cpp
-
-Feb 20, 2002 (Woody Zenfell):
-    Changed action queues operations to ActionQueues operations on GetRealActionQueues()
-
-Mar 13, 2002 (Br'fin (Jeremy Parsons)):
-	Altered enter_game to stop and reset fades after script_init
-  
-Jan 12, 2003 (Woody Zenfell):
-	Added ability to reset intermediate action queues (GameQueue)
-	Fixed potential out-of-sync bug
-        
-Feb 8, 2003 (Woody Zenfell):
-        Reformulated main update loop and multiple ActionFlags queue handling.
-        PLAYER_IS_PFHORTRAN_CONTROLLED is now no longer used - if a player has
-        entries in the PfhortranActionQueues, they'll be used; if not, his
-        entries from the RealActionQueues will be.
-
- June 14, 2003 (Woody Zenfell):
-	Player movement prediction support:
-	+ Support for retaining a partial game-state (this could be moved out to another file)
-	+ Changes to update_world() to take advantage of partial game-state saving/restoring.
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 #include "cseries.h"
 #include "map.h"

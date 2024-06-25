@@ -1,65 +1,26 @@
 /*
-PLATFORMS.C
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Saturday, April 30, 1994 1:18:29 AM
-
-Friday, September 16, 1994 7:50:32 PM   (alain)
-	fixed update_polygon_endpoint_data_for_height_change() so that it actually
-	calculates highest_adjacent_floor and lowest_adjacent_ceiling correctly.
-Saturday, September 17, 1994 6:04:11 PM   (alain)
-	added _one_stop_platform which moves one level, then won't move until you get off and back on.
-Saturday, October 29, 1994 2:42:22 AM (Jason)
-	razed.
-Saturday, November 5, 1994 2:53:39 PM (Jason)
-	added _platform_cannot_be_externally_deactivated.
-Sunday, November 6, 1994 8:31:29 PM  (Jason)
-	added _platform_uses_native_polygon_heights.
-Tuesday, November 15, 1994 11:36:37 PM  (Jason)
-	fixed recursive activates/deactivates; added flooding.
-Wednesday, May 3, 1995 4:37:18 PM  (Jason)
-	updates endpoint transparency correctly.
-Friday, June 9, 1995 11:43:11 AM  (Jason')
-	keys.
-Tuesday, July 11, 1995 11:32:46 AM  (Jason)
-	media sounds.
-
-Feb. 4, 2000 (Loren Petrich):
-	Changed halt() to assert(false) for better debugging
-
-Feb 25, 2000 (Loren Petrich):
-	Suppressed consistency check for platform extrema in calculate_platform_extrema()
-	as possibly unnecessary
-
-May 17, 2000 (Loren Petrich):
-	Added XML support, including a damage parser
-
-Dec 19, 2000 (Loren Petrich):
-	Suppressed assertion that a platform polygon must have at least one moving surface;
-	this is for compatibility with some Pfhorte maps like "Descent". Also, added softer
-	failure mode for get_platform_definition().
-	Also suppressed an assertion that platform[polygon[platform]] = platform;
-	currently handling failure in that by skipping over the platform.
-	
-Jun 30, 2002 (tiennou):
-	Added support for Pfhortran Procedure: platform_activated
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 #include <string.h>
 #include "cseries.h"

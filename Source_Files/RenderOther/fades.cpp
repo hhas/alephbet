@@ -1,64 +1,26 @@
 /*
-FADES.C
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Friday, June 10, 1994 6:59:04 PM
-
-Saturday, June 11, 1994 12:49:19 AM
-	not doing signed math on the color deltas resulted in some very cool static-ish effects
-	resulting from integer overflow.
-Saturday, July 9, 1994 1:06:20 PM
-	fade_finished() was acting like fade_not_finished().
-Sunday, September 25, 1994 12:50:34 PM  (Jason')
-	cool new fades.
-Monday, April 3, 1995 11:22:58 AM  (Jason')
-	fade effects for underwater/lava/goo/sewage.
-Monday, July 10, 1995 8:23:03 PM  (Jason)
-	random transparencies
-Thursday, August 24, 1995 6:20:06 PM  (Jason)
-	removed macintosh dependencies
-Monday, October 30, 1995 8:02:12 PM  (Jason)
-	fade prioritites for juggernaut flash
-
-Jan 30, 2000 (Loren Petrich):
-	Removed some "static" declarations that conflict with "extern"
-
-May 17, 2000 (Loren Petrich):
-	Added separate under-JjaroGoo fade effects
-
-May 20, 2000 (Loren Petrich):
-	Added XML-parser support.
-	Note: "transparency" here should be called the opacity,
-	since if it is zero, then colors will be unmodified.
-	
-May 29, 2000 (Loren Petrich):
-	Extended the ranges of the opacities (values > 1 and < 0 now OK)
-
-May 30, 2000 (Loren Petrich):
-	Added stuff for transmitting fader info to OpenGL
-
-Jul 1, 2000 (Loren Petrich):
-	Added some idiot-proofing to the fader accessors
-
-Jan 31, 2001 (Loren Petrich):
-	Added delayed action for the fader effect, so as to get around certain MacOS oddities
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 #include "cseries.h"
 #include "fades.h"

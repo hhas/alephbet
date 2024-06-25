@@ -1,108 +1,37 @@
 /*
-SCOTTISH_TEXTURES.C
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Wednesday, April 20, 1994 9:35:36 AM
-
-this is not your father’s texture mapping library.
-(in fact it isn’t yours either, dillweed)
-
-Wednesday, April 20, 1994 3:39:21 PM
-	vertical repeats would be difficult because it would require testing repeats in the
-	innermost loop of the pixel mapper (a compare and branch we can do without).
-Saturday, April 23, 1994 10:42:41 AM
-	(on the plane to santa clara) finished the slower version of the trapezoid mapper (we
-	need to handle stretching with a degenerate switch statement like marathon used to) but
-	the whole sampling process is now mathematically correct except for the squared function
-	we use to calculate the x texture position and the shading table (but this is accurate to
-	within 1/64k and doesn't accumulate error so who cares).
-Sunday, April 24, 1994 10:12:47 AM
-	(waiting for the CGDC to start at 9:00 PST) added all polygon stuff.  it struck me this
-	morning that clipping against the view cone must be deterministic (that is, line segments
-	of polygons and line segments of walls must be clipped in the same manner) or our
-	edges won't meet up.  ordered dither darkening will look really cool but will be slow in c.
-Sunday, April 24, 1994 11:21:47 PM
-	still need transparent trapezoids, dither darkening, faster DDA for trapezoid mapping.
-Wednesday, April 27, 1994 9:49:55 AM
-	i'm just looking for one divine hammer (to bang it all day).  solid polygons are currently
-	unaffected by darkening.  i'm not entirely certain we'll even use them.
-Sunday, May 8, 1994 8:32:11 AM
-	LISP’s lexical contours kick C firmly and painfully in the ass. everything is fast now
-	except the landscape mapper which has just been routed and is in full retreat.
-Friday, May 13, 1994 10:05:08 AM
-	low-level unification of trapezoids and rectangles, transparent runs in shapes are run-length
-	encoded now.  maintaining run tables was slower than generating d, delta_d and delta_d_prime
-	and using them on the fly.
-Wednesday, May 18, 1994 2:16:26 PM
-	scope matters (at WWDC).
-Sunday, May 22, 1994 12:32:02 PM
-	drawing things in column order to cached (i.e., non-screen) memory is like crapping in the
-	data cache, right?  maybe drawing rectangles in column-order wasn't such a great idea after all.
-	it also occurs to me that i know nothing about how to order instructions for the ’040 pipelines.
-Thursday, June 16, 1994 9:56:14 PM
-	modified _render_textured_polygon_line to handle elevation.
-Thursday, July 7, 1994 1:23:09 PM
-	changed MAXIMUM_SCRATCH_TABLE_ENTRIES from 4k to 1200.  Modified render code to work as well,
-	now the problem is floor/ceiling matching with trapezoids, which should fall out with the 
-	rewrite...
-Tuesday, July 26, 1994 3:42:16 PM
-	OBSOLETE’ed nearly the entire file (fixed_pixels are no more).  rewriting texture_rectangle.
-	will do 16bit mapping, soon.  a while ago i rewrote everything in 68k.
-Friday, September 16, 1994 6:03:11 PM  (Jason')
-	texture_rectangle() now respects top and bottom clips
-Tuesday, September 20, 1994 9:58:30 PM  (Jason')
-	if we’re so close to a rectangle that n>LARGEST_N then we don’t draw anything
-Wednesday, October 26, 1994 3:18:59 PM (Jason)
-	for non-convex or otherwise weird lines (dx<=0, dy<=0) we don’t draw anything (somebody’ll
-	notice that for sure).
-Friday, November 4, 1994 7:35:48 PM  (Jason')
-	pretexture_horizontal_polygon_lines() now respects the (x,y) polygon origin and uses z as height.
-
-Jan 30, 2000 (Loren Petrich):
-	Added some typecasts
-
-Feb. 4, 2000 (Loren Petrich):
-	Changed halt() to assert(false) for better debugging
-
-Mar 24, 2000 (Loren Petrich):
-	Using a special "landscape yaw" for the landscape texturing, so that the landscape center
-	will stay put.
-
-May 23, 2000 (Loren Petrich):
-	Adding support for different size scales for landscapes
-
-Jul 6, 2000 (Loren Petrich):
-	Added some slop to MAXIMUM_SCRATCH_TABLE_ENTRIES, because displays are now bigger;
-	its size got upped by 2
-
-Aug 9, 2000 (Loren Petrich):
-	Rasterizer_SW object introduced (software subclass of rasterizer object)
-
-May 16, 2002 (Woody Zenfell):
-    MSVC doesn't like "void f();  void g() { return f(); }"... fixed.
-*/
+/*
+ *  this is not your father's texture mapping library.
+ *  (in fact it isn't yours either, dillweed)
+ */
 
 /*
 rectangle shrinking has vertical error and appears to randomly shear the bitmap
 pretexture_horizontal_polygon_lines() has integer error in large height cases
 
-_static_transfer doesn’t work for ceilings and floors (because they call the wall mapper)
+_static_transfer doesn't work for ceilings and floors (because they call the wall mapper)
 build_y_table and build_x_table could both be sped up in nearly-horizontal and nearly-vertical cases (respectively)
 _pretexture_vertical_polygon_lines() takes up to half the time _texture_vertical_polygon_lines() does
 not only that, but texture_horizontal_polygon() is actually faster than texture_vertical_polygon()

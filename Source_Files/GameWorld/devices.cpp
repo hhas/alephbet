@@ -1,60 +1,26 @@
 /*
-DEVICES.C
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Sunday, December 5, 1993 2:48:44 PM
-
-Tuesday, December 7, 1993 11:12:25 PM
-	changed to be Jason compatible, open/close doors, and nixed gratuitous enum.
-Tuesday, January 4, 1994 10:36:08 AM
-	opening doors can wake monsters.
-Sunday, September 18, 1994 6:23:04 PM  (alain)
-	much of control panel code has been rewritten. no longer use composite sides,
-	but a flag in the side data structure. some control panels work over time (refueling)
-	and there are on/off textures associated with each control panel. and sounds.
-Friday, June 9, 1995 11:43:37 AM  (Jason')
-	destroy-able switches.
-Wednesday, June 21, 1995 8:31:57 AM  (Jason)
-	tag switches.
-
-Jan 30, 2000 (Loren Petrich):
-	Changed "class" to "_class" to make data structures more C++-friendly
-	Removed some "static" declarations that conflict with "extern"
-
-Feb 3, 2000 (Loren Petrich):
-	Added Jjaro control panels; they appear to be a clone of the sewage ones
-
-Feb. 4, 2000 (Loren Petrich):
-	Changed halt() to assert(false) for better debugging
-
-May 26, 2000 (Loren Petrich):
-	Added XML shapes support; had recently added XML configuration in general
-
-June 3, 2000 (Loren Petrich):
-	Idiot-proofed the control-panels accessor; it now returns NULL if an index is out of range.
-
-Aug 10, 2000 (Loren Petrich):
-	Added Chris Pruett's Pfhortran changes
-        
-Feb 3, 2003 (Woody Zenfell):
-        Support for network saved-games
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 #include "cseries.h"
 

@@ -1,3 +1,6 @@
+#ifndef	SDL_NETX_H
+#define	SDL_NETX_H
+
 /*
  *  SDL_netx.h
  *
@@ -22,9 +25,6 @@
  *
  *  Created by Woody Zenfell, III on Mon Sep 24 2001.
  */
-
-#ifndef	SDL_NETX_H
-#define	SDL_NETX_H
 
 // Officially, to be more SDL-like, we ought to arrange our structures with particular alignment,
 // specify C-style linkage, etc.  I don't think that's important at this point, but should anyone be

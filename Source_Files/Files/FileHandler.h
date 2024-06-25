@@ -1,51 +1,29 @@
 #ifndef _FILE_HANDLER_
 #define _FILE_HANDLER_
+
 /*
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-	
-	File-handler classes
-	by Loren Petrich,
-	August 11, 2000
-
-	These are designed to provide some abstract interfaces to file and directory objects.
-	
-	Most of these routines return whether they had succeeded;
-	more detailed error codes are API-specific.
-	Attempted to support stdio I/O directly, but on my Macintosh, at least,
-	the performance was much poorer. This is possibly due to "fseek" having to
-	actually read the file or something.
-	
-	Merged all the Macintosh-specific code into these base classes, so that
-	it will be selected with a preprocessor statement when more than one file-I/O
-	API is supported.
-
-Dec 7, 2000 (Loren Petrich):
-	Added a MacOS-specific file-creation function that allows direct specification
-	of type and creator codes
-
-Jan 25, 2002 (Br'fin (Jeremy Parsons)):
-	Added TARGET_API_MAC_CARBON for Carbon.h
-	Rearranged initializers in DirectorySpecifier constructor to appease compiler warnings
-
-March 18, 2002 (Br'fin (Jeremy Parsons)):
-	Added FileSpecifier::SetParentToResources for Carbon
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 // For the filetypes
 #include "tags.h"

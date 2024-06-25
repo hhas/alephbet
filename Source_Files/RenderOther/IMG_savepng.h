@@ -1,3 +1,6 @@
+#ifndef __IMG_SAVETOPNG_H__
+#define __IMG_SAVETOPNG_H__
+
 /*
   Based on zlib license - see http://www.gzip.org/zlib/zlib_license.html
 
@@ -21,9 +24,6 @@
 
   Keyword support added 12-26-2009 by Gregory Smith
  */
-#ifndef __IMG_SAVETOPNG_H__
-#define __IMG_SAVETOPNG_H__
-
 #include <SDL2/SDL.h>
 
 #ifdef __cplusplus

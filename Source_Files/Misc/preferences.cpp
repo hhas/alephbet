@@ -1,55 +1,25 @@
 /*
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Feb 5, 2002 (Br'fin (Jeremy Parsons)):
-	Default to keyboard and mouse control under Carbon
-	for there are no InputSprockets
-
-Apr 30, 2002 (Loren Petrich):
-	Converting to a MML-based preferences system
-
-May 16, 2002 (Woody Zenfell):
-    Added UI/preferences elements for configurable mouse sensitivity
-    Support for "don't auto-recenter" behavior modifier
-    Routines to let other code disable/reenable/query behavior modification
-   
-Jul 21, 2002 (Loren Petrich):
-	AS had added some code to fix the OSX preferences behavior;
-	I modified it so that it would not be used in the Classic version
-
-Apr 10-22, 2003 (Woody Zenfell):
-        Join hinting and autogathering have Preferences entries now
-        Being less obnoxious with unrecognized Prefs stuff
-        Macintosh Enviroprefs popup style can be set in Preferences file
-
-May 22, 2003 (Woody Zenfell):
-	Support for preferences for multiple network game protocols; configurable local game port.
-
- May 27, 2003 (Gregory Smith):
-	Preferences for speex netmic
-
- August 27, 2003 (Woody Zenfell):
-	Preferences for netscript.  Some reworking of index-based Mac FSSpec reading along the way.
- */
-
-/*
- *  preferences.cpp - Preferences handling
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
  */
 
 #include "cseries.h"

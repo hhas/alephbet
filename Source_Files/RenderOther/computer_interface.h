@@ -2,79 +2,28 @@
 #define __COMPUTER_INTERFACE_H
 
 /*
-	computer_interface.h
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-	Tuesday, August 23, 1994 11:25:40 PM (ajr)
-	Thursday, May 25, 1995 5:18:03 PM- rewriting.
-
-	New paradigm:
-	Groups each start with one of the following groups:
-	 #UNFINISHED, #SUCCESS, #FAILURE
-
-	First is shown the
-	#LOGON XXXXX
-	
-	Then there are any number of groups with:
-	#INFORMATION, #CHECKPOINT, #SOUND, #MOVIE, #TRACK
-	
-	And a final:
-	#INTERLEVEL TELEPORT, #INTRALEVEL TELEPORT		
-	
-	Each group ends with:
-	#END
-
-	Groupings:
-	#logon XXXX- login message (XXXX is shape for login screen)
-	#unfinished- unfinished message
-	#success- success message
-	#failure- failure message
-	#information- information
-	#briefing XX- briefing, then load XX
-	#checkpoint XX- Checkpoint xx (associated with goal) 
-	#sound XXXX- play sound XXXX
-	#movie XXXX- play movie XXXX (from Movie file)
-	#track XXXX- play soundtrack XXXX (from Music file)
-	#interlevel teleport XXX- go to level XXX
-	#intralevel teleport XXX- go to polygon XXX
-	#pict XXXX- diplay the pict resource XXXX
-
-	Special embedded keys:   
-	$B- Bold on
-	$b- bold off
-	$I- Italic on
-	$i- italic off
-	$U- underline on
-	$u- underline off
-	$- anything else is passed through unchanged
-
-	Preprocessed format:
-	static:
-		int32 total_length;
-		short grouping_count;
-		short font_changes_count;
-		short total_text_length;
-	dynamic:
-		struct terminal_groupings groups[grouping_count];
-		struct text_face_data[font_changes_count];
-		char text;
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 #include "cstypes.h"
 

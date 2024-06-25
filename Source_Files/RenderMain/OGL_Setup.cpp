@@ -1,73 +1,32 @@
 /*
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-	
-	OpenGL Renderer,
-	by Loren Petrich,
-	March 12, 2000
-
-	This contains implementations of functions intended for finding out OpenGL's presence
-	in the host system, for setting parameters for OpenGL rendering,
-	and for deciding whether to use OpenGL for rendering.
-	
-	June 11, 2000
-	
-	Had added XML parsing before that; most recently, added "opac_shift".
-	
-	Made semitransparency optional if the void is on one side of the texture
-
-Oct 13, 2000 (Loren Petrich)
-	Converted the OpenGL-addition accounting into Standard Template Library vectors
-
-Nov 12, 2000 (Loren Petrich):
-	Implemented texture substitution, also moved pixel-opacity editing into here;
-	the code is carefully constructed to assume RGBA byte order whether integers are
-	big- or little-endian.
-
-Nov 18, 2000 (Loren Petrich):
-	Added support for glow mapping; constrained it to only be present
-	when a normal texture is present, and to have the same size
-
-Nov 26, 2000 (Loren Petrich):
-	Added system for reloading textures only when their filenames change.
-
-Dec 17, 2000 (Loren Petrich):
-	Eliminated fog parameters from the preferences;
-	there is still a "fog present" switch, which is used to indicate
-	whether fog will not be suppressed.
-
-Apr 27, 2001 (Loren Petrich):
-	Modified the OpenGL fog support so as to enable below-liquid fogs
-
-Jul 8, 2001 (Loren Petrich):
-	Made it possible to read in silhouette bitmaps; one can now use the silhouette index
-	as a MML color-table index
-
-Aug 21, 2001 (Loren Petrich):
-	Adding support for 3D-model inhabitant objects
-
-Jan 25, 2002 (Br'fin (Jeremy Parsons)):
-	Added TARGET_API_MAC_CARBON for OpenGL.h, AGL.h
-	Removed QuickDraw3D support from Carbon
-
-Feb 5, 2002 (Br'fin (Jeremy Parsons)):
-	Refined OGL default preferences for Carbon
-*/
+/*
+ *  This contains implementations of functions intended for finding out
+ *  OpenGL's presence in the host system, for setting parameters for OpenGL
+ *  rendering, and for deciding whether to use OpenGL for rendering.
+ */
 
 #include <vector>
 #include <string.h>

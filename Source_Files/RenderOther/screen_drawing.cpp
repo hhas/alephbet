@@ -1,44 +1,26 @@
 /*
-	SCREEN_DRAWING.C
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-	Monday, August 15, 1994 1:55:21 PM
- 
-    Wednesday, August 24, 1994 12:50:20 AM (ajr)
-	  added _right_justified for _draw_screen_text
-	Thursday, June 22, 1995 8:45:41 AM- note that we no longer hold your hand and set the port
-		for you.  We have a grafptr and a restore ptr call.\
-
-Apr 30, 2000 (Loren Petrich):
-	Added XML-parser support (actually, some days earlier, but had modified it
-	so as to have "interface" be defined in "game_window".
-
-Jul 2, 2000 (Loren Petrich):
-	The HUD is now always buffered; it is lazily allocated
-
-Oct 19, 2000 (Loren Petrich):
-	Added graceful degradation if get_shape_pixmap() returns NULL; CB had already done that
-	with the SDL version.
-	
-Dec 17, 2000 (Loren Petrich):
-	Added font-abstraction support (FontHandler.*)
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 #include "cseries.h"
 

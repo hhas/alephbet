@@ -1,52 +1,32 @@
 /*
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-	
-	Rendering Object-Placement Class
-	by Loren Petrich,
-	August 6, 2000
-	
-	Contains the placement of inhabitant objects into the sorted polygons; from render.c
-	
-	Made [view_data *view] a member and removed it as an argument
-
-Sep 2, 2000 (Loren Petrich):
-	Added some idiot-proofing, since the shapes accessor now returns NULL for nonexistent bitmaps
-	
-Oct 13, 2000 (Loren Petrich):
-	Replaced GrowableLists and ResizableLists with STL vectors
-
-Oct 19, 2000 (Loren Petrich):
-	Added graceful escape in case of nonexistent shape in build_render_object().
-
-Jan 17, 2001 (Loren Petrich):
-	Added vertical flipping
-
-Sept 11, 2001 (Loren Petrich):
-	Added 3D-model support, including calculation of a projected bounding box and the miner's-light distance and direction
-
-Feb 3, 2003 (Loren Petrich):
-	Added chase-cam semitransparency
-
-May 3, 2003 (Br'fin (Jeremy Parsons))
-	Added LowLevelShape workaround for passing LowLevelShape info of sprites
-	instead of abusing/overflowing shape_descriptors
-*/
+/*
+ *  Rendering Object-Placement Class
+ *  Contains the placement of inhabitant objects into the sorted polygons;
+ *  from render.c
+ */
 
 #include "cseries.h"
 

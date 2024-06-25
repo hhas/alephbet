@@ -1,132 +1,31 @@
 /*
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-	
-	OpenGL Renderer,
-	by Loren Petrich,
-	March 12, 2000
-
-	This contains functions intended to interface OpenGL 3D-rendering code
-	with the rest of the Marathon source code.
-	
-	Much of the setup code is cribbed from the Apple GLUT code, or at least inspired by it.
-	
-	Late April, 2000:
-	
-	Moved texture stuff out to OGL_Textures.c/h
-	
-	Added wall-texture glow mapping.
-	
-	May 14, 2000:
-	
-	Added George Marsaglia's random-number generator
-	
-	May 24, 2000:
-	
-	Added view-control landscape-options support;
-	also fixed a bug in the landscape scaling -- it is now close to the software-rendering
-	scaling.
-	
-	May 27, 2000:
-	
-	Added vertical-wall-texture idiot-proofing for texture vectors -- don't render
-	if horizontal or vertical texture vectors have zero length.
-	
-	Added support for flat static effect
-	
-	Added partial transparency of textures (IsBlended)
-	
-June 11, 2000:
-	
-	Added support of IsSeeThrough flag for polygons
-	a texture overlaid on other visible textures is see-through,
-	while one overlaid on the void is not
-	
-	Removed TRANSPARENT_BIT test as irrelevant
-	
-	Made semitransparency optional if the void is on one side of the texture
-
-July 7, 2000:
-	
-	Calculated center correctly in OGL_RenderCrosshairs()
-	
-Jul 8, 2000:
-
-	Modified OGL_SetView() so that one can control whether to allocate a back buffer to draw in
-	Modified OGL_Copy2D() so that one can control which buffer (front or back)
-
-Jul 9, 2000:
-
-	Turned BeginFrame() and EndFrame() into OGL_StartMain() and OGL_EndMain()
-	
-	Also, grabbed some display list ID's for the fonts with glGenLists();
-	this makes it unnecessary to hardcode their ID's. Also, grabbed a display list ID
-	for a text string; this makes it easier to repeat its rendering.
-	Calling OGL_ResetMapFonts() near there -- it resets the font-info cache for the overhead map
-	
-Jul 17, 2000:
-	Reorganized the fog setting a bit; now it's set at the beginning of ecah frame.
-	That ought to make it easier for stuff like Pfhortran to change it.
-
-Aug 10, 2000:
-	Changed the fog handling so that the fog preferences get consulted only once,
-	when an OpenGL context is created. This will make it easier to change
-	the fog color and depth on the fly. Also, the presence flag, the depth, and the color
-	were made nonstatic so that Pfhortran can see them.
-
-Sep 21, 2000:
-	Added partial transparency to static mode
-
-Oct 13, 2000 (Loren Petrich)
-	Converted the animated-texture accounting into Standard Template Library vectors
-
-Nov 18, 2000 (Loren Petrich):
-	Added support for landscape vertical repeats
-
-Dec 17, 2000 (Loren Petrich):
-	Moved fog parameters into OGL_Setup.cpp;
-	changed "fog is on" in preferences to "fog is allowed"
-	Added "current fog color" so that landscapes will be correctly colored
-	in infravision mode.
-
-Jan 31, 2002 (Br'fin (Jeremy Parsons)):
-	Added TARGET_API_MAC_CARBON for AGL.h
-	Added accessors for datafields now opaque in Carbon
-	Added a check to make sure AGL_SWAP_RECT is enabled before we try to disable it, trying to squash a bug that occasionally pops up
-
-Feb 3, 2002 (Br'fin (Jeremy Parsons) and Loren Petrich):
-	Centered OpenGL displays under Carbon OS X
-	Fixed AGL_SWAP_RECT spamming of OS X console
-	
-Dec 13, 2002 (Loren Petrich):
-	Added initial preloading of textures to avoid lazy loading of wall textures
-	on start/restore of level
-        
-Feb 1, 2003 (Woody Zenfell):
-        Trying to reduce texture-preloading time by eliminating redundant processing
-
-April 22, 2003 (Woody Zenfell):
-        Macs can try using aglSetFullScreen() rather than aglSetDrawable() (experimental_rendering)
-
-May 3, 2003 (Br'fin (Jeremy Parsons))
-	Added LowLevelShape workaround for passing LowLevelShape info of sprites
-	instead of abusing/overflowing shape_descriptors
-*/
+/*
+ *  This contains functions intended to interface OpenGL 3D-rendering code
+ *  with the rest of the Marathon source code.
+ */
 
 #include <vector>
 #include <string.h>

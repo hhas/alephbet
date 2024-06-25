@@ -1,95 +1,26 @@
 /*
-MONSTERS.C
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Tuesday, November 10, 1992 1:10:20 PM
-
-Friday, May 27, 1994 11:21:07 AM
-	split into MONSTERS.C, PROJECTILES.C and EFFECTS.C; unified active_monster and monster array.
-Friday, September 30, 1994 5:48:25 PM (Jason)
-	started adding comments again.  damage_monsters_in_radius() is less forgiving in z now.
-Monday, December 5, 1994 9:07:37 PM  (Jason)
-	rebellion environment function (all _clients hate all _pfhor).
-Wednesday, February 1, 1995 2:29:01 AM  (Jason')
-	kill_sounds; invisible monsters don’t move
-Wednesday, June 14, 1995 10:14:24 AM  (Jason)
-	rewrite for marathon2 (halfway done).
-Monday, July 10, 1995 11:49:06 AM  (Jason)
-	rewrite for marathon2 done.  my bobs won’t listen to your fucking whining.
-
-Jan 30, 2000 (Loren Petrich):
-	Added some typecasts
-	Removed some "static" declarations that conflict with "extern"
-
-Feb 3, 2000 (Loren Petrich):
-	Treating Jjaro goo like sewage
-
-Feb. 4, 2000 (Loren Petrich):
-	Changed halt() to assert(false) for better debugging
-
-Feb 6, 2000 (Loren Petrich):
-	Added access to size of monster-definition structure
-
-Feb 12, 2000 (Loren Petrich):
-	Suppressed an exposed "dprintf" as an unnecessary interrupt.
-
-Feb 16, 2000 (Loren Petrich):
-	Added a check on the polygon index after a line-transparency check;
-	this is in case there is no polygon on the other side.
-
-Feb 17, 2000 (Loren Petrich):
-	Fixed stuff near GUESS_HYPOTENUSE() to be long-distance-friendly
-
-Feb 19, 2000 (Loren Petrich):
-	Added growable lists of indices of objects to be checked for collisions
-
-Feb 24, 2000 (Loren Petrich):
-	Suppressed some asserts about monster speeds
-
-Apr 27, 2000 (Loren Petrich):
-	Added some behavior in the case of a monster both floating and flying
-	to handle the map "Aqualung" correctly.
-
-May 29, 2000 (Loren Petirch):
-	Fixed side effect of fixing keyframe-never-zero bug:
-	if the keyframe is zero, then a sequence never triggers shrapnel damage.
-	Thus, Hunters die a soft death more harmlessly.
-
-Jun 11, 2000 (Loren Petrich):
-	Pegging health and oxygen to maximum values when damaged;
-	takes into account negative damage from healing projectiles.
-
-Jul 1, 2000 (Loren Petrich):
-	Inlined the accessors
-
-Aug 30, 2000 (Loren Petrich):
-	Added stuff for unpacking and packing
-	
-Oct 13, 2000 (Loren Petrich)
-	Converted the intersected-objects list into a Standard Template Library vector
-
-Oct 26, 2000 (Mark Levin)
-	Revealed a few functions needed by Pfhortran
-
-Jan 12, 2003 (Loren Petrich)
-	Added controllable damage kicks
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 #include <string.h>
 #include <limits.h>

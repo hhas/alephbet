@@ -1,60 +1,25 @@
 /*
-LUA_SCRIPT.CPP
-
-	Copyright (C) 2003 and beyond by Matthew Hielscher,
-	the "Aleph One" developers, and the "Aleph Bet" developers
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-	Controls the loading and execution of Lua scripts.
-*/
-
-/*
- Created 5-20-03 by Matthew Hielscher
- Controls the loading and execution of Lua scripts.
-
- Matthew Hielscher, 05-28-03
- Changed the error code to be much more graceful (no more quitting after an error)
- Also incorporated tiennou's functions
-
- tiennou, 06/23/03
- Added stuff on platforms (speed, heights, movement), terminals (text index), &polygon (heights).
-
- tiennou, 06/25/03
- Removed the last useless logError around. They prevented some functions to behave properly.
- Added L_Get_Player_Angle, returns player->facing & player->elevation.
- Got rid of all the cast-related warnings in there (Thanks Br'fin !).
-
- jkvw, 07/03/03
- Added recharge panel triggers, exposed A1's internal random number generators, and item creation.
-
- jkvw, 07/07/03
- Cleaned up some of the "odd" behaviors.  (e.g., new_monster/new_item would spawn their things at incorrect height.)
- Added triggers for player revival/death.
-
- tiennou, 07/20/03
- Added mnemonics for sounds, changed L_Start_Fade to L_Screen_Fade, added side_index parameter to L_Call_Start/End_Refuel and updated the docs with the info I had...
-
- jkvw, 07/21/03
- Lua access to network scoring and network compass, and get_player_name.
-
- Woody Zenfell, 08/05/03
- Refactored L_Call_* to share common code; reporting runtime Lua script errors via screen_printf
- 
- jkvw, 09/16/03
- L_Call_* no longer need guarding with #ifdef HAVE_LUA
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
  */
 
 #include "cseries.h"

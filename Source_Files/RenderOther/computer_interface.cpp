@@ -1,96 +1,26 @@
 /*
-	computer_interface.c
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-	Monday, May 8, 1995 7:18:55 PM- rdm created.
-
-Feb 4, 2000 (Loren Petrich):
-	Changed halt() to assert(false) for better debugging
-
-Feb 16, 2000 (Loren Petrich):
-	Set up for more graceful degradation when
-	there is no terminal data in a map;
-	also had get_indexed_terminal_data() return NULL
-	if terminal data could not be found.
-
-Feb 18, 2000 (Loren Petrich):
-	Suppressed all the dprintf warnings, such as one for a picture being
-	too large for a terminal.
-
-Feb 19, 2000 (Loren Petrich):
-	Had a frustrating time getting get_date_string() to work properly;
-	SecondsToDate() seems to be broken.
-
-Feb 21, 2000 (Loren Petrich):
-	Corrected a troublesome assert in find_checkpoint_location()
-	Moved drawing of borders to after drawing of other stuff,
-	to fix checkpoint-overdraw bug.
-
-Feb 26, 2000 (Loren Petrich):
-	Fixed level-0 teleportation bug; the hack is to move the destination
-	down by 1.
-	
-	Set font in PICT-error-message code to "systemFont".
-
-Mar 5, 2000 (Loren Petrich):
-	Improved handling of clipping in _render_computer_interface();
-	it is trimmed to the terminal window when rendering there, and restored
-	to the screen's full size when leaving.
-
-May 11, 2000 (Loren Petrich):
-	Suppressed vhalts here; these were for unrecognized terminal states.
-	Changed them into vwarns.
-
-May 20, 2000 (Loren Petrich):
-	Put in more graceful degradation for
-	get_indexed_grouping()
-	get_indexed_font_changes()
-	These will return NULL for an invalid index
-
-July 5, 2000 (Loren Petrich):
-	Using world_pixels instead of screen_window
-
-Aug 10, 2000 (Loren Petrich):
-	Added Chris Pruett's Pfhortran changes
-
-Aug 22, 2000 (Loren Petrich):
-	Added object-oriented resource handling
-
-Sep 24, 2000 (Loren Petrich):
-	Banished OverallBounds as unnecessary; world_pixels->portRect does fine here
-
-Jun 23, 2001 (Loren Petrich):
-	Suppressed some of the asserts in the code; tried to make degradation more graceful
-
-Jan 25, 2002 (Br'fin (Jeremy Parsons)):
-	Added accessors for datafields now opaque in Carbon
-*/
-
-// add logon/logoff keywords. (& make terminal display them)
-// cameras
-// static
-// delayed teleport
-
-// activate tags
-// picture with scrolling text.
-// checkpoint with scrolling text
-// don't use charwidth
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 #include <stdlib.h>
 #include <stdio.h>

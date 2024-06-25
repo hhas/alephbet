@@ -1,72 +1,26 @@
 /*
-PHYSICS.C
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Wednesday, May 11, 1994 9:32:16 AM
-
-Saturday, May 21, 1994 11:36:31 PM
-	missing effects due to map (i.e., gravity and collision detection).  last day in san
-	jose after WWDC.
-Sunday, May 22, 1994 11:14:55 AM
-	there are two viable methods of running a synchronized network game.  the first is doom's,
-	where each player shares with each other player only his control information for that tick
-	(this imposes a maximum frame rate, as the state-of-the-world will be advanced at the same
-	time on all machines).  the second is the continuous lag-tolerant model where each player
-	shares absolute information with each other player as often as possible and local machines
-	do their best at guessing what everyone else in the game is doing until they get better
-	information.  whichever choice is made will change the physics drastically.  we're going to
-	take the latter approach, and cache the KeyMap at interrupt time to be batch-processed
-	later at frame time.
-
-Feb. 4, 2000 (Loren Petrich):
-	Changed halt() to assert(false) for better debugging
-
-Feb 6, 2000 (Loren Petrich):
-	Added access to size of physics-definition structure
-
-Feb 20, 2000 (Loren Petrich):
-	Fixed chase-cam behavior: DROP_DEAD_HEIGHT is effectively zero for it.
-	Also, set up-and-down bob to zero when it is active.
-
-Aug 31, 2000 (Loren Petrich):
-	Added stuff for unpacking and packing
-
-May 16, 2002 (Woody Zenfell):
-    Letting user decide whether to auto-recenter when running
-
- June 14, 2003 (Woody Zenfell):
-	update_player_physics_variables() can now operate in a reduced-impact mode
-		that changes less of the game state.  Useful for partial-game-state
-		save-and-restore code (as used by prediction mechanism).
-*/
-
-/*
-running backwards shouldn’t mean doom in a fistfight
-
-//who decides on the physics model, anyway?  static_world-> or player->
-//falling through gridlines and crapping on elevators has to do with variables->flags being wrong after the player dies
-//absolute (or nearly-absolute) positioning information for yaw, pitch and velocity
-//the physics model is too soft (more noticable at high frame rates)
-//we can continually boot ourselves out of nearly-orthogonal walls by tiny amounts, resulting in a slide
-//it’s fairly obvious that players can still end up in walls
-//the recenter key should work faster
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 #ifdef DEBUG
 //#define DIVERGENCE_CHECK

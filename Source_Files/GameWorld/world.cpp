@@ -1,57 +1,26 @@
 /*
-WORLD.C
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Sunday, May 31, 1992 3:57:12 PM
-
-Friday, January 15, 1993 9:59:14 AM
-	added arctangent function.
-Thursday, January 21, 1993 9:46:24 PM
-	fixed arctangent function.  normalize_angle() could stand to be improved.
-Saturday, January 23, 1993 9:46:34 PM
-	fixed arctangent, hopefully for the last time.  normalize_angle() is a little faster.
-Monday, January 25, 1993 3:01:47 PM
-	arctangent works (tested at 0.5° increments against SANE’s tan), the only anomoly was
-	apparently arctan(0)==180°.
-Wednesday, January 27, 1993 3:49:04 PM
-	final fix to arctangent, we swear.  recall lim(arctan(x)) as x approaches π/2 or 3π/4 is ±∞,
-	depending on which side we come from.  because we didn't realize this, arctan failed in the
-	case where x was very close to but slightly below π/2.  i think we’ve seen the last monster
-	suddenly ‘panic’ and bolt directly into a wall.
-Sunday, July 25, 1993 11:51:42 PM
-	the arctan of 0/0 is now (arbitrairly) π/2 because we’re sick of assert(y) failing.
-Monday, June 20, 1994 4:15:06 PM
-	bug fix in translate_point3d().
-
-Feb 10, 2000 (Loren Petrich):
-	Fixed range check in translate_point3d()
-
-Feb 14, 2000 (Loren Petrich):
-	Doing some arithmetic as long values instead of short ones, so as to avoid annoying long-distance wraparound.
-
-Feb 17, 2000 (Loren Petrich):
-	Fixed arctangent() so that it gets the values into the right octants, and then does a binary search
-
-Jul 1, 2000 (Loren Petrich):
-	Inlined the angle normalization; doing it automatically for all the functions that work with angles
-*/
-
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 #include "cseries.h"
 #include "world.h"
 #include "FilmProfile.h"

@@ -1,3 +1,6 @@
+#ifndef MESSAGE_H
+#define MESSAGE_H
+
 /*
  *  Message.h
  *  Created by Woody Zenfell, III on Sun Aug 31 2003.
@@ -24,9 +27,6 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 */
-
-#ifndef MESSAGE_H
-#define MESSAGE_H
 
 #include <string.h>	// memcpy
 #include <SDL2/SDL.h>

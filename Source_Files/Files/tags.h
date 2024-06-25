@@ -1,66 +1,31 @@
 #ifndef __TAGS_H
 #define __TAGS_H
 
-#include "cstypes.h"
-
 /*
-	TAGS.H
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-	Sunday, July 3, 1994 5:33:15 PM
-
-	This is a list of all of the tags used by code that uses the wad file format. 
-	One tag, KEY_TAG, has special meaning, and KEY_TAG_SIZE must be set to the 
-	size of an index entry.  Each wad can only have one index entry.  You can get the
-	index entry from a wad, or from all of the wads in the file easily.
-	
-	Marathon uses the KEY_TAG as the name of the level.
-
-Feb 2, 2000 (Loren Petrich):
-	Changed application creator to 26.A "Aleph One"
-	Changed soundfile type to 'snd∞' to be Marathon-Infinity compatible
-
-Feb 3, 2000 (Loren Petrich):
-	Changed shapes-file type to 'shp∞' to be Marathon-Infinity compatible
-
-Feb 4, 2000 (Loren Petrich):
-	Changed most of the other 2's to ∞'s to be Marathon-Infinity compatible,
-	except for the map file type.
-
-Feb 6, 2000 (Loren Petrich):
-	Added loading of typecodes from the resource fork
-
-Aug 21, 2000 (Loren Petrich):
-	Added a preferences filetype
-
-Aug 22, 2000 (Loren Petrich):
-	Added an images filetype
-
-Aug 28, 2000 (Loren Petrich):
-	get_typecode() now defaults to '????' for unrecognized typecodes
-
-Mar 14, 2001 (Loren Petrich):
-	Added a music filetype
-
-Jul 4, 2002 (Loren Petrich):
-	Added a "set" function for the typecode
-*/
+#include "cstypes.h"
 
 #include <vector>
 

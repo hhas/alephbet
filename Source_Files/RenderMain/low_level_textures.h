@@ -1,34 +1,29 @@
+#ifndef _LOW_LEVEL_TEXTURES_
+#define _LOW_LEVEL_TEXTURES_
+
 /*
-LOW_LEVEL_TEXTURES.C
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Friday, August 19, 1994 2:05:54 PM
-
-Monday, February 27, 1995 11:40:47 PM  (Jason')
-	rob suggests that the PPC might not write-allocate cache lines so we might be faster if we
-	read from a location we’re about to write to.  he also suggested a rowbytes of 704 instead
-	of 640 off-screen for better cache performance.
-
-Jan 30, 2000 (Loren Petrich):
-	Added some typecasts
-	Removed some "static" declarations that conflict with "extern"
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 #include "cseries.h"
 #include "preferences.h"
@@ -643,3 +638,5 @@ void randomize_vertical_polygon_lines(
 	
 	texture_random_seed() = seed;
 }
+
+#endif

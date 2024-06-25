@@ -1,38 +1,33 @@
+#ifndef __SCREEN_SHARED_H
+#define __SCREEN_SHARED_H
+
 /*
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-	Created by Loren Petrich,
-	Dec. 23, 2000
-	Contains everything shared between screen.cpp and screen_sdl.cpp
-	
-Dec 29, 2000 (Loren Petrich):
-	Added stuff for doing screen messages
-
-Mar 19, 2001 (Loren Petrich):
-	Added some even bigger screen resolutions
-
-Jan 25, 2002 (Br'fin (Jeremy Parsons)):
-	Added accessors for datafields now opaque in Carbon
-
- Aug 6, 2003 (Woody Zenfell):
-	Minor tweaks to screen_printf() mechanism (safer; resets when screen_reset called)
-*/
+/*
+ *  Contains everything shared between screen.cpp and screen_sdl.cpp
+ */
 
 #include "computer_interface.h"
 #include "fades.h"
@@ -983,3 +978,5 @@ void screen_printf(const char *format, ...)
 	vsnprintf(Message.Text,sizeof(Message.Text),format,list);
 	va_end(list);
 }
+
+#endif

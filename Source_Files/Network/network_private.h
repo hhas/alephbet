@@ -1,42 +1,35 @@
-/*
- *  network_private.h
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
- * This file holds stuff that various parts of the network subsystem want to see, but that portions
- * of Aleph One outside of the networking code should not care about.
- *
- * Oct 11, 2001 (Woody Zenfell): split code away from network.cpp to create this file.
- *	Made any simple modifications needed to make things compile/work.
- *
- * Oct-Nov 2001 (Woody Zenfell): added code in support of text messages in stream packets.
- *	Added many comments.
-
-Feb 27, 2002 (Br'fin (Jeremy Parsons)):
-	Enabled SDL networking for Carbon without fully using SDL
-
- May 24, 2003 (Woody Zenfell):
-	Split ring-protocol-specific stuff out into RingGameProtocol.cpp;
-	"Unknown packet type response" streaming packet type; NetGetDistributionInfoForType()
- */
-
 #ifndef	NETWORK_PRIVATE_H
 #define	NETWORK_PRIVATE_H
+
+/*
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
+
+/*
+ * This file holds stuff that various parts of the network subsystem want to
+ * see, but that portions of Aleph One outside of the networking code should
+ * not care about.
+ */
 
 #include	"cstypes.h"
 

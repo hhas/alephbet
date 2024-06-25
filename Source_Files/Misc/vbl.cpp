@@ -1,80 +1,26 @@
 /*
-VBL.C
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Friday, August 21, 1992 7:06:54 PM
-
-Tuesday, November 17, 1992 3:53:29 PM
-	the new task of the vbl controller is only to move the player.  this is necessary for
-	good control of the game.  everything else (doors, monsters, projectiles, etc) will
-	be moved immediately before the next frame is drawn, based on delta-time values.
-	collisions (including the player with walls) will also be handled at this time.
-Thursday, November 19, 1992 1:27:23 AM
-	the enumeration 'turning_head' had to be changed to '_turn_not_rotate' to make this
-	file compile.  go figure.
-Wednesday, December 2, 1992 2:31:05 PM
-	the world doesn’t change while the mouse button is pressed.
-Friday, January 15, 1993 11:19:11 AM
-	the world doesn’t change after 14 ticks have passed without a screen refresh.
-Friday, January 22, 1993 3:06:32 PM
-	world_ticks was never being initialized to zero.  hmmm.
-Saturday, March 6, 1993 12:23:48 PM
-	at exit, we remove our vbl task.
-Sunday, May 16, 1993 4:07:47 PM
-	finally recoding everything
-Monday, August 16, 1993 10:22:17 AM
-	#ifdef CHARLES added.
-Saturday, August 21, 1993 12:35:29 PM
-	from pathways VBL_CONTROLLER.C.
-Sunday, May 22, 1994 8:51:15 PM
-	all the world physics has been moved into PHYSICS.C; all we do now is maintain and
-	distribute a circular queue of keyboard flags (we're the keyboard_controller, not the
-	movement_controller).
-Thursday, June 2, 1994 12:55:52 PM
-	gee, now we don’t even maintain the queue we just send our actions to PLAYER.C.
-Tuesday, July 5, 1994 9:27:49 PM
-	nuked most of the shit in here. changed the vbl task to a time
-	manager task. the only functions from the old vbl.c that remain are precalculate_key_information()
-	and parse_keymap().
-Thursday, July 7, 1994 11:59:32 AM
-	Added recording/replaying
-Wednesday, August 10, 1994 2:44:57 PM
-	added caching system for FSRead.
-Friday, January 13, 1995 11:38:51 AM  (Jason')
-	fixed the 'a' key getting blacklisted.
-
-Jan 30, 2000 (Loren Petrich)
-	Did some typecasts
-
-Jul 7, 2000 (Loren Petrich)
-	Added Ben Thompson's ISp-support changes
-
-Aug 12, 2000 (Loren Petrich):
-	Using object-oriented file handler
-
-Aug 26, 2000 (Loren Petrich):
-	Created alternative to SetLength(): delete a file, then re-create it.
-	This should be more stdio-friendly.
-
-Feb 20, 2002 (Woody Zenfell):
-    Uses GetRealActionQueues()->enqueueActionFlags() rather than queue_action_flags().
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 #include "cseries.h"
 #include <string.h>

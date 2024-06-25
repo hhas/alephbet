@@ -2,39 +2,28 @@
 #define __COLLECTION_DEFINITION_H
 
 /*
-COLLECTION_DEFINITION.H
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Friday, June 17, 1994 11:48:27 AM
-
-Friday, June 17, 1994 11:27:13 PM
-	added .minimum_light_intensity field to low-level shape.
-Tuesday, June 21, 1994 2:59:16 PM
-	added collection version number, added unused bytes to all structures.
-Wednesday, June 22, 1994 3:53:22 PM
-	scaling modifications.
-Wednesday, June 22, 1994 10:07:38 PM
-	added _scenery_collection type, .size field to collection_definition structure, changed
-	‘shape_indexes’ to ‘low_level_shape_indexes’ in high_level_shape_definition structure
-Saturday, July 9, 1994 3:36:05 PM
-	added NUMBER_OF_PRIVATE_COLORS constant.
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 #include "cstypes.h"
 #include <vector>

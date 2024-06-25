@@ -1,48 +1,26 @@
 /*
-MAP_CONSTRUCTORS.C
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Friday, June 3, 1994 1:06:31 PM
-
-Thursday, March 23, 1995 8:53:35 PM  (Jason')
-	added guess_side_lightsource_indexes().
-
-Jan 30, 2000 (Loren Petrich):
-	Added some typecasts
-
-Feb. 4, 2000 (Loren Petrich):
-	Changed halt() to assert(false) for better debugging
-
-Feb 15, 2000 (Loren Petrich):
-	Suppressed some assertions designed to check for map consistency;
-	this is to get around some Pfhorte bugs.
-
-April 16, 2000 (Loren Petrich):
-	Made the incorrect-count vwarns optional
-
-Aug 29, 2000 (Loren Petrich):
-	Created packing and unpacking functions for all the
-		externally-accessible data types defined here
-
-Dec 14, 2000 (Loren Petrich):
-	Added growable lists for lists of intersecting endpoints, lines, and polygons
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 #if defined(NEW_AND_BROKEN) || defined(WITH_ORIGINAL_DATA_STRUCTURES)
 const bool DoIncorrectCountVWarn = true;

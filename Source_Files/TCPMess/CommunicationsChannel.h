@@ -1,3 +1,6 @@
+#ifndef COMMUNICATIONSCHANNEL_H
+#define COMMUNICATIONSCHANNEL_H
+
 /*
  *  CommunicationsChannel.h
  *  Created by Woody Zenfell, III on Mon Sep 01 2003.
@@ -24,9 +27,6 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 */
-
-#ifndef COMMUNICATIONSCHANNEL_H
-#define COMMUNICATIONSCHANNEL_H
 
 // Failures: on almost any nontrivial failure, the channel simply becomes disconnected.
 // In most cases future communication would be meaningless anyway.

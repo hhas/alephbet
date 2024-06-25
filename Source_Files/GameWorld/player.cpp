@@ -1,135 +1,26 @@
 /*
-PLAYER.C
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Saturday, December 11, 1993 10:25:55 AM
-
-Friday, September 30, 1994 5:48:25 PM (Jason)
-	moved nearly all sounds out of the damage_definition structure and into shapes.
-Wednesday, October 26, 1994 3:18:59 PM (Jason)
-	invincible players are now damaged by fusion projectiles.
-Wednesday, November 30, 1994 6:56:20 PM  (Jason)
-	oxygen is used up faster by running and by firing.
-Thursday, January 12, 1995 11:18:18 AM  (Jason')
-	dead players don’t continue to use up oxygen.
-Thursday, July 6, 1995 4:53:52 PM
-	supports multi-player cooperative games. (Ryan)
-
-Feb 4, 2000 (Loren Petrich):
-	Added SMG wielding stuff
-
-	Changed halt() to assert(false) for better debugging
-
-Feb 18, 2000 (Loren Petrich):
-	Added support for a chase cam.
-	Note that mark_player_collections() always loads the player sprites
-	in expectation of a chase cam; this could be made to conditional on
-	whether a chase cam will ever be active.
-
-Feb 21, 2000 (Loren Petrich):
-	Changed NO_TELEPORTATION_DESTINATION to SHRT_MAX, an idiot-proof value,
-	since there are unlikely to be that many polygons in a map.
-	
-	Added upward and rightward shifts of the chase-cam position
-
-Feb 25, 2000 (Loren Petrich):
-	Moved chase-cam data into preferences data; using accessor in "interface.h"
-	Made it possible to swim under a liquid if one has the ball
-
-Feb 26, 2000 (Loren Petrich):
-	Fixed level-0 teleportation bug; the hack is to move the destination
-	down by 1.
-	
-	Added chase-cam reset feature, for the purpose of doing chase-cam inertia.
-	The reset is necessary to take into account teleporting or entering a level.
-
-Mar 2, 2000 (Loren Petrich):
-	Moved the chase-cam stuff into ChaseCam.c/h
-	
-Mar 22, 2000 (Loren Petrich):
-	Added a function to revive_player() to reset the field of view properly
-	when reviving
-
-May 14, 2000 (Loren Petrich):
-	Added XML-configuration support for various player features
-
-May 22, 2000 (Loren Petrich):
-	Added XML configurability for the powerup durations
-
-May 27, 2000 (Loren Petrich):
-	Added oxygen depletion and replenishment rates
-
-Jun 11, 2000 (Loren Petrich):
-	Pegging health and oxygen to maximum values when damaged;
-	takes into account negative damage from healing projectiles.
-	Also turned "agressor" into "aggressor".
-
-Jun 15, 2000 (Loren Petrich):
-	Added support for Chris Pruett's Pfhortran
-
-Jun 28, 2000 (Loren Petrich):
-	Generalized the invincibility-powerup vulnerability and added XML support for that
-
-Jul 1, 2000 (Loren Petrich):
-	Added Benad's changes
-
-Jul 10, 2000 (Loren Petrich):
-	Changed calculate_player_team() slightly; no more first vassert()
-
-Aug 31, 2000 (Loren Petrich):
-	Added stuff for unpacking and packing
-
-Apr 27, 2001 (Loren Petrich):
-	Made player guided missiles optional
-        
-Oct 21, 2001 (Woody Zenfell):
-        Made player_shape_definitions available to the rest of the system -
-        in particular, so that SDL network dialog widgets can use it to render
-        player icons.
-
-Feb 20, 2002 (Woody Zenfell):
-    Ripped action_queue support out into new ActionQueues class (see ActionQueues.h)
-    Providing pointer gRealActionQueues to help others find the set of queues they are
-    accustomed to using.
-
-May 20, 2002 (Woody Zenfell):
-    get_ticks_since_local_player_in_terminal() mechanism
-
-Jan 12, 2003 (Woody Zenfell):
-	Single entry point (reset_action_queues()) to reset all ActionQueues that need to be reset
-
-May 22, 2003 (Woody Zenfell):
-	Fixing damaging polygon types; giving player netgame penalty feedback; announcing player
-	net disconnects.
-
- May 27, 2003 (Woody Zenfell):
-	I hear dead people.  (netmic, star protocol or newer only)
-
- June 14, 2003 (Woody Zenfell):
-	update_players() now has a predictive mode of execution which takes many fewer actions
-	(i.e. tries to alter only state like the player's location and facing etc.)
-
- May 21, 2004 (Alexei Svitkine):
-	Made all the MML-settable stuff in this file have a ResetValues method that resets to
-	old values (which we now save). Had to move some free-standing variables into structs
-	for this.
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 #define DONT_REPEAT_DEFINITIONS
 

@@ -1,67 +1,35 @@
 #ifndef _OGL_SETUP_
 #define _OGL_SETUP_
+
 /*
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-	
-	OpenGL Interface File,
-	by Loren Petrich,
-	March 12, 2000
-
-	This contains functions intended for finding out OpenGL's presence
-	in the host system, for setting parameters for OpenGL rendering,
-	and for deciding whether to use OpenGL for rendering.
-	
-	May 27, 2000 (Loren Petrich)
-	
-	Added support for flat static effect
-
-	Added XML support
-	
-	May 31, 2000 (Loren Petrich)
-	
-	Added support for texture resetting. This clears all the textures in memory
-	and forces them to be reloaded. This may be good in cases of textures dropping out.
-	
-	June 11, 2000 (Loren Petrich)
-	
-	Added support for see-through liquids as an OpenGL parameter.
-	Also added an opacity-value shift for making dark areas more visible
-
-Sep 9, 2000:
-
-	Added flag for AppleGL texturing fix
-
-Dec 3. 2000 (Loren Petrich):
-	Changed 16-bit internal representation of textures from 5551 to 4444
-
-Dec 17, 2000 (Loren Petrich):
-	Eliminated fog parameters from the preferences;
-	there is still a "fog present" switch, which is used to indicate
-	whether fog will not be suppressed.
-
-Apr 27, 2001 (Loren Petrich):
-	Modified the OpenGL fog support so as to enable below-liquid fogs
-
-Aug 21, 2001 (Loren Petrich):
-	Adding support for 3D-model inhabitant objects
-*/
-
+/*
+ *  This contains functions intended for finding out OpenGL's presence in the
+ *  host system, for setting parameters for OpenGL rendering, and for deciding
+ *  whether to use OpenGL for rendering.
+ */
 
 #include "OGL_Subst_Texture_Def.h"
 #include "OGL_Model_Def.h"

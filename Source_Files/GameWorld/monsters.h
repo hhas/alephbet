@@ -2,48 +2,28 @@
 #define __MONSTERS_H
 
 /*
-MONSTERS.H
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Tuesday, June 28, 1994 7:07:59 PM
-
-Feb 3, 2000 (Loren Petrich):
-	Added VacBobs
-
-Feb 6, 2000 (Loren Petrich):
-	Added access to size of monster-definition structure
-
-Feb 10, 2000 (Loren Petrich):
-	Added dynamic-limits setting of MAXIMUM_MONSTERS_PER_MAP
-
-Feb 19, 2000 (Loren Petrich):
-	Added growable lists of indices of objects to be checked for collisions
-
-Aug 30, 2000 (Loren Petrich):
-	Added stuff for unpacking and packing
-	
-Oct 13, 2000 (Loren Petrich)
-	Converted the intersected-objects list into a Standard Template Library vector
-
-Oct 24, 2000 (Mark Levin)
-	Revealed some functions for P-tran
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 // LP additions:
 #include "dynamic_limits.h"

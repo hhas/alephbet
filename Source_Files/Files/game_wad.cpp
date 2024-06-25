@@ -1,83 +1,26 @@
 /*
-GAME_WAD.C
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Sunday, July 3, 1994 10:45:17 PM
-
-Routines for loading an entire game.
-
-Sunday, September 25, 1994 5:03:54 PM  (alain)
-	call recalculate_redundant_endpoint_data() upon restoring saved game since
-	the redundant data isn't saved.
-Sunday, November 6, 1994 5:35:34 PM
-	added support for the unified platforms/doors, cleaned up some old code of mine...
-Saturday, August 26, 1995 2:28:56 PM
-	made portable.
-
-Jan 30, 2000 (Loren Petrich):
-	Added some typecasts
-	Removed some "static" declarations that conflict with "extern"
-
-Feb 4, 2000 (Loren Petrich):
-	Changed halt() to assert(false) for better debugging
-
-Feb 6, 2000 (Loren Petrich):
-	Added loading and saving of physics models in savegames and from map files
-
-Feb 12, 2000 (Loren Petrich):
-	Added MARATHON_INFINITY_DATA_VERSION where appropriate
-
-Feb 14, 2000 (Loren Petrich):
-	Added more Pfhorte-friendly error checking to reading in of
-	map-info ('Minf') chunk; allowing it to be 2 bytes shorter.
-
-Feb 17, 2000 (Loren Petrich):
-	Hides cursor after warning user about loading non-Bungie map files
-	(strERRORS, warningExternalMapsFile)
-
-Feb 19, 2000 (Loren Petrich):
-	Fixed off-by-one asserts in load_***() routines;
-
-Feb 26, 2000 (Loren Petrich):
-	Added chase-cam initialization
-
-June 15, 2000 (Loren Petrich):
-	Added supprt for Chris Pruett's Pfhortran
-
-Aug 12, 2000 (Loren Petrich):
-	Using object-oriented file handler
-
-Aug 25, 2000 (Loren Petrich):
-	Cleared errors (game_errors.c/h) produced by Pfhortran
-	and by checking on a scenario's image files
-
-Aug 28, 2000 (Loren Petrich):
-	Started on using new pack/unpack routines
-
-Nov 26, 2000 (Loren Petrich):
-	Movied a RunLevelScript() before some other stuff, such as entering_map(),
-	so that textures to be loaded can be specified before they actually get loaded.
-
-Feb 15, 2002 (Br'fin (Jeremy Parsons)):
-	Additional save data is now applied to the Temporary file instead of the original
-	(Old level preview info is now saved under Macintosh again)
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 // This needs to do the right thing on save game, which is storing the precalculated crap.
 

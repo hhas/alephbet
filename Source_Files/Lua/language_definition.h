@@ -1,30 +1,30 @@
+/*
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
+
 // Supersedes file "Pfhortran Language Definition".
 // Translations of names into internal numbers (can be symbolic constants)
 // Format: {"Name", Number}, [C syntax for array member that's a struct]
-
-/* jkvw 07/03/03 - added mnemonics for balls and recharger types
- *
- * jkvw 07/07/03 - Mnemonic naming conventions are being naughty - note how "shotgun" was defined as 0x16 then later as 0x17,
- *	resulting in the shotgun item type mnemonic being unusable in scripts.  This version should be more usable and consistent.
- *	Old names are retained for backwards compatability.
- *
- * Falko 02/21/05 - added mnemonics for polygon types and powerups
-
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
- */
 
 // Items
 

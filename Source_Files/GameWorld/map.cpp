@@ -1,96 +1,25 @@
 /*
-MAP.C
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Sunday, August 15, 1993 12:13:52 PM
-
-Tuesday, December 7, 1993 9:35:13 AM
-	fixed bug in map_index_to_map_point (removed bitwise exclusive-ors).
-Sunday, January 2, 1994 10:53:34 PM
-	transmogrify_object_shape plays sounds now.
-Wednesday, March 9, 1994 4:34:40 PM
-	support for lightsourcing/mapping floor ceiling with polygons.
-Monday, June 27, 1994 6:52:10 PM
-	ajr--push_out_line now takes the length of the line instead of calculating it.
-Friday, December 9, 1994 1:31:09 PM  (Jason)
-	translate_map_object moves objects leaving the map into the center of their polygon.
-Friday, June 9, 1995 2:25:33 PM  (Jason)
-	sounds on the other side of a media boundary are obstructed
-Monday, September 18, 1995 4:38:30 PM  (Jason)
-	the old sound_index is now the landscape_index for a given level
-
-Jan 30, 2000 (Loren Petrich):
-	Added some typecasts
-
-Feb 4, 2000 (Loren Petrich):
-	Renamed the "pathways/marathon" environment
-	Changed halt() to assert(false) for better debugging
-
-Feb 13, 2000 (Loren Petrich):
-	Added some idiot-proofing to the tick count in animate_object().
-
-Feb 15, 2000 (Loren Petrich):
-	Suppressed some assertions designed to check for map consistency;
-	this is to get around some Pfhorte bugs.
-
-Feb 17, 2000 (Loren Petrich):
-	Fixed stuff near arctangent() to be long-distance-friendly
-
-Feb 20, 2000 (Loren Petrich): Suppressed height-consistency check in
-	change_polygon_height().
-
-Apr 28, 2000 (Loren Petrich): In animate_object(), switched the two tests
-	on the current frame so that the Pfhor can teleport out in
-	M2's "Charon Doesn't Make Change".
-
-Jul 6, 2000 (Loren Petrich): Readjusted the frame checking yet again, so that both keyframe = 0
-	and keyframe = [number of frames] would be detected.
-
-Jul 7, 2000 (Loren Petrich): Did yet another frame-checking readjustment, in order to suppress
-	the reactivated Hunter soft-death bug.
-
-Aug 20, 2000 (Loren Petrich): eliminated a "pause()" statement -- some debugging statement?
-	
-Oct 13, 2000 (Loren Petrich):
-	Converted the intersected-objects list into a Standard Template Library vector
-
-Oct 19, 2000 (Loren Petrich):
-	Changed get_object_shape_and_transfer_mode() so that it makes data->collection_code equal to NONE
-	if it does not find a valid sequence or view.
-	
-Nov 19, 2000 (Loren Petrich):
-	Added XML support for texture-loading control. This contains a switch to indicate whether to load
-	the landscape textures, and also stuff for loading the various texture environments.
-	Each one of these has slots for several collection ID's to load; one can use a converted M1 map
-	directly with this approach.
-
-Feb 8, 2001 (Loren Petrich):
-	Had not too long ago changed many of the arrays into dynamically-allocated ones, thus ending the
-	limits on the numbers of points, lines, polygons, etc.
-	Fixed a *serious* bug in the calculation of the "dynamic world" quantities in recalculate_map_counts() --
-	there are some count-down loops, but they ought to count down to the last used entity, not the last unused one.
-
-Feb 3, 2003 (Loren Petrich):
-	In attach_parasitic_object(), will transmit the sizing of the host object to the parasite.
-
- June 14, 2003 (Woody Zenfell):
-	New functions for manipulating polygons' object lists (in support of prediction).
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
  */
 
 /*

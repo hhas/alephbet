@@ -1,96 +1,26 @@
 /*
-	weapons.c
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-	Saturday, May 13, 1995 4:41:04 PM- rdm created.
-		Recreating to fix all the annoying problems.
-
-Feb. 4, 2000 (Loren Petrich):
-	Changed halt() to assert(false) for better debugging
-
-Feb 19, 2000 (Loren Petrich):
-	Suppressed debug checking of which weapons and triggers
-	in get_trigger_definition()
-	
-March 2, 2000 (Loren Petrich):
-	Suppressed player_weapon_has_ammo() assert in should_switch_to_weapon();
-	causes problems in "Missed Island"'s first level.
-	
-March 3, 2000 (Loren Petrich):
-	Suppressed complicated assert in fire_weapon();
-	 causes problems in the map "Dirt Devil", which turns the flamethrower into a jetpack.
-
-Apr 27, 2000 (Loren Petrich):
-	Added Josh Elsasser's "don't switch weapons" patch
-
-May 23, 2000 (Loren Petrich):
-	Correct behavior of weapon luminosity; it now adds to miner's light
-	rather than substituting for it.
-
-May 26, 2000 (Loren Petrich):
-	Added XML configuration of shell casings and weapon order.
-	Attempted to add more graceful behavior for some weapons being NONE.
-	In Muerte Machine, the weapons are disabled if the fists have weapon type NONE;
-	implemented the use of this as a flag.
-	
-	Added "CannotWieldWeapons()" test; it returns true if the fists have a weapon type of NONE
-
-Jun 14, 2000 (Loren Petrich):
-	Suppressed assertion about multiple triggers that follows the Dirt-Devil one
-
-Jun 15, 2000 (Loren Petrich):
-	Added support for Chris Pruett's Pfhortran
-
-Jul 1, 2000 (Loren Petrich):
-	Made some accessors inline
-
-Jul 1, 2000 (Loren Petrich):
-	Added Benad's changes
-
-Aug 31, 2000 (Loren Petrich):
-	Added stuff for unpacking and packing
-
-Sep 3, 2000 (Loren Petrich):
-	Suppressed "assert(weapon_type!=NUMBER_OF_WEAPONS);" in a search-for-which-weapon loop;
-	some physics models get to this without causing other trouble
-
-Oct 19, 2000 (Loren Petrich):
-	Weapon-sprite absence in get_weapon_display_information() handled by bugging out instead of
-	a failed assertion; having a SMG will not crash if one's using a M2 shapes file.
-	Also, added a bug-out in case of no view being found.
-
-Dec 24, 2000 (Loren Petrich):
-	Added support for idle-weapon animations
-
-Dec 31, 2000 (Loren Petrich):
-	Turned a remaining out-of-range assert into a no-render
-
-Jan 6, 2001 (Loren Petrich):
-	Added modification of guided-projectile patch from AlexJLS@aol.com;
-	one can now shoot guided missiles.
-
-Feb 1, 2001 (Loren Petrich):
-	Added fix for firing-animation wraparound; prevent_wrap is true for those animations also.
-
-Apr 10, 2003 (Woody Zenfell):
-        Fixed bug where dropping the skull made two of them (had this really been in there for almost 3 years??)
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 #include "cseries.h"
 #include "map.h"

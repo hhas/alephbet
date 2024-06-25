@@ -1,102 +1,28 @@
 /*
-	INTERFACE.C
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-	Thursday, December 30, 1993 6:56:22 PM
-	Mac specific code.....
-
-	Friday, July 8, 1994 2:32:44 PM (alain)
-		All old code in here is obsolete. This now has interface for the top-level
-		interface (Begin Game, etc…)
-	Saturday, September 10, 1994 12:45:48 AM  (alain)
-		the interface gutted again. just the stuff that handles the menu though, the rest stayed
-		the same.
-	Thursday, June 8, 1995 2:56:16 PM (ryan)
-		Pillaged, raped, & burned. (in that order)
-
-Jan 30, 2000 (Loren Petrich):
-	Added some typecasts
-	Removed some "static" declarations that conflict with "extern"
-	Surrounded choose_saved_game_to_load with "extern "C""
-
-Feb. 4, 2000 (Loren Petrich):
-	Changed halt() to assert(false) for better debugging
-
-Feb. 9, 2000 (Loren Petrich):
-	Changed NUMBER_OF_INTRO_SCREENS to 3
-	Changed NUMBER_OF_CREDIT_SCREENS to Hamish Sinclair's favorite number
-	
-	Fixed multiple-clicks-necessary problem for too few screens.
-	Was in next_game_state(); set game_state.phase (countdown value) to zero.
-	
-Feb 19, 2000 (Loren Petrich):
-	Set the single-player color to the player color set in the preferences,
-	for the benefit of chase-cam users.
-
-Mar 5, 2000 (Loren Petrich):
-	Added reset_screen() when starting a game, so that extravision
-	will not be persistent.
-
-May 13, 2000 (Loren Petrich):
-	Added Rhys Hill's fix for problems with quitting OpenGL
-
-Aug 12, 2000 (Loren Petrich):
-	Using object-oriented file handler
-
-Aug 24, 2000 (Loren Petrich):
-	Added source selector to calculate_picture_clut(), in order to better deal with
-	object-oriented file handlers
-
-Nov 25, 2000 (Loren Petrich):
-	Added support for movies that start at any level, including at the end of a game.
-	Also added end-screen control.
-
-Jan 31, 2001 (Loren Petrich):
-	In pause_game(), will stop the liquid faders that are active
-	
-Jan 25, 2002 (Br'fin (Jeremy Parsons)):
-	Disabled network and network microphone calls under Carbon
-
-Feb 27, 2002 (Br'fin (Jeremy Parsons)):
-	Renabled network calls, but not microphone calls under Carbon
-
-May 16, 2002 (Woody Zenfell):
-    Enforcing standard player behavior with regard to films and netplay
-    
-Jun 5, 2002 (Loren Petrich):
-	Added do-nothing "case _revert_game:" in portable_process_screen_click()
-	at the request of Michael Adams.
-        
-Feb 1, 2003 (Woody Zenfell):
-        Reenabling network microphone support on all platforms, trying to share code
-        and present consistent interfaces to the greatest degree practical.
-        
-Feb 8-12, 2003 (Woody Zenfell):
-        Introducing support for generalized game startup (will enable resumption of saved-games
-        as netgames, among other things).
-
-Feb 13, 2003 (Woody Zenfell):
-        We can now resume games as network games.
-*/
-
-// NEED VISIBLE FEEDBACK WHEN APPLETALK IS NOT AVAILABLE!!!
-
+/* Historical comment, accuracy not guaranteed: */
 /* ZZZ: more on enforcing standard behavior...
     + Standard behavior forced when playing a network game.
     + Standard behavior forced when replaying a film.

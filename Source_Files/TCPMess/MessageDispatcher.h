@@ -1,3 +1,6 @@
+#ifndef MESSAGEDISPATCHER_H
+#define MESSAGEDISPATCHER_H
+
 /*
  *  MessageDispatcher.h
  *  Created by Woody Zenfell, III on Sun Aug 31 2003.
@@ -25,9 +28,6 @@
   SOFTWARE.
 */
 
-
-#ifndef MESSAGEDISPATCHER_H
-#define MESSAGEDISPATCHER_H
 
 #include <map>
 

@@ -1,6 +1,24 @@
 dnl Process this file with autoconf to produce a configure script.
-dnl Written by Christian Bauer, the Aleph One developers, and
-dnl the Aleph Bet developers.
+
+# Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers, and
+# the Aleph Bet developers.
+#
+# Aleph Bet is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation, either version 3 of the License, or (at your option)
+# any later version.
+#
+# Aleph Bet is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+# details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+# This license notice applies only to the Aleph Bet engine itself, and does
+# not apply to Marathon, Marathon 2, or Marathon Infinity scenarios and
+# assets, nor to elements of any third-party scenarios.
 
 AC_INIT([Aleph Bet],m4_esyscmd([grep '^#define A1_DATE_VERSION' Source_Files/Misc/alephversion.h | sed -e 's/\(.*\"\)\(.*\)\(\"\)/\2/g' | tr -d '\n']),[https://github.com/Aleph-Bet-Marathon/alephbet/issues],[AlephBet],[https://aleph-bet-marathon.github.io/])
 AC_CONFIG_SRCDIR([Source_Files/shell.cpp])

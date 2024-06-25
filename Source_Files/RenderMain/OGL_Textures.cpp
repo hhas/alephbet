@@ -1,79 +1,30 @@
 /*
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-	
-	OpenGL Texture Manager,
-	by Loren Petrich,
-	March 12, 2000
-
-	This implements texture handling for OpenGL.
-	
-	May 2, 2000:
-	
-	Fixed silhouette-texture bug: color 0 is now transparent
-	
-	May 24, 2000:
-	
-	Added support for setting landscape aspect ratios from outside;
-	also added more graceful degradation for mis-sized textures.
-	Walls must be a power of 2 horizontally and vertical;
-	landscapes must be a power of 2 horizontally
-	in order for the tiling to work properly.
-	
-	June 11, 2000:
-	
-	Added support for opacity shift factor (OpacityShift alongside OpacityScale);
-	should be good for making dark colors somewhat opaque.
-
-Jul 10, 2000:
-
-	Fixed crashing bug when OpenGL is inactive with ResetTextures()
-
-Sep 9, 2000:
-
-	Restored old fix for AppleGL texturing as an option; this fix consists of setting
-	the minimum size of a texture to be 128.
-
-Nov 12, 2000 (Loren Petrich):
-	Cleaned up some of the code to avoid explicit endianness usage;
-	also implemented texture substitution.
-
-Nov 18, 2000 (Loren Petrich):
-	Added support for landscape vertical repeats;
-	also added support for glow mapping of wall textures
-
-Dec 16, 2000 (Loren Petrich):
-	Fixed substitution of landscape textures
-
-June 14, 2001 (Loren Petrich):
-	Changed Width*Height to TxtrWidth*TxtrHeight in some places to ensure that some operations
-	are done over complete textures
-
-Nov 30, 2001 (Alexander Strange):
-	Added Ian Rickard's texture purging to save VRAM.
-
-Jan 25, 2002 (Br'fin (Jeremy Parsons)):
-	Added TARGET_API_MAC_CARBON for AGL.h
-
-May 3, 2003 (Br'fin (Jeremy Parsons))
-	Added LowLevelShape workaround for passing LowLevelShape info of sprites
-	instead of abusing/overflowing shape_descriptors
-*/
+/*
+ *  This implements texture handling for OpenGL.
+ */
 
 #include <string.h>
 #include <stdlib.h>

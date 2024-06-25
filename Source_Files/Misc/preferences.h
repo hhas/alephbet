@@ -2,53 +2,27 @@
 #define __PREFERENCES_H
 
 /*
-	preferences.h
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-	Tuesday, June 13, 1995 10:07:04 AM- rdm created.
-
-Feb 10, 2000 (Loren Petrich):
-	Added stuff for input modifiers: run/walk and swim/sink
-
-Feb 25, 2000 (Loren Petrich):
-	Set up persistent stuff for the chase cam and crosshairs
-
-Mar 2, 2000 (Loren Petrich):
-	Added chase-cam and crosshairs interfaces
-
-Mar 14, 2000 (Loren Petrich):
-	Added OpenGL stuff
-
-Apr 27, 2000 (Loren Petrich):
-	Added Josh Elsasser's "don't switch weapons" patch
-
-Oct 22, 2001 (Woody Zenfell):
-	Changed the player name in player_preferences_data back to a Pstring (was Cstring in SDL version)
-
-May 16, 2002 (Woody Zenfell):
-	New control option "don't auto-recenter view"
-
-Apr 10, 2003 (Woody Zenfell):
-	Join hinting and autogathering have Preferences entries now
-
-May 22, 2003 (Woody Zenfell):
-	Support for preferences for multiple network game protocols; configurable local game port.
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
  */
 
 #include "interface.h"

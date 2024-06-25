@@ -1,41 +1,26 @@
 /*
-WORLD.H
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Wednesday, June 17, 1992 6:40:10 PM
-
-Friday, June 26, 1992 10:47:47 AM
-	to maintain precision when squaring world coordinates, they must be in [0,32*WORLD_ONE).
-Wednesday, August 18, 1993 2:59:47 PM
-	added 3d world points, world_distance is now a short (because we care).
-Sunday, May 22, 1994 10:48:26 PM
-	added fixed_point3d.  GUESS_HYPOTENUSE() is no longer completely broken.
-
-Feb 15, 2000 (Loren Petrich):
-	Moved definition of "long" versions of vectors into here
-	
-Feb 17, 2000 (Loren Petrich):
-	Made the arctangent function long-distance friendly
-
-Jul 1, 2000 (Loren Petrich):
-	Inlined the angle normalization; using tricky code for that
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 #ifndef _WORLD_H
 #define _WORLD_H

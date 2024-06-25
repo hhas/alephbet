@@ -2,55 +2,28 @@
 #define __INTERFACE_H
 
 /*
-INTERFACE.H
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Monday, August 23, 1993 4:35:53 PM
-
-Feb 24, 2000 (Loren Petrich):
-	Added get_number_of_collection_frames(), so as to assist in wall-texture error checking
-
-Feb 25, 2000 (Loren Petrich):
-	Added chase-cam and crosshair data structures and dialogs
-
-Mar 2, 2000 (Loren Petrich):
-	Moved the chase-cam and crosshair stuff out to ChaseCam.h and Crosshairs.h
-
-Mar 22, 2000 (Loren Petrich):
-	Added ResetFieldOfView(), a function that sets the field of view to the player's current state
-	(if extravision is active, then extravision, otherwise normal). It's defined in screen.c  
-
-Apr 27, 2000 (Loren Petrich):
-	Added Josh Elsasser's "don't switch weapons" patch
-
-Apr 30, 2000 (Loren Petrich):
-	Added reloading of view context when reverting, so that OpenGL won't look funny when one
-	changes a level.
-	
-May 1, 2000 (Loren Petrich): Added XML parser object for the infravision stuff.
-
-May 16, 2000 (Loren Petrich): Added XML parser for the control panels
-
-May 16, 2002 (Woody Zenfell):
-    Interfaces to dont_auto_recenter and to routines to help make such modifications safer
-    for films and netplay.
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 #include "cseries.h"
 

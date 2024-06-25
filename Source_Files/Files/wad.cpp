@@ -1,78 +1,26 @@
 /*
-	WAD.C
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-	Thursday, June 30, 1994 10:54:39 PM
-
-	Tuesday, December 13, 1994 4:31:46 PM- allowed for application specific data in the directory
-		data.  This lets me put the names and entry flags in one tight logical place.
-
-	Sunday, February 5, 1995 1:55:01 AM- allow for offset for inplace creation of data, added
-		version control so that I can read things that are old, implemented a checksum value 
-		for the header, allowed for poor man's search criteria.
-		
-		Three open calls:
-			1) open_wad_file_for_reading -> standard open call.
-			2) open_union_wad_file_for_reading-> opens multiple files, based on file type and 
-				alphabetical.
-			3) open_union_wad_file_for_reading_by_list-> opens multiple files, based on array 
-				passed in.
-
-Future Options:
- Reentrancy
- Use malloc to actually make it possible to read the data as changes are made in the future?
-
-	Saturday, October 28, 1995 1:13:38 PM- whoops.  Had a huge memory leak in the inflate wad
-		data.  I'm fired.
-	
-Jan 30, 2000 (Loren Petrich):
-	Did some typecasts
-
-Feb 3, 2000 (Loren Petrich):
-	Added WADFILE_HAS_INFINITY_STUFF to list of recognized wad types,
-		for Marathon Infinity compatibility.
-
-Aug 12, 2000 (Loren Petrich):
-	Using object-oriented file handler
-
-Aug 15, 2000 (Loren Petrich):
-	Suppressed union-wad stuff; that was probably some abortive attempt at creating some sort of
-	fancy archive format.
-
-Aug 25, 2000 (Loren Petrich):
-	Fixed a stupid bug in my reworking of the file handling --
-		"if (!open_...)" is now "if (open...)" -- checksumming should now work correctly.
-
-Sep 11, 2000 (Loren Petrich):
-	Made get_flat_data() and inflate_flat_data() pack and unpack properly...
-
-July 6, 2001 (Loren Petrich):
-	Added Thomas Herzog's more careful wad-version error checking
-	
-Sep 30, 2001 (Loren Petrich):
-	Added support for reading Marathon 1 map files
-	(not sure if anyone really wants to write them);
-	also added a "between levels" flag so that this may be used with 3D models.
-
-Jan 25, 2002 (Br'fin (Jeremy Parsons)):
-	Adjusted Carbon flow to avoid a p2cstr
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 // Note that level_transition_malloc is specific to marathon...
 

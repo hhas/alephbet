@@ -1,79 +1,26 @@
 /*
-SHAPES.C
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Saturday, September 4, 1993 9:26:41 AM
-
-Thursday, May 19, 1994 9:06:28 AM
-	unification of wall and object shapes complete, new shading table builder.
-Wednesday, June 22, 1994 11:55:07 PM
-	we now read data from alain’s shape extractor.
-Saturday, July 9, 1994 3:22:11 PM
-	lightening_table removed; we now build darkening tables on a collection-by-collection basis
-	(one 8k darkening table per clut permutation of the given collection)
-Monday, October 3, 1994 4:17:15 PM (Jason)
-	compressed or uncompressed collection resources
-Friday, June 16, 1995 11:34:08 AM  (Jason)
-	self-luminescent colors
-
-Jan 30, 2000 (Loren Petrich):
-	Changed "new" to "_new" to make data structures more C++-friendly
-	Did some typecasts
-
-Feb 3, 2000 (Loren Petrich):
-	Changed _collection_madd to _collection_vacbob (later changed all "vacbob"'s to "civilian_fusion"'s)
-
-Feb 4, 2000 (Loren Petrich):
-	Changed halt() to assert(false) for better debugging
-
-Feb 12, 2000 (Loren Petrich):
-	Set up a fallback strategy for the colors;
-	when there are more colors in all the tables than there are in the general color table,
-	then look for the nearest one.
-
-Feb 24, 2000 (Loren Petrich):
-	Added get_number_of_collection_frames(), so as to assist in wall-texture error checking
-
-Mar 14, 2000 (Loren Petrich):
-	Added accessors for number of bitmaps and which bitmap index for a frame index;
-	these will be useful for OpenGL rendering
-
-Mar 23, 2000 (Loren Petrich):
-	Made infravision tinting more generic and reassignable
-
-Aug 12, 2000 (Loren Petrich):
-	Using object-oriented file handler
-	
-Aug 14, 2000 (Loren Petrich):
-	Turned collection and shading-table handles into pointers,
-	because handles are needlessly MacOS-specific,
-	and because these are variable-format objects.
-
-Aug 26, 2000 (Loren Petrich):
-	Moved get_default_shapes_spec() to preprocess_map_mac.c
-
-Sept 2, 2000 (Loren Petrich):
-	Added shapes-file unpacking.
-
-Jan 17, 2001 (Loren Petrich):
-	Added support for offsets for OpenGL-rendered substitute textures
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 /*
 //gracefully handle out-of-memory conditions when loading shapes.  it will happen.

@@ -1,3 +1,6 @@
+#ifndef MESSAGEHANDLER_H
+#define MESSAGEHANDLER_H
+
 /*
  *  MessageHandler.h
  *  Created by Woody Zenfell, III on Thu Sep 11 2003.
@@ -24,9 +27,6 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 */
-
-#ifndef MESSAGEHANDLER_H
-#define MESSAGEHANDLER_H
 
 //#include <unistd.h>
 #include <cstdlib>

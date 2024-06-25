@@ -1,62 +1,26 @@
 /*
-GAME_WINDOW.C
-
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-
-Thursday, December 30, 1993 9:51:24 PM
-
-Tuesday, May 24, 1994 6:42:32 PM
-	functions beginning with underscores are mac-specific and always have a corresponding portable
-	function which sets up game-specific information (see update_compass and _update_compass for
-	an example).
-Friday, June 10, 1994 3:56:57 AM
-	gutted, rewritten.  Much cleaner now.
-Sunday, September 4, 1994 6:32:05 PM
-	made scroll_inventory() non-static so that shell.c can call it.
-Saturday, September 24, 1994 10:33:19 AM
-	fixed some things, twice...
-Friday, October 7, 1994 3:13:22 PM
-	New interface.  Draws panels from PICT resources for memory consumption.  Inventory is 
-	different panels, which are switched to whenever you grab an item.  There is no scrolling.
-Tuesday, June 6, 1995 3:37:50 PM
-	Marathon II modifications.
-Tuesday, August 29, 1995 4:02:15 PM
-	Reestablishing a level of portablility...
-
-Feb 4, 2000 (Loren Petrich):
-	Added SMG display stuff
-	
-Apr 30, 2000 (Loren Petrich): Added XML parser object for all the screen_drawing data,
-	and also essentiall all the data here.
-
-May 28, 2000 (Loren Petrich): Added support for buffering the Heads-Up Display
-
-Jul 2, 2000 (Loren Petrich):
-	The HUD is now always buffered
-
-Jul 16, 2001 (Loren Petrich):
-	Using "temporary" as storage space for count_text and weapon_name;
-	it is 256 bytes long, which should be more than enough for most text.
-	This fixes the long-weapon-name bug.
-
-Mar 08, 2002 (Woody Zenfell):
-    SDL network microphone support
-*/
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
 #include "cseries.h"
 

@@ -1,38 +1,36 @@
 #ifndef _OGL_RENDER_
 #define _OGL_RENDER_
+
 /*
+ *
+ *  Aleph Bet is copyright ©1994-2024 Bungie Inc., the Aleph One developers,
+ *  and the Aleph Bet developers.
+ *
+ *  Aleph Bet is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  Aleph Bet is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  This license notice applies only to the Aleph Bet engine itself, and
+ *  does not apply to Marathon, Marathon 2, or Marathon Infinity scenarios
+ *  and assets, nor to elements of any third-party scenarios.
+ *
+ */
 
-	Copyright (C) 1991-2001 and beyond by Bungie Studios, Inc.,
-	the "Aleph One" developers, and the "Aleph Bet" developers.
- 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
-	
-	OpenGL Interface File,
-	by Loren Petrich,
-	March 12, 2000
-
-	This contains functions intended to interface OpenGL 3D-rendering code
-	with the rest of the Marathon source code. It was separated from the
-	presence-accessing and parameter-accessing code in OGL_Control because
-	this include file contains some stuff used by the rendering code.
-
-July 8, 2000:
-	Modified OGL_SetView() and OGL_Copy2D() to control whether or not to use a back buffer,
-	and whether or not to write to the back buffer, respectively.
-*/
-
+/*
+ *  This contains functions intended to interface OpenGL 3D-rendering code
+ *  with the rest of the Marathon source code. It was separated from the
+ *  presence-accessing and parameter-accessing code in OGL_Control because
+ *  this include file contains some stuff used by the rendering code.
+ */
 
 #include "OGL_Setup.h"
 #include "render.h"
