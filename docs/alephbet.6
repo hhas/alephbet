@@ -1,0 +1,66 @@
+.\" manual page for the Debian GNU/Linux system originally written by
+.\" sam@robots.org.uk Sam Morris
+.\" define fallback URL and MTO macros 
+.de URL
+\\$2 \(laURL: \\$1 \(ra\\$3
+..
+.\" the www.tmac package will provide better macros which will override those
+.\" above if it is present
+.if \n[.g] .mso www.tmac
+.TH alephbet 6 2024-06-25 source.bungie.org Games
+.SH NAME
+alephbet \- open source continuation of the Marathon 2 game engine
+.SH SYNOPSIS
+.B alephbet
+[
+.I options
+]
+[
+.I directory
+]
+.SH DESCRIPTION
+Aleph Bet is an open source continuation of the Marathon 2 game engine. It can
+play Marathon, Marathon 2, and Marathon Infinity, as well as third-party
+scenarios for Marathon 2, Marathon Infinity, and Aleph One. It supports
+Windows, macOS, and most modern UNIX-compatible operating systems (such as
+Linux).
+.P
+Aleph Bet is a direct descendent of Aleph One and Aleph Modular, and is
+expected to incorporate future changes to Aleph One.
+.SH OPTIONS
+.TP
+.B \-h, \-\-help
+Show summary of options. (Available options change more frequently than this man page.)
+.TP
+.B \-v, \-\-version
+Show version of program.
+.TP
+.I directory
+Directory containing the data files of a scenario (map file, scripts, etc.)
+.SH ENVIRONMENT
+.TP
+.B ALEPHBET_DATA
+Directories that are searched for data files.
+This is a colon-separated list.
+Entries
+.I later
+in the list have precedence over entries earlier in the list.
+.SH FILES
+.TP
+.I ~/.alephbet
+Aleph Bet personalization directory.
+alephbet stores preferences, game recordings, saved games, and screen
+shots there.
+If
+.B ALEPHBET_DATA
+is not set, alephbet searches this directory for data files after searching the
+directory given as its argument.
+.SH BUGS
+If
+.B ALEPHBET_DATA
+is set, the
+.I directory
+argument is ignored.
+.SH "SEE ALSO"
+The latest news regarding engine and scenario development can be found at
+.URL "http://aleph-bet-marathon.github.io/" "the project web site" "."
