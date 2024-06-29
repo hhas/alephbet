@@ -36,3 +36,6 @@ lib*.a
 
 /*/target
 .ccls-cache
+
+/data/powered_by_alephbet*.png
+/data/powered_by_alephbet*.bmp
