@@ -14,11 +14,20 @@ cd "$(dirname $0)"
 # -----------------------------------------------------------------------------
 
 echo "Checking about screen fodder."
+
 if ! test Source_Files/Misc/a1-authors.h -nt authors-update.lua \
 || ! test Source_Files/Misc/a1-authors.h -nt A1-AUTHORS \
 || ! test Source_Files/Misc/ab-authors.h -nt authors-update.lua \
 || ! test Source_Files/Misc/ab-authors.h -nt AB-AUTHORS; then
     echo "About screen out of date. Please run authors-update.lua and rebuild."
+    exit 1
+fi
+
+displaydate="$(date "+%Y-%m-%d")"
+shortdate="$(echo $displaydate | tr -d -)"
+if [ "$(grep '^#define AB_DATE_DISPLAY_VERSION' Source_Files/Misc/alephversion.h | sed -e 's/.*"\(.*\)"/\1/g' )" != "$displaydate" -o "$(grep '^#define AB_DATE_VERSION' Source_Files/Misc/alephversion.h | sed -e 's/.*"\(.*\)"/\1/g' )" != "$shortdate" ]; then
+    echo "Dates in Source_Files/Misc/alephversion.h need to be updated. Please update them and rebuild."
+    echo "  (Today's date is $displaydate)"
     exit 1
 fi
 
@@ -41,12 +50,15 @@ cargo run -q --release --manifest-path=copyright-check/Cargo.toml -- \
     --exclude 'SDL_ffmpeg.*' \
     --exclude 'SDL_rwops_zzip.*' \
     --exclude 'Statistics.*' \
+    --exclude '/Source_Files/CSeries/confpaths.h' \
     --exclude '/Source_Files/Lua/l*' \
     --exclude '/Source_Files/Lua/COPYRIGHT' \
     --exclude '/Source_Files/Lua/README' \
     --include '/Source_Files/Lua/language_definition.h' \
-    --include '/Source_Files/Lua/lua_*' \
+    --include '/Source_Files/Lua/lua_*.cpp' \
+    --include '/Source_Files/Lua/lua_*.h' \
     --exclude '/Source_Files/Misc/a1-authors.h' \
+    --exclude '/Source_Files/Misc/ab-authors.h' \
     --exclude '/Source_Files/Misc/AlephSansMono-Bold.h' \
     --exclude '/Source_Files/Misc/CourierPrime*.h' \
     --exclude '/Source_Files/Misc/ProFontAO.h' \
@@ -59,6 +71,10 @@ cargo run -q --release --manifest-path=copyright-check/Cargo.toml -- \
     --exclude '/Source_Files/RenderOther/sdl_resize.*' \
     --exclude '/Source_Files/TCPMess/*' \
     --include '/Source_Files/TCPMess/Makefile.am' \
+    --exclude '*.Po' \
+    --exclude '*.o' \
+    --exclude '*.a' \
+    --exclude 'Source_Files/alephbet' \
     --dir Source_Files
 
 # -----------------------------------------------------------------------------

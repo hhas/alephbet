@@ -370,7 +370,7 @@ void expand_app_variables_inplace(std::string& str)
 	boost::replace_all(str, "$appVersion$", AB_DISPLAY_VERSION);
 	boost::replace_all(str, "$appLongVersion$", AB_VERSION_STRING);
 	boost::replace_all(str, "$appPlatform$", AB_DISPLAY_PLATFORM);
-	boost::replace_all(str, "$appDate$", AB_DISPLAY_DATE_VERSION);
+	boost::replace_all(str, "$appDate$", AB_DATE_DISPLAY_VERSION);
 	boost::replace_all(str, "$appURL$", AB_HOMEPAGE_URL);
 	boost::replace_all(str, "$appLogFile$", loggingFileName());
 	boost::replace_all(str, "$scenarioName$", Scenario::instance()->GetName());

@@ -22,6 +22,9 @@
  *
  */
 
+#ifndef _LUA_EPHEMERA_H
+#define _LUA_EPHEMERA_H
+
 #include "cseries.h"
 
 extern "C"

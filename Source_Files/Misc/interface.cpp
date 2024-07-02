@@ -1775,37 +1775,33 @@ static void display_about_dialog()
 
 	vertical_placer *a1_authors_placer = new vertical_placer();
 	
-	a1_authors_placer->dual_add(new w_static_text("Aleph Bet is based on the source code for Marathon 2 and"), d);
+	a1_authors_placer->dual_add(new w_static_text("Aleph One is based on the source code for Marathon 2 and"), d);
 	a1_authors_placer->dual_add(new w_static_text("Marathon Infinity, which was developed by Bungie Software."), d);
 	a1_authors_placer->add(new w_spacer, true);
 	
 	a1_authors_placer->dual_add(new w_static_text("The enhancements and extensions to Marathon 2 and Marathon"), d);
-	a1_authors_placer->dual_add(new w_static_text("Infinity that constitute Aleph Bet have been made by:"), d);
+	a1_authors_placer->dual_add(new w_static_text("Infinity that constitute Aleph One have been made by:"), d);
 
 	a1_authors_placer->add(new w_spacer, true);
 
-	{
-		std::vector<std::string> authors;
+	std::vector<std::string> a1_authors;
 #include "a1-authors.h"
-		w_authors_list *a1_authors_w = new w_authors_list(authors, &d);
-		a1_authors_placer->dual_add(a1_authors_w, d);
-	}
+	w_authors_list *a1_authors_w = new w_authors_list(a1_authors, &d);
+	a1_authors_placer->dual_add(a1_authors_w, d);
 
 	vertical_placer *ab_authors_placer = new vertical_placer();
 	
-	ab_authors_placer->dual_add(new w_static_text("Aleph Bet is a direct descendent of Aleph One, and"), d);
-	ab_authors_placer->dual_add(new w_static_text("benefits from all enhancements and extensions"), d);
-	ab_authors_placer->dual_add(new w_static_text("by that project's contributors."), d);
+	ab_authors_placer->dual_add(new w_static_text("Aleph Bet is a direct descendent of Aleph One, and benefits"), d);
+	ab_authors_placer->dual_add(new w_static_text("from many enhancements and extensions by that project's"), d);
+	ab_authors_placer->dual_add(new w_static_text("contributors."), d);
 	ab_authors_placer->add(new w_spacer, true);	
 	ab_authors_placer->dual_add(new w_static_text("Additional contributions have been made by:"), d);
 	ab_authors_placer->add(new w_spacer, true);
 
-	{
-		std::vector<std::string> authors;
+	std::vector<std::string> ab_authors;
 #include "ab-authors.h"
-		w_authors_list *ab_authors_w = new w_authors_list(authors, &d);
-		ab_authors_placer->dual_add(ab_authors_w, d);
-	}
+	w_authors_list *ab_authors_w = new w_authors_list(ab_authors, &d);
+	ab_authors_placer->dual_add(ab_authors_w, d);
 
 	tabs->add(about_placer, true);
 	tabs->add(a1_authors_placer, true);

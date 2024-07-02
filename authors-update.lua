@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-function go(inpath, outpath)
+function go(inpath, outpath, symbol)
     local inf = assert(io.open(inpath, "rb"))
     -- Skip until we see a line ending in "by:"
     local l
@@ -16,13 +16,13 @@ function go(inpath, outpath)
 ]]
     for l in inf:lines() do
         if l:match("[\x80-\xFF]") then
-            outf:write(("authors.push_back(utf8_to_mac_roman(%q));\n"):format(l))
+            outf:write(("%s.push_back(utf8_to_mac_roman(%q));\n"):format(symbol, l))
         else
-            outf:write(("authors.push_back(%q);\n"):format(l))
+            outf:write(("%s.push_back(%q);\n"):format(symbol, l))
         end
     end
     outf:close()
 end
 
-go("A1-AUTHORS", "Source_Files/Misc/a1-authors.h")
-go("AB-AUTHORS", "Source_Files/Misc/ab-authors.h")
+go("A1-AUTHORS", "Source_Files/Misc/a1-authors.h", "a1_authors")
+go("AB-AUTHORS", "Source_Files/Misc/ab-authors.h", "ab_authors")

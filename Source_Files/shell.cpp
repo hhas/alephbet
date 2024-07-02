@@ -323,7 +323,7 @@ void initialize_application(void)
 	size_t dsp_insert_pos = data_search_path.size();
 	size_t dsp_delete_pos = (size_t)-1;
 	
-	const string default_data_env = a1_getenv("ALEPHBET_DEFAULT_DATA");
+	string default_data_env = a1_getenv("ALEPHBET_DEFAULT_DATA");
 	if(default_data_env.empty()) {
 		default_data_env = a1_getenv("ALEPHONE_DEFAULT_DATA");
 	}
@@ -340,7 +340,7 @@ void initialize_application(void)
 		data_search_path.push_back(default_data_env);
 	}
 
-	const string data_env = a1_getenv("ALEPHBET_DATA");
+	string data_env = a1_getenv("ALEPHBET_DATA");
 	if(data_env.empty()) {
 		data_env = a1_getenv("ALEPHONE_DATA");
 	}
