@@ -701,7 +701,6 @@ bool get_entry_points(vector<entry_point> &vec, int32 type)
 extern void LoadSoloLua();
 extern void LoadReplayNetLua();
 extern void LoadStatsLua();
-extern void LoadAchievementsLua();
 extern bool RunLuaScript();
 
 /* This is called when the game level is changed somehow */
@@ -762,7 +761,6 @@ bool goto_level(
 		{
 			LoadReplayNetLua();
 		}
-		LoadAchievementsLua();
 		LoadStatsLua();
 
 		set_game_error(SavedType,SavedError);
@@ -1205,7 +1203,6 @@ bool load_game_from_file(FileSpecifier& File, bool run_scripts)
 			{
 				LoadSoloLua();
 			}
-			LoadAchievementsLua();
 			LoadStatsLua();
 			set_game_error(SavedType,SavedError);
 		}

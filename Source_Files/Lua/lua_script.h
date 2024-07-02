@@ -66,11 +66,11 @@ void L_Invalidate_Object(short object_index);
 void L_Invalidate_Ephemera(short ephemera_index);
 
 enum ScriptType {
-	_embedded_lua_script,
+	_embedded_lua_script=0,
 	_lua_netscript,
 	_solo_lua_script,
 	_stats_lua_script,
-	_achievements_lua_script
+  _num_script_types
 };
 
 void *L_Persistent_Table_Key();
@@ -83,9 +83,6 @@ void ResetPassedLua();
 void ExecuteLuaString(const std::string&);
 void LoadSoloLua();
 void LoadReplayNetLua();
-
-void LoadAchievementsLua();
-void InvalidateAchievements();
 
 void LoadStatsLua();
 bool CollectLuaStats(std::map<std::string, std::string>& table, std::map<std::string, std::string>& parameters);

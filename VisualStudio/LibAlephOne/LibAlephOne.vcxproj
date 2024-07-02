@@ -279,7 +279,6 @@
     <ClCompile Include="..\..\Source_Files\Lua\lua_saved_objects.cpp" />
     <ClCompile Include="..\..\Source_Files\Lua\lua_script.cpp" />
     <ClCompile Include="..\..\Source_Files\Lua\lua_serialize.cpp" />
-    <ClCompile Include="..\..\Source_Files\Misc\achievements.cpp" />
     <ClCompile Include="..\..\Source_Files\Misc\ActionQueues.cpp" />
     <ClCompile Include="..\..\Source_Files\Misc\CircularByteBuffer.cpp" />
     <ClCompile Include="..\..\Source_Files\Misc\Console.cpp" />
@@ -504,7 +503,6 @@
     <ClInclude Include="..\..\Source_Files\Lua\lua_script.h" />
     <ClInclude Include="..\..\Source_Files\Lua\lua_serialize.h" />
     <ClInclude Include="..\..\Source_Files\Lua\lua_templates.h" />
-    <ClInclude Include="..\..\Source_Files\Misc\achievements.h" />
     <ClInclude Include="..\..\Source_Files\Misc\ActionQueues.h" />
     <ClInclude Include="..\..\Source_Files\Misc\AlephSansMono-Bold.h" />
     <ClInclude Include="..\..\Source_Files\Misc\alephversion.h" />
