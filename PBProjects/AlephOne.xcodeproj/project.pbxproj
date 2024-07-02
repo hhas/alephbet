@@ -5170,7 +5170,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "DISPLAY_VERSION=$( grep '^#define A1_DISPLAY_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nDATE_VERSION=$( grep '^#define A1_DATE_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nsed -i '' -e s/A1_DISPLAY_VERSION/$DISPLAY_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\nsed -i '' -e s/A1_DATE_VERSION/$DATE_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\n";
+			shellScript = "DISPLAY_VERSION=$( grep '^#define AB_DISPLAY_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nDATE_VERSION=$( grep '^#define AB_DATE_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nsed -i '' -e s/AB_DISPLAY_VERSION/$DISPLAY_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\nsed -i '' -e s/AB_DATE_VERSION/$DATE_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\n";
 		};
 		AE120D602BC77645001873DD /* Insert Version */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5182,7 +5182,7 @@
 			name = "Insert Version";
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "DISPLAY_VERSION=$( grep '^#define A1_DISPLAY_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nDATE_VERSION=$( grep '^#define A1_DATE_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nsed -i '' -e s/A1_DISPLAY_VERSION/$DISPLAY_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\nsed -i '' -e s/A1_DATE_VERSION/$DATE_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\n";
+			shellScript = "DISPLAY_VERSION=$( grep '^#define AB_DISPLAY_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nDATE_VERSION=$( grep '^#define AB_DATE_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nsed -i '' -e s/AB_DISPLAY_VERSION/$DISPLAY_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\nsed -i '' -e s/AB_DATE_VERSION/$DATE_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\n";
 		};
 		AE505D04141D45E600915344 /* Insert Version */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5194,7 +5194,7 @@
 			name = "Insert Version";
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "DISPLAY_VERSION=$( grep '^#define A1_DISPLAY_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nDATE_VERSION=$( grep '^#define A1_DATE_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nsed -i '' -e s/A1_DISPLAY_VERSION/$DISPLAY_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\nsed -i '' -e s/A1_DATE_VERSION/$DATE_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\n";
+			shellScript = "DISPLAY_VERSION=$( grep '^#define AB_DISPLAY_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nDATE_VERSION=$( grep '^#define AB_DATE_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nsed -i '' -e s/AB_DISPLAY_VERSION/$DISPLAY_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\nsed -i '' -e s/AB_DATE_VERSION/$DATE_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\n";
 		};
 		AE505D06141D45E600915344 /* Copy Scenario */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5220,7 +5220,7 @@
 			name = "Insert Version";
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "DISPLAY_VERSION=$( grep '^#define A1_DISPLAY_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nDATE_VERSION=$( grep '^#define A1_DATE_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nsed -i '' -e s/A1_DISPLAY_VERSION/$DISPLAY_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\nsed -i '' -e s/A1_DATE_VERSION/$DATE_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\n";
+			shellScript = "DISPLAY_VERSION=$( grep '^#define AB_DISPLAY_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nDATE_VERSION=$( grep '^#define AB_DATE_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nsed -i '' -e s/AB_DISPLAY_VERSION/$DISPLAY_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\nsed -i '' -e s/AB_DATE_VERSION/$DATE_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\n";
 		};
 		AEB4A2A814296CAE00537AE7 /* Copy Scenario */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5259,7 +5259,7 @@
 			name = "Insert Version";
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "DISPLAY_VERSION=$( grep '^#define A1_DISPLAY_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nDATE_VERSION=$( grep '^#define A1_DATE_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nsed -i '' -e s/A1_DISPLAY_VERSION/$DISPLAY_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\nsed -i '' -e s/A1_DATE_VERSION/$DATE_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\n";
+			shellScript = "DISPLAY_VERSION=$( grep '^#define AB_DISPLAY_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nDATE_VERSION=$( grep '^#define AB_DATE_VERSION' \"$SRCROOT\"/../Source_Files/Misc/alephversion.h | sed -e 's/\\(.*\\\"\\)\\(.*\\)\\(\\\"\\)/\\2/g' )\nsed -i '' -e s/AB_DISPLAY_VERSION/$DISPLAY_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\nsed -i '' -e s/AB_DATE_VERSION/$DATE_VERSION/g \"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\n";
 		};
 		AEFD87D713EB944800C1E687 /* Copy Scenario */ = {
 			isa = PBXShellScriptBuildPhase;

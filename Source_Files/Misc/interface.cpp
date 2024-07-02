@@ -1758,15 +1758,11 @@ static void display_about_dialog()
 	{
 		about_placer->dual_add(new w_static_text(expand_app_variables("$appName$ is powered by").c_str()), d);
 	}
-#ifdef HAVE_STEAM
-	about_placer->dual_add(new w_static_text(expand_app_variables("Aleph Bet $appVersion$ Steam ($appDate$)").c_str()), d);
-#else
 	about_placer->dual_add(new w_static_text(expand_app_variables("Aleph Bet $appVersion$ ($appDate$)").c_str()), d);
-#endif
 
 	about_placer->add(new w_spacer, true);
 
-	about_placer->dual_add(new w_hyperlink(A1_HOMEPAGE_URL), d);
+	about_placer->dual_add(new w_hyperlink(AB_HOMEPAGE_URL), d);
 
 	about_placer->add(new w_spacer(2 * get_theme_space(SPACER_WIDGET)), true);
 	

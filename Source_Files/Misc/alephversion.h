@@ -25,44 +25,46 @@
  *
  */
 
+// Version info for Aleph Bet itself
+#define AB_DISPLAY_NAME "Aleph Bet"
+#define AB_DISPLAY_VERSION "0.9.0"
+#define AB_CONTENT_VERSION 1
+#define AB_DATE_VERSION "20240702"
+#define AB_DATE_DISPLAY_VERSION "2024-07-02"
 
-#define A1_DISPLAY_NAME "Aleph Bet"
-#define A1_DISPLAY_VERSION "0.9.0"
-#define A1_DISPLAY_DATE_VERSION "2024-06-03"
-#define A1_DATE_VERSION "20240603"
+// Info for the Aleph One version we're compatible with
+#define A1_DISPLAY_VERSION "1.8.1"
+#define A1_DATE_VERSION "20240513" // used for Lua scripts and plugins
 
 #ifdef _WIN32
-#define WIN_VERSION_STRING 0,2024,6,3 // <-- don't forget to update that for windows releases
-#define A1_DISPLAY_PLATFORM "Windows"
-#define A1_UPDATE_PLATFORM "windows"
+#define WIN_VERSION_STRING 0,2024,5,13 // <-- don't forget to update that for windows releases
+#define AB_DISPLAY_PLATFORM "Windows"
+#define AB_UPDATE_PLATFORM "windows"
 #elif defined (__APPLE__) && defined(__MACH__)
-#ifdef MAC_APP_STORE
-#define A1_DISPLAY_PLATFORM "Mac OS X (App Store)"
-#define A1_UPDATE_PLATFORM "macappstore"
-#else
-#define A1_DISPLAY_PLATFORM "macOS"
-#define A1_UPDATE_PLATFORM "macosx"
-#endif
+#define AB_DISPLAY_PLATFORM "macOS"
+#define AB_UPDATE_PLATFORM "macosx"
 #elif defined (linux)
-#define A1_DISPLAY_PLATFORM "Linux"
-#define A1_UPDATE_PLATFORM "source"
+#define AB_DISPLAY_PLATFORM "Linux"
+#define AB_UPDATE_PLATFORM "source"
 #elif defined (__NetBSD__)
-#define A1_DISPLAY_PLATFORM "NetBSD"
-#define A1_UPDATE_PLATFORM "source"
+#define AB_DISPLAY_PLATFORM "NetBSD"
+#define AB_UPDATE_PLATFORM "source"
 #elif defined (__OpenBSD__)
-#define A1_DISPLAY_PLATFORM "OpenBSD"
-#define A1_UPDATE_PLATFORM "source"
+#define AB_DISPLAY_PLATFORM "OpenBSD"
+#define AB_UPDATE_PLATFORM "source"
 #else
-#define A1_DISPLAY_PLATFORM "Unknown"
-#define A1_UPDATE_PLATFORM "source"
+#define AB_DISPLAY_PLATFORM "Unknown"
+#define AB_UPDATE_PLATFORM "source"
 #endif
 
-#ifndef A1_VERSION_STRING
-#define A1_VERSION_STRING A1_DISPLAY_PLATFORM " " A1_DISPLAY_DATE_VERSION " " A1_DISPLAY_VERSION
+#ifndef AB_VERSION_STRING
+#define AB_VERSION_STRING AB_DISPLAY_PLATFORM " " AB_DISPLAY_VERSION
 #endif
 
-#define A1_HOMEPAGE_URL "https://aleph-bet-marathon.github.io/"
-#define A1_UPDATE_URL "https://aleph-bet-marathon.github.io/update_check/" A1_UPDATE_PLATFORM ".txt"
+#define AB_HOMEPAGE_URL "https://aleph-bet-marathon.github.io/"
+#define AB_UPDATE_URL "https://aleph-bet-marathon.github.io/update_check/" AB_UPDATE_PLATFORM ".txt"
+
+// For now, this is still the "Aleph One metaserver"
 #define A1_METASERVER_HOST "metaserver.lhowon.org"
 #define A1_METASERVER_LOGIN_URL "https://metaserver.lhowon.org/metaclient/login"
 #define A1_METASERVER_SIGNUP_URL "https://metaserver.lhowon.org/metaclient/signup"

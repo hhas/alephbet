@@ -59,8 +59,8 @@ BUILD_YEAR = `echo $(VERSION) | cut -c 1-4`
 BUILD_MONTH = `echo $(VERSION) | cut -c 5-6 | sed -e s/^0//`
 BUILD_DAY = `echo $(VERSION) | cut -c 7-8 | sed -e s/^0//`
 WIN_VERSION_STRING= 0, $(BUILD_YEAR), $(BUILD_MONTH), $(BUILD_DAY)
-A1_DISPLAY_VERSION= `grep '^\#define A1_DISPLAY_VERSION' $(srcdir)/Misc/alephversion.h | sed -e 's/\(.*\"\)\(.*\)\(\"\)/\2/g' | tr -d '\n'`
+AB_DISPLAY_VERSION= `grep '^\#define AB_DISPLAY_VERSION' $(srcdir)/Misc/alephversion.h | sed -e 's/\(.*\"\)\(.*\)\(\"\)/\2/g' | tr -d '\n'`
 endif
 
 alephbet-resources.o: $(top_srcdir)/Resources/Windows/alephbet.rc Misc/alephversion.h
-	sed -e "s/WIN_VERSION_STRING/$(WIN_VERSION_STRING)/g" -e "s/A1_DISPLAY_VERSION/$(A1_DISPLAY_VERSION)/g" $(top_srcdir)/Resources/Windows/alephbet.rc | @WINDRES@ -I$(top_srcdir)/Resources/Windows -o alephbet-resources.o
+	sed -e "s/WIN_VERSION_STRING/$(WIN_VERSION_STRING)/g" -e "s/AB_DISPLAY_VERSION/$(AB_DISPLAY_VERSION)/g" $(top_srcdir)/Resources/Windows/alephbet.rc | @WINDRES@ -I$(top_srcdir)/Resources/Windows -o alephbet-resources.o

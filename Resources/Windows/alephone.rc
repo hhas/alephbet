@@ -16,7 +16,7 @@ FILETYPE 1
    VALUE "LegalCopyright", "GNU General Public License Version 3"
    VALUE "OriginalFilename", "AlephBet.exe"
    VALUE "ProductName", "Aleph Bet"
-   VALUE "ProductVersion", A1_DISPLAY_VERSION "\0"
+   VALUE "ProductVersion", AB_DISPLAY_VERSION "\0"
    VALUE "URL", "https://aleph-bet-marathon.github.io/"
   }
  }

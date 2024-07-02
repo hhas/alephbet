@@ -94,7 +94,7 @@ setupAndConnectClient(MetaserverClient& client)
 			placer->dual_add(new w_static_text("Please download it from the App Store"), d);
 #else
 			placer->dual_add(new w_static_text("Please download it from"), d);
-			placer->dual_add(new w_hyperlink(A1_HOMEPAGE_URL), d);
+			placer->dual_add(new w_hyperlink(AB_HOMEPAGE_URL), d);
 #endif
 			placer->dual_add(new w_static_text("before playing games online."), d);
 			
@@ -129,7 +129,7 @@ GameAvailableMetaserverAnnouncer::GameAvailableMetaserverAnnouncer(const game_in
 	
 	// description's constructor gets scenario info, aleph bet's protocol ID for us
 	
-	description.m_alephbetBuildString = string(A1_DISPLAY_VERSION) + " (" + A1_DISPLAY_PLATFORM + ")";
+	description.m_alephbetBuildString = string(AB_DISPLAY_VERSION) + " (" + AB_DISPLAY_PLATFORM + ")";
 
 	bool HasPhysics, HasLua;
 	level_has_embedded_physics_lua(info.level_number, HasPhysics, HasLua);

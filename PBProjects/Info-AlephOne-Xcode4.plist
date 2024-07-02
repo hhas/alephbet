@@ -280,11 +280,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>A1_DISPLAY_VERSION</string>
+	<string>AB_DISPLAY_VERSION</string>
 	<key>CFBundleSignature</key>
-	<string>26.A</string>
+	<string>26.B</string>
 	<key>CFBundleVersion</key>
-	<string>A1_DATE_VERSION</string>
+	<string>AB_DISPLAY_VERSION</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.action-games</string>
 	<key>LSEnvironment</key>

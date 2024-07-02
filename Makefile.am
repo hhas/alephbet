@@ -106,12 +106,12 @@ $(WINZIP): Source_Files/AlephBet.exe
 	rm -rf "$(WINDISTDIR)"
 
 # flatpaks
-A1_FLATPAK=AlephBet-$(VERSION).flatpak
-a1-flatpak: $(A1_FLATPAK)
+AB_FLATPAK=AlephBet-$(VERSION).flatpak
+ab-flatpak: $(AB_FLATPAK)
 
-flatpaks: a1-flatpak
+flatpaks: ab-flatpak
 
-$(A1_FLATPAK):
+$(AB_FLATPAK):
 	flatpak-builder --repo=flatpak/repo --force-clean flatpak/AlephBet.build $(srcdir)/flatpak/org.bungie.source.AlephBet.yml
 	flatpak build-bundle flatpak/repo $@ org.bungie.source.AlephBet
 

@@ -79,7 +79,7 @@ void Update::StartUpdateCheck()
 int Update::Thread()
 {
 	HTTPClient fetcher;
-	if (!fetcher.Get(A1_UPDATE_URL))
+	if (!fetcher.Get(AB_UPDATE_URL))
 	{
 		m_status = UpdateCheckFailed;
 		return 1;
@@ -92,19 +92,19 @@ int Update::Thread()
 	     it != tokens.end();
 	     ++it)
 	{
-		if (boost::algorithm::starts_with(*it, "A1_DATE_VERSION: "))
+		if (boost::algorithm::starts_with(*it, "AB_DATE_VERSION: "))
 		{
-			m_new_date_version = it->substr(strlen("A1_DATE_VERSION: "));
+			m_new_date_version = it->substr(strlen("AB_DATE_VERSION: "));
 		}
-		else if (boost::algorithm::starts_with(*it, "A1_DISPLAY_VERSION: "))
+		else if (boost::algorithm::starts_with(*it, "AB_DISPLAY_VERSION: "))
 		{
-			m_new_display_version = it->substr(strlen("A1_DISPLAY_VERSION: "));
+			m_new_display_version = it->substr(strlen("AB_DISPLAY_VERSION: "));
 		}
 	}
 
 	if (m_new_date_version.size())
 	{
-		m_status = m_new_date_version.compare(A1_DATE_VERSION) > 0 ? UpdateAvailable : NoUpdateAvailable;
+		m_status = m_new_date_version.compare(AB_DATE_VERSION) > 0 ? UpdateAvailable : NoUpdateAvailable;
 		return 0;
 	}
 	else

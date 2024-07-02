@@ -58,7 +58,7 @@ make_dmg()
         cp "$SRCROOT/../examples/lua/Cheats.lua" "$extdir"
     fi
     
-    version=`grep '^#define A1_DATE_VERSION' "$SRCROOT/../Source_Files/Misc/alephversion.h" | sed -e 's/\(.*\"\)\(.*\)\(\"\)/\2/g'`
+    version=`grep '^#define AB_DISPLAY_VERSION' "$SRCROOT/../Source_Files/Misc/alephversion.h" | sed -e 's/\(.*\"\)\(.*\)\(\"\)/\2/g'`
     imgfile="$TARGET_BUILD_DIR/$imgname-$version-Mac.dmg"
     hdiutil create -ov -fs HFS+ -format ULFO -layout GPTSPUD -srcfolder "$diskdir" -volname "$appname" "$imgfile"
     if [ "$SIGNATURE" != "" ]; then

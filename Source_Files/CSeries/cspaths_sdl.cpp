@@ -157,7 +157,7 @@ std::string get_data_path(CSPathType type)
 
 std::string get_application_name()
 {
-	return std::string(A1_DISPLAY_NAME);
+	return std::string(AB_DISPLAY_NAME);
 }
 
 std::string get_application_identifier()
@@ -227,7 +227,7 @@ std::string get_data_path(CSPathType type)
 
 std::string get_application_name()
 {
-	return std::string(A1_DISPLAY_NAME);
+	return std::string(AB_DISPLAY_NAME);
 }
 
 std::string get_application_identifier()

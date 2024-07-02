@@ -367,11 +367,11 @@ std::string wide_to_utf8(const std::wstring& utf16) { return wide_to_utf8(utf16.
 void expand_app_variables_inplace(std::string& str)
 {
 	boost::replace_all(str, "$appName$", get_application_name());
-	boost::replace_all(str, "$appVersion$", A1_DISPLAY_VERSION);
-	boost::replace_all(str, "$appLongVersion$", A1_VERSION_STRING);
-	boost::replace_all(str, "$appDate$", A1_DISPLAY_DATE_VERSION);
-	boost::replace_all(str, "$appPlatform$", A1_DISPLAY_PLATFORM);
-	boost::replace_all(str, "$appURL$", A1_HOMEPAGE_URL);
+	boost::replace_all(str, "$appVersion$", AB_DISPLAY_VERSION);
+	boost::replace_all(str, "$appLongVersion$", AB_VERSION_STRING);
+	boost::replace_all(str, "$appPlatform$", AB_DISPLAY_PLATFORM);
+	boost::replace_all(str, "$appDate$", AB_DISPLAY_DATE_VERSION);
+	boost::replace_all(str, "$appURL$", AB_HOMEPAGE_URL);
 	boost::replace_all(str, "$appLogFile$", loggingFileName());
 	boost::replace_all(str, "$scenarioName$", Scenario::instance()->GetName());
 	boost::replace_all(str, "$scenarioVersion$", Scenario::instance()->GetVersion());

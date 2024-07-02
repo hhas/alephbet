@@ -54,7 +54,7 @@ int main(int argc, char** argv)
 #if !defined(DISABLE_NETWORKING)
 		"\nBuilt with network play enabled.\n"
 #endif
-		, app_name_version, A1_HOMEPAGE_URL
+		, app_name_version, AB_HOMEPAGE_URL
 	);
 
 	shell_options.parse(argc, argv);

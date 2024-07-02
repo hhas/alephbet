@@ -20,7 +20,7 @@ dnl Process this file with autoconf to produce a configure script.
 # not apply to Marathon, Marathon 2, or Marathon Infinity scenarios and
 # assets, nor to elements of any third-party scenarios.
 
-AC_INIT([Aleph Bet],m4_esyscmd([grep '^#define A1_DATE_VERSION' Source_Files/Misc/alephversion.h | sed -e 's/\(.*\"\)\(.*\)\(\"\)/\2/g' | tr -d '\n']),[https://github.com/Aleph-Bet-Marathon/alephbet/issues],[AlephBet],[https://aleph-bet-marathon.github.io/])
+AC_INIT([Aleph Bet],m4_esyscmd([grep '^#define AB_DISPLAY_VERSION' Source_Files/Misc/alephversion.h | sed -e 's/\(.*\"\)\(.*\)\(\"\)/\2/g' | tr -d '\n']),[https://github.com/Aleph-Bet-Marathon/alephbet/issues],[AlephBet],[https://aleph-bet-marathon.github.io/])
 AC_CONFIG_SRCDIR([Source_Files/shell.cpp])
 AC_CONFIG_MACRO_DIR([m4])
 AC_PREREQ([2.69])
