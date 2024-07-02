@@ -13,6 +13,17 @@ cd "$(dirname $0)"
 
 # -----------------------------------------------------------------------------
 
+echo "Checking about screen fodder."
+if ! test Source_Files/Misc/a1-authors.h -nt authors-update.lua \
+|| ! test Source_Files/Misc/a1-authors.h -nt A1-AUTHORS \
+|| ! test Source_Files/Misc/ab-authors.h -nt authors-update.lua \
+|| ! test Source_Files/Misc/ab-authors.h -nt AB-AUTHORS; then
+    echo "About screen out of date. Please run authors-update.lua and rebuild."
+    exit 1
+fi
+
+# -----------------------------------------------------------------------------
+
 echo "Checking copyright notices."
 cargo run -q --release --manifest-path=copyright-check/Cargo.toml -- \
     --work "Aleph Bet" \
@@ -35,6 +46,7 @@ cargo run -q --release --manifest-path=copyright-check/Cargo.toml -- \
     --exclude '/Source_Files/Lua/README' \
     --include '/Source_Files/Lua/language_definition.h' \
     --include '/Source_Files/Lua/lua_*' \
+    --exclude '/Source_Files/Misc/a1-authors.h' \
     --exclude '/Source_Files/Misc/AlephSansMono-Bold.h' \
     --exclude '/Source_Files/Misc/CourierPrime*.h' \
     --exclude '/Source_Files/Misc/ProFontAO.h' \

@@ -748,7 +748,6 @@ bool join_networked_resume_game()
                                 // LP: getting the level scripting off of the map file
                                 // Being careful to carry over errors so that Pfhortran errors can be ignored
                                 short SavedType, SavedError = get_game_error(&SavedType);
-								LoadAchievementsLua();
 								LoadStatsLua();
                                 set_game_error(SavedType,SavedError);
                         }
@@ -764,7 +763,6 @@ bool join_networked_resume_game()
                                 /* Set to the default map. */
                                 set_to_default_map();
 
-								LoadAchievementsLua();
 								LoadStatsLua();
                         }
                         
@@ -855,7 +853,6 @@ bool load_and_start_game(FileSpecifier& File)
 			{
 				LoadSoloLua();
 			}
-			LoadAchievementsLua();
 			LoadStatsLua();
 			set_game_error(SavedType,SavedError);
 			
@@ -1743,18 +1740,16 @@ static void display_about_dialog()
 	vertical_placer* placer = new vertical_placer;
 	std::vector<std::string> labels;
 	labels.push_back("ABOUT");
-	labels.push_back("AUTHORS");
+	labels.push_back("ALEPH ONE");
+	labels.push_back("ALEPH BET");
 	w_tab *tab_w = new w_tab(labels, tabs);
-	
-	placer->dual_add(new w_title("ALEPH BET"), d);
-	placer->add(new w_spacer, true);
 
 	placer->dual_add(tab_w, d);
 	placer->add(new w_spacer, true);
 
 	vertical_placer* about_placer = new vertical_placer;
 	
-	if (strcmp(get_application_name().c_str(), "Aleph Bet") != 0)
+	if (get_application_name() != "Aleph Bet")
 	{
 		about_placer->dual_add(new w_static_text(expand_app_variables("$appName$ is powered by").c_str()), d);
 	}
@@ -1778,72 +1773,43 @@ static void display_about_dialog()
 
 	about_placer->dual_add(new w_static_text(expand_app_variables("Scenario loaded: $scenarioName$ $scenarioVersion$").c_str()), d);
 
-	vertical_placer *authors_placer = new vertical_placer();
+	vertical_placer *a1_authors_placer = new vertical_placer();
 	
-	authors_placer->dual_add(new w_static_text("Aleph Bet is based on the source code for Marathon 2 and"), d);
-	authors_placer->dual_add(new w_static_text("Marathon Infinity, which was developed by Bungie software."), d);
-	authors_placer->add(new w_spacer, true);
+	a1_authors_placer->dual_add(new w_static_text("Aleph Bet is based on the source code for Marathon 2 and"), d);
+	a1_authors_placer->dual_add(new w_static_text("Marathon Infinity, which was developed by Bungie Software."), d);
+	a1_authors_placer->add(new w_spacer, true);
 	
-	authors_placer->dual_add(new w_static_text("The enhancements and extensions to Marathon 2 and Marathon"), d);
-	authors_placer->dual_add(new w_static_text("Infinity that constitute Aleph Bet have been made by:"), d);
+	a1_authors_placer->dual_add(new w_static_text("The enhancements and extensions to Marathon 2 and Marathon"), d);
+	a1_authors_placer->dual_add(new w_static_text("Infinity that constitute Aleph Bet have been made by:"), d);
 
-	authors_placer->add(new w_spacer, true);
+	a1_authors_placer->add(new w_spacer, true);
 
-	std::vector<std::string> authors;
-	authors.push_back("Joey Adams");
-	authors.push_back("Michael Adams (mdmkolbe)");
-	authors.push_back("Falko Axmann");
-	authors.push_back("Christian Bauer");
-	authors.push_back("Mike Benonis");
-	authors.push_back("Steven Bytnar");
-	authors.push_back("Glen Ditchfield");
-	authors.push_back("Will Dyson");
-	authors.push_back("Carl Gherardi");
-	authors.push_back("Thomas Herzog");
-	authors.push_back("Chris Hallock (LidMop)");
-	authors.push_back(utf8_to_mac_roman("Benoît Hauquier (Kolfering)"));
-	authors.push_back("Peter Hessler");
-	authors.push_back("Matthew Hielscher");
-	authors.push_back("Rhys Hill");
-	authors.push_back("Alan Jenkins");
-	authors.push_back("Richard Jenkins (Solra Bizna)");
-	authors.push_back("Jeremy, the MSVC guy");
-	authors.push_back("Mark Levin");
-	authors.push_back("Bo Lindbergh");
-	authors.push_back("Chris Lovell");
-	authors.push_back("Jesse Luehrs");
-	authors.push_back("Marshall (darealshinji)");
-	authors.push_back("Derek Moeller");
-	authors.push_back("Jeremiah Morris");
-	authors.push_back("Sam Morris");
-	authors.push_back("Benoit Nadeau (Benad)");
-	authors.push_back("Mihai Parparita");
-	authors.push_back("Jeremy Parsons (brefin)");
-	authors.push_back("Eric Peterson");
-	authors.push_back("Loren Petrich");
-	authors.push_back("Ian Pitcher");
-	authors.push_back("Chris Pruett");
-	authors.push_back("Matthew Reda");
-	authors.push_back("Ian Rickard");
-	authors.push_back("Etienne Samson (tiennou)");
-	authors.push_back("Catherine Seppanen");
-	authors.push_back("Gregory Smith (treellama)");
-	authors.push_back("Scott Smith (pickle136)");
-	authors.push_back("Wolfgang Sourdeau");
-	authors.push_back("Peter Stirling");
-	authors.push_back("Alexander Strange (mrvacbob)");
-	authors.push_back("Alexei Svitkine");
-	authors.push_back("Ben Thompson");
-	authors.push_back("TrajansRow");
-	authors.push_back("Clemens Unterkofler (hogdotmac)");
-	authors.push_back("James Willson");
-	authors.push_back("Woody Zenfell III");
+	{
+		std::vector<std::string> authors;
+#include "a1-authors.h"
+		w_authors_list *a1_authors_w = new w_authors_list(authors, &d);
+		a1_authors_placer->dual_add(a1_authors_w, d);
+	}
 
-	w_authors_list *authors_w = new w_authors_list(authors, &d);
-	authors_placer->dual_add(authors_w, d);
+	vertical_placer *ab_authors_placer = new vertical_placer();
+	
+	ab_authors_placer->dual_add(new w_static_text("Aleph Bet is a direct descendent of Aleph One, and"), d);
+	ab_authors_placer->dual_add(new w_static_text("benefits from all enhancements and extensions"), d);
+	ab_authors_placer->dual_add(new w_static_text("by that project's contributors."), d);
+	ab_authors_placer->add(new w_spacer, true);	
+	ab_authors_placer->dual_add(new w_static_text("Additional contributions have been made by:"), d);
+	ab_authors_placer->add(new w_spacer, true);
+
+	{
+		std::vector<std::string> authors;
+#include "ab-authors.h"
+		w_authors_list *ab_authors_w = new w_authors_list(authors, &d);
+		ab_authors_placer->dual_add(ab_authors_w, d);
+	}
 
 	tabs->add(about_placer, true);
-	tabs->add(authors_placer, true);
+	tabs->add(a1_authors_placer, true);
+	tabs->add(ab_authors_placer, true);
 
 	placer->add(tabs, true);
 	
