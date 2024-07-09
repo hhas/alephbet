@@ -3,3 +3,4 @@
 
 ab_authors.push_back("Solra Bizna");
 ab_authors.push_back("Aaron Freed");
+ab_authors.push_back("ObsidianCarnageX12");
