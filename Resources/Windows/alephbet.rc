@@ -26,7 +26,7 @@ FILETYPE 1
  }
 }
 
-//AppIcon ICON "alephbet.ico" //Uncomment this once icon is in place.
+AppIcon ICON "alephbet.ico"
 FilmIcon ICON "FilmIcon.ico"
 ImagesIcon ICON "ImagesIcon.ico"
 MMLIcon ICON "MMLIcon.ico"
