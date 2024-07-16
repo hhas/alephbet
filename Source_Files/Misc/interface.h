@@ -377,7 +377,7 @@ enum {	// Results for network_join
         kNetworkJoinedResumeGame
 };
 
-bool network_gather(bool inResumingGame);
+bool network_gather(bool inResumingGame, bool& outUseRemoteHub);
 int network_join(void);
 
 /* ---------- prototypes/PHYSICS.C */

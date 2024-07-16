@@ -35,6 +35,17 @@
 
 #ifdef HAVE_OPENGL
 
+// Texture mapping
+struct TxtrTypeInfoData
+{
+	GLenum NearFilter;			// OpenGL parameter for near filter (GL_NEAREST, etc.)
+	GLenum FarFilter;			// OpenGL parameter for far filter (GL_NEAREST, etc.)
+	int Resolution;				// 0 is full-sized, 1 is half-sized, 2 is fourth-sized
+	GLenum ColorFormat;			// OpenGL parameter for stored color format (RGBA8, etc.)
+};
+
+extern TxtrTypeInfoData TxtrTypeInfoList[];
+
 // Initialize the texture accounting
 void OGL_StartTextures();
 

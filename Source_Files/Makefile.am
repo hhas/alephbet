@@ -42,6 +42,10 @@ alephbet_LDADD = \
   RenderMain/librendermain.a RenderOther/librenderother.a Sound/libsound.a \
   TCPMess/libtcpmess.a XML/libxml.a
 
+standalone_hub_SOURCES = shell.h shell.cpp shell_misc.cpp shell_options.h shell_options.cpp Network/StandaloneHub/standalone_hub_main.cpp
+
+standalone_hub_LDADD = $(alephbet_LDADD) Network/StandaloneHub/libstandalonehub.a
+
 AM_CPPFLAGS = -I$(top_srcdir)/Source_Files/CSeries -I$(top_srcdir)/Source_Files/Files \
   -I$(top_srcdir)/Source_Files/GameWorld -I$(top_srcdir)/Source_Files/Input \
   -I$(top_srcdir)/Source_Files/Lua -I$(top_srcdir)/Source_Files/Misc \
@@ -54,12 +58,17 @@ AM_CPPFLAGS = -I$(top_srcdir)/Source_Files/CSeries -I$(top_srcdir)/Source_Files/
 AlephBet_LDADD = $(alephbet_LDADD) alephbet-resources.o
 AlephBet_SOURCES = $(alephbet_SOURCES)
 
+if STANDALONE_HUB
+bin_PROGRAMS = standalone_hub
+else
 if MAKE_WINDOWS
 BUILD_YEAR = `echo $(VERSION) | cut -c 1-4`
 BUILD_MONTH = `echo $(VERSION) | cut -c 5-6 | sed -e s/^0//`
 BUILD_DAY = `echo $(VERSION) | cut -c 7-8 | sed -e s/^0//`
 WIN_VERSION_STRING= 0, $(BUILD_YEAR), $(BUILD_MONTH), $(BUILD_DAY)
 AB_DISPLAY_VERSION= `grep '^\#define AB_DISPLAY_VERSION' $(srcdir)/Misc/alephversion.h | sed -e 's/\(.*\"\)\(.*\)\(\"\)/\2/g' | tr -d '\n'`
+endif
+bin_PROGRAMS = alephbet
 endif
 
 alephbet-resources.o: $(top_srcdir)/Resources/Windows/alephbet.rc Misc/alephversion.h

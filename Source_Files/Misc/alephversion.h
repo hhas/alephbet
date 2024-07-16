@@ -29,15 +29,15 @@
 #define AB_DISPLAY_NAME "Aleph Bet"
 #define AB_DISPLAY_VERSION "0.9.0"
 #define AB_CONTENT_VERSION 1
-#define AB_DATE_VERSION "20240702"
-#define AB_DATE_DISPLAY_VERSION "2024-07-02"
+#define AB_DATE_VERSION "20240716"
+#define AB_DATE_DISPLAY_VERSION "2024-07-16"
 
 // Info for the Aleph One version we're compatible with
 #define A1_DISPLAY_VERSION "1.8.1"
-#define A1_DATE_VERSION "20240513" // used for Lua scripts and plugins
+#define A1_DATE_VERSION "20240712" // used for Lua scripts and plugins
 
 #ifdef _WIN32
-#define WIN_VERSION_STRING 0,2024,5,13 // <-- don't forget to update that for windows releases
+#define WIN_VERSION_STRING 0,9,0,0 // <-- don't forget to update that for windows releases
 #define AB_DISPLAY_PLATFORM "Windows"
 #define AB_UPDATE_PLATFORM "windows"
 #elif defined (__APPLE__) && defined(__MACH__)

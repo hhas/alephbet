@@ -31,7 +31,7 @@
 #include "sdl_network.h"
 
 // We avoid including half the world just to get TICKS_PER_SECOND for standalone hub...
-#ifndef A1_NETWORK_STANDALONE_HUB
+#ifndef AB_NETWORK_STANDALONE_HUB
 # include "map.h" // TICKS_PER_SECOND
 #else
 enum {
@@ -68,9 +68,10 @@ typedef WritableTickBasedCircularQueue<action_flags_t> WritableTickBasedActionQu
 
 class InfoTree;
 
-extern void hub_initialize(int32 inStartingTick, size_t inNumPlayers, const NetAddrBlock* const* inPlayerAddresses, size_t inLocalPlayerIndex);
+extern void hub_initialize(int32 inStartingTick, int inNumPlayers, const NetAddrBlock* const* inPlayerAddresses, int inLocalPlayerIndex);
 extern void hub_cleanup(bool inGraceful, int32 inSmallestPostGameTick);
 extern void hub_received_network_packet(DDPPacketBufferPtr inPacket);
+extern bool hub_is_active();
 extern void DefaultHubPreferences();
 extern InfoTree HubPreferencesTree();
 extern void HubParsePreferencesTree(InfoTree prefs, std::string version);

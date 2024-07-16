@@ -104,6 +104,7 @@ struct network_preferences_data
 	uint16 cheat_flags;
 	bool advertise_on_metaserver;
 	bool attempt_upnp;
+	bool use_remote_hub;
 	bool check_for_updates;
 	bool verify_https;
 
@@ -120,6 +121,14 @@ struct network_preferences_data
 	bool allow_stats;
 };
 
+enum SoloProfileType {
+	_solo_profile_aleph_one,
+	_solo_profile_unused,		// hope springs eternal
+	_solo_profile_marathon_2,
+	_solo_profile_marathon_infinity,
+	NUMBER_OF_SOLO_PROFILE_TYPES
+};
+
 struct player_preferences_data
 {
 	char name[PREFERENCES_NAME_LENGTH+1];
@@ -131,6 +140,8 @@ struct player_preferences_data
 	bool crosshairs_active;
 	struct ChaseCamData ChaseCam;
 	struct CrosshairData Crosshairs;
+
+	int solo_profile;
 };
 
 // LP addition: input-modifier flags
@@ -231,7 +242,7 @@ struct environment_preferences_data
 	bool use_replay_net_lua;
 	bool hide_extensions;
 
-	FilmProfileType film_profile;
+	FilmProfileType film_profile; // for legacy films
 
 	// Marathon 1 resources from the application itself
 	char resources_file[256];
