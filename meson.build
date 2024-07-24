@@ -57,7 +57,7 @@ libswresample_dep = dependency('libswresample')
 libswscale_dep = dependency('libswscale')
 sndfile_dep = dependency('sndfile')
 m_dep = cpp.find_library('m', required: false)
-# Always use the subprojcet for miniupnpc, because updates to it occasionally
+# Always use the subproject for miniupnpc, because updates to it occasionally
 # break the API.
 miniupnpc_dep = subproject('miniupnpc').get_variable('miniupnpc_dep')
 openal_dep = dependency('openal')
