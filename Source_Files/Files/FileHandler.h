@@ -31,7 +31,7 @@
 #include <stddef.h>	// For size_t
 #include <time.h>	// For time_t
 #include <vector>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include <errno.h>
 #include <string>

@@ -25,7 +25,7 @@
 #ifndef __SDL__NETWORK_H
 #define __SDL__NETWORK_H
 
-#include <SDL2/SDL_net.h>
+#include <SDL_net.h>
 #include <string>
 
 #include "cseries.h"

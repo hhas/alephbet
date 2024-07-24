@@ -95,10 +95,10 @@ static void shutdown_images_handler(void);
 static void draw_picture(LoadedResource &PictRsrc);
 
 
-#include <SDL2/SDL_endian.h>
+#include <SDL_endian.h>
 
 #ifdef HAVE_SDL_IMAGE
-#include <SDL2/SDL_image.h>
+#include <SDL_image.h>
 #endif
 
 #include "byte_swapping.h"

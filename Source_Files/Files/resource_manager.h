@@ -32,7 +32,7 @@
 #include "cstypes.h"
 #include <stdio.h>
 #include <vector>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #ifndef NO_STD_NAMESPACE
 using std::vector;

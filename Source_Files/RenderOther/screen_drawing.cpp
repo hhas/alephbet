@@ -37,7 +37,7 @@
 #include "sdl_fonts.h"
 #include <string.h>
 
-#include <SDL2/SDL_ttf.h>
+#include <SDL_ttf.h>
 #include "preferences.h"
 
 #define clutSCREEN_COLORS 130

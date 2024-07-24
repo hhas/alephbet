@@ -1,0 +1,9 @@
+[wrap-git]
+directory = miniupnpc
+url = https://github.com/transmission/miniupnpc.git
+revision = miniupnpd_2_3_6
+depth = 1
+patch_directory = miniupnpc-patch-overlay
+
+[provide]
+miniupnpc = miniupnpc_dep

@@ -29,7 +29,7 @@
 #include "FileHandler.h"
 #include "Logging.h"
 
-#include <SDL2/SDL_endian.h>
+#include <SDL_endian.h>
 #include <vector>
 #include <map>
 

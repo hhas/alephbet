@@ -42,3 +42,7 @@ lib*.a
 /data/powered_by_alephbet*.bmp
 /data/ab-icon/win*.png
 /data/ab-icon/*.iconset
+
+/subprojects/*/
+!/subprojects/packagefiles/
+

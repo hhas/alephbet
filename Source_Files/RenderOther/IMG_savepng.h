@@ -24,7 +24,7 @@
 
   Keyword support added 12-26-2009 by Gregory Smith
  */
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #ifdef __cplusplus
 extern "C" {

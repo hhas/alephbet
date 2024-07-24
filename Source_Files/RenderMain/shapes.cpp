@@ -58,7 +58,7 @@
 #include "Packing.h"
 #include "SW_Texture_Extras.h"
 
-#include <SDL2/SDL_rwops.h>
+#include <SDL_rwops.h>
 #include <memory>
 
 #include "Plugins.h"
@@ -174,7 +174,7 @@ static struct high_level_shape_definition *get_high_level_shape_definition(short
 static struct bitmap_definition *get_bitmap_definition(short collection_index, short bitmap_index);
 
 
-#include <SDL2/SDL_endian.h>
+#include <SDL_endian.h>
 #include "byte_swapping.h"
 
 /*

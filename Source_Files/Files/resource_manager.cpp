@@ -26,7 +26,7 @@
  *  resource_manager.cpp - MacOS resource handling for non-Mac platforms
  */
 
-#include <SDL2/SDL_endian.h>
+#include <SDL_endian.h>
 
 #include "cseries.h"
 #include "resource_manager.h"

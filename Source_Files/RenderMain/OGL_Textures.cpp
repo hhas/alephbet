@@ -40,8 +40,8 @@
 
 #include "preferences.h"
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_endian.h>
+#include <SDL.h>
+#include <SDL_endian.h>
 #include "interface.h"
 #include "render.h"
 #include "map.h"

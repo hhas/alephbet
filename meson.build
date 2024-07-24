@@ -3,30 +3,30 @@ project('alephbet', ['c', 'cpp'],
 
 cpp = meson.get_compiler('cpp')
 
-add_global_arguments('-DSDL', language: ['c', 'cpp'])
-add_global_arguments('-DHAVE_CURL', language: ['c', 'cpp'])
-add_global_arguments('-DHAVE_FFMPEG', language: ['c', 'cpp'])
-add_global_arguments('-DHAVE_MINIUPNPC', language: ['c', 'cpp'])
-add_global_arguments('-DHAVE_OPENGL', language: ['c', 'cpp'])
-add_global_arguments('-DHAVE_PNG', language: ['c', 'cpp'])
-add_global_arguments('-DHAVE_SDL_IMAGE', language: ['c', 'cpp'])
-add_global_arguments('-DHAVE_ZZIP', language: ['c', 'cpp'])
+add_project_arguments('-DSDL', language: ['c', 'cpp'])
+add_project_arguments('-DHAVE_CURL', language: ['c', 'cpp'])
+add_project_arguments('-DHAVE_FFMPEG', language: ['c', 'cpp'])
+add_project_arguments('-DHAVE_MINIUPNPC', language: ['c', 'cpp'])
+add_project_arguments('-DHAVE_OPENGL', language: ['c', 'cpp'])
+add_project_arguments('-DHAVE_PNG', language: ['c', 'cpp'])
+add_project_arguments('-DHAVE_SDL_IMAGE', language: ['c', 'cpp'])
+add_project_arguments('-DHAVE_ZZIP', language: ['c', 'cpp'])
 
 if cpp.has_header('pwd.h')
-    add_global_arguments('-DHAVE_PWD_H', language: ['c', 'cpp'])
+    add_project_arguments('-DHAVE_PWD_H', language: ['c', 'cpp'])
 endif
 
 if cpp.has_header('unistd.h')
-    add_global_arguments('-DHAVE_UNISTD_H', language: ['c', 'cpp'])
+    add_project_arguments('-DHAVE_UNISTD_H', language: ['c', 'cpp'])
 endif
 
 if cpp.has_header_symbol('unistd.h', '_SC_NPROCESSORS_ONLN')
     # TODO: take this out when ffmpeg is removed
-    add_global_arguments('-DHAVE_SYSCONF', language: ['c', 'cpp'])
+    add_project_arguments('-DHAVE_SYSCONF', language: ['c', 'cpp'])
 endif
 
 if cpp.has_header_symbol('stdlib.h', 'mkstemp')
-    add_global_arguments('-DLUA_USE_MKSTEMP', language: ['c', 'cpp'])
+    add_project_arguments('-DLUA_USE_MKSTEMP', language: ['c', 'cpp'])
 endif
 
 dsound_dep = dependency('', required: false)
@@ -50,7 +50,6 @@ gl_dep = dependency('gl')
 glu_dep = dependency('glu')
 libavcodec_dep = dependency('libavcodec')
 libavutil_dep = dependency('libavutil')
-libavfilter_dep = dependency('libavfilter')
 libavformat_dep = dependency('libavformat')
 libcurl_dep = dependency('libcurl')
 libpng_dep = dependency('libpng')
@@ -58,9 +57,11 @@ libswresample_dep = dependency('libswresample')
 libswscale_dep = dependency('libswscale')
 sndfile_dep = dependency('sndfile')
 m_dep = cpp.find_library('m', required: false)
-miniupnpc_dep = dependency('miniupnpc')
+# Always use the subprojcet for miniupnpc, because updates to it occasionally
+# break the API.
+miniupnpc_dep = subproject('miniupnpc').get_variable('miniupnpc_dep')
 openal_dep = dependency('openal')
-sdl2_dep = dependency('sdl2')
+sdl2_dep = dependency('sdl2', allow_fallback: host_machine.system() in ['windows', 'darwin'])
 sdl2_image_dep = dependency('sdl2_image')
 sdl2_ttf_dep = dependency('sdl2_ttf')
 sdl2_net_dep = dependency('sdl2_net')
@@ -320,7 +321,6 @@ executable('alephbet',
     glu_dep,
     libavcodec_dep,
     libavutil_dep,
-    libavfilter_dep,
     libavformat_dep,
     libpng_dep,
     libswresample_dep,

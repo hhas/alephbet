@@ -1,0 +1,9 @@
+[wrap-git]
+directory = zziplib
+url = https://github.com/gdraheim/zziplib.git
+revision = v0.13.77
+depth = 1
+patch_directory = zziplib-patch-overlay
+
+[provide]
+zziplib = zziplib_dep

@@ -29,7 +29,7 @@
 #include <vector>
 #include <memory>
 #include <functional>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #ifndef NO_STD_NAMESPACE
 using std::vector;

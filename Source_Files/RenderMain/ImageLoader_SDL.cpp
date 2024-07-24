@@ -26,7 +26,7 @@
 #include "FileHandler.h"
 
 #ifdef HAVE_SDL_IMAGE
-#include <SDL2/SDL_image.h>
+#include <SDL_image.h>
 #endif
 
 #include <cmath>

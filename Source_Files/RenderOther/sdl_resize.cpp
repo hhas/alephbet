@@ -16,7 +16,7 @@
 #include <cmath>
 #include <vector>
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include "sdl_resize.h"
 

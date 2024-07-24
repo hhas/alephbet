@@ -29,7 +29,7 @@
 */
 
 #include <string.h>	// memcpy
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 typedef Uint16 MessageTypeID;
 

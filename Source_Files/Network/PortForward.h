@@ -28,7 +28,7 @@ UPNPC.H
 #include <stdexcept>
 #include <memory>
 
-#include <miniupnpc/miniupnpc.h>
+#include <miniupnpc.h>
 
 class PortForwardException : public std::runtime_error {
 public:

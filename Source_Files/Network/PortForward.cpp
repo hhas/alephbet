@@ -4,7 +4,7 @@
 
 #include <sstream>
 
-#include <miniupnpc/upnpcommands.h>
+#include <upnpcommands.h>
 
 PortForward::PortForward(uint16_t port) :
 	port_{std::to_string(port)},
