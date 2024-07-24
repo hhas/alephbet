@@ -61,6 +61,8 @@ m_dep = cpp.find_library('m', required: false)
 # break the API.
 miniupnpc_dep = subproject('miniupnpc').get_variable('miniupnpc_dep')
 openal_dep = dependency('openal')
+# Do not use the subproject for sdl2 on platforms where it is likely to produce
+# a non-working build. ("No available video device")
 sdl2_dep = dependency('sdl2', allow_fallback: host_machine.system() in ['windows', 'darwin'])
 sdl2_image_dep = dependency('sdl2_image')
 sdl2_ttf_dep = dependency('sdl2_ttf')
