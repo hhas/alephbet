@@ -33,6 +33,8 @@
 #include <vector>
 #include <SDL.h>
 
+#include <filesystem>
+
 #include <errno.h>
 #include <string>
 #ifndef NO_STD_NAMESPACE
@@ -89,7 +91,7 @@ public:
 	typedef boost::iostreams::seekable_device_tag category;
 	std::streamsize read(char* s, std::streamsize n);
 	std::streamsize write(const char* s, std::streamsize n);
-	std::streampos seek(boost::iostreams::stream_offset off, std::ios_base::seekdir way);
+	std::streampos seek(ssize_t off, std::ios_base::seekdir way);
 
 	opened_file_device(OpenedFile& f);
 
@@ -186,8 +188,8 @@ private:
 
 // Directory entry, returned by FileSpecifier::ReadDirectory()
 struct dir_entry {
-	dir_entry() : is_directory(false), date(0) {}
-	dir_entry(const string& n, bool is_dir, TimeType d = 0) : name(n), is_directory(is_dir), date(d) {}
+	dir_entry() : is_directory(false), date() {}
+	dir_entry(const string& n, bool is_dir, std::filesystem::file_time_type d = {}) : name(n), is_directory(is_dir), date(d) {}
 
 	bool operator<(const dir_entry &other) const
 	{
@@ -203,7 +205,7 @@ struct dir_entry {
 
 	string name;		// Entry name
 	bool is_directory;	// Entry is a directory (plain file otherwise)
-	TimeType date;          // modification date
+	std::filesystem::file_time_type date;          // modification date
 };
 
 

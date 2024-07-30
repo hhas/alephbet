@@ -1575,19 +1575,19 @@ static bool _ParseMMLDirectory(DirectorySpecifier& dir, bool load_menu_mml_only)
 	sort(de.begin(), de.end());
 	
 	// Parse each file
-	vector<dir_entry>::const_iterator i, end = de.end();
-	for (i=de.begin(); i!=end; i++) {
-		if (i->is_directory)
+	const string lua_ext {".lua"};
+	for (const auto& i : de) {
+		if (i.is_directory)
 			continue;
-		if (i->name[i->name.length() - 1] == '~')
+		if (i.name[i.name.length() - 1] == '~')
 			continue;
 		// people stick Lua scripts in Scripts/
-		if (boost::algorithm::ends_with(i->name, ".lua"))
+		if (i.name.find(lua_ext, i.name.length() - lua_ext.length()) == lua_ext.length())
 			continue;
-		
+
 		// Construct full path name
-		FileSpecifier file_name = dir + i->name;
-		
+		FileSpecifier file_name = dir + i.name;
+
 		// Parse file
 		ParseMMLFromFile(file_name, load_menu_mml_only);
 	}

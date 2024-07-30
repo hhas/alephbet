@@ -29,6 +29,7 @@
  *  Plugins.h - a plugin manager
  */
 
+#include <filesystem>
 #include <list>
 #include <map>
 #include <set>
@@ -103,8 +104,8 @@ public:
 
 	void load_shapes_patches(bool opengl);
 
-	bool disable(const boost::filesystem::path& path);
-	bool enable(const boost::filesystem::path& path);
+	bool disable(const std::filesystem::path& path);
+	bool enable(const std::filesystem::path& path);
 
 	iterator begin() { return m_plugins.begin(); }
 	iterator end() { return m_plugins.end(); }

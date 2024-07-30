@@ -44,6 +44,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <limits.h>
+#include <chrono>
 #include <string>
 #include <vector>
 #include <functional>
@@ -78,15 +79,13 @@
 #include "preferences.h"
 
 #include <boost/algorithm/string/predicate.hpp>
-#include <boost/filesystem.hpp>
 
 #ifdef HAVE_NFD
 #include "nfd.h"
 #endif
 
 namespace io = boost::iostreams;
-namespace sys = boost::system;
-namespace fs = boost::filesystem;
+namespace fs = std::filesystem;
 
 // From shell_sdl.cpp
 extern vector<DirectorySpecifier> data_search_path;
@@ -101,10 +100,18 @@ constexpr int o_binary = O_BINARY;
 constexpr int o_binary = 0;
 #endif
 
-static int to_posix_code_or_unknown(sys::error_code ec)
+static int to_posix_code_or_unknown(std::error_code ec)
 {
 	const auto cond = ec.default_error_condition();
-	return cond.category() == sys::generic_category() ? cond.value() : unknown_filesystem_error;
+	return cond.category() == std::generic_category() ? cond.value() : unknown_filesystem_error;
+}
+
+static time_t convert_to_timetype(const fs::file_time_type& time) {
+	// this is cursed but we have to do this without c++20
+	const auto system_time = std::chrono::system_clock::now();
+	const auto file_time = fs::file_time_type::clock::now();
+	const auto converted_time_point = time - file_time + system_time;
+	return std::chrono::system_clock::to_time_t(converted_time_point);
 }
 
 #ifdef __WIN32__
@@ -236,7 +243,7 @@ std::streamsize opened_file_device::write(const char* s, std::streamsize n)
 	return SDL_RWwrite(f.GetRWops(), s, 1, n);
 }
 
-std::streampos opened_file_device::seek(io::stream_offset off, std::ios_base::seekdir way)
+std::streampos opened_file_device::seek(ssize_t off, std::ios_base::seekdir way)
 {
 	std::streampos pos;
 
@@ -388,7 +395,7 @@ bool FileSpecifier::Create(Typecode Type)
 // Create directory
 bool FileSpecifier::CreateDirectory()
 {
-	sys::error_code ec;
+	std::error_code ec;
 	const bool created_dir = fs::create_directory(utf8_to_path(name), ec);
 	err = ec.value() == 0 ? (created_dir ? 0 : EEXIST) : to_posix_code_or_unknown(ec);
 	return err == 0;
@@ -516,7 +523,7 @@ bool FileSpecifier::Exists()
 
 bool FileSpecifier::IsDir()
 {
-	sys::error_code ec;
+	std::error_code ec;
 	const bool is_dir = fs::is_directory(utf8_to_path(name), ec);
 	err = to_posix_code_or_unknown(ec);
 	return err == 0 && is_dir;
@@ -525,35 +532,32 @@ bool FileSpecifier::IsDir()
 // Get modification date
 TimeType FileSpecifier::GetDate()
 {
-	sys::error_code ec;
+	std::error_code ec;
 	const auto mtime = fs::last_write_time(utf8_to_path(name), ec);
 	err = to_posix_code_or_unknown(ec);
-	return err == 0 ? mtime : 0;
+	return err == 0 ? convert_to_timetype(mtime) : 0;
 }
 
-static const char * alephbet_extensions[] = {
-	".sceA",
-	".sgaA",
-	".filA",
-	".phyA",
-	".shpA",
-	".sndA",
-	0
+static const std::vector<string> alephbet_extensions = {
+	{".sceA"},
+	{".sgaA"},
+	{".filA"},
+	{".phyA"},
+	{".shpA"},
+	{".sndA"},
 };
 
 std::string FileSpecifier::HideExtension(const std::string& filename)
 {
 	if (environment_preferences->hide_extensions)
 	{
-		const char **extension = alephbet_extensions;
-		while (*extension)
-		{
-			if (boost::algorithm::ends_with(filename, *extension))
+		for (const auto& extension : alephbet_extensions) {
+			const auto match_pos = filename.length() - extension.length();
+			const auto extension_pos = filename.rfind(extension);
+			if (extension_pos == match_pos)
 			{
-				return filename.substr(0, filename.length() - strlen(*extension));
+				return filename.substr(0, match_pos);
 			}
-			
-		++extension;
 		}
 	}
 
@@ -699,7 +703,7 @@ bool FileSpecifier::GetFreeSpace(uint32 &FreeSpace)
 // Delete file
 bool FileSpecifier::Delete()
 {
-	sys::error_code ec;
+	std::error_code ec;
 	const bool removed = fs::remove(utf8_to_path(name), ec);
 	err = ec.value() == 0 ? (removed ? 0 : ENOENT) : to_posix_code_or_unknown(ec);
 	return err == 0;
@@ -707,7 +711,7 @@ bool FileSpecifier::Delete()
 
 bool FileSpecifier::Rename(const FileSpecifier& Destination)
 {
-	sys::error_code ec;
+	std::error_code ec;
 	fs::rename(utf8_to_path(name), utf8_to_path(Destination.name), ec);
 	err = to_posix_code_or_unknown(ec);
 	return err == 0;
@@ -810,7 +814,9 @@ bool FileSpecifier::SetNameWithPath(const char* NameWithPath, const DirectorySpe
 
 void FileSpecifier::SetTempName(const FileSpecifier& other)
 {
-	name = other.name + fs::unique_path("%%%%%%").string();
+	char tempname[L_tmpnam];
+	std::tmpnam(tempname);
+	name = other.name + tempname;
 }
 
 // Get last element of path
@@ -889,15 +895,15 @@ bool FileSpecifier::ReadDirectory(vector<dir_entry> &vec)
 {
 	vec.clear();
 	
-	sys::error_code ec;
+	std::error_code ec;
 	for (fs::directory_iterator it(utf8_to_path(name), ec), end; it != end; it.increment(ec))
 	{
 		const auto& entry = *it;
-		sys::error_code ignored_ec;
+		std::error_code ignored_ec;
 		const auto type = entry.status(ignored_ec).type();
-		const bool is_dir = type == fs::directory_file;
+		const bool is_dir = type == fs::file_type::directory;
 		
-		if (!(is_dir || type == fs::regular_file))
+		if (!(is_dir || type == fs::file_type::regular))
 			continue; // skip special or failed-to-stat files
 		
 		const auto basename = entry.path().filename();
@@ -1008,7 +1014,8 @@ public:
 		else
 		{
 			char date[256];
-			tm *time_info = localtime(&i->date);
+			auto time = convert_to_timetype(i->date);
+			tm *time_info = localtime(&time);
 
 			if (time_info) 
 			{

@@ -34,7 +34,7 @@
 #include "Scenario.h"
 
 #include <map>
-#include <boost/algorithm/string/replace.hpp>
+#include <regex>
 
 #ifdef __WIN32__
 #define WIN32_LEAN_AND_MEAN
@@ -360,21 +360,27 @@ std::string wide_to_utf8(const wchar_t* utf16)      { return wide_to_utf8(utf16,
 std::string wide_to_utf8(const std::wstring& utf16) { return wide_to_utf8(utf16.c_str(), utf16.size()); }
 #endif // __WIN32__
 
-
+namespace {
+	// TODO: Replace this!
+	void lazy_replace_all(std::string& str, const std::string& pattern, const std::string& replacement) {
+		std::regex regex(pattern);
+		str = std::regex_replace(str, regex, replacement);
+	}
+}
 /*
  *  Substitute special variables like application name or version
  */
 void expand_app_variables_inplace(std::string& str)
 {
-	boost::replace_all(str, "$appName$", get_application_name());
-	boost::replace_all(str, "$appVersion$", AB_DISPLAY_VERSION);
-	boost::replace_all(str, "$appLongVersion$", AB_VERSION_STRING);
-	boost::replace_all(str, "$appPlatform$", AB_DISPLAY_PLATFORM);
-	boost::replace_all(str, "$appDate$", AB_DATE_DISPLAY_VERSION);
-	boost::replace_all(str, "$appURL$", AB_HOMEPAGE_URL);
-	boost::replace_all(str, "$appLogFile$", loggingFileName());
-	boost::replace_all(str, "$scenarioName$", Scenario::instance()->GetName());
-	boost::replace_all(str, "$scenarioVersion$", Scenario::instance()->GetVersion());
+	lazy_replace_all(str, "\\$appName\\$", get_application_name());
+	lazy_replace_all(str, "\\$appVersion\\$", AB_DISPLAY_VERSION);
+	lazy_replace_all(str, "\\$appLongVersion\\$", AB_VERSION_STRING);
+	lazy_replace_all(str, "\\$appPlatform\\$", AB_DISPLAY_PLATFORM);
+	lazy_replace_all(str, "\\$appDate\\$", AB_DATE_DISPLAY_VERSION);
+	lazy_replace_all(str, "\\$appURL\\$", AB_HOMEPAGE_URL);
+	lazy_replace_all(str, "\\$appLogFile\\$", loggingFileName());
+	lazy_replace_all(str, "\\$scenarioName\\$", Scenario::instance()->GetName());
+	lazy_replace_all(str, "\\$scenarioVersion\\$", Scenario::instance()->GetVersion());
 }
 
 std::string expand_app_variables(const std::string& input)
