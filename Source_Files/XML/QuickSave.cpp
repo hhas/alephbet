@@ -32,7 +32,6 @@
 #include <fstream>
 #include <sstream>
 #include <boost/algorithm/string/replace.hpp>
-#include <boost/algorithm/string/predicate.hpp>
 
 #ifdef HAVE_SDL_IMAGE
 #include <SDL_image.h>
@@ -772,7 +771,7 @@ bool QuickSaveLoader::ParseDirectory(FileSpecifier& dir)
     
     for (std::vector<dir_entry>::const_iterator it = de.begin(); it != de.end(); ++it) {
         FileSpecifier file = dir + it->name;
-        if (algo::ends_with(it->name, ".sgaA"))
+        if (ends_with(it->name, ".sgaA"))
         {
             ParseQuickSave(file);
         }

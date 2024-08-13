@@ -26,8 +26,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include <boost/algorithm/string/predicate.hpp>
-
 #include "map.h"
 #include "interface.h"
 #include "shell.h"
@@ -1241,7 +1239,7 @@ bool setup_replay_from_random_resource()
 				continue;
 			}
 
-			if (boost::algorithm::ends_with(entry.name, ".filA"))
+			if (ends_with(entry.name, ".filA"))
 			{
 				FileSpecifier demo = scripts + entry.name;
 				demos.push_back(demo);

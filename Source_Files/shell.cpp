@@ -69,7 +69,6 @@
 #include <vector>
 
 #include <sstream>
-#include <boost/algorithm/string/predicate.hpp>
 
 #include "resource_manager.h"
 #include "sdl_dialogs.h"

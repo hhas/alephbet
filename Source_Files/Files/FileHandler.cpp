@@ -139,12 +139,6 @@ static const zzip_plugin_io_handlers& utf8_zzip_io() { return *zzip_get_default_
 #endif
 #endif // HAVE_ZZIP
 
-static bool ends_with(const std::string& haystack, const std::string& needle) {
-	return
-		haystack.size() >= needle.size()
-		&& haystack.compare(haystack.size()-needle.size(), needle.size(), needle) == 0;
-}
-
 /*
  *  Opened file
  */

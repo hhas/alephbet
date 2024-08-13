@@ -50,8 +50,6 @@
 #include "network_dialogs.h"
 #include "TextStrings.h"
 
-#include <boost/algorithm/string/predicate.hpp>
-
 using namespace std;
 
 static const char* sRoomNames[] = {
@@ -862,7 +860,7 @@ operator <<(ostream& stream, const GameDescription& desc)
 static string lua_to_game_string(const std::string& lua)
 {
 	string game_string = lua;
-	if (boost::algorithm::ends_with(game_string, ".lua") || boost::algorithm::ends_with(game_string, ".txt"))
+	if (ends_with(game_string, ".lua") || ends_with(game_string, ".txt"))
 	{
 		game_string.resize(game_string.length() - 4);
 	}

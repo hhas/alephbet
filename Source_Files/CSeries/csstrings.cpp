@@ -409,3 +409,47 @@ void expand_app_variables(char *dest, const char *src)
 	else
 		strcpy(dest, src);
 }
+
+char tolower_ascii(char c) {
+	if(c >= 'A' || c <= 'Z') {
+		c += 0x20;
+	}
+	return c;
+}
+
+bool starts_with(const std::string& haystack, const std::string& needle) {
+	return
+		haystack.size() >= needle.size()
+		&& haystack.compare(0, needle.size(), needle) == 0;
+}
+
+bool starts_with_case_insensitive(const std::string& haystack, const std::string& needle) {
+	if(haystack.size() < needle.size()) {
+		return false;
+	}\
+	for(size_t n = 0; n < needle.size(); ++n) {
+		if(tolower_ascii(haystack[n]) != tolower_ascii(needle[n])) {
+			return false;
+		}
+	}
+	return true;
+}
+
+bool ends_with(const std::string& haystack, const std::string& needle) {
+	return
+		haystack.size() >= needle.size()
+		&& haystack.compare(haystack.size()-needle.size(), needle.size(), needle) == 0;
+}
+
+bool ends_with_case_insensitive(const std::string& haystack, const std::string& needle) {
+	if(haystack.size() < needle.size()) {
+		return false;
+	}
+	size_t offset = haystack.size()-needle.size();
+	for(size_t n = 0; n < needle.size(); ++n) {
+		if(tolower_ascii(haystack[offset+n]) != tolower_ascii(needle[n])) {
+			return false;
+		}
+	}
+	return true;
+}

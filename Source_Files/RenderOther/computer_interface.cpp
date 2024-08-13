@@ -54,13 +54,11 @@
 
 #include "Logging.h"
 
-#include <boost/algorithm/string/predicate.hpp>
 #include <boost/iostreams/device/array.hpp>
 #include <boost/iostreams/stream_buffer.hpp>
 
 #include <sstream>
 
-namespace algo = boost::algorithm;
 namespace io = boost::iostreams;
 
 #define LABEL_INSET 3
@@ -2070,35 +2068,35 @@ terminal_text_t* MarathonTerminalCompiler::Compile()
 			group.flags = _group_is_marathon_1;
 			group.permutation = 0;
 			
-			if (algo::istarts_with(line, "#logon"))
+			if (starts_with_case_insensitive(line, "#logon"))
 			{
 				group.type = _logon_group;
 			}
-			else if (algo::istarts_with(line, "#information"))
+			else if (starts_with_case_insensitive(line, "#information"))
 			{
 				group.type = _information_group;
 			}
-			else if (algo::istarts_with(line, "#checkpoint"))
+			else if (starts_with_case_insensitive(line, "#checkpoint"))
 			{
 				group.type = _checkpoint_group;
 				std::istringstream permutation(line.substr(1 + strlen("#checkpoint")));
 				permutation >> group.permutation;
 			}
-			else if (algo::istarts_with(line, "#briefing"))
+			else if (starts_with_case_insensitive(line, "#briefing"))
 			{
 				group.type = _interlevel_teleport_group;
 				std::istringstream permutation(line.substr(1 + strlen("#briefing")));
 				permutation >> group.permutation;
 			}
-			else if (algo::istarts_with(line, "#unfinished"))
+			else if (starts_with_case_insensitive(line, "#unfinished"))
 			{
 				group.type = _unfinished_group;
 			}
-			else if (algo::istarts_with(line, "#success"))
+			else if (starts_with_case_insensitive(line, "#success"))
 			{
 				group.type = _success_group;
 			}
-			else if (algo::istarts_with(line, "#failure"))
+			else if (starts_with_case_insensitive(line, "#failure"))
 			{
 				group.type = _failure_group;
 			}

@@ -40,10 +40,6 @@
 #include "XML_ParseTreeRoot.h"
 #include "Scenario.h"
 
-#include <boost/algorithm/string/predicate.hpp>
-
-namespace algo = boost::algorithm;
-
 class PluginLoader {
 public:
 	PluginLoader() { }
@@ -469,12 +465,12 @@ bool PluginLoader::ParseDirectory(FileSpecifier& dir)
 		{
 			ParseDirectory(file);
 		}
-		else if (algo::ends_with(it->name, ".zip") || algo::ends_with(it->name, ".ZIP"))
+		else if (ends_with(it->name, ".zip") || ends_with(it->name, ".ZIP"))
 		{
 			// search it for a Plugin.xml file
 			for (const auto& zip_entry : file.ReadZIP())
 			{
-				if (zip_entry == "Plugin.xml" || algo::ends_with(zip_entry, "/Plugin.xml"))
+				if (zip_entry == "Plugin.xml" || ends_with(zip_entry, "/Plugin.xml"))
 				{
 					std::string archive = file.GetPath();
 					FileSpecifier file_name = FileSpecifier(archive.substr(0, archive.find_last_of('.'))) + zip_entry;

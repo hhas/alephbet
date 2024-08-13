@@ -41,8 +41,6 @@
 #include "FileHandler.h"
 #include "game_wad.h"
 
-#include <boost/algorithm/string/predicate.hpp>
-
 using namespace std;
 
 extern bool game_is_networked;
@@ -425,13 +423,13 @@ struct save_level
 			else
 			{
 				filename = mac_roman_to_utf8(static_world->level_name);
-				if (!boost::algorithm::ends_with(filename, ".sceA"))
+				if (!ends_with(filename, ".sceA"))
 					filename += ".sceA";
 			}
 		}
 		else
 		{
-			if (!boost::algorithm::ends_with(filename, ".sceA"))
+			if (!ends_with(filename, ".sceA"))
 				filename += ".sceA";	
 		}
 

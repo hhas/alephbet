@@ -45,8 +45,6 @@
 #include <algorithm>
 #include "Logging.h"
 
-#include <boost/algorithm/string/predicate.hpp>
-
 
 using namespace std;
 
@@ -87,7 +85,7 @@ MetaserverClient::handleChatMessage(ChatMessage* message, CommunicationsChannel*
 	{
 		std::string realSenderName = remove_formatting(message->senderName());
 		if (realSenderName[0] == '\260') realSenderName.erase(realSenderName.begin());
-		if (network_preferences->mute_metaserver_guests && boost::algorithm::starts_with(realSenderName, "Guest "))
+		if (network_preferences->mute_metaserver_guests && starts_with(realSenderName, "Guest "))
 			return;
 		if (s_ignoreNames.find(realSenderName) != s_ignoreNames.end()) 
 			return;
@@ -105,7 +103,7 @@ void MetaserverClient::handlePrivateMessage(PrivateMessage* message, Communicati
 	{		
 		std::string realSenderName = remove_formatting(message->senderName());
 		if (realSenderName[0] == '\260') realSenderName.erase(realSenderName.begin());
-		if (network_preferences->mute_metaserver_guests && boost::algorithm::starts_with(realSenderName, "Guest "))
+		if (network_preferences->mute_metaserver_guests && starts_with(realSenderName, "Guest "))
 			return;
 
 		if (s_ignoreNames.find(realSenderName) != s_ignoreNames.end()) 

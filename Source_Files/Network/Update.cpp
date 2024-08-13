@@ -30,7 +30,6 @@
 #include "HTTP.h"
 #include <sstream>
 #include <boost/tokenizer.hpp>
-#include <boost/algorithm/string/predicate.hpp>
 #include "alephversion.h"
 
 
@@ -92,11 +91,11 @@ int Update::Thread()
 	     it != tokens.end();
 	     ++it)
 	{
-		if (boost::algorithm::starts_with(*it, "AB_DATE_VERSION: "))
+		if (starts_with(*it, "AB_DATE_VERSION: "))
 		{
 			m_new_date_version = it->substr(strlen("AB_DATE_VERSION: "));
 		}
-		else if (boost::algorithm::starts_with(*it, "AB_DISPLAY_VERSION: "))
+		else if (starts_with(*it, "AB_DISPLAY_VERSION: "))
 		{
 			m_new_display_version = it->substr(strlen("AB_DISPLAY_VERSION: "));
 		}
