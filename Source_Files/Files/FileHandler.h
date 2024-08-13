@@ -85,6 +85,7 @@ private:
 	int32 fork_offset, fork_length;
 };
 
+// TODO: DELETEME adapts OpenedFile to Boost's idea of a Device
 class opened_file_device {
 public:
 	typedef char char_type;
@@ -97,6 +98,23 @@ public:
 
 private:
 	OpenedFile& f;
+};
+
+// adapts OpenedFile to a std::streambuf
+class opened_file_stream : public std::streambuf {
+public:
+	opened_file_stream(OpenedFile& f, std::ios_base::openmode mode);
+	virtual ~opened_file_stream();
+	std::streampos seekpos(std::streampos pos, std::ios_base::openmode which) override;
+	std::streampos seekoff(std::streamoff off, std::ios_base::seekdir dir, std::ios_base::openmode which) override;
+	std::streamsize xsputn(const char* s, std::streamsize count) override;
+	int overflow(int ch) override; // implement this to throw an engine error
+	std::streamsize xsgetn(char* s, std::streamsize count) override;
+	int underflow() override;
+private:
+	OpenedFile& f;
+	char buf[512];
+	std::ios_base::openmode mode;
 };
 
 /*

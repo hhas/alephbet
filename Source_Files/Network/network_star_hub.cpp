@@ -52,7 +52,7 @@
 #include "crc.h"
 #include "player.h" // for masking out action flags triggers :(
 
-#define DEBUG_TIMING_ADJUSTMENTS
+//#define DEBUG_TIMING_ADJUSTMENTS
 
 #ifdef DEBUG_TIMING_ADJUSTMENTS
 #include "FileHandler.h"
@@ -977,10 +977,8 @@ hub_received_game_data_packet_v1(AIStream& ps, int inSenderIndex)
 				}
 				dout << std::endl;
 			}
-
-		}
-		
 #endif
+		}
 	}
 	
         // Do any needed post-processing

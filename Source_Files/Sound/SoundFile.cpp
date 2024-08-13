@@ -194,7 +194,7 @@ void SoundHeader::ConvertSignedToUnsignedByte(uint8* data, int length)
 
 bool SoundHeader::Load(OpenedFile &SoundFile)
 {
-	io::stream_buffer<opened_file_device> sb(SoundFile);
+	opened_file_stream sb(SoundFile, std::ios_base::in);
 	BIStreamBE s(&sb);
 
 	return Load(s);
@@ -202,7 +202,7 @@ bool SoundHeader::Load(OpenedFile &SoundFile)
 
 std::shared_ptr<SoundData> SoundHeader::LoadData(OpenedFile& SoundFile)
 {
-	io::stream_buffer<opened_file_device> sb(SoundFile);
+	opened_file_stream sb(SoundFile, std::ios_base::in);
 	BIStreamBE s(&sb);
 	
 	return LoadData(s);

@@ -78,13 +78,10 @@
 
 #include "preferences.h"
 
-#include <boost/algorithm/string/predicate.hpp>
-
 #ifdef HAVE_NFD
 #include "nfd.h"
 #endif
 
-namespace io = boost::iostreams;
 namespace fs = std::filesystem;
 
 // From shell_sdl.cpp
@@ -141,6 +138,12 @@ static const zzip_plugin_io_handlers& utf8_zzip_io()
 static const zzip_plugin_io_handlers& utf8_zzip_io() { return *zzip_get_default_io(); }
 #endif
 #endif // HAVE_ZZIP
+
+static bool ends_with(const std::string& haystack, const std::string& needle) {
+	return
+		haystack.size() >= needle.size()
+		&& haystack.compare(haystack.size()-needle.size(), needle.size(), needle) == 0;
+}
 
 /*
  *  Opened file
@@ -263,6 +266,126 @@ std::streampos opened_file_device::seek(ssize_t off, std::ios_base::seekdir way)
 	}
 
 	return pos - static_cast<std::streampos>(f.fork_offset);
+}
+
+/*
+ *  Opened file stream
+ */
+
+opened_file_stream::opened_file_stream(OpenedFile& f, std::ios_base::openmode mode) : f(f) {
+	if(mode & (std::ios::in | std::ios::out) == (std::ios::in | std::ios::out)) {
+		// can't be in and out at the same time
+		// TODO: error
+	}
+	this->mode = mode;
+	// set both get and put buffers because why not
+	setg(std::begin(this->buf), std::end(this->buf), std::end(this->buf));
+	setp(std::begin(this->buf), std::end(this->buf));
+}
+
+opened_file_stream::~opened_file_stream() {
+	if(this->mode & std::ios::out) {
+		// flush the buffer
+		this->overflow(std::char_traits<char>::eof());
+	}
+}
+
+std::streampos opened_file_stream::seekpos(std::streampos pos, std::ios_base::openmode which) {
+	return seekoff(static_cast<std::streamoff>(pos), std::ios::beg, which);
+}
+
+std::streampos opened_file_stream::seekoff(std::streamoff off, std::ios_base::seekdir dir, std::ios_base::openmode which) {			
+	if(which & this->mode == 0) {
+		// wrong mode!
+		return static_cast<std::streampos>(std::streamoff(-1));
+	}
+	// get the base seek offset depending on the direction
+	int32 f_out;
+	switch(dir) {
+		case std::ios::end:
+			f.GetLength(f_out);
+			break;
+		case std::ios::cur:
+			if(which & std::ios_base::out) {
+				// Overflow saves the day :)
+				overflow(std::char_traits<char>::eof());
+			}
+			f.GetPosition(f_out);
+			if(which & std::ios_base::in) {
+				// Our caller thinks we're only this far in the buffer
+				f_out -= this->egptr() - this->gptr();
+			}
+			break;
+		case std::ios::beg:
+			f_out = 0;
+			break;
+	}
+	// seek
+	f.SetPosition(off + f_out);
+	// reset the buffer pointers
+	setg(std::begin(this->buf), std::end(this->buf), std::end(this->buf));
+	setp(std::begin(this->buf), std::end(this->buf));
+	// get the new position
+	f.GetPosition(f_out);
+	return f_out;
+}	
+
+std::streamsize opened_file_stream::xsputn(const char* s, std::streamsize count) {
+	if(this->mode & std::ios::out == 0) {
+		// wrong mode!
+		return 0;
+	}
+	// the default implementation will call sputc, which will frobnicate our
+	// buffer pointers and call overflow if it runs out of buffer
+	return std::streambuf::xsputn(s, count);
+}
+
+int opened_file_stream::overflow(int ch) {
+	// write the buf out to the file
+	auto curr_buf_utilization = this->pptr() - this->pbase();
+	auto result = this->f.Write(curr_buf_utilization, this->buf);
+	// reset the buf
+	this->pbump(-curr_buf_utilization);
+	// ch is the character that WOULD have been written, or EOF if there was
+	// no character that would have been written.
+	if (ch != std::char_traits<char>::eof()) {
+		// Write the character that would have written.
+		this->buf[0] = std::char_traits<char>::to_char_type(ch);
+		this->pbump(1);
+	}
+	if(result) {
+		return std::char_traits<char>::not_eof(0);
+	} else {
+		return std::char_traits<char>::eof();
+	}
+}
+
+std::streamsize opened_file_stream::xsgetn(char* s, std::streamsize count) {
+	if(this->mode & std::ios::in == 0) {
+		// wrong mode!
+		return 0;
+	}
+	// the default implementation will call uflow, which will frobnicate our
+	// buffer pointers and call underflow if it runs out of buffer. DUH
+	return std::streambuf::xsgetn(s, count);
+}
+
+int opened_file_stream::underflow() {
+	// fill the buffer with new data
+	int32 f_length, f_pos;
+	this->f.GetLength(f_length); // TODO: cache the length?
+	this->f.GetPosition(f_pos); // ...and the position? (or just yeet iostream)
+	auto bytes_to_read = std::min(sizeof(this->buf), (size_t)f_length - f_pos);
+	auto result = f.Read(bytes_to_read, this->buf);
+	// set the buffer
+	this->setg(this->buf, this->buf, this->buf + bytes_to_read);
+	if(!result || bytes_to_read == 0) {
+		// either failed to read or got EOF.
+		return std::char_traits<char>::eof();
+	} else {
+		// successfully read, return the char at the buf
+		return std::char_traits<char>::to_int_type(this->buf[0]);
+	}
 }
 
 /*
@@ -814,9 +937,7 @@ bool FileSpecifier::SetNameWithPath(const char* NameWithPath, const DirectorySpe
 
 void FileSpecifier::SetTempName(const FileSpecifier& other)
 {
-	char tempname[L_tmpnam];
-	std::tmpnam(tempname);
-	name = other.name + tempname;
+	name = other.name + "^";
 }
 
 // Get last element of path
@@ -1475,7 +1596,7 @@ public:
 			break;
 		}
 
-		if (m_extension && boost::algorithm::ends_with(m_default_name, m_extension))
+		if (m_extension && ends_with(m_default_name, m_extension))
 		{
 			m_default_name.resize(m_default_name.size() - strlen(m_extension));
 		}
@@ -1576,7 +1697,7 @@ public:
 			dir = base;
 		}
 
-		if (m_extension && !boost::algorithm::ends_with(filename, m_extension))
+		if (m_extension && !ends_with(filename, m_extension))
 		{
 			filename += m_extension;
 		}
