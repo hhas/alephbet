@@ -57,7 +57,7 @@ std::shared_ptr<SoundData> ExternalSoundHeader::LoadExternal(FileSpecifier& File
 
 SoundOptions* SoundReplacements::GetSoundOptions(short Index, short Slot)
 {
-	boost::unordered_map<key, SoundOptions>::iterator it = m_hash.find(key(Index, Slot));
+	auto it = m_hash.find(key(Index, Slot));
 	if (it != m_hash.end()) 
 	{
 		return &it->second;

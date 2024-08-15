@@ -34,9 +34,6 @@
 
 #include <string>
 #include <vector>
-#include <boost/algorithm/string/case_conv.hpp>
-
-using boost::algorithm::to_lower_copy;
 
 enum
 {

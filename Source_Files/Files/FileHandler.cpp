@@ -288,40 +288,40 @@ std::streampos opened_file_stream::seekpos(std::streampos pos, std::ios_base::op
 	return seekoff(static_cast<std::streamoff>(pos), std::ios::beg, which);
 }
 
-std::streampos opened_file_stream::seekoff(std::streamoff off, std::ios_base::seekdir dir, std::ios_base::openmode which) {			
+std::streampos opened_file_stream::seekoff(std::streamoff off, std::ios_base::seekdir dir, std::ios_base::openmode which) {
 	if(which & this->mode == 0) {
 		// wrong mode!
 		return static_cast<std::streampos>(std::streamoff(-1));
 	}
 	// get the base seek offset depending on the direction
-	int32 f_out;
+	int32 base_offset;
 	switch(dir) {
-		case std::ios::end:
-			f.GetLength(f_out);
-			break;
-		case std::ios::cur:
-			if(which & std::ios_base::out) {
-				// Overflow saves the day :)
-				overflow(std::char_traits<char>::eof());
-			}
-			f.GetPosition(f_out);
-			if(which & std::ios_base::in) {
-				// Our caller thinks we're only this far in the buffer
-				f_out -= this->egptr() - this->gptr();
-			}
-			break;
-		case std::ios::beg:
-			f_out = 0;
-			break;
+	case std::ios::end:
+		f.GetLength(base_offset);
+		break;
+	case std::ios::cur:
+		if(which & std::ios_base::out) {
+			// Overflow saves the day :)
+			overflow(std::char_traits<char>::eof());
+		}
+		f.GetPosition(base_offset);
+		if(which & std::ios_base::in) {
+			// Our caller thinks we're only this far in the buffer
+			base_offset -= this->egptr() - this->gptr();
+		}
+		break;
+	case std::ios::beg:
+		base_offset = 0;
+		break;
 	}
 	// seek
-	f.SetPosition(off + f_out);
+	f.SetPosition(off + base_offset);
 	// reset the buffer pointers
 	setg(std::begin(this->buf), std::end(this->buf), std::end(this->buf));
 	setp(std::begin(this->buf), std::end(this->buf));
 	// get the new position
-	f.GetPosition(f_out);
-	return f_out;
+	f.GetPosition(base_offset);
+	return base_offset;
 }	
 
 std::streamsize opened_file_stream::xsputn(const char* s, std::streamsize count) {
@@ -380,6 +380,141 @@ int opened_file_stream::underflow() {
 		// successfully read, return the char at the buf
 		return std::char_traits<char>::to_int_type(this->buf[0]);
 	}
+}
+
+/*
+ *  Byte streams!
+ */
+
+const_byte_stream::const_byte_stream(const void* base, size_t len) {
+	// We don't implement `pbackfail`, so the caller can't corrupt the "const"
+	// source buffer by ungetting a character they didn't get.
+	auto ptr = const_cast<char*>(reinterpret_cast<const char*>(base));
+	setg(ptr, ptr, ptr+len);
+}
+
+const_byte_stream::~const_byte_stream() {}
+
+std::streampos const_byte_stream::seekpos(std::streampos pos, std::ios_base::openmode which) {
+	return seekoff(static_cast<std::streamoff>(pos), std::ios::beg, which);
+}
+
+std::streampos const_byte_stream::seekoff(std::streamoff off, std::ios_base::seekdir dir, std::ios_base::openmode which) {
+	if(which & std::ios::in == 0) {
+		// wrong mode!
+		return static_cast<std::streampos>(std::streamoff(-1));
+	}
+	// get the base seek offset depending on the direction
+	std::streamoff base_offset;
+	switch(dir) {
+	case std::ios::end:
+		base_offset = this->egptr() - this->eback();
+		break;
+	case std::ios::cur:
+		base_offset = this->gptr() - this->eback();
+		break;
+	case std::ios::beg:
+		base_offset = 0;
+		break;
+	}
+	auto target_offset = base_offset + off;
+	if(target_offset < 0) {
+		target_offset = 0;
+	} else if(target_offset > this->egptr() - this->eback()) {
+		target_offset = this->egptr() - this->eback();
+	}
+	setg(
+		this->eback(),
+		this->eback() + target_offset,
+		this->egptr()
+	);
+	return target_offset;
+}
+
+std::streamsize const_byte_stream::showmanyc() {
+	return this->egptr() - this->gptr();
+}
+
+mutable_byte_stream::mutable_byte_stream(void* base, size_t len) {
+	// We don't implement `pbackfail`, so the caller can't corrupt the "const"
+	// source buffer by ungetting a character they didn't get.
+	auto ptr = reinterpret_cast<char*>(base);
+	setg(ptr, ptr, ptr+len);
+	setp(ptr, ptr+len);
+}
+
+mutable_byte_stream::~mutable_byte_stream() {}
+
+std::streampos mutable_byte_stream::seekpos(std::streampos pos, std::ios_base::openmode which) {
+	return seekoff(static_cast<std::streamoff>(pos), std::ios::beg, which);
+}
+
+std::streampos mutable_byte_stream::seekoff(std::streamoff off, std::ios_base::seekdir dir, std::ios_base::openmode which) {
+	which = which & (std::ios::in|std::ios::out);
+	switch(which) {
+	default:
+		// nonsense mode!
+		return static_cast<std::streampos>(std::streamoff(-1));
+	case std::ios::in: {
+		// get the base seek offset depending on the direction
+		std::streamoff base_offset;
+		switch(dir) {
+		case std::ios::end:
+			base_offset = this->egptr() - this->eback();
+			break;
+		case std::ios::cur:
+			base_offset = this->gptr() - this->eback();
+			break;
+		case std::ios::beg:
+			base_offset = 0;
+			break;
+		}
+		auto target_offset = base_offset + off;
+		if(target_offset < 0) {
+			target_offset = 0;
+		} else if(target_offset > this->egptr() - this->eback()) {
+			target_offset = this->egptr() - this->eback();
+		}
+		setg(
+			this->eback(),
+			this->eback() + target_offset,
+			this->egptr()
+		);
+		return target_offset;
+	}
+	case std::ios::out: {
+		// all of the above, but p flavored instead of g flavored
+		// note: we use the eback pointer instead of the pbase pointer because
+		// we can't ensure that pbase is the beginning of our buffer
+		std::streamoff base_offset;
+		switch(dir) {
+		case std::ios::end:
+			base_offset = this->epptr() - this->eback();
+			break;
+		case std::ios::cur:
+			base_offset = this->pptr() - this->eback();
+			break;
+		case std::ios::beg:
+			base_offset = 0;
+			break;
+		}
+		auto target_offset = base_offset + off;
+		if(target_offset < 0) {
+			target_offset = 0;
+		} else if(target_offset > this->epptr() - this->eback()) {
+			target_offset = this->epptr() - this->eback();
+		}
+		setp(
+			this->eback() + target_offset,
+			this->epptr()
+		);
+		return target_offset;
+	}
+	}
+}
+
+std::streamsize mutable_byte_stream::showmanyc() {
+	return this->egptr() - this->gptr();
 }
 
 /*

@@ -32,7 +32,7 @@
 #include <string>
 #include "SoundFile.h"
 
-#include <boost/unordered_map.hpp>
+#include <unordered_map>
 
 class ExternalSoundHeader : public SoundInfo
 {
@@ -65,8 +65,14 @@ private:
 	SoundReplacements() { }
 
 	typedef std::pair<short, short> key;
+	class PairHash {
+	public:
+		std::size_t operator()(const std::pair<short, short>& s) const noexcept {
+			return std::hash<uint32>()((uint32(s.first) << 16) ^ (uint32(s.second)));
+		}
+	};
 
-	boost::unordered_map<key, SoundOptions> m_hash;
+	std::unordered_map<key, SoundOptions, PairHash> m_hash;
 };
 
 #endif

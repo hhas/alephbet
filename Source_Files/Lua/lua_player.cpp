@@ -49,10 +49,6 @@
 #include "SoundManager.h"
 #include "ViewControl.h"
 
-#include <boost/iostreams/device/array.hpp>
-#include <boost/iostreams/stream_buffer.hpp>
-namespace io = boost::iostreams;
-
 #define DONT_REPEAT_DEFINITIONS
 #include "item_definitions.h"
 #include "projectile_definitions.h"
@@ -2688,7 +2684,7 @@ int Lua_Game_Deserialize(lua_State* L)
         size_t len;
         auto s = lua_tolstring(L, 1, &len);
 
-        io::stream_buffer<io::array_source> sb(s, len);
+        const_byte_stream sb(s, len);
 
         if (lua_restore(L, &sb))
         {

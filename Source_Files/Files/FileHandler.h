@@ -117,6 +117,26 @@ private:
 	std::ios_base::openmode mode;
 };
 
+// adapts an immutable byte buffer to a std::streambuf
+class const_byte_stream : public std::streambuf {
+public:
+	const_byte_stream(const void* base, size_t len);
+	virtual ~const_byte_stream();
+	std::streampos seekpos(std::streampos pos, std::ios_base::openmode which) override;
+	std::streampos seekoff(std::streamoff off, std::ios_base::seekdir dir, std::ios_base::openmode which) override;
+	std::streamsize showmanyc() override;
+};
+
+// adapts an *mutable* byte buffer to a std::streambuf (yuck!)
+class mutable_byte_stream : public std::streambuf {
+public:
+	mutable_byte_stream(void* base, size_t len);
+	virtual ~mutable_byte_stream();
+	std::streampos seekpos(std::streampos pos, std::ios_base::openmode which) override;
+	std::streampos seekoff(std::streamoff off, std::ios_base::seekdir dir, std::ios_base::openmode which) override;
+	std::streamsize showmanyc() override;
+};
+
 /*
 	Abstraction for loaded resources;
 	this object will release that resource when it finishes.

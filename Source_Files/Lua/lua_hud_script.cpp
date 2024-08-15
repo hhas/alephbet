@@ -46,10 +46,6 @@ extern "C"
 #include "lua_hud_script.h"
 #include "lua_hud_objects.h"
 
-#include <boost/iostreams/device/array.hpp>
-#include <boost/iostreams/stream_buffer.hpp>
-namespace io = boost::iostreams;
-
 
 bool use_lua_hud_crosshairs;
 

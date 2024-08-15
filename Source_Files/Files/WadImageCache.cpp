@@ -29,9 +29,7 @@
 #include "cseries.h"
 #include "WadImageCache.h"
 
-#include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_generators.hpp>
-#include <boost/uuid/uuid_io.hpp>
+#include <random>
 #include "InfoTree.h"
 
 #ifdef HAVE_SDL_IMAGE
@@ -126,15 +124,23 @@ SDL_Surface *WadImageCache::resize_image(SDL_Surface *original, int width, int h
 
 std::string WadImageCache::image_to_new_name(SDL_Surface *image, int32 *filesize) const
 {
-	// create name
-	boost::uuids::random_generator gen;
-	boost::uuids::uuid u = gen();
-	std::string ustr = boost::uuids::to_string(u);
-	
+	// make a random, non-used filename in the image cache dir
 	FileSpecifier File;
-	File.SetToImageCacheDir();
-	File.AddPart(ustr);
-	
+	std::string random_name;
+	std::mt19937 rng;
+	std::uniform_int_distribution<> random_char_distrib(0,63);
+	static const char RANDOM_CHARS[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_-";
+
+	do {
+		random_name.clear();
+		for(int n = 0; n < 20; ++n) {
+			random_name += RANDOM_CHARS[random_char_distrib(rng)];
+		}
+		random_name += ".png";
+		File.SetToImageCacheDir();
+		File.AddPart(random_name);
+	} while(File.Exists());
+		
 	FileSpecifier TempFile;
 	TempFile.SetTempName(File);
 	
@@ -154,7 +160,7 @@ std::string WadImageCache::image_to_new_name(SDL_Surface *image, int32 *filesize
 			if (File.Open(of))
 				of.GetLength(*filesize);
 		}
-		return ustr;
+		return random_name;
 	}
 	
 	if (filesize)

@@ -86,10 +86,6 @@ extern "C"
 #include "lua_saved_objects.h"
 #include "lua_serialize.h"
 
-#include <boost/iostreams/device/array.hpp>
-#include <boost/iostreams/stream_buffer.hpp>
-namespace io = boost::iostreams;
-
 #define DONT_REPEAT_DEFINITIONS
 #include "item_definitions.h"
 #include "monster_definitions.h"
@@ -2298,7 +2294,7 @@ size_t save_lua_states()
 
 void pack_lua_states(uint8* data, size_t length)
 {
-	io::stream_buffer<io::array_sink> sb(reinterpret_cast<char*>(data), length);
+	mutable_byte_stream sb(data, length);
 	BOStreamBE s(&sb);
 	for (std::map<int, std::string>::iterator it = SavedLuaState.begin(); it != SavedLuaState.end(); ++it)
 	{
@@ -2315,7 +2311,7 @@ void pack_lua_states(uint8* data, size_t length)
 
 void unpack_lua_states(uint8* data, size_t length)
 {
-	io::stream_buffer<io::array_source> sb(reinterpret_cast<char*>(data), length);
+	const_byte_stream sb(data, length);
 	BIStreamBE s(&sb);
 
 	SavedLuaState.clear();

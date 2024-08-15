@@ -30,10 +30,7 @@
 #include <assert.h>
 
 #include "BStream.h"
-#include <boost/iostreams/stream_buffer.hpp>
 #include <utility>
-
-namespace io = boost::iostreams;
 
 SoundHeader::SoundHeader() :
 	SoundInfo(),
@@ -210,7 +207,7 @@ std::shared_ptr<SoundData> SoundHeader::LoadData(OpenedFile& SoundFile)
 
 bool SoundHeader::Load(LoadedResource& rsrc)
 {
-	io::stream_buffer<io::array_source> sb(reinterpret_cast<char*>(rsrc.GetPointer()), rsrc.GetLength());
+	const_byte_stream sb(rsrc.GetPointer(), rsrc.GetLength());
 	BIStreamBE s(&sb);
 
 	// Get resource format
@@ -262,7 +259,7 @@ bool SoundHeader::Load(LoadedResource& rsrc)
 
 std::shared_ptr<SoundData> SoundHeader::LoadData(LoadedResource& rsrc)
 {
-	io::stream_buffer<io::array_source> sb(reinterpret_cast<char*>(rsrc.GetPointer()), rsrc.GetLength());
+	const_byte_stream sb(rsrc.GetPointer(), rsrc.GetLength());
 	BIStreamBE s(&sb);
 
 	return LoadData(s);

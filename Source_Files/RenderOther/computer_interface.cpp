@@ -54,12 +54,7 @@
 
 #include "Logging.h"
 
-#include <boost/iostreams/device/array.hpp>
-#include <boost/iostreams/stream_buffer.hpp>
-
 #include <sstream>
-
-namespace io = boost::iostreams;
 
 #define LABEL_INSET 3
 #define LOG_DURATION_BEFORE_TIMEOUT (2*TICKS_PER_SECOND)
@@ -2035,7 +2030,7 @@ private:
 
 	std::unique_ptr<terminal_text_t> terminal;
 	
-	io::stream_buffer<io::array_source> in_buffer;
+	const_byte_stream in_buffer;
 	std::istream in;
 
 	std::vector<uint8_t> out;
