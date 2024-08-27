@@ -29,10 +29,10 @@
 #include <AL/alext.h>
 
 #include "Decoder.h"
+#include "LockfreeSPSCQueue.h"
 #include <atomic>
 #include <algorithm>
 #include <unordered_map>
-#include <boost/lockfree/spsc_queue.hpp>
 #include <boost/unordered/unordered_map.hpp>
 
 using SetupALResult = std::pair<bool, bool>; //first is source configuration suceeded for this pass, second is source is fully setup and doesn't need another pass
@@ -41,7 +41,7 @@ template <typename T>
 struct AtomicStructure {
 private:
     static constexpr int queue_size = 5;
-    boost::lockfree::spsc_queue<T, boost::lockfree::capacity<queue_size>> shared_queue;
+    LockfreeSPSCQueue<T, queue_size> shared_queue;
     std::atomic_int index = { 0 };
     T structure[2];
 public:
@@ -53,7 +53,7 @@ public:
     const T& Get() const { return structure[index]; }
 
     void Store(const T& value) {
-        shared_queue.push(value);
+        shared_queue.push_blocking(value);
     }
 
     void Set(const T& value) {
@@ -63,14 +63,17 @@ public:
     }
 
     bool Consume(T& returnValue) {
-        return shared_queue.pop(returnValue);
+        return shared_queue.pop_nonblocking(returnValue);
     }
 
     bool Update() {
-        T returnValue[queue_size];
-        auto size = shared_queue.pop(returnValue, queue_size);
-        if (size) Set(returnValue[size - 1]);
-        return size;
+        T value;
+        bool any_successes = false;
+        while(shared_queue.pop_nonblocking(value)) {
+            Set(value);
+            any_successes = true;
+        }
+        return any_successes;
     }
 };
 

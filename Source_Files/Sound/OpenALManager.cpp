@@ -73,7 +73,7 @@ bool OpenALManager::Init(const AudioParameters& parameters) {
 void OpenALManager::ProcessAudioQueue() {
 
 	std::shared_ptr<AudioPlayer> audioPlayer;
-	while (audio_players_shared.pop(audioPlayer)) {
+	while (audio_players_shared.pop_nonblocking(audioPlayer)) {
 		audio_players_queue.push_back(audioPlayer);
 	}
 
@@ -156,14 +156,14 @@ void OpenALManager::ToggleDeviceMode(bool recording_device) {
 std::shared_ptr<SoundPlayer> OpenALManager::PlaySound(const Sound& sound, const SoundParameters& parameters) {
 	if (!process_audio_active) return std::shared_ptr<SoundPlayer>();
 	auto soundPlayer = std::make_shared<SoundPlayer>(sound, parameters);
-	audio_players_shared.push(soundPlayer);
+	audio_players_shared.push_blocking(soundPlayer);
 	return soundPlayer;
 }
 
 std::shared_ptr<MusicPlayer> OpenALManager::PlayMusic(std::shared_ptr<StreamDecoder> decoder, MusicParameters parameters) {
 	if (!process_audio_active) return std::shared_ptr<MusicPlayer>();
 	auto musicPlayer = std::make_shared<MusicPlayer>(decoder, parameters);
-	audio_players_shared.push(musicPlayer);
+	audio_players_shared.push_blocking(musicPlayer);
 	return musicPlayer;
 }
 
@@ -171,7 +171,7 @@ std::shared_ptr<MusicPlayer> OpenALManager::PlayMusic(std::shared_ptr<StreamDeco
 std::shared_ptr<StreamPlayer> OpenALManager::PlayStream(CallBackStreamPlayer callback, int length, int rate, bool stereo, AudioFormat audioFormat) {
 	if (!process_audio_active) return std::shared_ptr<StreamPlayer>();
 	auto streamPlayer = std::make_shared<StreamPlayer>(callback, length, rate, stereo, audioFormat);
-	audio_players_shared.push(streamPlayer);
+	audio_players_shared.push_blocking(streamPlayer);
 	return streamPlayer;
 }
 
@@ -202,7 +202,7 @@ void OpenALManager::StopAllPlayers() {
 	audio_players_queue.clear();
 
 	std::shared_ptr<AudioPlayer> audioPlayer;
-	while (audio_players_shared.pop(audioPlayer)) {
+	while (audio_players_shared.pop_nonblocking(audioPlayer)) {
 		audioPlayer->is_active = false;
 	}
 

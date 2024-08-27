@@ -28,6 +28,7 @@
 #include "MusicPlayer.h"
 #include "SoundPlayer.h"
 #include "StreamPlayer.h"
+#include "LockfreeSPSCQueue.h"
 #include <queue>
 
 #if defined (_MSC_VER) && !defined (M_PI)
@@ -114,7 +115,7 @@ private:
 	bool is_using_recording_device = false;
 	std::queue<std::unique_ptr<AudioPlayer::AudioSource>> sources_pool;
 	std::deque<std::shared_ptr<AudioPlayer>> audio_players_queue; //for audio thread only
-	boost::lockfree::spsc_queue<std::shared_ptr<AudioPlayer>, boost::lockfree::capacity<256>> audio_players_shared; //pipeline main => audio thread
+	LockfreeSPSCQueue<std::shared_ptr<AudioPlayer>, 256> audio_players_shared; //pipeline main => audio thread
 	int GetBestOpenALSupportedFormat();
 	void RetrieveSource(const std::shared_ptr<AudioPlayer>& player);
 
