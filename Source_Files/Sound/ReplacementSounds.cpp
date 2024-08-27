@@ -57,7 +57,7 @@ std::shared_ptr<SoundData> ExternalSoundHeader::LoadExternal(FileSpecifier& File
 
 SoundOptions* SoundReplacements::GetSoundOptions(short Index, short Slot)
 {
-	auto it = m_hash.find(key(Index, Slot));
+	auto it = m_hash.find(std::make_pair(Index, Slot));
 	if (it != m_hash.end()) 
 	{
 		return &it->second;
@@ -71,7 +71,7 @@ SoundOptions* SoundReplacements::GetSoundOptions(short Index, short Slot)
 void SoundReplacements::Add(const SoundOptions& Data, short Index, short Slot)
 {
 	SoundManager::instance()->UnloadSound(Index);
-	m_hash[key(Index, Slot)] = Data;
+	m_hash[std::make_pair(Index, Slot)] = Data;
 }
 
 void SoundReplacements::Reset()

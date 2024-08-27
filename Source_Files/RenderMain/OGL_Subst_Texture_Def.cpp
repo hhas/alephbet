@@ -30,11 +30,11 @@
 #include "cseries.h"
 #include "OGL_Subst_Texture_Def.h"
 #include "Logging.h"
+#include "PairOfShortsHash.h"
 #include "InfoTree.h"
 
 #include <set>
 #include <string>
-#include <boost/unordered_map.hpp>
 
 #ifdef HAVE_OPENGL
 
@@ -43,7 +43,7 @@
 static OGL_TextureOptions DefaultTextureOptions;
 
 typedef std::pair<short, short> TOKey;
-typedef boost::unordered_map<TOKey, OGL_TextureOptions> TOHash;
+typedef std::unordered_map<TOKey, OGL_TextureOptions> TOHash;
 static TOHash Collections[NUMBER_OF_COLLECTIONS];
 
 // Deletes a collection's texture-options sequences

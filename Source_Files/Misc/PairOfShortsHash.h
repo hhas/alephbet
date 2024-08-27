@@ -1,5 +1,5 @@
-#ifndef __REPLACEMENTSOUNDS_H
-#define __REPLACEMENTSOUNDS_H
+#ifndef PAIR_OF_SHORTS_HASH
+#define PAIR_OF_SHORTS_HASH
 
 /*
  *
@@ -25,47 +25,13 @@
  *
  */
 
-/*
- *  Handles MML-specified external replacement sounds
- */
+#include <memory>
+#include <utility>
 
-#include <string>
-#include <unordered_map>
-
-#include "SoundFile.h"
-#include "PairOfShortsHash.h"
-
-class ExternalSoundHeader : public SoundInfo
-{
-public:
-	ExternalSoundHeader() : SoundInfo() { }
-	~ExternalSoundHeader() { }
-	std::shared_ptr<SoundData> LoadExternal(FileSpecifier& File);
-};
-
-struct SoundOptions
-{
-	FileSpecifier File;
-	ExternalSoundHeader Sound;
-};
-
-class SoundReplacements
-{
-public:
-	static inline SoundReplacements* instance() { 
-		static SoundReplacements *m_instance = nullptr;
-		if (!m_instance) m_instance = new SoundReplacements;
-		return m_instance;
-	}
-
-	SoundOptions *GetSoundOptions(short Index, short Slot);
-	void Reset();
-	void Add(const SoundOptions& Data, short Index, short Slot);
-
-private:
-	SoundReplacements() { }
-
-	std::unordered_map<std::pair<short, short>, SoundOptions> m_hash;
+template<> struct std::hash<std::pair<short, short>> {
+    std::size_t operator()(const std::pair<short, short>& s) const noexcept {
+        return std::hash<uint32_t>()((uint32_t(s.first) << 16) ^ (uint32_t(s.second)));
+    }
 };
 
 #endif
