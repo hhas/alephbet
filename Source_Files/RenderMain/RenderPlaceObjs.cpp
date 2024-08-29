@@ -43,7 +43,6 @@
 #include <string.h>
 #include <limits.h>
 #include <algorithm>
-#include <boost/container/small_vector.hpp>
 
 
 // LP: "recommended" sizes of stuff in growable lists
@@ -58,7 +57,9 @@ struct RenderPlaceObjsClass::span_data
 		long_point2d right_pt; // right edge of object's span in this node, or span_data::right_pt if rightmost node
 	};	                       // (even if that point lies outside)
 	
-	boost::container::small_vector<base_node_data, 6> base_nodes; // left-to-right
+	// TODO: originally used boost's small_vector with a capacity of six,
+	// we may get some performance back if we do something like that
+	std::vector<base_node_data> base_nodes; // left-to-right
 	
 	// Total span (can be off-map: coords are within +/- 2^16 instead of 2^15)
 	long_point2d left_pt;
