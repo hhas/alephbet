@@ -417,13 +417,13 @@ char tolower_ascii(char c) {
 	return c;
 }
 
-bool starts_with(const std::string& haystack, const std::string& needle) {
+bool starts_with(const std::string_view& haystack, const std::string_view& needle) {
 	return
 		haystack.size() >= needle.size()
 		&& haystack.compare(0, needle.size(), needle) == 0;
 }
 
-bool starts_with_case_insensitive(const std::string& haystack, const std::string& needle) {
+bool starts_with_case_insensitive(const std::string_view& haystack, const std::string_view& needle) {
 	if(haystack.size() < needle.size()) {
 		return false;
 	}\
@@ -435,13 +435,13 @@ bool starts_with_case_insensitive(const std::string& haystack, const std::string
 	return true;
 }
 
-bool ends_with(const std::string& haystack, const std::string& needle) {
+bool ends_with(const std::string_view& haystack, const std::string_view& needle) {
 	return
 		haystack.size() >= needle.size()
 		&& haystack.compare(haystack.size()-needle.size(), needle.size(), needle) == 0;
 }
 
-bool ends_with_case_insensitive(const std::string& haystack, const std::string& needle) {
+bool ends_with_case_insensitive(const std::string_view& haystack, const std::string_view& needle) {
 	if(haystack.size() < needle.size()) {
 		return false;
 	}

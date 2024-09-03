@@ -33,7 +33,6 @@
 #include <vector>
 #include <map>
 
-#include <boost/tokenizer.hpp>
 #include <string>
 
 #ifndef NO_STD_NAMESPACE
@@ -62,6 +61,87 @@ static ttf_font_list_t ttf_font_list;
 
 // From shell_sdl.cpp
 extern vector<DirectorySpecifier> data_search_path;
+
+namespace {
+	class style_token_iterator {
+		friend class style_tokenizer;
+		const std::string_view& source_string;
+		std::string_view::const_iterator position;
+		std::string_view::const_iterator ending;
+		std::string_view view;
+		style_token_iterator(
+			const std::string_view& source_string, 
+			std::string_view::const_iterator position
+		) : source_string(source_string), position(position) {
+			ending = position;
+			if(ending != source_string.cend()) {
+				++ending;
+			}
+			if(ending != source_string.cend()) {
+				if(*position == '|') {
+					// Return just the style token.
+					++ending;
+				} else {
+					// Return everything leading up to the next style token.
+					while(
+						ending != source_string.cend()
+						&& *ending != '|'
+					) {
+						++ending;
+					}
+				}
+			}
+			view = std::string_view(position, ending - position);
+		}
+	public:
+		style_token_iterator& operator=(style_token_iterator&& rhs) {
+			this->position = rhs.position;
+			this->ending = rhs.ending;
+			this->view = rhs.view;
+			return *this;
+		}
+		std::string_view operator*() const {
+			return view;
+		}
+		const std::string_view* operator->() const {
+			return &view;
+		}
+		bool operator==(const style_token_iterator& other) const {
+			return position == other.position;
+		}
+		bool operator!=(const style_token_iterator& other) const {
+			return position != other.position;
+		}
+		bool operator<(const style_token_iterator& other) const {
+			return position < other.position;
+		}
+		bool operator>(const style_token_iterator& other) const {
+			return position > other.position;
+		}
+		bool operator<=(const style_token_iterator& other) const {
+			return position <= other.position;
+		}
+		bool operator>=(const style_token_iterator& other) const {
+			return position >= other.position;
+		}
+		style_token_iterator& operator++() {
+			*this = style_token_iterator(this->source_string, this->ending);
+			return *this;
+		}
+	};
+	class style_tokenizer {
+		const std::string_view& source_string;
+	public:
+		style_tokenizer(const std::string_view& source_string)
+		: source_string(source_string) {}
+		style_token_iterator cbegin() const {
+			return style_token_iterator(source_string, source_string.cbegin());
+		}
+		style_token_iterator cend() const {
+			return style_token_iterator(source_string, source_string.cend());
+		}
+	};
+}
 
 
 /*
@@ -628,47 +708,12 @@ static 	inline bool style_code(char c)
 	}
 }
 
-class style_separator
-{
-public:
-	bool operator() (std::string::const_iterator& next, std::string::const_iterator end, std::string& token)
-	{
-		if (next == end) return false;
-
-		token = std::string();
-
-		// if we start with a token, return it
-		if (*next == '|' && next + 1 != end && style_code(*(next + 1)))
-		{
-			token += *next;
-			++next;
-			token += *next;
-			++next;
-			return true;
-		}
-
-		token += *next;
-		++next;
-
-		// add characters until we hit a token
-		for (;next != end && !(*next == '|' && next + 1 != end && style_code(*(next + 1))); ++next)
-		{
-			token += *next;
-		}
-
-		return true;
-	}
-
-	void reset() { }
-
-};
-
-static inline bool is_style_token(const std::string& token)
+static inline bool is_style_token(const std::string_view& token)
 {
 	return (token.size() == 2 && token[0] == '|' && style_code(token[1]));
 }
 
-static void update_style(uint16& style, const std::string& token)
+static void update_style(uint16& style, const std::string_view& token)
 {
 	if (tolower(token[1]) == 'p')
 		style &= ~(styleBold | styleItalic);
@@ -688,8 +733,8 @@ static void update_style(uint16& style, const std::string& token)
 int font_info::draw_styled_text(SDL_Surface *s, const std::string& text, size_t length, int x, int y, uint32 pixel, uint16 style, bool utf8) const 
 {
 	int width = 0;
-	boost::tokenizer<style_separator> tok(text.begin(), text.begin() + length);
-	for (boost::tokenizer<style_separator>::iterator it = tok.begin(); it != tok.end(); ++it)
+	style_tokenizer tokenizer(std::string_view(text.data(), length));
+	for (auto it = tokenizer.cbegin(); it != tokenizer.cend(); ++it)
 	{
 		if (is_style_token(*it))
 		{
@@ -699,9 +744,9 @@ int font_info::draw_styled_text(SDL_Surface *s, const std::string& text, size_t 
 		{
 			if (style & styleShadow)
 			{
-				_draw_text(s, it->c_str(), it->size(), x + width + 1, y + 1, SDL_MapRGB(s->format, 0x0, 0x0, 0x0), style, utf8);
+				_draw_text(s, it->data(), it->size(), x + width + 1, y + 1, SDL_MapRGB(s->format, 0x0, 0x0, 0x0), style, utf8);
 			}
-			width += _draw_text(s, it->c_str(), it->size(), x + width, y, pixel, style, utf8);
+			width += _draw_text(s, it->data(), it->size(), x + width, y, pixel, style, utf8);
 		}
 	}
 
@@ -711,8 +756,8 @@ int font_info::draw_styled_text(SDL_Surface *s, const std::string& text, size_t 
 int font_info::styled_text_width(const std::string& text, size_t length, uint16 style, bool utf8) const 
 {
 	int width = 0;
-	boost::tokenizer<style_separator> tok(text.begin(), text.begin() + length);
-	for (boost::tokenizer<style_separator>::iterator it = tok.begin(); it != tok.end(); ++it)
+	style_tokenizer tokenizer(std::string_view(text.data(), length));
+	for (auto it = tokenizer.cbegin(); it != tokenizer.cend(); ++it)
 	{
 		if (is_style_token(*it))
 		{
@@ -720,7 +765,7 @@ int font_info::styled_text_width(const std::string& text, size_t length, uint16 
 		}
 		else
 		{
-			width += _text_width(it->c_str(), it->length(), style, utf8);
+			width += _text_width(it->data(), it->length(), style, utf8);
 		}
 	}
 
@@ -739,8 +784,8 @@ int font_info::trunc_styled_text(const std::string& text, int max_width, uint16 
 	}
 
 	int length = 0;
-	boost::tokenizer<style_separator> tok(text);
-	for (boost::tokenizer<style_separator>::iterator it = tok.begin(); it != tok.end(); ++it)
+	style_tokenizer tokenizer(text);
+	for (auto it = tokenizer.cbegin(); it != tokenizer.cend(); ++it)
 	{
 		if (is_style_token(*it))
 		{
@@ -749,8 +794,8 @@ int font_info::trunc_styled_text(const std::string& text, int max_width, uint16 
 		}
 		else
 		{
-			int additional_length = _trunc_text(it->c_str(), max_width, style);
-			max_width -= _text_width(it->c_str(), additional_length, style);
+			int additional_length = _trunc_text(it->data(), max_width, style);
+			max_width -= _text_width(it->data(), additional_length, style);
 			length += additional_length;
 			if (additional_length < it->size())
 				return length;
@@ -762,8 +807,8 @@ int font_info::trunc_styled_text(const std::string& text, int max_width, uint16 
 
 std::string font_info::style_at(const std::string& text, std::string::const_iterator pos, uint16 style) const
 {
-	boost::tokenizer<style_separator> tok(text.begin(), pos);
-	for (boost::tokenizer<style_separator>::iterator it = tok.begin(); it != tok.end(); ++it)
+	style_tokenizer tokenizer(std::string_view(text.data(), size_t(pos-text.cbegin())));
+	for (auto it = tokenizer.cbegin(); it != tokenizer.cend(); ++it)
 	{
 		if (is_style_token(*it))
 			update_style(style, *it);

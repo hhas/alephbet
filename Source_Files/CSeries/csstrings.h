@@ -87,9 +87,9 @@ void expand_app_variables(char *dest, const char *src);
 // Can't use the ctypes one because locales will bite us.
 
 char tolower_ascii(char c);
-bool starts_with(const std::string& haystack, const std::string& needle);
-bool starts_with_case_insensitive(const std::string& haystack, const std::string& needle);
-bool ends_with(const std::string& haystack, const std::string& needle);
-bool ends_with_case_insensitive(const std::string& haystack, const std::string& needle);
+bool starts_with(const std::string_view& haystack, const std::string_view& needle);
+bool starts_with_case_insensitive(const std::string_view& haystack, const std::string_view& needle);
+bool ends_with(const std::string_view& haystack, const std::string_view& needle);
+bool ends_with_case_insensitive(const std::string_view& haystack, const std::string_view& needle);
 
 #endif

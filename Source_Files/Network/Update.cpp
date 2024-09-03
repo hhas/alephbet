@@ -29,9 +29,81 @@
 #include "Update.h"
 #include "HTTP.h"
 #include <sstream>
-#include <boost/tokenizer.hpp>
 #include "alephversion.h"
 
+namespace {
+	class line_split_iterator {
+		friend class line_splitter;
+		const std::string& source_string;
+		std::string::const_iterator position;
+		std::string::const_iterator ending;
+		std::string_view view;
+		line_split_iterator(
+			const std::string& source_string, 
+			std::string::const_iterator position
+		) : source_string(source_string), position(position) {
+			while(
+				position != source_string.cend()
+				&& (*position == '\n' || *position == '\r')
+			) {
+				++position;
+			}
+			ending = position;
+			while(
+				ending != source_string.cend()
+				&& *ending != '\n' && *ending != '\r'
+			) {
+				++ending;
+			}
+			view = std::string_view(position, ending);
+		}
+	public:
+		line_split_iterator& operator=(line_split_iterator&& rhs) {
+			this->position = rhs.position;
+			this->ending = rhs.ending;
+			return *this;
+		}
+		std::string_view operator*() const {
+			return view;
+		}
+		const std::string_view* operator->() const {
+			return &view;
+		}
+		bool operator==(const line_split_iterator& other) const {
+			return position == other.position;
+		}
+		bool operator!=(const line_split_iterator& other) const {
+			return position != other.position;
+		}
+		bool operator<(const line_split_iterator& other) const {
+			return position < other.position;
+		}
+		bool operator>(const line_split_iterator& other) const {
+			return position > other.position;
+		}
+		bool operator<=(const line_split_iterator& other) const {
+			return position <= other.position;
+		}
+		bool operator>=(const line_split_iterator& other) const {
+			return position >= other.position;
+		}
+		line_split_iterator& operator++() {
+			*this = line_split_iterator(this->source_string, this->ending);
+		}
+	};
+	class line_splitter {
+		const std::string& source_string;
+	public:
+		line_splitter(const std::string& source_string)
+		: source_string(source_string) {}
+		line_split_iterator cbegin() const {
+			return line_split_iterator(source_string, source_string.cbegin());
+		}
+		line_split_iterator cend() const {
+			return line_split_iterator(source_string, source_string.cend());
+		}
+	};
+}
 
 Update::Update() : m_status(NoUpdateAvailable), m_thread(0)
 {
@@ -83,13 +155,9 @@ int Update::Thread()
 		m_status = UpdateCheckFailed;
 		return 1;
 	}
-
-	boost::char_separator<char> sep("\r\n");
 	std::string response = fetcher.Response();
-	boost::tokenizer<boost::char_separator<char> > tokens(response, sep);
-	for (boost::tokenizer<boost::char_separator<char> >::iterator it = tokens.begin();
-	     it != tokens.end();
-	     ++it)
+	line_splitter lines(response);
+	for (auto it = lines.cbegin(); it != lines.cend(); ++it)
 	{
 		if (starts_with(*it, "AB_DATE_VERSION: "))
 		{
