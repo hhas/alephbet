@@ -30,26 +30,25 @@
 
 /* Open the file, and allocate whatever internal structures are necessary in the */
 /*  preferences pointer.. */
-bool w_open_preferences_file(char *PrefName, Typecode Type);
+bool w_open_preferences_file(char* PrefName, Typecode Type);
 
-typedef void (*prefs_initializer)(void *prefs);
-typedef bool (*prefs_validater)(void *prefs);
+typedef void (*prefs_initializer)(void* prefs);
+typedef bool (*prefs_validater)(void* prefs);
 
-void *w_get_data_from_preferences(
-	WadDataType tag,					/* Tag to read */
-	size_t expected_size,				/* Data size */
-	prefs_initializer initialize,	/* Call if I have to allocate it.. */
-	prefs_validater validate);	/* Verify function-> fixes if bad and returns true */
-	
+void* w_get_data_from_preferences(WadDataType tag,              /* Tag to read */
+                                  size_t expected_size,         /* Data size */
+                                  prefs_initializer initialize, /* Call if I have to allocate it.. */
+                                  prefs_validater validate);    /* Verify function-> fixes if bad and returns true */
+
 void w_write_preferences_file(void);
 
 /* ------ local structures */
 /* This is the structure used internally */
 struct preferences_info {
-	preferences_info() : wad(NULL) {}
+    preferences_info() : wad(NULL) {}
 
-	FileSpecifier PrefsFile;
-	struct wad_data *wad;
+    FileSpecifier PrefsFile;
+    struct wad_data* wad;
 };
 
 #endif

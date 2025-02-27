@@ -30,46 +30,46 @@
 
 #include "Decoder.hpp"
 #include "LockfreeSPSCQueue.hpp"
-#include <atomic>
 #include <algorithm>
-#include <unordered_map>
+#include <atomic>
 #include <boost/unordered/unordered_map.hpp>
+#include <unordered_map>
 
-using SetupALResult = std::pair<bool, bool>; //first is source configuration suceeded for this pass, second is source is fully setup and doesn't need another pass
+using SetupALResult = std::pair<bool, bool>; // first is source configuration suceeded for this pass, second is source
+                                             // is fully setup and doesn't need another pass
 
 template <typename T>
 struct AtomicStructure {
-private:
+  private:
+
     static constexpr int queue_size = 5;
     LockfreeSPSCQueue<T, queue_size> shared_queue;
-    std::atomic_int index = { 0 };
+    std::atomic_int index = {0};
     T structure[2];
-public:
-    AtomicStructure& operator= (const T& structure) {
+
+  public:
+
+    AtomicStructure& operator=(const T& structure) {
         this->structure[index] = structure;
         return *this;
     }
 
     const T& Get() const { return structure[index]; }
 
-    void Store(const T& value) {
-        shared_queue.push_blocking(value);
-    }
+    void Store(const T& value) { shared_queue.push_blocking(value); }
 
     void Set(const T& value) {
-        int swappedIndex = index ^ 1;
+        int swappedIndex        = index ^ 1;
         structure[swappedIndex] = value;
-        index = swappedIndex;
+        index                   = swappedIndex;
     }
 
-    bool Consume(T& returnValue) {
-        return shared_queue.pop_nonblocking(returnValue);
-    }
+    bool Consume(T& returnValue) { return shared_queue.pop_nonblocking(returnValue); }
 
     bool Update() {
         T value;
         bool any_successes = false;
-        while(shared_queue.pop_nonblocking(value)) {
+        while (shared_queue.pop_nonblocking(value)) {
             Set(value);
             any_successes = true;
         }
@@ -77,16 +77,16 @@ public:
     }
 };
 
-static constexpr int num_buffers = 4;
+static constexpr int num_buffers    = 4;
 static constexpr int buffer_samples = 8192;
 
 class AudioPlayer {
-private:
-   
+  private:
+
     typedef std::unordered_map<ALuint, bool> AudioPlayerBuffers; //<buffer id, is queued for processing>
 
     struct AudioSource {
-        ALuint source_id = 0; //Source used by this player
+        ALuint source_id = 0; // Source used by this player
         AudioPlayerBuffers buffers;
     };
 
@@ -97,49 +97,62 @@ private:
     void FillBuffers();
     std::unique_ptr<AudioSource> RetrieveSource();
     bool AssignSource();
-    virtual SetupALResult SetUpALSourceIdle(); //Update of the source parameters (AL), done everytime the player is processed in the queue
-    virtual bool SetUpALSourceInit(); //Init of the source parameters (AL), done when the source is assigned to the player
+    virtual SetupALResult SetUpALSourceIdle(); // Update of the source parameters (AL), done everytime the player is
+                                               // processed in the queue
+    virtual bool
+            SetUpALSourceInit(); // Init of the source parameters (AL), done when the source is assigned to the player
 
-	typedef std::pair<AudioFormat, bool> key;
-	class PairHash {
-	public:
-		std::size_t operator()(const std::pair<AudioFormat, bool>& s) const noexcept {
-			return std::hash<uint32>()(uint32_t(s.first) ^ (s.second ? 0xcb914917 : 0));
-		}
-	};
+    typedef std::pair<AudioFormat, bool> key;
 
-    static inline const std::unordered_map<key, int, PairHash> mapping_audio_format_openal = {
-        {{AudioFormat::_8_bit, false}, AL_FORMAT_MONO8},
-        {{AudioFormat::_8_bit, true}, AL_FORMAT_STEREO8},
-        {{AudioFormat::_16_bit, false}, AL_FORMAT_MONO16},
-        {{AudioFormat::_16_bit, true}, AL_FORMAT_STEREO16},
-        {{AudioFormat::_32_float, false}, AL_FORMAT_MONO_FLOAT32},
-        {{AudioFormat::_32_float, true}, AL_FORMAT_STEREO_FLOAT32}
+    class PairHash {
+      public:
+
+        std::size_t operator()(const std::pair<AudioFormat, bool>& s) const noexcept {
+            return std::hash<uint32>()(uint32_t(s.first) ^ (s.second ? 0xcb91'4917 : 0));
+        }
     };
 
-    int queued_rate = 0;
-    ALenum queued_format = 0; //Mono 8-16-32f or stereo 8-16-32f
+    static inline const std::unordered_map<key, int, PairHash> mapping_audio_format_openal = {
+            {{AudioFormat::_8_bit, false},    AL_FORMAT_MONO8         },
+            {{AudioFormat::_8_bit, true},     AL_FORMAT_STEREO8       },
+            {{AudioFormat::_16_bit, false},   AL_FORMAT_MONO16        },
+            {{AudioFormat::_16_bit, true},    AL_FORMAT_STEREO16      },
+            {{AudioFormat::_32_float, false}, AL_FORMAT_MONO_FLOAT32  },
+            {{AudioFormat::_32_float, true},  AL_FORMAT_STEREO_FLOAT32}
+    };
+
+    int queued_rate      = 0;
+    ALenum queued_format = 0; // Mono 8-16-32f or stereo 8-16-32f
 
     friend class OpenALManager;
 
-public:
+  public:
+
     void AskStop() { stop_signal = true; }
+
     bool IsActive() const { return is_active.load(); }
+
     bool HasRewind() const { return rewind_signal.load(); }
+
     void AskRewind() { rewind_signal = true; }
+
     virtual float GetPriority() const = 0;
-protected:
+
+  protected:
+
     AudioPlayer(int rate, bool stereo, AudioFormat audioFormat);
     void Init(int rate, bool stereo, AudioFormat audioFormat);
     virtual int GetNextData(uint8* data, int length) = 0;
+
     virtual bool LoadParametersUpdates() { return false; }
+
     bool IsPlaying() const;
-    std::atomic_bool rewind_signal = { false };
-    std::atomic_bool stop_signal = { false };
-    std::atomic_bool is_active = { true };
-    bool is_sync_with_al_parameters = false; //uses locks
-    int rate = 0;
-    ALenum format = 0; //Mono 8-16-32f or stereo 8-16-32f
+    std::atomic_bool rewind_signal  = {false};
+    std::atomic_bool stop_signal    = {false};
+    std::atomic_bool is_active      = {true};
+    bool is_sync_with_al_parameters = false; // uses locks
+    int rate                        = 0;
+    ALenum format                   = 0; // Mono 8-16-32f or stereo 8-16-32f
     std::unique_ptr<AudioSource> audio_source;
     virtual void Rewind();
 };

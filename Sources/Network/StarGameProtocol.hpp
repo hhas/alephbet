@@ -35,25 +35,25 @@
 
 class InfoTree;
 
-class StarGameProtocol : public NetworkGameProtocol
-{
-public:
-	bool	Enter(short* inNetStatePtr);
-	void	Exit1();
-	void	Exit2();
-	void	DistributeInformation(short type, void *buffer, short buffer_size, bool send_to_self, bool only_send_to_team);
-	bool	Sync(NetTopology* inTopology, int32 inSmallestGameTick, int inLocalPlayerIndex, int inServerPlayerIndex);
-	bool	UnSync(bool inGraceful, int32 inSmallestPostgameTick);
-	int32	GetNetTime();
-	void	PacketHandler(DDPPacketBuffer* inPacket);
+class StarGameProtocol : public NetworkGameProtocol {
+  public:
 
-	static void ParsePreferencesTree(InfoTree prefs, std::string version);
+    bool Enter(short* inNetStatePtr);
+    void Exit1();
+    void Exit2();
+    void DistributeInformation(short type, void* buffer, short buffer_size, bool send_to_self, bool only_send_to_team);
+    bool Sync(NetTopology* inTopology, int32 inSmallestGameTick, int inLocalPlayerIndex, int inServerPlayerIndex);
+    bool UnSync(bool inGraceful, int32 inSmallestPostgameTick);
+    int32 GetNetTime();
+    void PacketHandler(DDPPacketBuffer* inPacket);
 
-	int32   GetUnconfirmedActionFlagsCount();
-	uint32  PeekUnconfirmedActionFlag(int32 offset);
-	void    UpdateUnconfirmedActionFlags();
+    static void ParsePreferencesTree(InfoTree prefs, std::string version);
 
-	bool CheckWorldUpdate() override;
+    int32 GetUnconfirmedActionFlagsCount();
+    uint32 PeekUnconfirmedActionFlag(int32 offset);
+    void UpdateUnconfirmedActionFlags();
+
+    bool CheckWorldUpdate() override;
 };
 
 extern void DefaultStarPreferences();

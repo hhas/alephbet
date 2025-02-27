@@ -22,58 +22,52 @@
  *
  */
 
-#include "cseries.hpp"
 #include "Scenario.hpp"
 #include "InfoTree.hpp"
+#include "cseries.hpp"
 
-Scenario *Scenario::instance()
-{
-	static Scenario *m_instance = nullptr;
-	if (!m_instance) m_instance = new Scenario();
-	return m_instance;
+Scenario* Scenario::instance() {
+    static Scenario* m_instance = nullptr;
+    if (!m_instance)
+        m_instance = new Scenario();
+    return m_instance;
 }
 
-void Scenario::AddCompatible(const string Compatible)
-{
-	m_compatibleVersions.push_back(string(Compatible, 0, 23));
+void Scenario::AddCompatible(const string Compatible) { m_compatibleVersions.push_back(string(Compatible, 0, 23)); }
+
+bool Scenario::IsCompatible(const string Compatible) {
+    if (Compatible == "" || m_id == "")
+        return true;
+    if (Compatible == m_id)
+        return true;
+    for (int i = 0; i < m_compatibleVersions.size(); i++) {
+        if (m_compatibleVersions[i] == Compatible)
+            return true;
+    }
+
+    return false;
 }
 
-bool Scenario::IsCompatible(const string Compatible)
-{
-	if (Compatible == "" || m_id == "") return true;
-	if (Compatible == m_id) return true;
-	for (int i = 0; i < m_compatibleVersions.size(); i++)
-	{
-		if (m_compatibleVersions[i] == Compatible) return true;
-	}
-
-	return false;
+void reset_mml_scenario() {
+    // no reset
 }
 
+void parse_mml_scenario(const InfoTree& root) {
+    std::string str;
+    if (root.read_attr("name", str))
+        Scenario::instance()->SetName(str);
+    if (root.read_attr("id", str))
+        Scenario::instance()->SetID(str);
+    if (root.read_attr("version", str))
+        Scenario::instance()->SetVersion(str);
 
-void reset_mml_scenario()
-{
-	// no reset
-}
+    bool allows_classic_gameplay;
+    if (root.read_attr("allow_classic_gameplay", allows_classic_gameplay))
+        Scenario::instance()->SetAllowsClassicGameplay(allows_classic_gameplay);
 
-void parse_mml_scenario(const InfoTree& root)
-{
-	std::string str;
-	if (root.read_attr("name", str))
-		Scenario::instance()->SetName(str);
-	if (root.read_attr("id", str))
-		Scenario::instance()->SetID(str);
-	if (root.read_attr("version", str))
-		Scenario::instance()->SetVersion(str);
-
-	bool allows_classic_gameplay;
-	if (root.read_attr("allow_classic_gameplay", allows_classic_gameplay))
-		Scenario::instance()->SetAllowsClassicGameplay(allows_classic_gameplay);
-
-	for (const InfoTree &can_join : root.children_named("can_join"))
-	{
-		std::string compat = can_join.get_value("");
-		if (compat.size())
-			Scenario::instance()->AddCompatible(compat);
-	}
+    for (const InfoTree& can_join : root.children_named("can_join")) {
+        std::string compat = can_join.get_value("");
+        if (compat.size())
+            Scenario::instance()->AddCompatible(compat);
+    }
 }

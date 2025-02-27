@@ -30,7 +30,7 @@
 class FileSpecifier;
 
 #define BUNGIE_PHYSICS_DATA_VERSION 0
-#define PHYSICS_DATA_VERSION 1
+#define PHYSICS_DATA_VERSION        1
 
 /* ------------- prototypes */
 
@@ -42,8 +42,8 @@ void set_to_default_physics_file(void);
 /* Proceses the entire physics file.. */
 void import_definition_structures(void);
 
-void *get_network_physics_buffer(int32 *physics_length);
-void process_network_physics_model(void *data);
+void* get_network_physics_buffer(int32* physics_length);
+void process_network_physics_model(void* data);
 
 uint32_t get_physics_file_checksum();
 #endif

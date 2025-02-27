@@ -28,103 +28,91 @@
 
 #include "HUDRenderer_SW.hpp"
 
+#include "Shape_Blitter.hpp"
 #include "images.hpp"
 #include "shell.hpp" // get_shape_surface!?
-#include "Shape_Blitter.hpp"
 
 extern bool MotionSensorActive;
-
 
 /*
  *  Update motion sensor
  */
 
-void HUD_SW_Class::update_motion_sensor(short time_elapsed)
-{
-	if (!(GET_GAME_OPTIONS() & _motion_sensor_does_not_work) && MotionSensorActive) {
-		if (motion_sensor_has_changed() || time_elapsed == NONE) {
-			render_motion_sensor(time_elapsed);
-			ForceUpdate = true;
-			screen_rectangle *r = get_interface_rectangle(_motion_sensor_rect);
-			DrawShapeAtXY(BUILD_DESCRIPTOR(_collection_interface, _motion_sensor_mount), r->left, r->top);
-		}
-	}
+void HUD_SW_Class::update_motion_sensor(short time_elapsed) {
+    if (!(GET_GAME_OPTIONS() & _motion_sensor_does_not_work) && MotionSensorActive) {
+        if (motion_sensor_has_changed() || time_elapsed == NONE) {
+            render_motion_sensor(time_elapsed);
+            ForceUpdate         = true;
+            screen_rectangle* r = get_interface_rectangle(_motion_sensor_rect);
+            DrawShapeAtXY(BUILD_DESCRIPTOR(_collection_interface, _motion_sensor_mount), r->left, r->top);
+        }
+    }
 }
-
 
 /*
  *  Draw shapes
  */
 
-void HUD_SW_Class::DrawShape(shape_descriptor shape, screen_rectangle *dest, screen_rectangle *src)
-{
-	_draw_screen_shape(shape, dest, src);
+void HUD_SW_Class::DrawShape(shape_descriptor shape, screen_rectangle* dest, screen_rectangle* src) {
+    _draw_screen_shape(shape, dest, src);
 }
 
-void HUD_SW_Class::DrawShapeAtXY(shape_descriptor shape, short x, short y, bool transparency)
-{
-	// "transparency" is only used for OpenGL motion sensor
-	_draw_screen_shape_at_x_y(shape, x, y);
+void HUD_SW_Class::DrawShapeAtXY(shape_descriptor shape, short x, short y, bool transparency) {
+    // "transparency" is only used for OpenGL motion sensor
+    _draw_screen_shape_at_x_y(shape, x, y);
 }
 
-extern SDL_Surface *HUD_Buffer;
+extern SDL_Surface* HUD_Buffer;
 
 template <class T>
-static void rotate(T *src_pixels, int src_pitch, T *dst_pixels, int dst_pitch, int width, int height)
-{
-	for (int y = 0; y < height; y++)
-	{
-		for (int x = 0; x < width; x++)
-		{
-			dst_pixels[x * dst_pitch + y] = src_pixels[y * src_pitch + x];
-		}
-	}
+static void rotate(T* src_pixels, int src_pitch, T* dst_pixels, int dst_pitch, int width, int height) {
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) { dst_pixels[x * dst_pitch + y] = src_pixels[y * src_pitch + x]; }
+    }
 }
 
-SDL_Surface *rotate_surface(SDL_Surface *s, int width, int height)
-{
-	if (!s) return 0;
+SDL_Surface* rotate_surface(SDL_Surface* s, int width, int height) {
+    if (!s)
+        return 0;
 
-	SDL_Surface *s2 = SDL_CreateRGBSurface(SDL_SWSURFACE, height, width, s->format->BitsPerPixel, s->format->Rmask, s->format->Gmask, s->format->Bmask, s->format->Amask);
+    SDL_Surface* s2 = SDL_CreateRGBSurface(SDL_SWSURFACE, height, width, s->format->BitsPerPixel, s->format->Rmask,
+                                           s->format->Gmask, s->format->Bmask, s->format->Amask);
 
-	switch (s->format->BytesPerPixel) {
-		case 1:
-			rotate((pixel8 *)s->pixels, s->pitch, (pixel8 *)s2->pixels, s2->pitch, width, height);
-			break;
-		case 2:
-			rotate((pixel16 *)s->pixels, s->pitch / 2, (pixel16 *)s2->pixels, s2->pitch / 2, width, height);
-			break;
-		case 4:
-			rotate((pixel32 *)s->pixels, s->pitch / 4, (pixel32 *)s2->pixels, s2->pitch / 4, width, height);
-			break;
-	}
+    switch (s->format->BytesPerPixel) {
+        case 1:
+            rotate((pixel8*)s->pixels, s->pitch, (pixel8*)s2->pixels, s2->pitch, width, height);
+            break;
+        case 2:
+            rotate((pixel16*)s->pixels, s->pitch / 2, (pixel16*)s2->pixels, s2->pitch / 2, width, height);
+            break;
+        case 4:
+            rotate((pixel32*)s->pixels, s->pitch / 4, (pixel32*)s2->pixels, s2->pitch / 4, width, height);
+            break;
+    }
 
-	if (s->format->palette)
-		SDL_SetPaletteColors(s2->format->palette, s->format->palette->colors, 0, s->format->palette->ncolors);
+    if (s->format->palette)
+        SDL_SetPaletteColors(s2->format->palette, s->format->palette->colors, 0, s->format->palette->ncolors);
 
-	return s2;
-}	
+    return s2;
+}
 
-void HUD_SW_Class::DrawTexture(shape_descriptor shape, short texture_type, short x, short y, int size)
-{
-    Shape_Blitter b(
-                    GET_COLLECTION(GET_DESCRIPTOR_COLLECTION(shape)),
-                    GET_DESCRIPTOR_SHAPE(shape),
-                    texture_type,
+void HUD_SW_Class::DrawTexture(shape_descriptor shape, short texture_type, short x, short y, int size) {
+    Shape_Blitter b(GET_COLLECTION(GET_DESCRIPTOR_COLLECTION(shape)), GET_DESCRIPTOR_SHAPE(shape), texture_type,
                     GET_COLLECTION_CLUT(GET_DESCRIPTOR_COLLECTION(shape)));
     int w = b.Width();
     int h = b.Height();
-    if (!w || !h) return;
+    if (!w || !h)
+        return;
     if (w >= h)
         b.Rescale(size, size * h / w);
     else
         b.Rescale(size * w / h, size);
-    
+
     SDL_Rect r;
     r.w = b.Width();
     r.h = b.Height();
-    r.x = x + (size - r.w)/2;
-    r.y = y + (size - r.h)/2;
+    r.x = x + (size - r.w) / 2;
+    r.y = y + (size - r.h) / 2;
     b.SDL_Draw(HUD_Buffer, r);
 }
 
@@ -132,31 +120,20 @@ void HUD_SW_Class::DrawTexture(shape_descriptor shape, short texture_type, short
  *  Draw text
  */
 
-void HUD_SW_Class::DrawText(const char *text, screen_rectangle *dest, short flags, short font_id, short text_color)
-{
-	_draw_screen_text(text, dest, flags, font_id, text_color);
+void HUD_SW_Class::DrawText(const char* text, screen_rectangle* dest, short flags, short font_id, short text_color) {
+    _draw_screen_text(text, dest, flags, font_id, text_color);
 }
 
-int HUD_SW_Class::TextWidth(const char* text, short font_id)
-{
-	return _text_width(text, font_id);
-}
+int HUD_SW_Class::TextWidth(const char* text, short font_id) { return _text_width(text, font_id); }
 
 /*
  *  Fill rectangle
  */
 
-void HUD_SW_Class::FillRect(screen_rectangle *r, short color_index)
-{
-	_fill_rect(r, color_index);
-}
-
+void HUD_SW_Class::FillRect(screen_rectangle* r, short color_index) { _fill_rect(r, color_index); }
 
 /*
  *  Frame rectangle
  */
 
-void HUD_SW_Class::FrameRect(screen_rectangle *r, short color_index)
-{
-	_frame_rect(r, color_index);
-}
+void HUD_SW_Class::FrameRect(screen_rectangle* r, short color_index) { _frame_rect(r, color_index); }

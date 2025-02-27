@@ -34,12 +34,12 @@
 #include <stddef.h>
 
 // Set up a string in the repository; a repeated call will replace an old string
-void TS_PutCString(short ID, short Index, const char *String);
+void TS_PutCString(short ID, short Index, const char* String);
 
 // Returns a pointer to a string;
 // if the ID and the index do not point to a valid string,
 // this function will then return NULL
-const char *TS_GetCString(short ID, short Index);
+const char* TS_GetCString(short ID, short Index);
 
 // Checks on the presence of a string set
 bool TS_IsPresent(short ID);
@@ -59,7 +59,7 @@ void TS_DeleteAllStrings();
 // Write output as a C string;
 // Returns how many characters resulted.
 // Needs at least (OutMaxLen + 1) characters allocated.
-size_t DeUTF8_C(const char *InString, size_t InLen, char *OutString, size_t OutMaxLen);
+size_t DeUTF8_C(const char* InString, size_t InLen, char* OutString, size_t OutMaxLen);
 
 class InfoTree;
 void parse_mml_stringset(const InfoTree& root);

@@ -32,23 +32,17 @@
 #include "sdl_dialogs.hpp"
 #include "sdl_widgets.hpp"
 
-void
-modify_control_enabled(
-	DialogPtr inDialog,
-	short inWhichItem,
-	short inChangeEnable) {
+void modify_control_enabled(DialogPtr inDialog, short inWhichItem, short inChangeEnable) {
 
     assert(inDialog != NULL);
-    
-    widget*	theWidget = inDialog->get_widget_by_id(inWhichItem);
-    
+
+    widget* theWidget = inDialog->get_widget_by_id(inWhichItem);
+
     assert(theWidget != NULL);
-  
-    if(inChangeEnable != NONE)
+
+    if (inChangeEnable != NONE)
         theWidget->set_enabled(inChangeEnable == CONTROL_ACTIVE ? true : false);
 }
-
-
 
 /*************************************************************************************************
  *
@@ -57,29 +51,22 @@ modify_control_enabled(
  *
  *************************************************************************************************/
 // Works only on w_select (and subclasses).
-short
-get_selection_control_value(DialogPtr dialog, short which_control)
-{
+short get_selection_control_value(DialogPtr dialog, short which_control) {
     assert(dialog != NULL);
-    
-    w_select*	theSelectionWidget = dynamic_cast<w_select*>(dialog->get_widget_by_id(which_control));
-    
+
+    w_select* theSelectionWidget = dynamic_cast<w_select*>(dialog->get_widget_by_id(which_control));
+
     assert(theSelectionWidget != NULL);
-    
+
     return theSelectionWidget->get_selection() + 1;
 }
 
+void copy_cstring_to_static_text(DialogPtr dialog, short item, const char* cstring) {
+    assert(dialog != NULL);
 
+    w_static_text* theStaticText = dynamic_cast<w_static_text*>(dialog->get_widget_by_id(item));
 
-void
-copy_cstring_to_static_text(DialogPtr dialog, short item, const char* cstring) {
-	assert(dialog != NULL);
-	
-	w_static_text*	theStaticText = dynamic_cast<w_static_text*>(dialog->get_widget_by_id(item));
-	
-	assert(theStaticText != NULL);
-	
-	theStaticText->set_text(cstring);
+    assert(theStaticText != NULL);
+
+    theStaticText->set_text(cstring);
 }
-
-

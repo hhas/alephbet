@@ -35,25 +35,25 @@
 
 class InfoTree;
 
-class RingGameProtocol : public NetworkGameProtocol
-{
-public:
-	bool	Enter(short* inNetStatePtr);
-	void	Exit1();
-	void	Exit2();
-	void	DistributeInformation(short type, void *buffer, short buffer_size, bool send_to_self, bool only_send_to_team);
-	bool	Sync(NetTopology* inTopology, int32 inSmallestGameTick, int inLocalPlayerIndex, int inServerPlayerIndex);
-	bool	UnSync(bool inGraceful, int32 inSmallestPostgameTick);
-	int32	GetNetTime();
-	void	PacketHandler(DDPPacketBuffer* inPacket);
+class RingGameProtocol : public NetworkGameProtocol {
+  public:
 
-	int32   GetUnconfirmedActionFlagsCount();
-	uint32  PeekUnconfirmedActionFlag(int32 offset);
-	void    UpdateUnconfirmedActionFlags();
+    bool Enter(short* inNetStatePtr);
+    void Exit1();
+    void Exit2();
+    void DistributeInformation(short type, void* buffer, short buffer_size, bool send_to_self, bool only_send_to_team);
+    bool Sync(NetTopology* inTopology, int32 inSmallestGameTick, int inLocalPlayerIndex, int inServerPlayerIndex);
+    bool UnSync(bool inGraceful, int32 inSmallestPostgameTick);
+    int32 GetNetTime();
+    void PacketHandler(DDPPacketBuffer* inPacket);
 
-	static void ParsePreferencesTree(InfoTree prefs, std::string version);
+    int32 GetUnconfirmedActionFlagsCount();
+    uint32 PeekUnconfirmedActionFlag(int32 offset);
+    void UpdateUnconfirmedActionFlags();
 
-	bool CheckWorldUpdate() override;
+    static void ParsePreferencesTree(InfoTree prefs, std::string version);
+
+    bool CheckWorldUpdate() override;
 };
 
 extern void DefaultRingPreferences();

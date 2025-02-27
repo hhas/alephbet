@@ -25,53 +25,55 @@
  *
  */
 
-#include "cseries.hpp"
-#include "OGL_Headers.hpp"
-#include "OGL_Blitter.hpp"
 #include "ImageLoader.hpp"
+#include "OGL_Blitter.hpp"
+#include "OGL_Headers.hpp"
+#include "cseries.hpp"
 
 #ifdef HAVE_OPENGL
-class OGL_LoadScreen
-{
-public:
-	static OGL_LoadScreen *instance();
-	
-	bool Start();
-	void Stop();
-	void Progress(const int percent);
+class OGL_LoadScreen {
+  public:
 
-	void Set(std::string Path, bool Stretch, bool Scale);
-	void Set(std::string Path, bool Stretch, bool Scale, short X, short Y, short W, short H);
-	void Clear();
+    static OGL_LoadScreen* instance();
 
-	bool Use() { return use; }
+    bool Start();
+    void Stop();
+    void Progress(const int percent);
 
-	rgb_color *Colors() { return colors; }
+    void Set(std::string Path, bool Stretch, bool Scale);
+    void Set(std::string Path, bool Stretch, bool Scale, short X, short Y, short W, short H);
+    void Clear();
 
-private:
-OGL_LoadScreen() : x(0), y(0), w(0), h(0), use(false), useProgress(false), percent(0) { }
-	~OGL_LoadScreen();
+    bool Use() { return use; }
 
-	std::string path;
-	ImageDescriptor image;
-	short x, y, w, h;
+    rgb_color* Colors() { return colors; }
 
-	OGL_Blitter blitter;
-	SDL_Rect m_dst;
-	double x_offset, y_offset, x_scale, y_scale;
+  private:
 
-	bool scale;
-	bool stretch;
+    OGL_LoadScreen() : x(0), y(0), w(0), h(0), use(false), useProgress(false), percent(0) {}
 
-	bool use;
-	bool useProgress;
+    ~OGL_LoadScreen();
 
-	rgb_color colors[2];
+    std::string path;
+    ImageDescriptor image;
+    short x, y, w, h;
 
-	short percent;
+    OGL_Blitter blitter;
+    SDL_Rect m_dst;
+    double x_offset, y_offset, x_scale, y_scale;
+
+    bool scale;
+    bool stretch;
+
+    bool use;
+    bool useProgress;
+
+    rgb_color colors[2];
+
+    short percent;
 
 
-	GLuint texture_ref;
+    GLuint texture_ref;
 };
 #endif
 

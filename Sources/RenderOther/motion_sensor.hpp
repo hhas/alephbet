@@ -28,18 +28,17 @@
 #include "shape_descriptors.hpp"
 
 enum {
-	MType_Friend,	// What you, friendly players, and the Bobs are
-	MType_Alien,	// What the other critters are
-	MType_Enemy,	// What hostile players are
-	NUMBER_OF_MDISPTYPES
+    MType_Friend, // What you, friendly players, and the Bobs are
+    MType_Alien,  // What the other critters are
+    MType_Enemy,  // What hostile players are
+    NUMBER_OF_MDISPTYPES
 };
-
 
 /* ---------- prototypes/MOTION_SENSOR.C */
 
-void initialize_motion_sensor(shape_descriptor mount, shape_descriptor virgin_mounts,
-	shape_descriptor alien, shape_descriptor _friend, shape_descriptor enemy,
-	shape_descriptor network_compass, short side_length);
+void initialize_motion_sensor(shape_descriptor mount, shape_descriptor virgin_mounts, shape_descriptor alien,
+                              shape_descriptor _friend, shape_descriptor enemy, shape_descriptor network_compass,
+                              short side_length);
 void reset_motion_sensor(short monster_index);
 void motion_sensor_scan(void);
 bool motion_sensor_has_changed(void);

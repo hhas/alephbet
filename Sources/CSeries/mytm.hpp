@@ -27,21 +27,15 @@
 
 #include "cstypes.hpp"
 
-typedef struct myTMTask myTMTask,*myTMTaskPtr;
+typedef struct myTMTask myTMTask, *myTMTaskPtr;
 
-extern myTMTaskPtr myTMSetup(
-	int32 time,
-	bool (*func)(void));
+extern myTMTaskPtr myTMSetup(int32 time, bool (*func)(void));
 
-extern myTMTaskPtr myXTMSetup(
-	int32 time,
-	bool (*func)(void));
+extern myTMTaskPtr myXTMSetup(int32 time, bool (*func)(void));
 
-extern myTMTaskPtr myTMRemove(
-	myTMTaskPtr task);
+extern myTMTaskPtr myTMRemove(myTMTaskPtr task);
 
-extern void myTMReset(
-	myTMTaskPtr task);
+extern void myTMReset(myTMTaskPtr task);
 
 // ZZZ: call this from time to time to collect leftover zombie threads and reclaim a little storage.
 // Pass false for fairly quick operation.  Pass true to make sure that we wait for folks to finish.
@@ -52,16 +46,22 @@ extern bool take_mytm_mutex();
 extern bool release_mytm_mutex();
 
 // ghs: exception-safe version of above
-class MyTMMutexTaker
-{
-public :
-	MyTMMutexTaker() { m_release = take_mytm_mutex(); }
-	~MyTMMutexTaker() { if (m_release) release_mytm_mutex(); }
-private:
-	bool m_release;
+class MyTMMutexTaker {
+  public:
+
+    MyTMMutexTaker() { m_release = take_mytm_mutex(); }
+
+    ~MyTMMutexTaker() {
+        if (m_release)
+            release_mytm_mutex();
+    }
+
+  private:
+
+    bool m_release;
 };
 
 // ZZZ: call before any other mytm routines
 extern void mytm_initialize();
 
-#endif //def MYTM_H_
+#endif // def MYTM_H_

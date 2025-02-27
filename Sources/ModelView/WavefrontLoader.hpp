@@ -25,9 +25,9 @@
  *
  */
 
-#include <stdio.h>
-#include "Model3D.hpp"
 #include "FileHandler.hpp"
+#include "Model3D.hpp"
+#include <stdio.h>
 
 // Load a Wavefront model, without converting its coordinate system.
 bool LoadModel_Wavefront(FileSpecifier& Spec, Model3D& Model);

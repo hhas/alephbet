@@ -32,7 +32,8 @@
 class FileSpecifier;
 
 bool save_game_file(FileSpecifier& File, const std::string& metadata, const std::string& imagedata);
-struct wad_data *build_meta_game_wad(const std::string& metadata, const std::string& imagedata, struct wad_header *header, int32 *length);
+struct wad_data* build_meta_game_wad(const std::string& metadata, const std::string& imagedata,
+                                     struct wad_header* header, int32* length);
 
 bool export_level(FileSpecifier& File);
 
@@ -44,14 +45,13 @@ void get_current_saved_game_name(FileSpecifier& File);
 void set_saved_game_name_to_default();
 
 // ZZZ: exposed this for netgame-resuming code
-bool process_map_wad(struct wad_data *wad, bool restoring_game, short version);
+bool process_map_wad(struct wad_data* wad, bool restoring_game, short version);
 
-bool match_checksum_with_map(short vRefNum, long dirID, uint32 checksum, 
-	FileSpecifier& File);
+bool match_checksum_with_map(short vRefNum, long dirID, uint32 checksum, FileSpecifier& File);
 void set_map_file(FileSpecifier& File, bool runScript = true);
 dynamic_data get_dynamic_data_from_save(FileSpecifier& File);
 bool get_dynamic_data_from_wad(wad_data* wad, dynamic_data* dest);
-//CP Addition: get_map_file returns the FileDesc pointer to the current map
+// CP Addition: get_map_file returns the FileDesc pointer to the current map
 FileSpecifier& get_map_file(void);
 
 void level_has_embedded_physics_lua(int Level, bool& HasPhysics, bool& HasLua);

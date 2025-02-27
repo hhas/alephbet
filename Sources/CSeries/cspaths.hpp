@@ -33,18 +33,18 @@
 #include <string>
 
 typedef enum {
-	kPathLocalData,
-	kPathDefaultData,
-	kPathLegacyData,
-	kPathBundleData,
-	kPathLogs,
-	kPathPreferences,
-	kPathLegacyPreferences,
-	kPathScreenshots,
-	kPathSavedGames,
-	kPathQuickSaves,
-	kPathImageCache,
-	kPathRecordings
+    kPathLocalData,
+    kPathDefaultData,
+    kPathLegacyData,
+    kPathBundleData,
+    kPathLogs,
+    kPathPreferences,
+    kPathLegacyPreferences,
+    kPathScreenshots,
+    kPathSavedGames,
+    kPathQuickSaves,
+    kPathImageCache,
+    kPathRecordings
 } CSPathType;
 
 std::string get_data_path(CSPathType type);

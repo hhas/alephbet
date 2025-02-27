@@ -27,16 +27,15 @@
 
 #include "cseries.hpp"
 
-extern "C"
-{
-#include "lua.h"
+extern "C" {
 #include "lauxlib.h"
+#include "lua.h"
 #include "lualib.h"
 }
 
 #include "items.hpp"
-#include "map.hpp"
 #include "lua_templates.hpp"
+#include "map.hpp"
 
 extern char Lua_Effect_Name[]; // "effect"
 typedef L_Class<Lua_Effect_Name> Lua_Effect;
@@ -74,6 +73,6 @@ typedef L_LazyEnum<Lua_Sound_Name> Lua_Sound;
 extern char Lua_Sounds_Name[]; // "Sounds"
 typedef L_EnumContainer<Lua_Sounds_Name, Lua_Sound> Lua_Sounds;
 
-int Lua_Objects_register(lua_State *L);
+int Lua_Objects_register(lua_State* L);
 
 #endif

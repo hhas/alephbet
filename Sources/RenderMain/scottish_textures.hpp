@@ -25,10 +25,10 @@
  *
  */
 
-#include "cseries.hpp"
 #include "OGL_Headers.hpp"
-#include "world.hpp"
+#include "cseries.hpp"
 #include "shape_descriptors.hpp"
+#include "world.hpp"
 
 /* ---------- constants */
 
@@ -37,19 +37,19 @@
 
 enum /* transfer modes */
 {
-	_tinted_transfer, /* pass background through given shading table for non-transparent
-		pixels; config word is $mmnn: mm is a mask applied to a random number in [0,32)
-		which is then added to nn and used to retrieve a tinting table.  ‘ordinary’ (pathways-style)
-		tinting can be accomplished by passing an alternate shading table. */
-	_solid_transfer, /* writes (0,0) color of texture for non-transparent pixels; does not
-		respect shading */
-	_big_landscaped_transfer, /* does not distort texture (texture is anchored in screen-space) */
-	_textured_transfer, /* distorts texture to match surface */
-	_shadeless_transfer, /* does not respect any lighting information; uses a single shading table */
-	_static_transfer /* writes static for non-transparent pixels (config word is the unsigned
-		chance in 64k that a non-transparent pixel will become transparent).  does not respect
-		shading. */
-//	_big_landscaped_transfer
+    _tinted_transfer,         /* pass background through given shading table for non-transparent
+                pixels; config word is $mmnn: mm is a mask applied to a random number in [0,32)
+                which is then added to nn and used to retrieve a tinting table.  ‘ordinary’ (pathways-style)
+                tinting can be accomplished by passing an alternate shading table. */
+    _solid_transfer,          /* writes (0,0) color of texture for non-transparent pixels; does not
+                 respect shading */
+    _big_landscaped_transfer, /* does not distort texture (texture is anchored in screen-space) */
+    _textured_transfer,       /* distorts texture to match surface */
+    _shadeless_transfer,      /* does not respect any lighting information; uses a single shading table */
+    _static_transfer          /* writes static for non-transparent pixels (config word is the unsigned
+                 chance in 64k that a non-transparent pixel will become transparent).  does not respect
+                 shading. */
+    //	_big_landscaped_transfer
 };
 
 /* ---------- shading tables */
@@ -58,139 +58,132 @@ enum /* transfer modes */
 
 #define FIRST_SHADING_TABLE 0
 
-struct tint_table8
-{
-	pixel8 index[PIXEL8_MAXIMUM_COLORS];
+struct tint_table8 {
+    pixel8 index[PIXEL8_MAXIMUM_COLORS];
 };
 
-struct tint_table16
-{
-	pixel16 red[PIXEL16_MAXIMUM_COMPONENT+1];
-	pixel16 green[PIXEL16_MAXIMUM_COMPONENT+1];
-	pixel16 blue[PIXEL16_MAXIMUM_COMPONENT+1];
+struct tint_table16 {
+    pixel16 red[PIXEL16_MAXIMUM_COMPONENT + 1];
+    pixel16 green[PIXEL16_MAXIMUM_COMPONENT + 1];
+    pixel16 blue[PIXEL16_MAXIMUM_COMPONENT + 1];
 };
 
-struct tint_table32
-{
-	pixel32 red[PIXEL32_MAXIMUM_COMPONENT+1];
-	pixel32 green[PIXEL32_MAXIMUM_COMPONENT+1];
-	pixel32 blue[PIXEL32_MAXIMUM_COMPONENT+1];
+struct tint_table32 {
+    pixel32 red[PIXEL32_MAXIMUM_COMPONENT + 1];
+    pixel32 green[PIXEL32_MAXIMUM_COMPONENT + 1];
+    pixel32 blue[PIXEL32_MAXIMUM_COMPONENT + 1];
 };
 
 /* ---------- structures */
 
-struct point2d
-{
-	short x, y;
+struct point2d {
+    short x, y;
 };
 
 /* ignore multiple shading tables if set */
 #define _SHADELESS_BIT 0x8000
 
 // for scaling floor/ceiling
-#define _SCALE_2X_BIT   0x0001
-#define _SCALE_4X_BIT   0x0002
-#define _SCALE_BITS		0x0003
+#define _SCALE_2X_BIT 0x0001
+#define _SCALE_4X_BIT 0x0002
+#define _SCALE_BITS   0x0003
 
 class OGL_ModelData;
 
-struct rectangle_definition
-{
-	uint16 flags;
-	
-	struct bitmap_definition *texture;
-	
-	/* screen coordinates; x0 <= x1, y0 <= y1 */
-	int16 x0, y0;
-	int16 x1, y1;
+struct rectangle_definition {
+    uint16 flags;
 
-	/* screen coordinates */
-	int16 clip_left, clip_right;
-	int16 clip_top, clip_bottom;
+    struct bitmap_definition* texture;
 
-	/* depth at logical center (used to calculate light due to viewer) */
-	// LP change: made this long-distance friendly
-	int32 depth;
-	
-	/* ambient shading table index; many objects will be self-luminescent, so this may have
-		nothing to do with the polygon the object is sitting in */
-	_fixed ambient_shade;
-	
-	/* here are all the shading tables, crammed together in memory */	
-	void *shading_tables;
+    /* screen coordinates; x0 <= x1, y0 <= y1 */
+    int16 x0, y0;
+    int16 x1, y1;
 
-	/* _tinted, _textured and _static are supported; _solid would be silly and _landscape
-		would be hard (but might be cool) */
-	int16 transfer_mode, transfer_data;
-	
-	/* mirrored horizontally and vertically if true */
-	bool flip_vertical, flip_horizontal;
-	
-	// LP addition: shape-descriptor value for the convenience of OpenGL;
-	// the lower byte is the frame
-	// Note that for the convenience of 3D-model rendering, more shape information may
-	// eventually have to be transmitted.
-	shape_descriptor ShapeDesc;
-	uint16 LowLevelShape;
-	
-	// For the convenience of the teleporter: shrink to the median axis,
-	// with this position on the screen
-	int16 xc;
-	
-	// Set overall, so as to make semitransparent chase-cam mode easy (0 to 1)
-	float Opacity;
-	
-	// For the convenience of the OpenGL 3D-model renderer
-	_fixed ceiling_light;		// The ambient_shade is the floor light
-	OGL_ModelData *ModelPtr;	// For models
-	short ModelSequence, ModelFrame, NextModelFrame;	// For model animation
-	float MixFrac;				// Mixture between current and next frame
-	world_point3d Position;		// In overall world coordinates
-	short ProjDistance;			// Of centroid, from view plane
-	short Azimuth;				// Facing angle
-	float Scale;				// how big
-	float HorizScale;			// For teleporting
-	short LiquidRelHeight;		// Relative to object location
-	bool BelowLiquid;			// Where the rendering is relative to the liquid
-	int LightDepth;				// For finding the amount of "miner's light"
-	GLfloat LightDirection[3];		// To the "light point"
-	short WorldLeft, WorldBottom, WorldRight, WorldTop;
+    /* screen coordinates */
+    int16 clip_left, clip_right;
+    int16 clip_top, clip_bottom;
 
-	// Constructor required defaults
-	rectangle_definition() :
-		LowLevelShape(0) {}
+    /* depth at logical center (used to calculate light due to viewer) */
+    // LP change: made this long-distance friendly
+    int32 depth;
+
+    /* ambient shading table index; many objects will be self-luminescent, so this may have
+        nothing to do with the polygon the object is sitting in */
+    _fixed ambient_shade;
+
+    /* here are all the shading tables, crammed together in memory */
+    void* shading_tables;
+
+    /* _tinted, _textured and _static are supported; _solid would be silly and _landscape
+        would be hard (but might be cool) */
+    int16 transfer_mode, transfer_data;
+
+    /* mirrored horizontally and vertically if true */
+    bool flip_vertical, flip_horizontal;
+
+    // LP addition: shape-descriptor value for the convenience of OpenGL;
+    // the lower byte is the frame
+    // Note that for the convenience of 3D-model rendering, more shape information may
+    // eventually have to be transmitted.
+    shape_descriptor ShapeDesc;
+    uint16 LowLevelShape;
+
+    // For the convenience of the teleporter: shrink to the median axis,
+    // with this position on the screen
+    int16 xc;
+
+    // Set overall, so as to make semitransparent chase-cam mode easy (0 to 1)
+    float Opacity;
+
+    // For the convenience of the OpenGL 3D-model renderer
+    _fixed ceiling_light;                            // The ambient_shade is the floor light
+    OGL_ModelData* ModelPtr;                         // For models
+    short ModelSequence, ModelFrame, NextModelFrame; // For model animation
+    float MixFrac;                                   // Mixture between current and next frame
+    world_point3d Position;                          // In overall world coordinates
+    short ProjDistance;                              // Of centroid, from view plane
+    short Azimuth;                                   // Facing angle
+    float Scale;                                     // how big
+    float HorizScale;                                // For teleporting
+    short LiquidRelHeight;                           // Relative to object location
+    bool BelowLiquid;                                // Where the rendering is relative to the liquid
+    int LightDepth;                                  // For finding the amount of "miner's light"
+    GLfloat LightDirection[3];                       // To the "light point"
+    short WorldLeft, WorldBottom, WorldRight, WorldTop;
+
+    // Constructor required defaults
+    rectangle_definition() : LowLevelShape(0) {}
 };
 
-struct polygon_definition
-{
-	uint16 flags;
-	
-	struct bitmap_definition *texture; /* ignored for _tinted and _solid polygons */
+struct polygon_definition {
+    uint16 flags;
 
-	/* ambient shading table index */
-	_fixed ambient_shade;
+    struct bitmap_definition* texture; /* ignored for _tinted and _solid polygons */
 
-	/* here are all the shading tables, crammed together in memory (unless this is a tinted
-		polygon in which case it is a single 256-byte tinting table) */
-	void *shading_tables;	
+    /* ambient shading table index */
+    _fixed ambient_shade;
 
-	/* all modes legal */	
-	int16 transfer_mode, transfer_data;
-	
-	// LP change: made this long-distance friendly
-	long_point3d origin;
-	world_vector3d vector; /* used only for vertically textured polygons */
+    /* here are all the shading tables, crammed together in memory (unless this is a tinted
+        polygon in which case it is a single 256-byte tinting table) */
+    void* shading_tables;
 
-	/* clockwise vertices for this convex polygon */
-	int16 vertex_count;
-	point2d vertices[MAXIMUM_VERTICES_PER_SCREEN_POLYGON];
-	
-	// LP addition: shape-descriptor value for the convenience of OpenGL;
-	// the lower byte is the frame
-	shape_descriptor ShapeDesc;
-	
-	// Whether the void is present on one side; useful for suppressing semitransparency
-	bool VoidPresent;
+    /* all modes legal */
+    int16 transfer_mode, transfer_data;
+
+    // LP change: made this long-distance friendly
+    long_point3d origin;
+    world_vector3d vector; /* used only for vertically textured polygons */
+
+    /* clockwise vertices for this convex polygon */
+    int16 vertex_count;
+    point2d vertices[MAXIMUM_VERTICES_PER_SCREEN_POLYGON];
+
+    // LP addition: shape-descriptor value for the convenience of OpenGL;
+    // the lower byte is the frame
+    shape_descriptor ShapeDesc;
+
+    // Whether the void is present on one side; useful for suppressing semitransparency
+    bool VoidPresent;
 };
 
 /* ---------- globals */

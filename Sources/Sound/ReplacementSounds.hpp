@@ -32,40 +32,43 @@
 #include <string>
 #include <unordered_map>
 
-#include "SoundFile.hpp"
 #include "PairOfShortsHash.hpp"
+#include "SoundFile.hpp"
 
-class ExternalSoundHeader : public SoundInfo
-{
-public:
-	ExternalSoundHeader() : SoundInfo() { }
-	~ExternalSoundHeader() { }
-	std::shared_ptr<SoundData> LoadExternal(FileSpecifier& File);
+class ExternalSoundHeader : public SoundInfo {
+  public:
+
+    ExternalSoundHeader() : SoundInfo() {}
+
+    ~ExternalSoundHeader() {}
+
+    std::shared_ptr<SoundData> LoadExternal(FileSpecifier& File);
 };
 
-struct SoundOptions
-{
-	FileSpecifier File;
-	ExternalSoundHeader Sound;
+struct SoundOptions {
+    FileSpecifier File;
+    ExternalSoundHeader Sound;
 };
 
-class SoundReplacements
-{
-public:
-	static inline SoundReplacements* instance() { 
-		static SoundReplacements *m_instance = nullptr;
-		if (!m_instance) m_instance = new SoundReplacements;
-		return m_instance;
-	}
+class SoundReplacements {
+  public:
 
-	SoundOptions *GetSoundOptions(short Index, short Slot);
-	void Reset();
-	void Add(const SoundOptions& Data, short Index, short Slot);
+    static inline SoundReplacements* instance() {
+        static SoundReplacements* m_instance = nullptr;
+        if (!m_instance)
+            m_instance = new SoundReplacements;
+        return m_instance;
+    }
 
-private:
-	SoundReplacements() { }
+    SoundOptions* GetSoundOptions(short Index, short Slot);
+    void Reset();
+    void Add(const SoundOptions& Data, short Index, short Slot);
 
-	std::unordered_map<std::pair<short, short>, SoundOptions> m_hash;
+  private:
+
+    SoundReplacements() {}
+
+    std::unordered_map<std::pair<short, short>, SoundOptions> m_hash;
 };
 
 #endif

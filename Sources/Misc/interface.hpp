@@ -33,103 +33,105 @@ class OpenedResourceFile;
 /* ---------- constants */
 
 #define strFILENAMES 129
+
 enum /* filenames in strFILENAMES */
 {
-	filenameSHAPES8,
-	filenameSHAPES16,
-	filenameSOUNDS8,
-	filenameSOUNDS16,
-	filenamePREFERENCES,
-	filenameDEFAULT_MAP,
-	filenameDEFAULT_SAVE_GAME,
-	filenameMARATHON_NAME,
-	filenameMARATHON_RECORDING,
-	filenamePHYSICS_MODEL,
-	filenameMUSIC,
-	filenameIMAGES,
-	filenameMOVIE,
-	filenameDEFAULT_THEME,
-	filenameEXTERNAL_RESOURCES,
+    filenameSHAPES8,
+    filenameSHAPES16,
+    filenameSOUNDS8,
+    filenameSOUNDS16,
+    filenamePREFERENCES,
+    filenameDEFAULT_MAP,
+    filenameDEFAULT_SAVE_GAME,
+    filenameMARATHON_NAME,
+    filenameMARATHON_RECORDING,
+    filenamePHYSICS_MODEL,
+    filenameMUSIC,
+    filenameIMAGES,
+    filenameMOVIE,
+    filenameDEFAULT_THEME,
+    filenameEXTERNAL_RESOURCES,
 };
 
 #define strPATHS 138
 
 #define strERRORS 128
+
 enum /* errors in strERRORS */
 {
-	badProcessor= 0,
-	badQuickDraw,
-	badSystem,
-	badMemory,
-	badMonitor,
-	badExtraFileLocations,
-	badSoundChannels,
-	fileError,
-	copyHasBeenModified, // bad serial number
-	copyHasExpired,
-	keyIsUsedForSound,
-	keyIsUsedForMapZooming,
-	keyIsUsedForScrolling,
-	keyIsUsedAlready,
-	outOfMemory,
-	warningExternalPhysicsModel,
-	warningExternalMapsFile,
-	badReadMapGameError,
-	badReadMapSystemError,
-	badWriteMap,
-	badSerialNumber,
-	duplicateSerialNumbers,
-	networkOnlySerialNumber,
-	corruptedMap,
-	checkpointNotFound,
-	pictureNotFound,
-	networkNotSupportedForDemo,
-	serverQuitInCooperativeNetGame,
-	unableToGracefullyChangeLevelsNet,
-	cantFindMap,	// called when the save game can't find the map.  Reverts to default map.
-	cantFindReplayMap, // called when you can't find the map that the replay references..
-	notEnoughNetworkMemory,
-	luascriptconflict,
-	replayVersionTooNew,
-	keyScrollWheelDoesntWork
+    badProcessor = 0,
+    badQuickDraw,
+    badSystem,
+    badMemory,
+    badMonitor,
+    badExtraFileLocations,
+    badSoundChannels,
+    fileError,
+    copyHasBeenModified, // bad serial number
+    copyHasExpired,
+    keyIsUsedForSound,
+    keyIsUsedForMapZooming,
+    keyIsUsedForScrolling,
+    keyIsUsedAlready,
+    outOfMemory,
+    warningExternalPhysicsModel,
+    warningExternalMapsFile,
+    badReadMapGameError,
+    badReadMapSystemError,
+    badWriteMap,
+    badSerialNumber,
+    duplicateSerialNumbers,
+    networkOnlySerialNumber,
+    corruptedMap,
+    checkpointNotFound,
+    pictureNotFound,
+    networkNotSupportedForDemo,
+    serverQuitInCooperativeNetGame,
+    unableToGracefullyChangeLevelsNet,
+    cantFindMap,       // called when the save game can't find the map.  Reverts to default map.
+    cantFindReplayMap, // called when you can't find the map that the replay references..
+    notEnoughNetworkMemory,
+    luascriptconflict,
+    replayVersionTooNew,
+    keyScrollWheelDoesntWork
 };
 
 enum /* animation types */
 {
-	_animated1= 1,
-	_animated2to8= 2, /* ?? */
-	_animated3to4= 3,
-	_animated4= 4,
-	_animated5to8= 5,
-	_animated8= 8,
-	_animated3to5= 9,
-	_unanimated= 10,
-	_animated5= 11
+    _animated1    = 1,
+    _animated2to8 = 2, /* ?? */
+    _animated3to4 = 3,
+    _animated4    = 4,
+    _animated5to8 = 5,
+    _animated8    = 8,
+    _animated3to5 = 9,
+    _unanimated   = 10,
+    _animated5    = 11
 };
 
 enum /* shading tables */
 {
-	_darkening_table
+    _darkening_table
 };
 
 enum /* shape types (this is for the editor) */
 {
-	_wall_shape, /* things designated as walls */
-	_floor_or_ceiling_shape, /* walls in raw format */
-	_object_shape, /* things designated as objects */
-	_other_shape /* anything not falling into the above categories (guns, interface elements, etc) */
+    _wall_shape,             /* things designated as walls */
+    _floor_or_ceiling_shape, /* walls in raw format */
+    _object_shape,           /* things designated as objects */
+    _other_shape             /* anything not falling into the above categories (guns, interface elements, etc) */
 };
 
 #define TOTAL_SHAPE_COLLECTIONS 128
 
 enum /* The various default key setups a user can select. for vbl.c and it's callers */
 {
-	_standard_keyboard_setup,
-	_left_handed_keyboard_setup,
-	_powerbook_keyboard_setup,
-	NUMBER_OF_KEY_SETUPS,
-	
-	_custom_keyboard_setup = NONE
+    _standard_keyboard_setup,
+    _left_handed_keyboard_setup,
+    _powerbook_keyboard_setup,
+    NUMBER_OF_KEY_SETUPS,
+
+    _custom_keyboard_setup = NONE
 };
 
 #define INDEFINATE_TIME_DELAY (INT32_MAX)
@@ -140,78 +142,77 @@ enum /* The various default key setups a user can select. for vbl.c and it's cal
 
 /* ---------- structures */
 
-#define _X_MIRRORED_BIT 0x8000
-#define _Y_MIRRORED_BIT 0x4000
+#define _X_MIRRORED_BIT        0x8000
+#define _Y_MIRRORED_BIT        0x4000
 #define _KEYPOINT_OBSCURED_BIT 0x2000
 
-struct shape_information_data
-{
-	uint16 flags; /* [x-mirror.1] [y-mirror.1] [keypoint_obscured.1] [unused.13] */
+struct shape_information_data {
+    uint16 flags; /* [x-mirror.1] [y-mirror.1] [keypoint_obscured.1] [unused.13] */
 
-	_fixed minimum_light_intensity; /* in [0,FIXED_ONE] */
+    _fixed minimum_light_intensity; /* in [0,FIXED_ONE] */
 
-	short unused[5];
+    short unused[5];
 
-	short world_left, world_right, world_top, world_bottom;
-	short world_x0, world_y0;
+    short world_left, world_right, world_top, world_bottom;
+    short world_x0, world_y0;
 };
 
 struct shape_animation_data // Also used in high_level_shape_definition
 {
-	int16 number_of_views; /* must be 1, 2, 5 or 8 */
-	
-	int16 frames_per_view, ticks_per_frame;
-	int16 key_frame;
-	
-	int16 transfer_mode;
-	int16 transfer_mode_period; /* in ticks */
-	
-	int16 first_frame_sound, key_frame_sound, last_frame_sound;
+    int16 number_of_views; /* must be 1, 2, 5 or 8 */
 
-	int16 pixels_to_world;
-	
-	int16 loop_frame;
+    int16 frames_per_view, ticks_per_frame;
+    int16 key_frame;
 
-	int16 unused[14];
+    int16 transfer_mode;
+    int16 transfer_mode_period; /* in ticks */
 
-	/* N*frames_per_view indexes of low-level shapes follow, where
-	   N = 1 if number_of_views = _unanimated/_animated1,
-	   N = 4 if number_of_views = _animated3to4/_animated4,
-	   N = 5 if number_of_views = _animated3to5/_animated5,
-	   N = 8 if number_of_views = _animated2to8/_animated5to8/_animated8 */
-	int16 low_level_shape_indexes[1];
+    int16 first_frame_sound, key_frame_sound, last_frame_sound;
+
+    int16 pixels_to_world;
+
+    int16 loop_frame;
+
+    int16 unused[14];
+
+    /* N*frames_per_view indexes of low-level shapes follow, where
+       N = 1 if number_of_views = _unanimated/_animated1,
+       N = 4 if number_of_views = _animated3to4/_animated4,
+       N = 5 if number_of_views = _animated3to5/_animated5,
+       N = 8 if number_of_views = _animated2to8/_animated5to8/_animated8 */
+    int16 low_level_shape_indexes[1];
 };
 
 /* ---------- prototypes/SHELL.C */
 
 enum { /* controllers */
-	_single_player,
-	_network_player,
-	_demo,
-	_replay,
-	_replay_from_file,
-	NUMBER_OF_PSEUDO_PLAYERS
+    _single_player,
+    _network_player,
+    _demo,
+    _replay,
+    _replay_from_file,
+    NUMBER_OF_PSEUDO_PLAYERS
 };
 
 enum { /* states. */
-	_display_intro_screens,
-	_display_main_menu,
-	_display_chapter_heading,
-	_display_prologue,
-	_display_epilogue,
-	_display_credits,
-	_display_intro_screens_for_demo,
-	_display_quit_screens,
-	NUMBER_OF_SCREENS,
-	_game_in_progress= NUMBER_OF_SCREENS,
-	_quit_game,
-	_close_game,
-	_switch_demo,
-	_revert_game,
-	_change_level,
-	_begin_display_of_epilogue,
-	_displaying_network_game_dialogs,
-	NUMBER_OF_GAME_STATES
+    _display_intro_screens,
+    _display_main_menu,
+    _display_chapter_heading,
+    _display_prologue,
+    _display_epilogue,
+    _display_credits,
+    _display_intro_screens_for_demo,
+    _display_quit_screens,
+    NUMBER_OF_SCREENS,
+    _game_in_progress = NUMBER_OF_SCREENS,
+    _quit_game,
+    _close_game,
+    _switch_demo,
+    _revert_game,
+    _change_level,
+    _begin_display_of_epilogue,
+    _displaying_network_game_dialogs,
+    NUMBER_OF_GAME_STATES
 };
 
 bool game_window_is_full_screen(void);
@@ -277,23 +278,26 @@ void show_cursor(void);
 void set_drawing_clip_rectangle(short top, short left, short bottom, short right);
 
 /* ---------- prototypes/SHAPES.C */
-void *get_global_shading_table(void);
+void* get_global_shading_table(void);
 
-short get_shape_descriptors(short shape_type, shape_descriptor *buffer);
+short get_shape_descriptors(short shape_type, shape_descriptor* buffer);
 
-#define get_shape_bitmap_and_shading_table(shape, bitmap, shading_table, shading_mode) extended_get_shape_bitmap_and_shading_table(GET_DESCRIPTOR_COLLECTION(shape), \
-	GET_DESCRIPTOR_SHAPE(shape), (bitmap), (shading_table), (shading_mode))
+#define get_shape_bitmap_and_shading_table(shape, bitmap, shading_table, shading_mode)                         \
+    extended_get_shape_bitmap_and_shading_table(GET_DESCRIPTOR_COLLECTION(shape), GET_DESCRIPTOR_SHAPE(shape), \
+                                                (bitmap), (shading_table), (shading_mode))
 void extended_get_shape_bitmap_and_shading_table(short collection_code, short low_level_shape_index,
-	struct bitmap_definition **bitmap, void **shading_tables, short shading_mode);
+                                                 struct bitmap_definition** bitmap, void** shading_tables,
+                                                 short shading_mode);
 
-#define get_shape_information(shape) extended_get_shape_information(GET_DESCRIPTOR_COLLECTION(shape), GET_DESCRIPTOR_SHAPE(shape))
-struct shape_information_data *extended_get_shape_information(short collection_code, short low_level_shape_index);
+#define get_shape_information(shape) \
+    extended_get_shape_information(GET_DESCRIPTOR_COLLECTION(shape), GET_DESCRIPTOR_SHAPE(shape))
+struct shape_information_data* extended_get_shape_information(short collection_code, short low_level_shape_index);
 
-void get_shape_hotpoint(shape_descriptor texture, short *x0, short *y0);
-struct shape_animation_data *get_shape_animation_data(shape_descriptor texture);
+void get_shape_hotpoint(shape_descriptor texture, short* x0, short* y0);
+struct shape_animation_data* get_shape_animation_data(shape_descriptor texture);
 void process_collection_sounds(short colleciton_code, void (*process_sound)(short sound_index));
 
-#define mark_collection_for_loading(c) mark_collection((c), true)
+#define mark_collection_for_loading(c)   mark_collection((c), true)
 #define mark_collection_for_unloading(c) mark_collection((c), false)
 void mark_collection(short collection_code, bool loading);
 void strip_collection(short collection_code);
@@ -302,8 +306,8 @@ int count_replacement_collections();
 void load_replacement_collections();
 void unload_all_collections(void);
 
-void set_shapes_patch_data(uint8 *data, size_t length);
-uint8* get_shapes_patch_data(size_t &length);
+void set_shapes_patch_data(uint8* data, size_t length);
+uint8* get_shapes_patch_data(size_t& length);
 
 // LP additions:
 // Whether or not collection is present
@@ -315,14 +319,14 @@ short get_number_of_collection_bitmaps(short collection_index);
 // Which bitmap index for a frame (good for OpenGL texture rendering)
 short get_bitmap_index(short collection_index, short low_level_shape_index);
 // Get CLUT for collection
-struct rgb_color_value *get_collection_colors(short collection_index, short clut_number, int &num_colors);
+struct rgb_color_value* get_collection_colors(short collection_index, short clut_number, int& num_colors);
 
 // ZZZ: made these visible
-struct low_level_shape_definition *get_low_level_shape_definition(short collection_index, short low_level_shape_index);
+struct low_level_shape_definition* get_low_level_shape_definition(short collection_index, short low_level_shape_index);
 
 
 /* ---------- prototypes/PREPROCESS_MAP_MAC.C */
-void setup_revert_game_info(struct game_data *game_info, struct player_start_data *start, struct entry_point *entry);
+void setup_revert_game_info(struct game_data* game_info, struct player_start_data* start, struct entry_point* entry);
 bool revert_game(void);
 bool load_game(bool use_last_load);
 bool save_game(void);
@@ -331,9 +335,9 @@ void restart_game(void);
 
 /* ---------- prototypes/GAME_WAD.C */
 /* Map transferring fuctions */
-int32 get_net_map_data_length(void *data);
-bool process_net_map_data(void *data); /* Note that this frees it as well */
-void *get_map_for_net_transfer(struct entry_point *entry);
+int32 get_net_map_data_length(void* data);
+bool process_net_map_data(void* data); /* Note that this frees it as well */
+void* get_map_for_net_transfer(struct entry_point* entry);
 
 /* ---------- prototypes/VBL.C */
 
@@ -344,7 +348,7 @@ int32 get_heartbeat_count(void);
 float get_heartbeat_fraction(void);
 void wait_until_next_frame(void);
 void sync_heartbeat_count(void);
-void process_action_flags(short player_identifier, const uint32 *action_flags, short count);
+void process_action_flags(short player_identifier, const uint32* action_flags, short count);
 void rewind_recording(void);
 void stop_recording(void);
 void stop_replay(void);
@@ -370,11 +374,11 @@ void scroll_inventory(short dy);
 
 /* ---------- prototypes/NETWORK.C */
 
-enum {	// Results for network_join
-	kNetworkJoinFailedUnjoined,
-        kNetworkJoinFailedJoined,
-        kNetworkJoinedNewGame,
-        kNetworkJoinedResumeGame
+enum { // Results for network_join
+    kNetworkJoinFailedUnjoined,
+    kNetworkJoinFailedJoined,
+    kNetworkJoinedNewGame,
+    kNetworkJoinedResumeGame
 };
 
 bool network_gather(bool inResumingGame, bool& outUseRemoteHub);
@@ -390,7 +394,7 @@ void init_physics_wad_data();
 void import_definition_structures(void);
 
 /* ---------- prototypes/KEYBOARD_DIALOG.C */
-bool configure_key_setup(short *keycodes);
+bool configure_key_setup(short* keycodes);
 
 /* --------- from PREPROCESS_MAP_MAC.C */
 bool have_default_files(void);
@@ -402,7 +406,8 @@ void get_default_shapes_spec(FileSpecifier& File);
 bool get_default_theme_spec(FileSpecifier& File);
 // ZZZ addition: since Mac versions now search for any candidate files instead of picking
 // by name, new interface to search for all simultaneously instead of duplicating effort.
-void get_default_file_specs(FileSpecifier* outMapSpec, FileSpecifier* outShapesSpec, FileSpecifier* outSoundsSpec, FileSpecifier* outPhysicsSpec);
+void get_default_file_specs(FileSpecifier* outMapSpec, FileSpecifier* outShapesSpec, FileSpecifier* outSoundsSpec,
+                            FileSpecifier* outPhysicsSpec);
 
 // LP change: resets field of view to whatever the player had had when reviving
 void ResetFieldOfView();

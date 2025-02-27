@@ -26,36 +26,35 @@
  */
 
 enum { /* Menus available during the game */
-	mGame= 128,
-	iPause= 1,
-	iSave,
-	iRevert,
-	iCloseGame,
-	iQuitGame
+    mGame  = 128,
+    iPause = 1,
+    iSave,
+    iRevert,
+    iCloseGame,
+    iQuitGame
 };
 
 enum { /* Menu interface... */
-	mInterface= 129,
-	iNewGame= 1,
-	iLoadGame,
-	iGatherGame,
-	iJoinGame,
-	iPreferences,
-	iReplayLastFilm,
-	iSaveLastFilm,
-	iReplaySavedFilm,
-	iCredits,
-	iQuit,
-	iCenterButton,
-	iPlaySingletonLevel,
-	iAbout
+    mInterface = 129,
+    iNewGame   = 1,
+    iLoadGame,
+    iGatherGame,
+    iJoinGame,
+    iPreferences,
+    iReplayLastFilm,
+    iSaveLastFilm,
+    iReplaySavedFilm,
+    iCredits,
+    iQuit,
+    iCenterButton,
+    iPlaySingletonLevel,
+    iAbout
 };
 
 /* This is the menu with nothing in the title, so that it doesn't show up */
 /* when the menu bar is drawn atexit.. */
 enum {
-	mFakeEmptyMenu= 130
+    mFakeEmptyMenu = 130
 };
 
 #endif
-

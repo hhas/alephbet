@@ -25,31 +25,30 @@
  *
  */
 
-#include "cseries.hpp"  // need RGBColor
+#include "cseries.hpp" // need RGBColor
 
 struct SDL_Surface;
 
 enum {
-	CHShape_RealCrosshairs,
-	CHShape_Circle
+    CHShape_RealCrosshairs,
+    CHShape_Circle
 };
 
-struct CrosshairData
-{
-     RGBColor Color;
-	short Thickness;
-	short FromCenter;
-	short Length;
-	short Shape;
-	float Opacity;
-	float GLColorsPreCalc[4];
-	bool PreCalced;
+struct CrosshairData {
+    RGBColor Color;
+    short Thickness;
+    short FromCenter;
+    short Length;
+    short Shape;
+    float Opacity;
+    float GLColorsPreCalc[4];
+    bool PreCalced;
 };
 
 // True for OK, false for cancel
 // the structure will not be changed if this was canceled
 // Implemented in PlayerDialogs.c
-bool Configure_Crosshairs(CrosshairData &Data);
+bool Configure_Crosshairs(CrosshairData& Data);
 
 // Gotten from preferences
 // Implemented in preferences.c
@@ -59,6 +58,6 @@ CrosshairData& GetCrosshairData();
 bool Crosshairs_IsActive();
 bool Crosshairs_SetActive(bool NewState);
 
-bool Crosshairs_Render(SDL_Surface *s);
+bool Crosshairs_Render(SDL_Surface* s);
 
 #endif

@@ -27,15 +27,14 @@
 
 #include "cseries.hpp"
 
-extern "C"
-{
-#include "lua.h"
+extern "C" {
 #include "lauxlib.h"
+#include "lua.h"
 #include "lualib.h"
 }
 
-#include "map.hpp"
 #include "lua_templates.hpp"
+#include "map.hpp"
 
 extern char Lua_Player_Name[]; // "player"
 typedef L_Class<Lua_Player_Name> Lua_Player;
@@ -49,6 +48,6 @@ typedef L_Enum<Lua_PlayerColor_Name> Lua_PlayerColor;
 extern char Lua_PlayerColors_Name[]; // "PlayerColors"
 typedef L_EnumContainer<Lua_PlayerColors_Name, Lua_PlayerColor> Lua_PlayerColors;
 
-int Lua_Player_register (lua_State *L);
+int Lua_Player_register(lua_State* L);
 
 #endif

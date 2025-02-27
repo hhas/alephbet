@@ -31,40 +31,42 @@
 
 #include <memory>
 
-#include "cseries.hpp"
 #include "FileHandler.hpp"
 #include "SoundManagerEnums.hpp"
+#include "cseries.hpp"
 
-class StreamDecoder
-{
-public:
-	virtual bool Open(FileSpecifier &File) = 0;
-	virtual int32 Decode(uint8* buffer, int32 max_length) = 0;
-	virtual void Rewind() = 0;
-	virtual void Close() = 0;
+class StreamDecoder {
+  public:
 
-	virtual AudioFormat GetAudioFormat() = 0;
-	virtual bool IsStereo() = 0;
-	virtual int BytesPerFrame() = 0;
-	virtual float Rate() = 0;
-	virtual bool IsLittleEndian() = 0;
+    virtual bool Open(FileSpecifier& File)                = 0;
+    virtual int32 Decode(uint8* buffer, int32 max_length) = 0;
+    virtual void Rewind()                                 = 0;
+    virtual void Close()                                  = 0;
 
-	StreamDecoder() { }
-	virtual ~StreamDecoder() { }
+    virtual AudioFormat GetAudioFormat() = 0;
+    virtual bool IsStereo()              = 0;
+    virtual int BytesPerFrame()          = 0;
+    virtual float Rate()                 = 0;
+    virtual bool IsLittleEndian()        = 0;
 
-	static std::unique_ptr<StreamDecoder> Get(FileSpecifier &File); // can return 0
+    StreamDecoder() {}
+
+    virtual ~StreamDecoder() {}
+
+    static std::unique_ptr<StreamDecoder> Get(FileSpecifier& File); // can return 0
 };
 
-class Decoder : public StreamDecoder
-{
-public:
-	Decoder() : StreamDecoder() { }
-	~Decoder() { }
+class Decoder : public StreamDecoder {
+  public:
 
-	// total number of frames in the file
-	virtual int32 Frames() = 0; 
+    Decoder() : StreamDecoder() {}
 
-	static Decoder* Get(FileSpecifier &File); // can return 0
+    ~Decoder() {}
+
+    // total number of frames in the file
+    virtual int32 Frames() = 0;
+
+    static Decoder* Get(FileSpecifier& File); // can return 0
 };
 
 #endif

@@ -25,84 +25,60 @@
  *
  */
 
-/*	
+/*
  *  Overhead-Map OpenGL Class
  *  Subclass of OverheadMapClass for doing rendering in OpenGL
  */
 
-#include <vector>
 #include "OverheadMapRenderer.hpp"
+#include <vector>
 
+class OverheadMap_OGL_Class : public OverheadMapClass {
+    void begin_overall();
+    void end_overall();
 
-class OverheadMap_OGL_Class: public OverheadMapClass
-{
-	void begin_overall();
-	void end_overall();
-	
-	void begin_polygons();
-	
-	void draw_polygon(
-		short vertex_count,
-		short *vertices,
-		rgb_color& color);
-	
-	void end_polygons();
+    void begin_polygons();
 
-	void DrawCachedPolygons();
-	
-	void begin_lines();
+    void draw_polygon(short vertex_count, short* vertices, rgb_color& color);
 
-	void draw_line(
-		short *vertices,
-		rgb_color& color,
-		short pen_size);
+    void end_polygons();
 
-	void end_lines();	// Needed for flushing cached lines
-	
-	void DrawCachedLines();
-	
-	void draw_thing(
-		world_point2d& center,
-		rgb_color& color,
-		short shape,
-		short radius);
-	
-	void draw_player(
-		world_point2d& center,
-		angle facing,
-		rgb_color& color,
-		short shrink,
-		short front,
-		short rear,
-		short rear_theta);
-	
-	// Text justification: 0=left, 1=center
-	void draw_text(
-		world_point2d& location,
-		rgb_color& colorr,
-		char *text,
-		FontSpecifier& FontData,
-		short justify);
-	
-	void set_path_drawing(rgb_color& color);
-	void draw_path(
-		short step,	// 0: first point
-		world_point2d &location);
-	
-	void finish_path();
-	
-	// Cached polygons and their color
-	vector<unsigned short> PolygonCache;
-	rgb_color SavedColor;
+    void DrawCachedPolygons();
 
-	// Cached polygon lines and their width
-	vector<world_point2d> LineCache;
-	short SavedPenSize;
-	
-	// Cached lines For drawing monster paths
-	vector<world_point2d> PathPoints;
+    void begin_lines();
 
-public:
+    void draw_line(short* vertices, rgb_color& color, short pen_size);
+
+    void end_lines(); // Needed for flushing cached lines
+
+    void DrawCachedLines();
+
+    void draw_thing(world_point2d& center, rgb_color& color, short shape, short radius);
+
+    void draw_player(world_point2d& center, angle facing, rgb_color& color, short shrink, short front, short rear,
+                     short rear_theta);
+
+    // Text justification: 0=left, 1=center
+    void draw_text(world_point2d& location, rgb_color& colorr, char* text, FontSpecifier& FontData, short justify);
+
+    void set_path_drawing(rgb_color& color);
+    void draw_path(short step, // 0: first point
+                   world_point2d& location);
+
+    void finish_path();
+
+    // Cached polygons and their color
+    vector<unsigned short> PolygonCache;
+    rgb_color SavedColor;
+
+    // Cached polygon lines and their width
+    vector<world_point2d> LineCache;
+    short SavedPenSize;
+
+    // Cached lines For drawing monster paths
+    vector<world_point2d> PathPoints;
+
+  public:
 };
 
 #endif

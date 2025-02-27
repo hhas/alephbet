@@ -87,40 +87,35 @@
 #define ValueToStream ValueToStreamLE
 #endif
 
-extern void StreamToValue(uint8* &Stream, uint16 &Value);
-extern void StreamToValue(uint8* &Stream, int16 &Value);
-extern void StreamToValue(uint8* &Stream, uint32 &Value);
-extern void StreamToValue(uint8* &Stream, int32 &Value);
-extern void ValueToStream(uint8* &Stream, uint16 Value);
-extern void ValueToStream(uint8* &Stream, int16 Value);
-extern void ValueToStream(uint8* &Stream, uint32 Value);
-extern void ValueToStream(uint8* &Stream, int32 Value);
+extern void StreamToValue(uint8*& Stream, uint16& Value);
+extern void StreamToValue(uint8*& Stream, int16& Value);
+extern void StreamToValue(uint8*& Stream, uint32& Value);
+extern void StreamToValue(uint8*& Stream, int32& Value);
+extern void ValueToStream(uint8*& Stream, uint16 Value);
+extern void ValueToStream(uint8*& Stream, int16 Value);
+extern void ValueToStream(uint8*& Stream, uint32 Value);
+extern void ValueToStream(uint8*& Stream, int32 Value);
 
 #ifndef PACKING_INTERNAL
-template<class T> inline static void StreamToList(uint8* &Stream, T* List, size_t Count)
-{
+template <class T>
+inline static void StreamToList(uint8*& Stream, T* List, size_t Count) {
     T* ValuePtr = List;
-    for (size_t k=0; k<Count; k++)
-        StreamToValue(Stream,*(ValuePtr++));
+    for (size_t k = 0; k < Count; k++) StreamToValue(Stream, *(ValuePtr++));
 }
 
-
-template<class T> inline static void ListToStream(uint8* &Stream, T* List, size_t Count)
-{
+template <class T>
+inline static void ListToStream(uint8*& Stream, T* List, size_t Count) {
     T* ValuePtr = List;
-    for (size_t k=0; k<Count; k++)
-        ValueToStream(Stream,*(ValuePtr++));
+    for (size_t k = 0; k < Count; k++) ValueToStream(Stream, *(ValuePtr++));
 }
 
-inline static void StreamToBytes(uint8* &Stream, void* Bytes, size_t Count)
-{
-    memcpy(Bytes,Stream,Count);
+inline static void StreamToBytes(uint8*& Stream, void* Bytes, size_t Count) {
+    memcpy(Bytes, Stream, Count);
     Stream += Count;
 }
 
-inline static void BytesToStream(uint8* &Stream, const void* Bytes, size_t Count)
-{
-    memcpy(Stream,Bytes,Count);
+inline static void BytesToStream(uint8*& Stream, const void* Bytes, size_t Count) {
+    memcpy(Stream, Bytes, Count);
     Stream += Count;
 }
 #endif

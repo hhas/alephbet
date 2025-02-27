@@ -27,7 +27,7 @@
 
 /*
  *  Uniform header for all Aleph Bet OpenGL users
- */ 
+ */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -48,7 +48,7 @@
 
 #include <SDL_opengl.h>
 
-#if defined (__APPLE__) && defined(__MACH__)
+#if defined(__APPLE__) && defined(__MACH__)
 #include <OpenGL/glu.h>
 #else
 #include <GL/glu.h>

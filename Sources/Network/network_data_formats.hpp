@@ -1,5 +1,5 @@
-#ifndef	NETWORK_DATA_FORMATS_H
-#define	NETWORK_DATA_FORMATS_H
+#ifndef NETWORK_DATA_FORMATS_H
+#define NETWORK_DATA_FORMATS_H
 
 /*
  *
@@ -25,10 +25,9 @@
  *
  */
 
-#include "cseries.hpp"		// Need ALEPHBET_LITTLE_ENDIAN, if appropriate.
+#include "cseries.hpp" // Need ALEPHBET_LITTLE_ENDIAN, if appropriate.
 #include "network.hpp"
 #include "network_private.hpp"
-
 
 
 // Note: no further interpretation/manipulation of a packet is attempted here.  That's up
@@ -37,14 +36,12 @@
 
 const int SIZEOF_NetPacketHeader = 6;
 
-struct NetPacketHeader_NET
-{
-	uint8 data[SIZEOF_NetPacketHeader];
+struct NetPacketHeader_NET {
+    uint8 data[SIZEOF_NetPacketHeader];
 };
 
 extern void netcpy(NetPacketHeader_NET* dest, const NetPacketHeader* src);
 extern void netcpy(NetPacketHeader* dest, const NetPacketHeader_NET* src);
-
 
 
 // Note: we do not attempt any manipulations on the actual action_flags, as we do not claim
@@ -53,11 +50,10 @@ extern void netcpy(NetPacketHeader* dest, const NetPacketHeader_NET* src);
 // We'll leave it to whomever interprets or writes to the action_flags data segment to do the
 // necessary manipulations.
 
-const int SIZEOF_NetPacket = 2*MAXIMUM_NUMBER_OF_NETWORK_PLAYERS + 8;
+const int SIZEOF_NetPacket = 2 * MAXIMUM_NUMBER_OF_NETWORK_PLAYERS + 8;
 
-struct NetPacket_NET
-{
-	uint8 data[SIZEOF_NetPacket];
+struct NetPacket_NET {
+    uint8 data[SIZEOF_NetPacket];
 };
 
 extern void netcpy(NetPacket_NET* dest, const NetPacket* src);
@@ -75,16 +71,14 @@ __inline__ void netcpy(uint32* dest, const uint32* src, size_t length) { memcpy(
 #endif
 
 
-
 // Note: we do not attempt any sort of processing on the "data" segment here,
 // since we may not understand its format.  Whoever interprets it will have to
 // do the necessary packing/unpacking, byte-swapping, etc.
 
 const int SIZEOF_NetDistributionPacket = 6;
 
-struct NetDistributionPacket_NET
-{
-	uint8 data[SIZEOF_NetDistributionPacket];
+struct NetDistributionPacket_NET {
+    uint8 data[SIZEOF_NetDistributionPacket];
 };
 
 extern void netcpy(NetDistributionPacket_NET* dest, const NetDistributionPacket* src);
@@ -98,10 +92,10 @@ extern void netcpy(NetDistributionPacket* dest, const NetDistributionPacket_NET*
 const int SIZEOF_IPaddress = 6;
 
 struct IPaddress_NET {
-   uint8 data[SIZEOF_IPaddress];
+    uint8 data[SIZEOF_IPaddress];
 };
 
 extern void netcpy(IPaddress_NET* dest, const IPaddress* src);
 extern void netcpy(IPaddress* dest, const IPaddress_NET* src);
 
-#endif//NETWORK_DATA_FORMATS_H
+#endif // NETWORK_DATA_FORMATS_H

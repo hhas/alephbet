@@ -28,25 +28,20 @@
 #include <string> /* Prefix header doesn't do this? */
 #include <vector>
 
-#define iOK					1
+#define iOK 1
 
 class dialog;
 
-typedef	dialog*	DialogPtr;
+typedef dialog* DialogPtr;
 
-#define	CONTROL_INACTIVE	0
-#define	CONTROL_ACTIVE		1
+#define CONTROL_INACTIVE 0
+#define CONTROL_ACTIVE   1
 
 extern void copy_cstring_to_static_text(DialogPtr dialog, short item, const char* cstring);
 
-extern void modify_control_enabled(
-	DialogPtr dlg,
-	short item,
-	short hilite);
+extern void modify_control_enabled(DialogPtr dlg, short item, short hilite);
 
-extern short get_selection_control_value(
-        DialogPtr dialog,
-        short which_control);
-        
+extern short get_selection_control_value(DialogPtr dialog, short which_control);
 
-#endif//_CSERIES_DIALOGS_
+
+#endif //_CSERIES_DIALOGS_

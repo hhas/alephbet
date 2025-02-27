@@ -24,25 +24,23 @@
 
 #include "thread_priority_sdl.hpp"
 
-#include	<SDL_thread.h>
-#include	<pthread.h>
-#include        <sched.h>
+#include <SDL_thread.h>
+#include <pthread.h>
+#include <sched.h>
 
-bool
-BoostThreadPriority(SDL_Thread* inThread) {
+bool BoostThreadPriority(SDL_Thread* inThread) {
 #if defined(_POSIX_PRIORITY_SCHEDULING)
-    pthread_t		theTargetThread = (pthread_t) SDL_GetThreadID(inThread);
-    int			theSchedulingPolicy;
-    struct sched_param	theSchedulingParameters;
-    
-    if(pthread_getschedparam(theTargetThread, &theSchedulingPolicy, &theSchedulingParameters) != 0)
-      return false;
-    
-    theSchedulingParameters.sched_priority = 
-      sched_get_priority_max(theSchedulingPolicy);
-    
-    if(pthread_setschedparam(theTargetThread, theSchedulingPolicy, &theSchedulingParameters) != 0)
-      return false;
+    pthread_t theTargetThread = (pthread_t)SDL_GetThreadID(inThread);
+    int theSchedulingPolicy;
+    struct sched_param theSchedulingParameters;
+
+    if (pthread_getschedparam(theTargetThread, &theSchedulingPolicy, &theSchedulingParameters) != 0)
+        return false;
+
+    theSchedulingParameters.sched_priority = sched_get_priority_max(theSchedulingPolicy);
+
+    if (pthread_setschedparam(theTargetThread, theSchedulingPolicy, &theSchedulingParameters) != 0)
+        return false;
 #endif
     return true;
 }

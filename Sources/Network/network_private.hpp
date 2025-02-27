@@ -1,5 +1,5 @@
-#ifndef	NETWORK_PRIVATE_H
-#define	NETWORK_PRIVATE_H
+#ifndef NETWORK_PRIVATE_H
+#define NETWORK_PRIVATE_H
 
 /*
  *
@@ -42,40 +42,41 @@
 
 #include <memory>
 
-#define	GAME_PORT (network_preferences->game_port)
+#define GAME_PORT (network_preferences->game_port)
 
 // (ZZZ:) Moved here from sdl_network.h and macintosh_network.h
 
 /* ---------- constants */
 
-#define asyncUncompleted 1	/* ioResult value */
+#define asyncUncompleted 1 /* ioResult value */
 
 #define strNETWORK_ERRORS 132
+
 enum /* error string for user */
 {
-	netErrCantAddPlayer,
-	netErrCouldntDistribute,
-	netErrCouldntJoin,
-	netErrServerCanceled,
-	netErrMapDistribFailed,
-	netErrWaitedTooLongForMap,
-	netErrSyncFailed,
-	netErrJoinFailed,
-	netErrCantContinue,
-        netErrIncompatibleVersion,
-        netErrGatheredPlayerUnacceptable,
-        netErrUngatheredPlayerUnacceptable,
-        netErrJoinerCantFindScenario,
-	netErrLostConnection,
-	netErrCouldntResolve,
-	netErrCouldntReceiveMap,
-	netWarnJoinerHasNoStar,
-	netWarnJoinerHasNoRing,
-	netWarnJoinerNoLua,
-	netErrMetaserverConnectionFailure,
-	netWarnCouldNotAdvertiseOnMetaserver,
-	netWarnUPnPConfigureFailed,
-	netWarnRemoteHubServerNotAvailable
+    netErrCantAddPlayer,
+    netErrCouldntDistribute,
+    netErrCouldntJoin,
+    netErrServerCanceled,
+    netErrMapDistribFailed,
+    netErrWaitedTooLongForMap,
+    netErrSyncFailed,
+    netErrJoinFailed,
+    netErrCantContinue,
+    netErrIncompatibleVersion,
+    netErrGatheredPlayerUnacceptable,
+    netErrUngatheredPlayerUnacceptable,
+    netErrJoinerCantFindScenario,
+    netErrLostConnection,
+    netErrCouldntResolve,
+    netErrCouldntReceiveMap,
+    netWarnJoinerHasNoStar,
+    netWarnJoinerHasNoRing,
+    netWarnJoinerNoLua,
+    netErrMetaserverConnectionFailure,
+    netWarnCouldNotAdvertiseOnMetaserver,
+    netWarnUPnPConfigureFailed,
+    netWarnRemoteHubServerNotAvailable
 };
 
 // (ZZZ:) Moved here from network.cpp
@@ -83,60 +84,60 @@ enum /* error string for user */
 /* ---------- constants */
 
 #define NET_DEAD_ACTION_FLAG_COUNT (-1)
-#define NET_DEAD_ACTION_FLAG (NONE)
+#define NET_DEAD_ACTION_FLAG       (NONE)
 
-#define MAXIMUM_GAME_DATA_SIZE       256
-#define MAXIMUM_PLAYER_DATA_SIZE     128
-#define MAXIMUM_UPDATES_PER_PACKET    16 // how many action flags per player can be sent in each ring packet
-#define UPDATES_PER_PACKET             1  // defines action flags per packet and period of the ring
-#define UPDATE_LATENCY                 1
+#define MAXIMUM_GAME_DATA_SIZE     256
+#define MAXIMUM_PLAYER_DATA_SIZE   128
+#define MAXIMUM_UPDATES_PER_PACKET 16 // how many action flags per player can be sent in each ring packet
+#define UPDATES_PER_PACKET         1  // defines action flags per packet and period of the ring
+#define UPDATE_LATENCY             1
 
-#define NET_QUEUE_SIZE (MAXIMUM_UPDATES_PER_PACKET+1)
+#define NET_QUEUE_SIZE (MAXIMUM_UPDATES_PER_PACKET + 1)
 
-#define UNSYNC_TIMEOUT (3*MACHINE_TICKS_PER_SECOND) // 3 seconds
+#define UNSYNC_TIMEOUT (3 * MACHINE_TICKS_PER_SECOND) // 3 seconds
 
-#define STREAM_TRANSFER_CHUNK_SIZE (10000)
-#define MAP_TRANSFER_TIME_OUT   (MACHINE_TICKS_PER_SECOND*70) // 70 seconds to wait for map.
-#define NET_SYNC_TIME_OUT       (MACHINE_TICKS_PER_SECOND*50) // 50 seconds to time out of syncing. 
+#define STREAM_TRANSFER_CHUNK_SIZE (10'000)
+#define MAP_TRANSFER_TIME_OUT      (MACHINE_TICKS_PER_SECOND * 70) // 70 seconds to wait for map.
+#define NET_SYNC_TIME_OUT          (MACHINE_TICKS_PER_SECOND * 50) // 50 seconds to time out of syncing.
 
 #define kACK_TIMEOUT 40
-#define kRETRIES     50  // how many timeouts allowed before dropping the next player
-                         // kRETRIES * kACK_TIMEOUT / 1000 = timeout in seconds
+#define kRETRIES \
+    50 // how many timeouts allowed before dropping the next player
+       // kRETRIES * kACK_TIMEOUT / 1000 = timeout in seconds
 
-#define NUM_DISTRIBUTION_TYPES    3
+#define NUM_DISTRIBUTION_TYPES 3
 
 // Altering constants below should make you alter get_network_version().  - Woody
-#define kPROTOCOL_TYPE           69
+#define kPROTOCOL_TYPE 69
 
 enum /* tag */
-{	// ZZZ annotation: these (in NetPacketHeader) indicate the rest of the datagram is a NetPacket (i.e. a ring packet).
-	tagRING_PACKET,
-	tagACKNOWLEDGEMENT,
-	tagCHANGE_RING_PACKET,  // to tell a player to change his downring address. also has action flags.
-	
-        // ZZZ annotation: these should only be found in streaming data (in a NetTopology).
-	tagNEW_PLAYER,
-	tagCANCEL_GAME,
-	tagSTART_GAME,
-	tagDROPPED_PLAYER,
-	tagCHANGED_PLAYER,
-	
-        // ZZZ annotation: these (in NetPacketHeader) indicate the rest of the datagram is a NetDistributionPacket.
-	tagLOSSY_DISTRIBUTION,     // for transfer data other than action flags
-	tagLOSSLESS_DISTRIBUTION,   // ditto, but currently unimplemented
-        
-        // ZZZ: more streaming data (topology) packet types
-        tagRESUME_GAME	// ZZZ addition: trying to resume a saved-game rather than start a new netgame.
+{ // ZZZ annotation: these (in NetPacketHeader) indicate the rest of the datagram is a NetPacket (i.e. a ring packet).
+    tagRING_PACKET,
+    tagACKNOWLEDGEMENT,
+    tagCHANGE_RING_PACKET, // to tell a player to change his downring address. also has action flags.
+
+    // ZZZ annotation: these should only be found in streaming data (in a NetTopology).
+    tagNEW_PLAYER,
+    tagCANCEL_GAME,
+    tagSTART_GAME,
+    tagDROPPED_PLAYER,
+    tagCHANGED_PLAYER,
+
+    // ZZZ annotation: these (in NetPacketHeader) indicate the rest of the datagram is a NetDistributionPacket.
+    tagLOSSY_DISTRIBUTION,    // for transfer data other than action flags
+    tagLOSSLESS_DISTRIBUTION, // ditto, but currently unimplemented
+
+    // ZZZ: more streaming data (topology) packet types
+    tagRESUME_GAME // ZZZ addition: trying to resume a saved-game rather than start a new netgame.
 };
 
-enum
-{
-	typeSYNC_RING_PACKET,    // first packet of the game, gets everyone in the game
-	typeTIME_RING_PACKET,    // second packet of the game, sets everyone's clock
-	typeNORMAL_RING_PACKET,   // all the other packets of the game
-	
-	typeUNSYNC_RING_PACKET,	// last packet of the game, get everyone unsynced properly.
-	typeDEAD_PACKET	// This is simply a convenience for a switch. This packet never leaves the server.
+enum {
+    typeSYNC_RING_PACKET,   // first packet of the game, gets everyone in the game
+    typeTIME_RING_PACKET,   // second packet of the game, sets everyone's clock
+    typeNORMAL_RING_PACKET, // all the other packets of the game
+
+    typeUNSYNC_RING_PACKET, // last packet of the game, get everyone unsynced properly.
+    typeDEAD_PACKET         // This is simply a convenience for a switch. This packet never leaves the server.
 };
 
 /* ---------- structures */
@@ -149,87 +150,82 @@ enum
 
 // (ZZZ:) Information passed in datagrams (note: the _NET version is ALWAYS the one sent/received on the wire.
 // If not, it's a BUG.  These are used to setup/extract data.)
-struct NetPacketHeader
-{
-	int16 tag;
-	int32 sequence;
-	
-	/* data */
+struct NetPacketHeader {
+    int16 tag;
+    int32 sequence;
+
+    /* data */
 };
 typedef struct NetPacketHeader NetPacketHeader, *NetPacketHeaderPtr;
 
-struct NetPacket
-{
-	uint8 ring_packet_type;         // typeSYNC_RING_PACKET, etc...
-	uint8 server_player_index;
-	int32 server_net_time;
-	int16 required_action_flags;                         // handed down from on high (the server)
-	int16 action_flag_count[MAXIMUM_NUMBER_OF_NETWORK_PLAYERS];  // how many each player actually has.
-	uint32 action_flags[1];
+struct NetPacket {
+    uint8 ring_packet_type; // typeSYNC_RING_PACKET, etc...
+    uint8 server_player_index;
+    int32 server_net_time;
+    int16 required_action_flags;                                // handed down from on high (the server)
+    int16 action_flag_count[MAXIMUM_NUMBER_OF_NETWORK_PLAYERS]; // how many each player actually has.
+    uint32 action_flags[1];
 };
 typedef struct NetPacket NetPacket, *NetPacketPtr;
 
-struct NetDistributionPacket
-{
-	int16 distribution_type;  // type of information
-	int16 first_player_index; // who sent the information
-	int16 data_size;          // how much they're sending.
-	uint8  data[2];            // the chunk ’o shit to send
+struct NetDistributionPacket {
+    int16 distribution_type;  // type of information
+    int16 first_player_index; // who sent the information
+    int16 data_size;          // how much they're sending.
+    uint8 data[2];            // the chunk ’o shit to send
 };
 typedef struct NetDistributionPacket NetDistributionPacket, *NetDistributionPacketPtr;
 
 // Information passed in streams
-struct NetPlayer
-{
-	NetAddrBlock dspAddress, ddpAddress;
-	
-	int16 identifier;
+struct NetPlayer {
+    NetAddrBlock dspAddress, ddpAddress;
 
-	int16 stream_id; // to remind gatherer how to contact joiners
+    int16 identifier;
 
-	bool net_dead; // only valid if you are the server.
+    int16 stream_id; // to remind gatherer how to contact joiners
 
-  //uint8 player_data[MAXIMUM_PLAYER_DATA_SIZE];
-  player_info player_data;
+    bool net_dead; // only valid if you are the server.
+
+    // uint8 player_data[MAXIMUM_PLAYER_DATA_SIZE];
+    player_info player_data;
 };
 typedef struct NetPlayer NetPlayer, *NetPlayerPtr;
 
-struct NetServer
-{
-	NetAddrBlock dspAddress, ddpAddress;
+struct NetServer {
+    NetAddrBlock dspAddress, ddpAddress;
 };
 
-struct NetTopology
-{
-	int16 tag;
-	int16 player_count;
-	
-	int16 nextIdentifier;
-	
-  //uint8 game_data[MAXIMUM_GAME_DATA_SIZE];
-	game_info game_data;
-	
-	struct NetPlayer players[MAXIMUM_NUMBER_OF_NETWORK_PLAYERS];
-	struct NetServer server;
+struct NetTopology {
+    int16 tag;
+    int16 player_count;
+
+    int16 nextIdentifier;
+
+    // uint8 game_data[MAXIMUM_GAME_DATA_SIZE];
+    game_info game_data;
+
+    struct NetPlayer players[MAXIMUM_NUMBER_OF_NETWORK_PLAYERS];
+    struct NetServer server;
 };
 typedef struct NetTopology NetTopology, *NetTopologyPtr;
 
 #ifdef NETWORK_CHAT
 // (ZZZ addition)
-enum { CHAT_MESSAGE_TEXT_BUFFER_SIZE = 250 };
+enum {
+    CHAT_MESSAGE_TEXT_BUFFER_SIZE = 250
+};
 
 struct NetChatMessage {
-    int16   sender_identifier;
-    char    text[CHAT_MESSAGE_TEXT_BUFFER_SIZE];
+    int16 sender_identifier;
+    char text[CHAT_MESSAGE_TEXT_BUFFER_SIZE];
 };
 #endif
 
 
 // ZZZ: same here (should be safe to alter)
-struct NetDistributionInfo
-{
-	bool              lossy;
-	NetDistributionProc  distribution_proc;
+struct NetDistributionInfo {
+    bool lossy;
+    NetDistributionProc distribution_proc;
 };
 
 typedef struct NetDistributionInfo NetDistributionInfo, *NetDistributionInfoPtr;
@@ -242,49 +238,50 @@ typedef struct NetDistributionInfo NetDistributionInfo, *NetDistributionInfoPtr;
 
 // Information sent via streaming protocol - warning above still applies!
 struct gather_player_data {
-	int16 new_local_player_identifier;
+    int16 new_local_player_identifier;
 };
 
 // used in accept_gather_data::accepted - this is a sneaky way of detecting whether
 // we're playing with a resume netgame-capable player or not.  (Old code always sent
 // 1 on accept, never 2; old code interprets any nonzero 'accepted' as an accept.)
 enum {
-        kNaiveJoinerAccepted = 1,
-        kResumeNetgameSavvyJoinerAccepted = 2,	// build knows how to resume saved games as netgames
-        kFixedTagAndBallJoinerAccepted = 3,	// build lacks multiple-ball-drop bug and tag-suicide bug
+    kNaiveJoinerAccepted              = 1,
+    kResumeNetgameSavvyJoinerAccepted = 2, // build knows how to resume saved games as netgames
+    kFixedTagAndBallJoinerAccepted    = 3, // build lacks multiple-ball-drop bug and tag-suicide bug
 
-        // this should always be updated to match the current best (unless our build isn't up to spec)
-        kStateOfTheArtJoinerAccepted = kFixedTagAndBallJoinerAccepted
+    // this should always be updated to match the current best (unless our build isn't up to spec)
+    kStateOfTheArtJoinerAccepted = kFixedTagAndBallJoinerAccepted
 };
 
 struct accept_gather_data {
-	uint8 accepted;
-	NetPlayer player;
+    uint8 accepted;
+    NetPlayer player;
 };
 
 enum {
-	_netscript_query_message,
-        _netscript_no_script_message,
-        _netscript_yes_script_message,
-        _netscript_script_intent_message
+    _netscript_query_message,
+    _netscript_no_script_message,
+    _netscript_yes_script_message,
+    _netscript_script_intent_message
 };
 
 // Altering these constants requires changes to get_network_version().  - Woody
 enum {
-	_hello_packet,
-	_joiner_info_packet,
-	_join_player_packet,
-	_accept_join_packet,
-	_topology_packet,
-	_stream_size_packet,
-	_stream_data_packet,
-	// ZZZ additions below
-        _chat_packet,
-	// The following should only be sent when get_network_version() >= kMinimumNetworkVersionForGracefulUnknownStreamPackets
-	_unknown_packet_type_response_packet,
-        _script_packet,
-	NUMBER_OF_BUFFERED_STREAM_PACKET_TYPES,
-	NUMBER_OF_STREAM_PACKET_TYPES= 	NUMBER_OF_BUFFERED_STREAM_PACKET_TYPES
+    _hello_packet,
+    _joiner_info_packet,
+    _join_player_packet,
+    _accept_join_packet,
+    _topology_packet,
+    _stream_size_packet,
+    _stream_data_packet,
+    // ZZZ additions below
+    _chat_packet,
+    // The following should only be sent when get_network_version() >=
+    // kMinimumNetworkVersionForGracefulUnknownStreamPackets
+    _unknown_packet_type_response_packet,
+    _script_packet,
+    NUMBER_OF_BUFFERED_STREAM_PACKET_TYPES,
+    NUMBER_OF_STREAM_PACKET_TYPES = NUMBER_OF_BUFFERED_STREAM_PACKET_TYPES
 };
 
 /* ===== end of application specific data structures/enums */
@@ -298,40 +295,40 @@ class Message;
 
 const NetDistributionInfo* NetGetDistributionInfoForType(int16 inType);
 
-struct ClientChatInfo
-{
-	std::string name;
-	int16 color;
-	int16 team;
+struct ClientChatInfo {
+    std::string name;
+    int16 color;
+    int16 team;
 };
 
 // "network_dialogs_private.h" follows
 
-class GathererAvailableAnnouncer
-{
-public:
-	GathererAvailableAnnouncer();
-	~GathererAvailableAnnouncer();
-	static void pump();
+class GathererAvailableAnnouncer {
+  public:
 
-private:
-	SSLP_ServiceInstance	mServiceInstance;
+    GathererAvailableAnnouncer();
+    ~GathererAvailableAnnouncer();
+    static void pump();
+
+  private:
+
+    SSLP_ServiceInstance mServiceInstance;
+};
+
+class JoinerSeekingGathererAnnouncer {
+  public:
+
+    JoinerSeekingGathererAnnouncer(bool shouldSeek);
+    ~JoinerSeekingGathererAnnouncer();
+    static void pump();
+
+  private:
+
+    static void found_gatherer_callback(const SSLP_ServiceInstance* instance);
+    static void lost_gatherer_callback(const SSLP_ServiceInstance* instance);
+
+    bool mShouldSeek;
 };
 
 
-class JoinerSeekingGathererAnnouncer
-{
-public:
-	JoinerSeekingGathererAnnouncer(bool shouldSeek);
-	~JoinerSeekingGathererAnnouncer();
-	static void pump();
-
-private:
-	static void found_gatherer_callback(const SSLP_ServiceInstance* instance);
-	static void lost_gatherer_callback(const SSLP_ServiceInstance* instance);
-	
-	bool mShouldSeek;
-};
-
-
-#endif//NETWORK_PRIVATE_H
+#endif // NETWORK_PRIVATE_H

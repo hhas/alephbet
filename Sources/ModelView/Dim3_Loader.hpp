@@ -25,16 +25,14 @@
  *
  */
 
-#include "Model3D.hpp"
 #include "FileHandler.hpp"
-
+#include "Model3D.hpp"
 
 // Do multifile models by doing multiple passes;
 // the first one is special because it sets up for the run
-enum
-{
-	LoadModelDim3_First,
-	LoadModelDim3_Rest
+enum {
+    LoadModelDim3_First,
+    LoadModelDim3_Rest
 };
 
 bool LoadModel_Dim3(FileSpecifier& Spec, Model3D& Model, int WhichPass);

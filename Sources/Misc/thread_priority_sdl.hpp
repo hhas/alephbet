@@ -22,7 +22,7 @@
  *
  */
 #ifndef THREAD_PRIORITY_H
-#define	THREAD_PRIORITY_H
+#define THREAD_PRIORITY_H
 
 struct SDL_Thread;
 
@@ -31,7 +31,6 @@ struct SDL_Thread;
 // The main thread's priority should not be further reduced by additional calls.
 // This should by called by the main thread (so the priority reduction
 // can be accomplished).
-extern bool
-BoostThreadPriority(SDL_Thread* inThread);
+extern bool BoostThreadPriority(SDL_Thread* inThread);
 
 #endif // THREAD_PRIORITY_H

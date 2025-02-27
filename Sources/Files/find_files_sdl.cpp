@@ -26,61 +26,57 @@
  *  find_files_sdl.cpp - Routines for finding files, SDL implementation
  */
 
-#include "cseries.hpp"
 #include "FileHandler.hpp"
+#include "cseries.hpp"
 #include "find_files.hpp"
 
-#include <vector>
 #include <algorithm>
-
+#include <vector>
 
 /*
  *  File finder base class
  */
 
-bool FileFinder::_Find(DirectorySpecifier &dir, Typecode type, bool recursive, int depth)
-{
-	// Get list of entries in directory
-	vector<dir_entry> entries;
-	if (!dir.ReadDirectory(entries))
-		return false;
-	sort(entries.begin(), entries.end());
+bool FileFinder::_Find(DirectorySpecifier& dir, Typecode type, bool recursive, int depth) {
+    // Get list of entries in directory
+    vector<dir_entry> entries;
+    if (!dir.ReadDirectory(entries))
+        return false;
+    sort(entries.begin(), entries.end());
 
-	// Iterate through entries
-	vector<dir_entry>::const_iterator i, end = entries.end();
-	for (i = entries.begin(); i != end; i++) {
+    // Iterate through entries
+    vector<dir_entry>::const_iterator i, end = entries.end();
+    for (i = entries.begin(); i != end; i++) {
 
-		// Construct full specifier of file/dir
-		FileSpecifier file = dir + i->name;
+        // Construct full specifier of file/dir
+        FileSpecifier file = dir + i->name;
 
-		if (i->is_directory) {
+        if (i->is_directory) {
 
-			if (depth == 0 && i->name == "Plugins")
-				continue;
+            if (depth == 0 && i->name == "Plugins")
+                continue;
 
-			// Recurse into directory
-			if (recursive)
-				if (_Find(file, type, recursive, depth + 1))
-					return true;
+            // Recurse into directory
+            if (recursive)
+                if (_Find(file, type, recursive, depth + 1))
+                    return true;
 
-		} else {
+        } else {
 
-			// Check file type and call found() function
-			if (type == WILDCARD_TYPE || type == file.GetType())
-				if (found(file))
-					return true;
-		}
-	}
-	return false;
+            // Check file type and call found() function
+            if (type == WILDCARD_TYPE || type == file.GetType())
+                if (found(file))
+                    return true;
+        }
+    }
+    return false;
 }
-
 
 /*
  *  Find all files of given type
  */
 
-bool FindAllFiles::found(FileSpecifier &file)
-{
-	dest_vector.push_back(file);
-	return false;
+bool FindAllFiles::found(FileSpecifier& file) {
+    dest_vector.push_back(file);
+    return false;
 }

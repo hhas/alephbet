@@ -31,8 +31,8 @@
  *  whether to use OpenGL for rendering.
  */
 
-#include "OGL_Subst_Texture_Def.hpp"
 #include "OGL_Model_Def.hpp"
+#include "OGL_Subst_Texture_Def.hpp"
 
 #include <cmath>
 #include <string>
@@ -48,17 +48,17 @@
    support to its OpenGL renderer AlephBets built on older versions of OSX will
    still be able to make use of it (ditto other OSes) -SB */
 #ifndef GL_FRAMEBUFFER_SRGB_EXT
-#define GL_FRAMEBUFFER_SRGB_EXT           0x8DB9
+#define GL_FRAMEBUFFER_SRGB_EXT 0x8DB9
 #endif
 #ifndef GL_SRGB
-#define GL_SRGB                           0x8C40
+#define GL_SRGB 0x8C40
 #endif
 #ifndef GL_SRGB_ALPHA
-#define GL_SRGB_ALPHA                     0x8C42
+#define GL_SRGB_ALPHA 0x8C42
 #endif
 #if defined(GL_ARB_texture_compression) && defined(GL_COMPRESSED_RGB_S3TC_DXT1_EXT)
 #ifndef GL_COMPRESSED_SRGB_S3TC_DXT1_EXT
-#define GL_COMPRESSED_SRGB_S3TC_DXT1_EXT  0x8C4C
+#define GL_COMPRESSED_SRGB_S3TC_DXT1_EXT 0x8C4C
 #endif
 #ifndef GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT
 #define GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT 0x8C4D
@@ -88,11 +88,11 @@ extern bool npotTextures;
 
 /* Using the EXT_framebuffer_sRGB spec as reference */
 static inline float sRGB_frob(GLfloat f) {
-	if (Using_sRGB) {
-		return (f <= 0.04045f ? f * (1.f/12.92f) : std::pow((f + 0.055) * (1.0/1.055), 2.4));
-	} else {
-		return f;
-	}
+    if (Using_sRGB) {
+        return (f <= 0.04045f ? f * (1.f / 12.92f) : std::pow((f + 0.055) * (1.0 / 1.055), 2.4));
+    } else {
+        return f;
+    }
 }
 
 void SglColor3f(GLfloat r, GLfloat g, GLfloat b);
@@ -128,101 +128,97 @@ void OGL_StopProgress();
 // as listed below; this is so that one can degrade texture quality independently,
 // and have (say) high-quality walls and weapons in hand, medium-quality inhabitant sprites,
 // and low-quality landscapes.
-enum
-{
-	OGL_Txtr_Wall,
-	OGL_Txtr_Landscape,
-	OGL_Txtr_Inhabitant,
-	OGL_Txtr_WeaponsInHand,
-	OGL_Txtr_HUD,
-	OGL_NUMBER_OF_TEXTURE_TYPES
+enum {
+    OGL_Txtr_Wall,
+    OGL_Txtr_Landscape,
+    OGL_Txtr_Inhabitant,
+    OGL_Txtr_WeaponsInHand,
+    OGL_Txtr_HUD,
+    OGL_NUMBER_OF_TEXTURE_TYPES
 };
 
 /*
-	All enumeration starts from 0, in contrast to MacOS popup menus, for example,
-	which start from one.
-	
-	The filters are OpenGL filter types
-	GL_NEAREST		(Pixelated)
-	GL_LINEAR		(Smoothed)
-	GL_NEAREST_MIPMAP_NEAREST
-	GL_LINEAR_MIPMAP_NEAREST
-	GL_NEAREST_MIPMAP_LINEAR
-	GL_LINEAR_MIPMAP_LINEAR
-	
-	Nearby textures have only the first two;
-	distant textures have the additional four, which feature mipmapping.
-	
-	The resolutions are how much to shrink the textures before using them,
-	in order to save VRAM space; they are, in order
-	x1
-	x1/2
-	x1/4
-	
-	The color depths indicate what numbers of bits for each color channel:
-	
-	32-bit (8888)
-	16-bit (4444)
-	8-bit  (2222)
+    All enumeration starts from 0, in contrast to MacOS popup menus, for example,
+    which start from one.
+
+    The filters are OpenGL filter types
+    GL_NEAREST		(Pixelated)
+    GL_LINEAR		(Smoothed)
+    GL_NEAREST_MIPMAP_NEAREST
+    GL_LINEAR_MIPMAP_NEAREST
+    GL_NEAREST_MIPMAP_LINEAR
+    GL_LINEAR_MIPMAP_LINEAR
+
+    Nearby textures have only the first two;
+    distant textures have the additional four, which feature mipmapping.
+
+    The resolutions are how much to shrink the textures before using them,
+    in order to save VRAM space; they are, in order
+    x1
+    x1/2
+    x1/4
+
+    The color depths indicate what numbers of bits for each color channel:
+
+    32-bit (8888)
+    16-bit (4444)
+    8-bit  (2222)
 */
 
-struct OGL_Texture_Configure
-{
-	int16 NearFilter;
-	int16 FarFilter;
-	int16 Resolution;
-	int16 ColorFormat;
-	int16 MaxSize;
+struct OGL_Texture_Configure {
+    int16 NearFilter;
+    int16 FarFilter;
+    int16 Resolution;
+    int16 ColorFormat;
+    int16 MaxSize;
 };
 
 // Here are some control flags
-enum
-{
-	OGL_Flag_ZBuffer	= 0x0001,	// Whether to use a Z-buffer
-	OGL_Flag_VoidColor	= 0x0002,	// Whether to color the void
-	OGL_Flag_FlatLand	= 0x0004,	// Whether to use flat-textured landscapes
-	OGL_Flag_Fog		= 0x0008,	// Whether to make fog
-	OGL_Flag_3D_Models	= 0x0010,	// Whether to use 3D models
-	OGL_Flag_2DGraphics	= 0x0020,	// Whether to pipe 2D graphics through OpenGL
-	OGL_Flag_FlatStatic	= 0x0040,	// Whether to make the "static" effect look flat
-	OGL_Flag_Fader		= 0x0080,	// Whether to do the fader effects in OpenGL
-	OGL_Flag_LiqSeeThru	= 0x0100,	// Whether the liquids can be seen through
-	OGL_Flag_Map		= 0x0200,	// Whether to do the overhead map with OpenGL
-	OGL_Flag_TextureFix	= 0x0400,	// Whether to apply a texture fix for old Apple OpenGL
-	OGL_Flag_HUD		= 0x0800,	// Whether to do the HUD with OpenGL
-	OGL_Flag_Blur		= 0x1000,   // Whether to blur landscapes and glowing textures
-	OGL_Flag_BumpMap	= 0x2000,   // Whether to use bump mapping
-	OGL_Flag_MimicSW    = 0x4000,   // Whether to mimic software perspective
+enum {
+    OGL_Flag_ZBuffer    = 0x0001, // Whether to use a Z-buffer
+    OGL_Flag_VoidColor  = 0x0002, // Whether to color the void
+    OGL_Flag_FlatLand   = 0x0004, // Whether to use flat-textured landscapes
+    OGL_Flag_Fog        = 0x0008, // Whether to make fog
+    OGL_Flag_3D_Models  = 0x0010, // Whether to use 3D models
+    OGL_Flag_2DGraphics = 0x0020, // Whether to pipe 2D graphics through OpenGL
+    OGL_Flag_FlatStatic = 0x0040, // Whether to make the "static" effect look flat
+    OGL_Flag_Fader      = 0x0080, // Whether to do the fader effects in OpenGL
+    OGL_Flag_LiqSeeThru = 0x0100, // Whether the liquids can be seen through
+    OGL_Flag_Map        = 0x0200, // Whether to do the overhead map with OpenGL
+    OGL_Flag_TextureFix = 0x0400, // Whether to apply a texture fix for old Apple OpenGL
+    OGL_Flag_HUD        = 0x0800, // Whether to do the HUD with OpenGL
+    OGL_Flag_Blur       = 0x1000, // Whether to blur landscapes and glowing textures
+    OGL_Flag_BumpMap    = 0x2000, // Whether to use bump mapping
+    OGL_Flag_MimicSW    = 0x4000, // Whether to mimic software perspective
 };
 
-struct OGL_ConfigureData
-{
-	// Configure textures
-	OGL_Texture_Configure TxtrConfigList[OGL_NUMBER_OF_TEXTURE_TYPES];
+struct OGL_ConfigureData {
+    // Configure textures
+    OGL_Texture_Configure TxtrConfigList[OGL_NUMBER_OF_TEXTURE_TYPES];
 
-	// Configure models
-	OGL_Texture_Configure ModelConfig;
+    // Configure models
+    OGL_Texture_Configure ModelConfig;
 
-	// Overall rendering flags
-	uint16 Flags;
-	
-	// Color of the Void
-	RGBColor VoidColor;
-	
-	// Landscape Flat Colors
-	// First index: which landscape
-	// (day, night, moon, outer space)
-	// Second index: ground, sky
-	RGBColor LscpColors[4][2];
-	
-	// Anisotropy setting
-	float AnisotropyLevel;
-	int16 Multisamples;
+    // Overall rendering flags
+    uint16 Flags;
 
-	bool GeForceFix;
-	bool WaitForVSync;
-  bool Use_sRGB;
-	bool Use_NPOT;
+    // Color of the Void
+    RGBColor VoidColor;
+
+    // Landscape Flat Colors
+    // First index: which landscape
+    // (day, night, moon, outer space)
+    // Second index: ground, sky
+    RGBColor LscpColors[4][2];
+
+    // Anisotropy setting
+    float AnisotropyLevel;
+    int16 Multisamples;
+
+    bool GeForceFix;
+    bool WaitForVSync;
+    bool Use_sRGB;
+    bool Use_NPOT;
 };
 
 OGL_ConfigureData& Get_OGL_ConfigureData();
@@ -250,98 +246,93 @@ void OGL_ResetTextures();
 // 3D-Model and Skin Support
 
 // Model-skin options
-struct OGL_SkinData: public OGL_TextureOptionsBase
-{
-	short CLUT;				// Which color table is this skin for? (-1 is all)
-	
-	OGL_SkinData(): CLUT(ALL_CLUTS) {}
+struct OGL_SkinData : public OGL_TextureOptionsBase {
+    short CLUT; // Which color table is this skin for? (-1 is all)
+
+    OGL_SkinData() : CLUT(ALL_CLUTS) {}
 };
 
 // Manages skins, in case we decide to have separate static and animated models
-struct OGL_SkinManager
-{
-	// List of skins that a model will "own"
-	vector<OGL_SkinData> SkinData;
-	
-	// OpenGL skin ID's (one for each possible
-	// Copied from TextureState in OGL_Textures	
-	// Which member textures?
-	enum
-	{
-		Normal,		// Used for all normally-shaded and shadeless textures
-		Glowing,	// Used for self-luminous textures
-		NUMBER_OF_TEXTURES
-	};
-	GLuint IDs[NUMBER_OF_OPENGL_BITMAP_SETS][NUMBER_OF_TEXTURES];		// Texture ID's
-	bool IDsInUse[NUMBER_OF_OPENGL_BITMAP_SETS][NUMBER_OF_TEXTURES];	// Which ID's are being used?
-		
-	void Reset(bool Clear_OGL_Txtrs);		// Resets the skins so that they may be reloaded;
-											// indicate whether to clear OpenGL textures
-	
-	OGL_SkinData *GetSkin(short CLUT);		// Gets a pointer to a skin-data object; NULL for no skin available
-	bool Use(short CLUT, short Which);		// Uses a skin; returns whether to load one	
-	
-	// For convenience
-	void Load();
-	void Unload();
-};
+struct OGL_SkinManager {
+    // List of skins that a model will "own"
+    vector<OGL_SkinData> SkinData;
 
+    // OpenGL skin ID's (one for each possible
+    // Copied from TextureState in OGL_Textures
+    // Which member textures?
+    enum {
+        Normal,  // Used for all normally-shaded and shadeless textures
+        Glowing, // Used for self-luminous textures
+        NUMBER_OF_TEXTURES
+    };
+
+    GLuint IDs[NUMBER_OF_OPENGL_BITMAP_SETS][NUMBER_OF_TEXTURES];    // Texture ID's
+    bool IDsInUse[NUMBER_OF_OPENGL_BITMAP_SETS][NUMBER_OF_TEXTURES]; // Which ID's are being used?
+
+    void Reset(bool Clear_OGL_Txtrs); // Resets the skins so that they may be reloaded;
+                                      // indicate whether to clear OpenGL textures
+
+    OGL_SkinData* GetSkin(short CLUT); // Gets a pointer to a skin-data object; NULL for no skin available
+    bool Use(short CLUT, short Which); // Uses a skin; returns whether to load one
+
+    // For convenience
+    void Load();
+    void Unload();
+};
 
 // Mode
-enum
-{
-	OGL_MLight_Fast,			// Fast method -- only one miner's-light calculation
-	OGL_MLight_Fast_NoFade,		// Like above, but miner's light doesn't fade toward sides
-	OGL_MLight_Indiv,			// Miner's light calculated for each vertex
-	OGL_MLight_Indiv_NoFade,	// Like above, but miner's light doesn't fade toward sides
-	NUMBER_OF_MODEL_LIGHT_TYPES
+enum {
+    OGL_MLight_Fast,         // Fast method -- only one miner's-light calculation
+    OGL_MLight_Fast_NoFade,  // Like above, but miner's light doesn't fade toward sides
+    OGL_MLight_Indiv,        // Miner's light calculated for each vertex
+    OGL_MLight_Indiv_NoFade, // Like above, but miner's light doesn't fade toward sides
+    NUMBER_OF_MODEL_LIGHT_TYPES
 };
-
 
 // Static 3D-Model Data and Options
-class OGL_ModelData: public OGL_SkinManager
-{
-public:
-	// Name of the model file;
-	// there are two extra names here for handling ggadwa's Dim3 multiple files
-	vector<char> ModelFile, ModelFile1, ModelFile2;
-	
-	// Type of model-file data (guess the model-file type if empty)
-	vector<char> ModelType;
-	
-	// Preprocessing: rotation scaling, shifting
-	// Scaling and rotation are applied before shifting
-	// Scaling can be negative, thus producing mirroring
-	float Scale;					// From model units to engine internal units (not World Units)
-	float XRot, YRot, ZRot;			// In degrees
-	float XShift, YShift, ZShift;	// In internal units
-	short Sidedness;				// Which side of the polygons is visible?
-									// (+: clockwise, -: counterclockwise, 0: both)
-	short NormalType;				// What type of normals?
-	float NormalSplit;				// Threshold for splitting the vertex normals 
-	short LightType;				// What type of lighting?
-	short DepthType;				// What sort of depth reference to use?
-									// (+: farthest point, -: nearest point, 0: center point)
-	
-	// Should a rotation rate be included, in order to get that Quake look?
-	
-	// The model itself (static, single-skin [only one skin at a time])
-	Model3D Model;
-	bool ModelPresent() {return !Model.VertIndices.empty();}
-	
-	// For convenience
-	void Load();
-	void Unload();
-	
-	OGL_ModelData():
-		Scale(1), XRot(0), YRot(0), ZRot(0), XShift(0), YShift(0), ZShift(0), Sidedness(1),
-			NormalType(1), NormalSplit(0.5), LightType(0), DepthType(0) {}
-};
+class OGL_ModelData : public OGL_SkinManager {
+  public:
 
+    // Name of the model file;
+    // there are two extra names here for handling ggadwa's Dim3 multiple files
+    vector<char> ModelFile, ModelFile1, ModelFile2;
+
+    // Type of model-file data (guess the model-file type if empty)
+    vector<char> ModelType;
+
+    // Preprocessing: rotation scaling, shifting
+    // Scaling and rotation are applied before shifting
+    // Scaling can be negative, thus producing mirroring
+    float Scale;                  // From model units to engine internal units (not World Units)
+    float XRot, YRot, ZRot;       // In degrees
+    float XShift, YShift, ZShift; // In internal units
+    short Sidedness;              // Which side of the polygons is visible?
+                                  // (+: clockwise, -: counterclockwise, 0: both)
+    short NormalType;             // What type of normals?
+    float NormalSplit;            // Threshold for splitting the vertex normals
+    short LightType;              // What type of lighting?
+    short DepthType;              // What sort of depth reference to use?
+                                  // (+: farthest point, -: nearest point, 0: center point)
+
+    // Should a rotation rate be included, in order to get that Quake look?
+
+    // The model itself (static, single-skin [only one skin at a time])
+    Model3D Model;
+
+    bool ModelPresent() { return !Model.VertIndices.empty(); }
+
+    // For convenience
+    void Load();
+    void Unload();
+
+    OGL_ModelData()
+        : Scale(1), XRot(0), YRot(0), ZRot(0), XShift(0), YShift(0), ZShift(0), Sidedness(1), NormalType(1),
+          NormalSplit(0.5), LightType(0), DepthType(0) {}
+};
 
 // Returns NULL if a collectiona and sequence do not have an associated model;
 // also returns which model sequence was found (
-OGL_ModelData *OGL_GetModelData(short Collection, short Sequence, short& ModelSequence);
+OGL_ModelData* OGL_GetModelData(short Collection, short Sequence, short& ModelSequence);
 
 // Resets all model skins; arg is whether to clear OpenGL textures
 void OGL_ResetModelSkins(bool Clear_OGL_Txtrs);
@@ -359,34 +350,31 @@ void OGL_ResetModelSkins(bool Clear_OGL_Txtrs);
 
 // Fog modes
 enum {
-	OGL_Fog_Linear,
-	OGL_Fog_Exp,
-	OGL_Fog_Exp2
+    OGL_Fog_Linear,
+    OGL_Fog_Exp,
+    OGL_Fog_Exp2
 };
 
 // Fog data record
-struct OGL_FogData
-{
-	rgb_color Color;
-	float Depth;		// In World Units (1024 internal units)
-	float Start;		// In World Units (1024 internal units); Linear only
-	bool IsPresent;
-	bool AffectsLandscapes;
-	int Mode;
+struct OGL_FogData {
+    rgb_color Color;
+    float Depth; // In World Units (1024 internal units)
+    float Start; // In World Units (1024 internal units); Linear only
+    bool IsPresent;
+    bool AffectsLandscapes;
+    int Mode;
 
-	float LandscapeMix;	// 0-1
+    float LandscapeMix; // 0-1
 };
 
 // Fog types
-enum
-{
-	OGL_Fog_AboveLiquid,
-	OGL_Fog_BelowLiquid,
-	OGL_NUMBER_OF_FOG_TYPES
+enum {
+    OGL_Fog_AboveLiquid,
+    OGL_Fog_BelowLiquid,
+    OGL_NUMBER_OF_FOG_TYPES
 };
 
-
-OGL_FogData *OGL_GetFogData(int Type);
+OGL_FogData* OGL_GetFogData(int Type);
 
 class InfoTree;
 void parse_mml_opengl(const InfoTree& root);

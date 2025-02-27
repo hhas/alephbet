@@ -29,20 +29,20 @@
  *  network_lookup_sdl.h - SDL network lookup stuff
  */
 
-#include "cseries.hpp"  // need OSErr
 #include "SSLP_API.h"
+#include "cseries.hpp" // need OSErr
 
 /* ---------- prototypes/NETWORK_NAMES.C */
 
 // ZZZ: added support for SSLP hinting
-OSErr NetRegisterName(const unsigned char *name, const unsigned char *type,
-					  short version, short socketNumber, const char* hint_addr_string);
+OSErr NetRegisterName(const unsigned char* name, const unsigned char* type, short version, short socketNumber,
+                      const char* hint_addr_string);
 OSErr NetUnRegisterName(void);
 
 /* ---------- prototypes/NETWORK_LOOKUP.C */
 
 // Now unused - as long as SSLP_Pump() is called, e.g. by the dialog, it's unnecessary.
-//void NetLookupUpdate(void);
+// void NetLookupUpdate(void);
 
 void NetLookupClose(void);
 
@@ -50,14 +50,13 @@ void NetLookupClose(void);
 // I have renamed it since its interface has changed quite a bit - if this is a bad idea,
 // feel free to name it back.
 // Note it still takes a Pstring for maximum compatibility with MacOS version.
-OSErr NetLookupOpen_SSLP(const unsigned char *type, short version,
-        SSLP_Service_Instance_Status_Changed_Callback foundInstance,
-        SSLP_Service_Instance_Status_Changed_Callback lostInstance,
-        SSLP_Service_Instance_Status_Changed_Callback nameChanged
-);
+OSErr NetLookupOpen_SSLP(const unsigned char* type, short version,
+                         SSLP_Service_Instance_Status_Changed_Callback foundInstance,
+                         SSLP_Service_Instance_Status_Changed_Callback lostInstance,
+                         SSLP_Service_Instance_Status_Changed_Callback nameChanged);
 
 // Now unused - functionality handled in w_found_players widget type
-//void NetLookupRemove(short index);
-//void NetLookupInformation(short index, NetAddrBlock *address, NetEntityName *entity);
+// void NetLookupRemove(short index);
+// void NetLookupInformation(short index, NetAddrBlock *address, NetEntityName *entity);
 
-#endif//NETWORK_LOOKUP_SDL_H
+#endif // NETWORK_LOOKUP_SDL_H

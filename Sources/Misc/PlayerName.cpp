@@ -24,26 +24,22 @@
 
 #include "cseries.hpp"
 
+#include "InfoTree.hpp"
 #include "PlayerName.hpp"
 #include "TextStrings.hpp"
-#include "InfoTree.hpp"
 #include <string.h>
 
 static char PlayerName[256];
 
-
 // Get that name
-const char *GetPlayerName() {return PlayerName;}
+const char* GetPlayerName() { return PlayerName; }
 
-
-void reset_mml_player_name()
-{
-	// no reset
+void reset_mml_player_name() {
+    // no reset
 }
 
-void parse_mml_player_name(const InfoTree& root)
-{
-	boost::optional<std::string> name_opt;
-	if ((name_opt = root.get_value_optional<std::string>()))
-		DeUTF8_C(name_opt->c_str(), name_opt->size(), PlayerName, 255);
+void parse_mml_player_name(const InfoTree& root) {
+    boost::optional<std::string> name_opt;
+    if ((name_opt = root.get_value_optional<std::string>()))
+        DeUTF8_C(name_opt->c_str(), name_opt->size(), PlayerName, 255);
 }

@@ -1,272 +1,237 @@
 /*
-	Copyright (C) 2024 Benoit Hauquier and the "Aleph One" developers.
+    Copyright (C) 2024 Benoit Hauquier and the "Aleph One" developers.
 
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 3 of the License, or
+    (at your option) any later version.
 
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-	This license is contained in the file "COPYING",
-	which is included with this source code; it is available online at
-	http://www.gnu.org/licenses/gpl.html
+    This license is contained in the file "COPYING",
+    which is included with this source code; it is available online at
+    http://www.gnu.org/licenses/gpl.html
 */
 
-#include <SDL_net.h>
-#include "Logging.hpp"
 #include "DefaultStringSets.hpp"
-#include "preferences.hpp"
-#include "network_star.hpp"
-#include "mytm.hpp"
-#include "vbl.hpp"
-#include "map.hpp"
+#include "Logging.hpp"
 #include "StandaloneHub.hpp"
-#include "wad.hpp"
 #include "game_wad.hpp"
+#include "map.hpp"
+#include "mytm.hpp"
+#include "network_star.hpp"
+#include "preferences.hpp"
+#include "vbl.hpp"
+#include "wad.hpp"
+#include <SDL_net.h>
 #include <iostream>
 
-enum class StandaloneHubState
-{
-	_waiting_for_gatherer,
-	_game_in_progress,
-	_quit
+enum class StandaloneHubState {
+    _waiting_for_gatherer,
+    _game_in_progress,
+    _quit
 };
 
 extern DirectorySpecifier log_dir;
 
-static void initialize_hub(short port)
-{
-	InitDefaultStringSets();
-	log_dir = get_data_path(kPathLogs);
-	network_preferences = new network_preferences_data;
-	network_preferences->game_port = port;
-	network_preferences->game_protocol = _network_game_protocol_star;
-	DefaultHubPreferences();
+static void initialize_hub(short port) {
+    InitDefaultStringSets();
+    log_dir                            = get_data_path(kPathLogs);
+    network_preferences                = new network_preferences_data;
+    network_preferences->game_port     = port;
+    network_preferences->game_protocol = _network_game_protocol_star;
+    DefaultHubPreferences();
 
-	if (SDLNet_Init() < 0)
-	{
-		std::ostringstream oss;
-		oss << "Couldn't initialize SDL_net (" << SDLNet_GetError() << ")";
-		throw std::runtime_error(oss.str());
-	}
+    if (SDLNet_Init() < 0) {
+        std::ostringstream oss;
+        oss << "Couldn't initialize SDL_net (" << SDLNet_GetError() << ")";
+        throw std::runtime_error(oss.str());
+    }
 
-	mytm_initialize();
-	initialize_keyboard_controller();
-	initialize_marathon();
+    mytm_initialize();
+    initialize_keyboard_controller();
+    initialize_marathon();
 }
 
-static void shutdown_hub()
-{
-	SDLNet_Quit();
+static void shutdown_hub() { SDLNet_Quit(); }
+
+static bool hub_init_game(void) {
+    initialize_map_for_new_game();
+
+    byte* physics      = nullptr;
+    int physics_length = StandaloneHub::Instance()->GetPhysicsData(&physics);
+    if (physics)
+        return true; // don't need to init further
+
+    byte* wad      = nullptr;
+    int wad_length = StandaloneHub::Instance()->GetMapData(&wad);
+    if (!wad)
+        return false; // something is wrong
+
+    auto wad_copy = new byte[wad_length];
+    std::memcpy(wad_copy, wad, wad_length);
+
+    wad_header header;
+    auto wad_data = inflate_flat_data(wad_copy, &header);
+    if (!wad_data)
+        return false;
+
+    bool success = get_dynamic_data_from_wad(wad_data, dynamic_world);
+    free_wad(wad_data);
+
+    return success;
 }
 
-static bool hub_init_game(void)
-{
-	initialize_map_for_new_game();
+static bool hub_game_in_progress(bool& game_is_done) {
+    game_is_done = false;
 
-	byte* physics = nullptr;
-	int physics_length = StandaloneHub::Instance()->GetPhysicsData(&physics);
-	if (physics) return true; //don't need to init further
+    if (hub_is_active() && !StandaloneHub::Instance()->HasGameEnded()) {
+        NetProcessMessagesInGame();
+        return true;
+    }
 
-	byte* wad = nullptr;
-	int wad_length = StandaloneHub::Instance()->GetMapData(&wad);
-	if (!wad) return false; //something is wrong
+    if (!NetUnSync())
+        return false; // should never happen
 
-	auto wad_copy = new byte[wad_length];
-	std::memcpy(wad_copy, wad, wad_length);
+    bool next_game = false;
 
-	wad_header header;
-	auto wad_data = inflate_flat_data(wad_copy, &header);
-	if (!wad_data) return false;
+    if (StandaloneHub::Instance()->GetGameDataFromGatherer()) {
+        initialize_map_for_new_level();
+        next_game = NetChangeMap(nullptr) && NetSync(); // don't stop the server if it fails here
+    }
 
-	bool success = get_dynamic_data_from_wad(wad_data, dynamic_world);
-	free_wad(wad_data);
+    if (!next_game) {
+        game_is_done = true;
+        return StandaloneHub::Reset();
+    }
 
-	return success;
+    StandaloneHub::Instance()->SetGameEnded(false);
+    return true;
 }
 
-static bool hub_game_in_progress(bool& game_is_done)
-{
-	game_is_done = false;
+static bool hub_host_game(bool& game_has_started) {
+    game_has_started = false;
 
-	if (hub_is_active() && !StandaloneHub::Instance()->HasGameEnded())
-	{
-		NetProcessMessagesInGame();
-		return true;
-	}
+    if (!StandaloneHub::Init(GAME_PORT)) {
+        logError("Error while trying to instantiate Aleph One remote hub");
+        return false;
+    }
 
-	if (!NetUnSync()) return false; //should never happen
+    if (!StandaloneHub::Instance()->WaitForGatherer())
+        return true;
 
-	bool next_game = false;
+    if (!StandaloneHub::Instance()->GetGameDataFromGatherer() || !hub_init_game()) {
+        return StandaloneHub::Reset();
+    }
 
-	if (StandaloneHub::Instance()->GetGameDataFromGatherer())
-	{
-		initialize_map_for_new_level();
-		next_game = NetChangeMap(nullptr) && NetSync(); //don't stop the server if it fails here
-	}
+    bool gathering_done;
+    bool success = StandaloneHub::Instance()->SetupGathererGame(gathering_done);
 
-	if (!next_game)
-	{
-		game_is_done = true;
-		return StandaloneHub::Reset();
-	}
+    if (!success) {
+        logError("Error while trying to gather game on Aleph One remote hub");
+        return false;
+    }
 
-	StandaloneHub::Instance()->SetGameEnded(false);
-	return true;
+    if (!gathering_done)
+        return true;
+
+    if (NetStart() && NetChangeMap(nullptr) && NetSync()) {
+        game_has_started = true;
+        return true;
+    }
+
+    return StandaloneHub::Reset();
 }
 
-static bool hub_host_game(bool& game_has_started)
-{
-	game_has_started = false;
+static void main_loop_hub() {
+    auto game_state = StandaloneHubState::_waiting_for_gatherer;
 
-	if (!StandaloneHub::Init(GAME_PORT))
-	{
-		logError("Error while trying to instantiate Aleph One remote hub");
-		return false;
-	}
+    while (game_state != StandaloneHubState::_quit) {
+        switch (game_state) {
+            case StandaloneHubState::_waiting_for_gatherer: {
+                bool game_has_started;
 
-	if (!StandaloneHub::Instance()->WaitForGatherer()) return true;
+                if (!hub_host_game(game_has_started))
+                    game_state = StandaloneHubState::_quit;
+                else if (game_has_started)
+                    game_state = StandaloneHubState::_game_in_progress;
 
-	if (!StandaloneHub::Instance()->GetGameDataFromGatherer() || !hub_init_game())
-	{
-		return StandaloneHub::Reset();
-	}
+                break;
+            }
 
-	bool gathering_done;
-	bool success = StandaloneHub::Instance()->SetupGathererGame(gathering_done);
+            case StandaloneHubState::_game_in_progress: {
+                bool game_is_done;
 
-	if (!success)
-	{
-		logError("Error while trying to gather game on Aleph One remote hub");
-		return false;
-	}
+                if (!hub_game_in_progress(game_is_done))
+                    game_state = StandaloneHubState::_quit;
+                else if (game_is_done)
+                    game_state = StandaloneHubState::_waiting_for_gatherer;
 
-	if (!gathering_done) return true;
+                break;
+            }
+        }
 
-	if (NetStart() && NetChangeMap(nullptr) && NetSync())
-	{
-		game_has_started = true;
-		return true;
-	}
-
-	return StandaloneHub::Reset();
+        sleep_for_machine_ticks(1);
+    }
 }
 
-static void main_loop_hub()
-{
-	auto game_state = StandaloneHubState::_waiting_for_gatherer;
+static uint16_t parse_port(char* port_arg) {
+    std::string port_str = port_arg;
+    bool parsed          = true;
 
-	while (game_state != StandaloneHubState::_quit)
-	{
-		switch (game_state)
-		{
-			case StandaloneHubState::_waiting_for_gatherer:
-				{
-					bool game_has_started;
+    if (port_str.length() > 5)
+        return 0;
 
-					if (!hub_host_game(game_has_started))
-						game_state = StandaloneHubState::_quit;
-					else if (game_has_started)
-						game_state = StandaloneHubState::_game_in_progress;
+    for (char c : port_str) {
+        if (!isdigit(c)) {
+            parsed = false;
+            break;
+        }
+    }
 
-					break;
-				}
-
-			case StandaloneHubState::_game_in_progress:
-				{
-					bool game_is_done;
-
-					if (!hub_game_in_progress(game_is_done))
-						game_state = StandaloneHubState::_quit;
-					else if (game_is_done)
-						game_state = StandaloneHubState::_waiting_for_gatherer;
-
-					break;
-				}
-		}
-
-		sleep_for_machine_ticks(1);
-	}
+    uint32_t port = parsed ? std::atoi(port_arg) : 0;
+    return port > UINT16_MAX ? 0 : port;
 }
 
-static uint16_t parse_port(char* port_arg)
-{
-	std::string port_str = port_arg;
-	bool parsed = true;
+int main(int argc, char** argv) {
+    auto code  = 0;
+    short port = 0;
 
-	if (port_str.length() > 5) return 0;
+    if (argc > 1) {
+        port = parse_port(argv[1]);
+    }
 
-	for (char c : port_str)
-	{
-		if (!isdigit(c))
-		{
-			parsed = false;
-			break;
-		}
-	}
+    if (!port) {
+        printf("Invalid or missing argument \"port\" for network standalone hub");
+        return 1;
+    }
 
-	uint32_t port = parsed ? std::atoi(port_arg) : 0;
-	return port > UINT16_MAX ? 0 : port;
-}
+    try {
 
-int main(int argc, char** argv)
-{
-	auto code = 0;
-	short port = 0;
+        // Initialize everything
+        initialize_hub(port);
 
-	if (argc > 1)
-	{
-		port = parse_port(argv[1]);
-	}
+        // Run the main loop
+        main_loop_hub();
 
-	if (!port)
-	{
-		printf("Invalid or missing argument \"port\" for network standalone hub");
-		return 1;
-	}
+    } catch (std::exception& e) {
+        try {
+            logFatal("Unhandled exception: %s", e.what());
+        } catch (...) {}
+        code = 1;
+    } catch (...) {
+        try {
+            logFatal("Unknown exception");
+        } catch (...) {}
+        code = 1;
+    }
 
-	try {
+    try {
+        shutdown_hub();
+    } catch (...) {}
 
-		// Initialize everything
-		initialize_hub(port);
-
-		// Run the main loop
-		main_loop_hub();
-
-	}
-	catch (std::exception& e) {
-		try
-		{
-			logFatal("Unhandled exception: %s", e.what());
-		}
-		catch (...)
-		{
-		}
-		code = 1;
-	}
-	catch (...) {
-		try
-		{
-			logFatal("Unknown exception");
-		}
-		catch (...)
-		{
-		}
-		code = 1;
-	}
-
-	try
-	{
-		shutdown_hub();
-	}
-	catch (...)
-	{
-
-	}
-
-	return code;
+    return code;
 }

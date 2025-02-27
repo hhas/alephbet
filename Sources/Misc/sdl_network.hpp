@@ -45,40 +45,37 @@ typedef IPaddress NetAddrBlock;
 
 /* ---------- DDPFrame and PacketBuffer (DDP) */
 
-struct DDPFrame
-{
-	uint16 data_size;
-	byte data[ddpMaxData];
-	UDPsocket socket;
+struct DDPFrame {
+    uint16 data_size;
+    byte data[ddpMaxData];
+    UDPsocket socket;
 };
 typedef struct DDPFrame DDPFrame, *DDPFramePtr;
 
-struct DDPPacketBuffer
-{
-	byte protocolType;
-	NetAddrBlock sourceAddress;
-	
-	uint16 datagramSize;
-	byte datagramData[ddpMaxData];
+struct DDPPacketBuffer {
+    byte protocolType;
+    NetAddrBlock sourceAddress;
+
+    uint16 datagramSize;
+    byte datagramData[ddpMaxData];
 };
 typedef struct DDPPacketBuffer DDPPacketBuffer, *DDPPacketBufferPtr;
 
 /* ---------- ConnectionEnd (ADSP) */
 
-struct ConnectionEnd
-{
-	TCPsocket		socket;
-        TCPsocket		server_socket;
-        SDLNet_SocketSet	server_socket_set;
+struct ConnectionEnd {
+    TCPsocket socket;
+    TCPsocket server_socket;
+    SDLNet_SocketSet server_socket_set;
 };
 typedef struct ConnectionEnd ConnectionEnd, *ConnectionEndPtr;
 
 /* ---------- types */
 
-typedef NetEntityName *NetEntityNamePtr;
+typedef NetEntityName* NetEntityNamePtr;
 
 typedef void (*lookupUpdateProcPtr)(short message, short index);
-typedef bool (*lookupFilterProcPtr)(NetEntityName *entity, NetAddrBlock *address);
+typedef bool (*lookupFilterProcPtr)(NetEntityName* entity, NetAddrBlock* address);
 typedef void (*PacketHandlerProcPtr)(DDPPacketBufferPtr packet);
 
 /* ---------- prototypes/NETWORK.C */
@@ -89,7 +86,7 @@ std::string NetSessionIdentifier(void);
 void NetSetServerIdentifier(short identifier);
 
 /* for giving to NetLookupOpen() as a filter procedure */
-bool NetEntityNotInGame(NetEntityName *entity, NetAddrBlock *address);
+bool NetEntityNotInGame(NetEntityName* entity, NetAddrBlock* address);
 
 /* ---------- prototypes/NETWORK_NAMES.C */
 
@@ -109,13 +106,13 @@ OSErr NetDDPClose(void);
 // a UNIX socket.  Now with NETWORK_IP, that portion of the API is used to pass an IP port number.
 // (The argument to NetDDPCloseSocket() is now ignored, then; we only currently support one open UDP socket.)
 // NETWORK_IP: *ioPortNumber is in network byte order ("big-endian")
-OSErr NetDDPOpenSocket(short *ioPortNumber, PacketHandlerProcPtr packetHandler);
+OSErr NetDDPOpenSocket(short* ioPortNumber, PacketHandlerProcPtr packetHandler);
 OSErr NetDDPCloseSocket(short ignored);
 
 DDPFramePtr NetDDPNewFrame(void);
 void NetDDPDisposeFrame(DDPFramePtr frame);
 
-OSErr NetDDPSendFrame(DDPFramePtr frame, const NetAddrBlock *address, short protocolType, short socket);
+OSErr NetDDPSendFrame(DDPFramePtr frame, const NetAddrBlock* address, short protocolType, short socket);
 
 /* ---------- prototypes/NETWORK_ADSP.C */
 

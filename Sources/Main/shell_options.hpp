@@ -26,33 +26,33 @@
  */
 
 #include <string>
-#include <vector>
 #include <unordered_map>
+#include <vector>
 
 struct ShellOptions {
-	std::unordered_map<int, bool> parse(int argc, char** argv, bool ignore_unknown_args = false);
+    std::unordered_map<int, bool> parse(int argc, char** argv, bool ignore_unknown_args = false);
 
-	std::string program_name;
-	
-	bool nogl;
-	bool nosound;
-	bool nogamma;
-	bool debug;
-	bool nojoystick;
-	bool insecure_lua;
+    std::string program_name;
 
-	bool force_fullscreen;
-	bool force_windowed;
+    bool nogl;
+    bool nosound;
+    bool nogamma;
+    bool debug;
+    bool nojoystick;
+    bool insecure_lua;
 
-	bool skip_intro;
-	bool editor;
+    bool force_fullscreen;
+    bool force_windowed;
 
-	std::string replay_directory;
+    bool skip_intro;
+    bool editor;
 
-	std::string directory;
-	std::vector<std::string> files;
+    std::string replay_directory;
 
-	std::string output;
+    std::string directory;
+    std::vector<std::string> files;
+
+    std::string output;
 };
 
 extern ShellOptions shell_options;

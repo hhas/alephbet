@@ -1,5 +1,5 @@
 #ifndef TEXTLAYOUTHELPER_H
-#define	TEXTLAYOUTHELPER_H
+#define TEXTLAYOUTHELPER_H
 
 /*
  *
@@ -45,34 +45,37 @@
 using std::vector;
 
 class TextLayoutHelper {
-public:
+  public:
+
     TextLayoutHelper();
     ~TextLayoutHelper();
-    
+
     // Remove all reservations
-    void	removeAllReservations();
-    
-    // Reserve a place for the rectangle given.  Returns the smallest bottom that will not overlap previous reservations. 
-    int 	reserveSpaceFor(int inLeft, unsigned int inWidth, int inLowestBottom, unsigned int inHeight);
-    
-protected:
+    void removeAllReservations();
+
+    // Reserve a place for the rectangle given.  Returns the smallest bottom that will not overlap previous
+    // reservations.
+    int reserveSpaceFor(int inLeft, unsigned int inWidth, int inLowestBottom, unsigned int inHeight);
+
+  protected:
+
     struct ReservationEnd;
     struct Reservation;
-    
-    typedef vector<ReservationEnd>	CollectionOfReservationEnds;
-    
-    CollectionOfReservationEnds		mReservationEnds;
+
+    typedef vector<ReservationEnd> CollectionOfReservationEnds;
+
+    CollectionOfReservationEnds mReservationEnds;
 };
 
 struct TextLayoutHelper::ReservationEnd {
-    int					mHorizontalCoordinate;
-    TextLayoutHelper::Reservation*	mReservation;
-    bool				mStartOfReservation;
+    int mHorizontalCoordinate;
+    TextLayoutHelper::Reservation* mReservation;
+    bool mStartOfReservation;
 };
 
 struct TextLayoutHelper::Reservation {
-    int		mBottom;
-    int		mTop;
+    int mBottom;
+    int mTop;
 };
 
-#endif//TEXTLAYOUTHELPER_H
+#endif // TEXTLAYOUTHELPER_H

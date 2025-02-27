@@ -34,65 +34,52 @@
 #include "Message.hpp"
 #include "MessageHandler.hpp"
 
+class MessageDispatcher : public MessageHandler {
+  public:
 
-class MessageDispatcher : public MessageHandler
-{
-public:
-	MessageDispatcher() : mDefaultHandler(NULL) {}
-	
-	void setHandlerForType(MessageHandler* inHandler, MessageTypeID inType)
-	{
-		if(inHandler == NULL)
-			clearHandlerForType(inType);
-		else
-			mMap[inType] = inHandler;
-	}
+    MessageDispatcher() : mDefaultHandler(NULL) {}
 
-	MessageHandler* handlerForType(MessageTypeID inType)
-	{
-		MessageHandler* theHandler = mDefaultHandler;
+    void setHandlerForType(MessageHandler* inHandler, MessageTypeID inType) {
+        if (inHandler == NULL)
+            clearHandlerForType(inType);
+        else
+            mMap[inType] = inHandler;
+    }
 
-		MessageDispatcherMap::iterator i = mMap.find(inType);
-		if(i != mMap.end())
-			theHandler = i->second;
+    MessageHandler* handlerForType(MessageTypeID inType) {
+        MessageHandler* theHandler = mDefaultHandler;
 
-		return theHandler;
-	}
+        MessageDispatcherMap::iterator i = mMap.find(inType);
+        if (i != mMap.end())
+            theHandler = i->second;
 
-	MessageHandler* handlerForTypeNoDefault(MessageTypeID inType)
-	{
-		MessageDispatcherMap::iterator i = mMap.find(inType);
-		return (i != mMap.end()) ? i->second : NULL;
-	}
+        return theHandler;
+    }
 
-	void clearHandlerForType(MessageTypeID inType)
-	{
-		mMap.erase(inType);
-	}
+    MessageHandler* handlerForTypeNoDefault(MessageTypeID inType) {
+        MessageDispatcherMap::iterator i = mMap.find(inType);
+        return (i != mMap.end()) ? i->second : NULL;
+    }
 
-	void setDefaultHandler(MessageHandler* inHandler)
-	{
-		mDefaultHandler = inHandler;
-	}
+    void clearHandlerForType(MessageTypeID inType) { mMap.erase(inType); }
 
-	MessageHandler* defaultHandler() const
-	{
-		return mDefaultHandler;
-	}
+    void setDefaultHandler(MessageHandler* inHandler) { mDefaultHandler = inHandler; }
 
-	void handle(Message* inMessage, CommunicationsChannel* inChannel)
-	{
-		MessageHandler* theHandler = handlerForType(inMessage->type());
+    MessageHandler* defaultHandler() const { return mDefaultHandler; }
 
-		if(theHandler != NULL)
-			theHandler->handle(inMessage, inChannel);
-	}
+    void handle(Message* inMessage, CommunicationsChannel* inChannel) {
+        MessageHandler* theHandler = handlerForType(inMessage->type());
 
-private:
-	typedef std::map<MessageTypeID, MessageHandler*> MessageDispatcherMap;
-	
-	MessageDispatcherMap	mMap;
-	MessageHandler*		mDefaultHandler;
+        if (theHandler != NULL)
+            theHandler->handle(inMessage, inChannel);
+    }
+
+  private:
+
+    typedef std::map<MessageTypeID, MessageHandler*> MessageDispatcherMap;
+
+    MessageDispatcherMap mMap;
+    MessageHandler* mDefaultHandler;
 };
 
 #endif // MESSAGEDISPATCHER_H

@@ -25,80 +25,71 @@
 #ifndef PREFERENCES_WIDGETS_SDL_H
 #define PREFERENCES_WIDGETS_SDL_H
 
+#include "Plugins.hpp"
+#include "collection_definition.hpp"
 #include "cseries.hpp"
 #include "find_files.hpp"
-#include "collection_definition.hpp"
-#include "sdl_widgets.hpp"
-#include "sdl_fonts.hpp"
+#include "interface.hpp"
 #include "screen.hpp"
 #include "screen_drawing.hpp"
-#include "interface.hpp"
-#include "Plugins.hpp"
+#include "sdl_fonts.hpp"
+#include "sdl_widgets.hpp"
 
 // From shell_sdl.cpp
 extern vector<DirectorySpecifier> data_search_path;
 
 // Environment item
 class env_item {
-public:
-	env_item() : indent(0), selectable(false)
-	{
-		name[0] = 0;
-	}
+  public:
 
-	env_item(const FileSpecifier &fs, int i, bool sel) : spec(fs), indent(i), selectable(sel)
-	{
-		spec.GetName(name);
-	}
+    env_item() : indent(0), selectable(false) { name[0] = 0; }
 
-	FileSpecifier spec;	// Specifier of associated file
-	char name[256];		// Last part of file name
-	int indent;			// Indentation level
-	bool selectable;	// Flag: item refers to selectable file (otherwise to directory name)
+    env_item(const FileSpecifier& fs, int i, bool sel) : spec(fs), indent(i), selectable(sel) { spec.GetName(name); }
+
+    FileSpecifier spec; // Specifier of associated file
+    char name[256];     // Last part of file name
+    int indent;         // Indentation level
+    bool selectable;    // Flag: item refers to selectable file (otherwise to directory name)
 };
 
 // Environment file list widget
 class w_env_list : public w_list<env_item> {
-public:
-	w_env_list(const vector<env_item> &items, const char *selection, dialog *d) : w_list<env_item>(items, 400, 15, 0), parent(d)
-	{
-		vector<env_item>::const_iterator i, end = items.end();
-		size_t num = 0;
-		for (i = items.begin(); i != end; i++, num++) {
-			if (strcmp(i->spec.GetPath(), selection) == 0) {
-				set_selection(num);
-				break;
-			}
-		}
-	}
+  public:
 
-	bool is_item_selectable(size_t i)
-	{
-		return items[i].selectable;
-	}
+    w_env_list(const vector<env_item>& items, const char* selection, dialog* d)
+        : w_list<env_item>(items, 400, 15, 0), parent(d) {
+        vector<env_item>::const_iterator i, end = items.end();
+        size_t num = 0;
+        for (i = items.begin(); i != end; i++, num++) {
+            if (strcmp(i->spec.GetPath(), selection) == 0) {
+                set_selection(num);
+                break;
+            }
+        }
+    }
 
-	void item_selected(void)
-	{
-		parent->quit(0);
-	}
+    bool is_item_selectable(size_t i) { return items[i].selectable; }
 
-	void draw_item(vector<env_item>::const_iterator i, SDL_Surface *s, int16 x, int16 y, uint16 width, bool selected) const
-	{
-		y += font->get_ascent();
+    void item_selected(void) { parent->quit(0); }
 
-		uint32 color;
-		if (i->selectable) {
-			color = selected ? get_theme_color(ITEM_WIDGET, ACTIVE_STATE) : get_theme_color(ITEM_WIDGET, DEFAULT_STATE);
-		} else
-			color = get_theme_color(LABEL_WIDGET, DEFAULT_STATE);
+    void draw_item(vector<env_item>::const_iterator i, SDL_Surface* s, int16 x, int16 y, uint16 width,
+                   bool selected) const {
+        y += font->get_ascent();
 
-		set_drawing_clip_rectangle(0, x, s->h, x + width);
-		draw_text(s, FileSpecifier::HideExtension(i->name).c_str(), x + i->indent * 8, y, color, font, style, true);
-		set_drawing_clip_rectangle(SHRT_MIN, SHRT_MIN, SHRT_MAX, SHRT_MAX);
-	}
+        uint32 color;
+        if (i->selectable) {
+            color = selected ? get_theme_color(ITEM_WIDGET, ACTIVE_STATE) : get_theme_color(ITEM_WIDGET, DEFAULT_STATE);
+        } else
+            color = get_theme_color(LABEL_WIDGET, DEFAULT_STATE);
 
-private:
-	dialog *parent;
+        set_drawing_clip_rectangle(0, x, s->h, x + width);
+        draw_text(s, FileSpecifier::HideExtension(i->name).c_str(), x + i->indent * 8, y, color, font, style, true);
+        set_drawing_clip_rectangle(SHRT_MIN, SHRT_MIN, SHRT_MAX, SHRT_MAX);
+    }
+
+  private:
+
+    dialog* parent;
 };
 
 // Environment selection button
@@ -107,92 +98,93 @@ class w_env_select;
 typedef void (*selection_made_callback_t)(w_env_select* inWidget);
 
 class w_env_select : public w_select_button {
-public:
-w_env_select(const char *path, const char *m, Typecode t, dialog *d)
-	: w_select_button(item_name, select_item_callback, NULL, true),
-		parent(d), menu_title(m), type(t), mCallback(NULL)
-	{
-		set_arg(this);
-		set_path(path);
-	}
-	~w_env_select() {}
+  public:
 
-    void    set_selection_made_callback(selection_made_callback_t inCallback) {
-        mCallback = inCallback;
+    w_env_select(const char* path, const char* m, Typecode t, dialog* d)
+        : w_select_button(item_name, select_item_callback, NULL, true), parent(d), menu_title(m), type(t),
+          mCallback(NULL) {
+        set_arg(this);
+        set_path(path);
     }
 
-	void set_path(const char *p)
-	{
-		item = p;
-		item.GetName(item_name);
-		std::string filename = item_name;
-		strncpy(item_name, FileSpecifier::HideExtension(filename).c_str(), 256);
-		set_selection(item_name);
-	}
+    ~w_env_select() {}
 
-	const char *get_path(void) const
-	{
-		return item.GetPath();
-	}
+    void set_selection_made_callback(selection_made_callback_t inCallback) { mCallback = inCallback; }
 
-	FileSpecifier &get_file_specifier(void)
-	{
-		return item;
-	}
+    void set_path(const char* p) {
+        item = p;
+        item.GetName(item_name);
+        std::string filename = item_name;
+        strncpy(item_name, FileSpecifier::HideExtension(filename).c_str(), 256);
+        set_selection(item_name);
+    }
 
-private:
-	void select_item(dialog *parent);
-	static void select_item_callback(void *arg);
+    const char* get_path(void) const { return item.GetPath(); }
 
-    dialog *parent;
-	const char *menu_title;	// Selection menu title
+    FileSpecifier& get_file_specifier(void) { return item; }
 
-	FileSpecifier item;		// File specification
-	Typecode type;				// File type
-	char item_name[256];	// File name (excluding directory part)
+  private:
+
+    void select_item(dialog* parent);
+    static void select_item_callback(void* arg);
+
+    dialog* parent;
+    const char* menu_title; // Selection menu title
+
+    FileSpecifier item;  // File specification
+    Typecode type;       // File type
+    char item_name[256]; // File name (excluding directory part)
 
     selection_made_callback_t mCallback;
 };
 
 class w_crosshair_display : public widget {
-public:
-	enum {
-		kSize = 80
-	};
+  public:
 
-	w_crosshair_display();
-	~w_crosshair_display();
+    enum {
+        kSize = 80
+    };
 
-	void draw(SDL_Surface *s) const;
-	bool is_selectable(void) const { return false; }
+    w_crosshair_display();
+    ~w_crosshair_display();
 
-	bool placeable_implemented() { return true; }
+    void draw(SDL_Surface* s) const;
 
-	bool is_dirty() { return true; }
+    bool is_selectable(void) const { return false; }
 
-private:
-	SDL_Surface *surface;
+    bool placeable_implemented() { return true; }
+
+    bool is_dirty() { return true; }
+
+  private:
+
+    SDL_Surface* surface;
 };
 
 class w_plugins : public w_list_base {
-public:
-	w_plugins(std::vector<Plugin>& plugins, int width, int numRows) : w_list_base(width, numRows, 0), m_plugins(plugins)
-	{
-		saved_min_height = item_height() * static_cast<uint16>(shown_items) + get_theme_space(LIST_WIDGET, T_SPACE) + get_theme_space(LIST_WIDGET, B_SPACE);
-		trough_rect.h = saved_min_height - get_theme_space(LIST_WIDGET, TROUGH_T_SPACE) - get_theme_space(LIST_WIDGET, TROUGH_B_SPACE);
-		num_items = m_plugins.size();
-		new_items();
-	}
+  public:
 
-	uint16 item_height() const { return 2 * font->get_line_height() + font->get_line_height() / 2 + 2; }
+    w_plugins(std::vector<Plugin>& plugins, int width, int numRows)
+        : w_list_base(width, numRows, 0), m_plugins(plugins) {
+        saved_min_height = item_height() * static_cast<uint16>(shown_items) + get_theme_space(LIST_WIDGET, T_SPACE)
+                           + get_theme_space(LIST_WIDGET, B_SPACE);
+        trough_rect.h = saved_min_height - get_theme_space(LIST_WIDGET, TROUGH_T_SPACE)
+                        - get_theme_space(LIST_WIDGET, TROUGH_B_SPACE);
+        num_items = m_plugins.size();
+        new_items();
+    }
 
-protected:
-	void draw_items(SDL_Surface* s) const;
-	void item_selected();
+    uint16 item_height() const { return 2 * font->get_line_height() + font->get_line_height() / 2 + 2; }
 
-private:
-	std::vector<Plugin>& m_plugins;
-	void draw_item(Plugins::iterator i, SDL_Surface* s, int16 x, int16 y, uint16 width, bool selected) const;
+  protected:
+
+    void draw_items(SDL_Surface* s) const;
+    void item_selected();
+
+  private:
+
+    std::vector<Plugin>& m_plugins;
+    void draw_item(Plugins::iterator i, SDL_Surface* s, int16 x, int16 y, uint16 width, bool selected) const;
 };
 
 #endif

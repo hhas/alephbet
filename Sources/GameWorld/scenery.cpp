@@ -24,28 +24,27 @@
 
 #include "cseries.hpp"
 
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 #include <vector>
 
-#include "cseries.hpp"
-#include "map.hpp"
-#include "render.hpp"
-#include "interface.hpp"
-#include "flood_map.hpp"
-#include "effects.hpp"
-#include "monsters.hpp"
-#include "projectiles.hpp"
-#include "player.hpp"
-#include "platforms.hpp"
-#include "scenery.hpp"
 #include "InfoTree.hpp"
+#include "cseries.hpp"
+#include "effects.hpp"
+#include "flood_map.hpp"
+#include "interface.hpp"
+#include "map.hpp"
+#include "monsters.hpp"
+#include "platforms.hpp"
+#include "player.hpp"
+#include "projectiles.hpp"
+#include "render.hpp"
+#include "scenery.hpp"
 
 /* ---------- constants */
 
-enum
-{
-	MAXIMUM_ANIMATED_SCENERY_OBJECTS= 20
+enum {
+    MAXIMUM_ANIMATED_SCENERY_OBJECTS = 20
 };
 
 /* ---------- globals */
@@ -59,159 +58,134 @@ static vector<short> AnimatedSceneryObjects;
 
 /* ---------- private prototypes */
 
-struct scenery_definition *get_scenery_definition(short scenery_type);
+struct scenery_definition* get_scenery_definition(short scenery_type);
 
 /* ---------- code */
 
-void initialize_scenery(
-	void)
-{
-	// Will reserve some space for them
-	AnimatedSceneryObjects.reserve(32);
+void initialize_scenery(void) {
+    // Will reserve some space for them
+    AnimatedSceneryObjects.reserve(32);
 }
 
 /* returns object index if successful, NONE otherwise */
-short new_scenery(
-	struct object_location *location,
-	short scenery_type)
-{
-	short object_index= NONE;
-	
-	// This get function will do the bounds checking
-	struct scenery_definition *definition= get_scenery_definition(scenery_type);
-	if (!definition) return NONE;
-	
-	object_index= new_map_object(location, definition->shape);
-	if (object_index!=NONE)
-	{
-		struct object_data *object= get_object_data(object_index);
-		
-		SET_OBJECT_OWNER(object, _object_is_scenery);
-		SET_OBJECT_SOLIDITY(object, (definition->flags&_scenery_is_solid) ? true : false);
-		object->permutation= scenery_type;
-	}
+short new_scenery(struct object_location* location, short scenery_type) {
+    short object_index = NONE;
 
-	return object_index;
+    // This get function will do the bounds checking
+    struct scenery_definition* definition = get_scenery_definition(scenery_type);
+    if (!definition)
+        return NONE;
+
+    object_index = new_map_object(location, definition->shape);
+    if (object_index != NONE) {
+        struct object_data* object = get_object_data(object_index);
+
+        SET_OBJECT_OWNER(object, _object_is_scenery);
+        SET_OBJECT_SOLIDITY(object, (definition->flags & _scenery_is_solid) ? true : false);
+        object->permutation = scenery_type;
+    }
+
+    return object_index;
 }
 
-void animate_scenery(
-	void)
-{
-	for (unsigned i=0; i<AnimatedSceneryObjects.size(); ++i)
-		animate_object(AnimatedSceneryObjects[i]);
+void animate_scenery(void) {
+    for (unsigned i = 0; i < AnimatedSceneryObjects.size(); ++i) animate_object(AnimatedSceneryObjects[i]);
 }
 
-void deanimate_scenery(short object_index)
-{
-	std::vector<short>::iterator it;
-	for (it = AnimatedSceneryObjects.begin(); it != AnimatedSceneryObjects.end() && *it != object_index; it++);
-	
-	if (it != AnimatedSceneryObjects.end())
-		AnimatedSceneryObjects.erase(it);
+void deanimate_scenery(short object_index) {
+    std::vector<short>::iterator it;
+    for (it = AnimatedSceneryObjects.begin(); it != AnimatedSceneryObjects.end() && *it != object_index; it++);
+
+    if (it != AnimatedSceneryObjects.end())
+        AnimatedSceneryObjects.erase(it);
 }
 
-void randomize_scenery_shape(short object_index)
-{
-	object_data *object = get_object_data(object_index);
-	scenery_definition *definition = get_scenery_definition(object->permutation);
-	if (!definition) return;
+void randomize_scenery_shape(short object_index) {
+    object_data* object            = get_object_data(object_index);
+    scenery_definition* definition = get_scenery_definition(object->permutation);
+    if (!definition)
+        return;
 
-	if (!randomize_object_sequence(object_index, definition->shape))
-	{
-		AnimatedSceneryObjects.push_back(object_index);
-	}
+    if (!randomize_object_sequence(object_index, definition->shape)) {
+        AnimatedSceneryObjects.push_back(object_index);
+    }
 }
 
-void randomize_scenery_shapes(
-	void)
-{
-	struct object_data *object;
-	short object_index;
-	
-	AnimatedSceneryObjects.clear();
-	
-	for (object_index= 0, object= objects; object_index<MAXIMUM_OBJECTS_PER_MAP; ++object_index, ++object)
-	{
-		if (SLOT_IS_USED(object) && GET_OBJECT_OWNER(object)==_object_is_scenery)
-		{
-			struct scenery_definition *definition= get_scenery_definition(object->permutation);
-			if (!definition) continue;
-			
-			if (!randomize_object_sequence(object_index, definition->shape))
-			{
-				AnimatedSceneryObjects.push_back(object_index);
-			}
-		}
-	}
+void randomize_scenery_shapes(void) {
+    struct object_data* object;
+    short object_index;
+
+    AnimatedSceneryObjects.clear();
+
+    for (object_index = 0, object = objects; object_index < MAXIMUM_OBJECTS_PER_MAP; ++object_index, ++object) {
+        if (SLOT_IS_USED(object) && GET_OBJECT_OWNER(object) == _object_is_scenery) {
+            struct scenery_definition* definition = get_scenery_definition(object->permutation);
+            if (!definition)
+                continue;
+
+            if (!randomize_object_sequence(object_index, definition->shape)) {
+                AnimatedSceneryObjects.push_back(object_index);
+            }
+        }
+    }
 }
 
-void get_scenery_dimensions(
-	short scenery_type,
-	world_distance *radius,
-	world_distance *height)
-{
-	struct scenery_definition *definition= get_scenery_definition(scenery_type);
-	if (!definition)
-	{
-		// Fallback
-		*radius = 0;
-		*height = 0;
-		return;
-	}
+void get_scenery_dimensions(short scenery_type, world_distance* radius, world_distance* height) {
+    struct scenery_definition* definition = get_scenery_definition(scenery_type);
+    if (!definition) {
+        // Fallback
+        *radius = 0;
+        *height = 0;
+        return;
+    }
 
-	*radius= definition->radius;
-	*height= definition->height;
+    *radius = definition->radius;
+    *height = definition->height;
 }
 
-void damage_scenery(
-	short object_index)
-{
-	struct object_data *object= get_object_data(object_index);
-	struct scenery_definition *definition= get_scenery_definition(object->permutation);
-	if (!definition) return;
-	
-	if (definition->flags&_scenery_can_be_destroyed)
-	{
-		object->shape= definition->destroyed_shape;
-		object->sequence = 0;
+void damage_scenery(short object_index) {
+    struct object_data* object            = get_object_data(object_index);
+    struct scenery_definition* definition = get_scenery_definition(object->permutation);
+    if (!definition)
+        return;
 
-		if (film_profile.fix_destroy_scenery_random_frame)
-		{
-			randomize_object_sequence(object_index, object->shape);
-		}
+    if (definition->flags & _scenery_can_be_destroyed) {
+        object->shape    = definition->destroyed_shape;
+        object->sequence = 0;
 
-		// LP addition: don't create a destruction effect if the effect type is NONE
-		if (definition->destroyed_effect != NONE)
-			new_effect(&object->location, object->polygon, definition->destroyed_effect, object->facing);
-		SET_OBJECT_OWNER(object, _object_is_normal);
-	}
+        if (film_profile.fix_destroy_scenery_random_frame) {
+            randomize_object_sequence(object_index, object->shape);
+        }
+
+        // LP addition: don't create a destruction effect if the effect type is NONE
+        if (definition->destroyed_effect != NONE)
+            new_effect(&object->location, object->polygon, definition->destroyed_effect, object->facing);
+        SET_OBJECT_OWNER(object, _object_is_normal);
+    }
 }
 
-bool get_scenery_collection(short scenery_type, short& collection)
-{
-	struct scenery_definition *definition = get_scenery_definition(scenery_type);
-	if (!definition) return false;
+bool get_scenery_collection(short scenery_type, short& collection) {
+    struct scenery_definition* definition = get_scenery_definition(scenery_type);
+    if (!definition)
+        return false;
 
-	collection = GET_DESCRIPTOR_COLLECTION(definition->shape);
-	return true;
+    collection = GET_DESCRIPTOR_COLLECTION(definition->shape);
+    return true;
 }
 
-bool get_damaged_scenery_collection(short scenery_type, short& collection)
-{
-	struct scenery_definition *definition = get_scenery_definition(scenery_type);
-	if (!definition || !(definition->flags & _scenery_can_be_destroyed))
-		return false;
+bool get_damaged_scenery_collection(short scenery_type, short& collection) {
+    struct scenery_definition* definition = get_scenery_definition(scenery_type);
+    if (!definition || !(definition->flags & _scenery_can_be_destroyed))
+        return false;
 
-	collection = GET_DESCRIPTOR_COLLECTION(definition->destroyed_shape);
-	return true;
+    collection = GET_DESCRIPTOR_COLLECTION(definition->destroyed_shape);
+    return true;
 }
 
 /* ---------- private code */
 
-struct scenery_definition *get_scenery_definition(
-	short scenery_type)
-{
-	return GetMemberWithBounds(scenery_definitions,scenery_type,NUMBER_OF_SCENERY_DEFINITIONS);
+struct scenery_definition* get_scenery_definition(short scenery_type) {
+    return GetMemberWithBounds(scenery_definitions, scenery_type, NUMBER_OF_SCENERY_DEFINITIONS);
 }
 
 // UGH: level MML loads *after* game_wad has instantiated map scenery,
@@ -220,65 +194,60 @@ struct scenery_definition *get_scenery_definition(
 
 bool ok_to_reset_scenery_solidity = false;
 
-static void reset_scenery_solidity()
-{
-	if (!ok_to_reset_scenery_solidity) return;
+static void reset_scenery_solidity() {
+    if (!ok_to_reset_scenery_solidity)
+        return;
 
-	for (int i = 0; i < MAXIMUM_OBJECTS_PER_MAP; ++i)
-	{
-		object_data* object = &objects[i];
-		if (SLOT_IS_USED(object) && GET_OBJECT_OWNER(object) == _object_is_scenery)
-		{
-			scenery_definition *definition = get_scenery_definition(object->permutation);
-			if (!definition) break;
+    for (int i = 0; i < MAXIMUM_OBJECTS_PER_MAP; ++i) {
+        object_data* object = &objects[i];
+        if (SLOT_IS_USED(object) && GET_OBJECT_OWNER(object) == _object_is_scenery) {
+            scenery_definition* definition = get_scenery_definition(object->permutation);
+            if (!definition)
+                break;
 
-			SET_OBJECT_SOLIDITY(object, definition->flags & _scenery_is_solid);
-		}
-	}
+            SET_OBJECT_SOLIDITY(object, definition->flags & _scenery_is_solid);
+        }
+    }
 }
 
 
-struct scenery_definition *original_scenery_definitions = NULL;
+struct scenery_definition* original_scenery_definitions = NULL;
 
-void reset_mml_scenery()
-{
-	if (original_scenery_definitions) {
-		for (unsigned i = 0; i < NUMBER_OF_SCENERY_DEFINITIONS; i++)
-			scenery_definitions[i] = original_scenery_definitions[i];
-		free(original_scenery_definitions);
-		original_scenery_definitions = NULL;
-	}
+void reset_mml_scenery() {
+    if (original_scenery_definitions) {
+        for (unsigned i = 0; i < NUMBER_OF_SCENERY_DEFINITIONS; i++)
+            scenery_definitions[i] = original_scenery_definitions[i];
+        free(original_scenery_definitions);
+        original_scenery_definitions = NULL;
+    }
 }
 
-void parse_mml_scenery(const InfoTree& root)
-{
-	// back up old values first
-	if (!original_scenery_definitions) {
-		original_scenery_definitions = (struct scenery_definition *) malloc(sizeof(struct scenery_definition) * NUMBER_OF_SCENERY_DEFINITIONS);
-		assert(original_scenery_definitions);
-		for (unsigned i = 0; i < NUMBER_OF_SCENERY_DEFINITIONS; i++)
-			original_scenery_definitions[i] = scenery_definitions[i];
-	}
-	
-	for (const InfoTree &object : root.children_named("object"))
-	{
-		int16 index;
-		if (!object.read_indexed("index", index, NUMBER_OF_SCENERY_DEFINITIONS))
-			continue;
-		scenery_definition& def = scenery_definitions[index];
-		
-		object.read_attr("flags", def.flags);
-		object.read_attr("radius", def.radius);
-		object.read_attr("height", def.height);
-		object.read_indexed("destruction", def.destroyed_effect, NUMBER_OF_EFFECT_TYPES, true);
-		
-		for (const InfoTree &child : object.children_named("normal"))
-			for (const InfoTree &shape : child.children_named("shape"))
-				shape.read_shape(def.shape);
-		for (const InfoTree &child : object.children_named("destroyed"))
-			for (const InfoTree &shape : child.children_named("shape"))
-				shape.read_shape(def.destroyed_shape);
-	}
-	
-	reset_scenery_solidity();
+void parse_mml_scenery(const InfoTree& root) {
+    // back up old values first
+    if (!original_scenery_definitions) {
+        original_scenery_definitions
+                = (struct scenery_definition*)malloc(sizeof(struct scenery_definition) * NUMBER_OF_SCENERY_DEFINITIONS);
+        assert(original_scenery_definitions);
+        for (unsigned i = 0; i < NUMBER_OF_SCENERY_DEFINITIONS; i++)
+            original_scenery_definitions[i] = scenery_definitions[i];
+    }
+
+    for (const InfoTree& object : root.children_named("object")) {
+        int16 index;
+        if (!object.read_indexed("index", index, NUMBER_OF_SCENERY_DEFINITIONS))
+            continue;
+        scenery_definition& def = scenery_definitions[index];
+
+        object.read_attr("flags", def.flags);
+        object.read_attr("radius", def.radius);
+        object.read_attr("height", def.height);
+        object.read_indexed("destruction", def.destroyed_effect, NUMBER_OF_EFFECT_TYPES, true);
+
+        for (const InfoTree& child : object.children_named("normal"))
+            for (const InfoTree& shape : child.children_named("shape")) shape.read_shape(def.shape);
+        for (const InfoTree& child : object.children_named("destroyed"))
+            for (const InfoTree& shape : child.children_named("shape")) shape.read_shape(def.destroyed_shape);
+    }
+
+    reset_scenery_solidity();
 }

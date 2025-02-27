@@ -28,7 +28,8 @@
 #include <memory>
 #include <utility>
 
-template<> struct std::hash<std::pair<short, short>> {
+template <>
+struct std::hash<std::pair<short, short>> {
     std::size_t operator()(const std::pair<short, short>& s) const noexcept {
         return std::hash<uint32_t>()((uint32_t(s.first) << 16) ^ (uint32_t(s.second)));
     }

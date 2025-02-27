@@ -24,15 +24,15 @@
  *  and assets, nor to elements of any third-party scenarios.
  *
  */
- 
+
 /*
  *  Centralized location for distribution types (for NetDistributeInformation,
  *  NetAddDistributionFunction, etc.) helps avoid potential conflicts.
  */
 
 enum {
-        kOriginalNetworkAudioDistributionTypeID = 0,    // for compatibility with older versions
-        kNewNetworkAudioDistributionTypeID = 1          // new-style realtime network audio data
+    kOriginalNetworkAudioDistributionTypeID = 0, // for compatibility with older versions
+    kNewNetworkAudioDistributionTypeID      = 1  // new-style realtime network audio data
 };
 
 #endif // NETWORK_DISTRIBUTION_TYPES_H

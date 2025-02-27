@@ -25,79 +25,85 @@
  *
  */
 
-#include "cseries.hpp"
 #include "CommunicationsChannel.hpp"
-#include <string>
-#include <memory>
+#include "cseries.hpp"
 #include <SDL_thread.h>
+#include <memory>
+#include <string>
 
-class NonblockingConnect
-{
-public:
-	NonblockingConnect(const std::string& address, uint16 port);
-	NonblockingConnect(const IPaddress& ip);
-	~NonblockingConnect();
+class NonblockingConnect {
+  public:
 
-	enum Status
-	{
-		Connecting,
-		Connected,
-		ResolutionFailed,
-		ConnectFailed
-	};
+    NonblockingConnect(const std::string& address, uint16 port);
+    NonblockingConnect(const IPaddress& ip);
+    ~NonblockingConnect();
 
-	Status status() { return m_status; }
-	bool done() { return m_status != Connecting; }
-	const IPaddress& address() { 
-		assert(m_status != Connecting && m_status != ResolutionFailed); 
-		return m_ip;
-	}
-	
-	CommunicationsChannel* release() { 
-		assert(m_status == Connected); 
-		return m_channel.release();
-	}
+    enum Status {
+        Connecting,
+        Connected,
+        ResolutionFailed,
+        ConnectFailed
+    };
+
+    Status status() { return m_status; }
+
+    bool done() { return m_status != Connecting; }
+
+    const IPaddress& address() {
+        assert(m_status != Connecting && m_status != ResolutionFailed);
+        return m_ip;
+    }
+
+    CommunicationsChannel* release() {
+        assert(m_status == Connected);
+        return m_channel.release();
+    }
 
 
-private:
-	void connect();
-	std::unique_ptr<CommunicationsChannel> m_channel;
-	Status m_status;
+  private:
 
-	std::string m_address;
-	uint16 m_port;
+    void connect();
+    std::unique_ptr<CommunicationsChannel> m_channel;
+    Status m_status;
 
-	bool m_ipSpecified;
-	IPaddress m_ip;
+    std::string m_address;
+    uint16 m_port;
 
-	int Thread();
-	static int connect_thread(void *);
-	SDL_Thread *m_thread;
-};	
-		
+    bool m_ipSpecified;
+    IPaddress m_ip;
 
-class ConnectPool
-{
-public:
-	static ConnectPool *instance() { 
-		static ConnectPool *m_instance = nullptr;
-		if (!m_instance) {
-			m_instance = new ConnectPool(); 
-		}
-		return m_instance; 
-	}
-	NonblockingConnect* connect(const std::string& address, uint16 port);
-	NonblockingConnect* connect(const IPaddress& ip);
-	void abandon(NonblockingConnect*);
-	~ConnectPool();
+    int Thread();
+    static int connect_thread(void*);
+    SDL_Thread* m_thread;
+};
 
-private:
-	ConnectPool();
-	void fast_free();
-	enum { kPoolSize = 20 };
-	// second is false if we are in use!
-	std::pair<NonblockingConnect *, bool> m_pool[kPoolSize];
+class ConnectPool {
+  public:
 
+    static ConnectPool* instance() {
+        static ConnectPool* m_instance = nullptr;
+        if (!m_instance) {
+            m_instance = new ConnectPool();
+        }
+        return m_instance;
+    }
+
+    NonblockingConnect* connect(const std::string& address, uint16 port);
+    NonblockingConnect* connect(const IPaddress& ip);
+    void abandon(NonblockingConnect*);
+    ~ConnectPool();
+
+  private:
+
+    ConnectPool();
+    void fast_free();
+
+    enum {
+        kPoolSize = 20
+    };
+
+    // second is false if we are in use!
+    std::pair<NonblockingConnect*, bool> m_pool[kPoolSize];
 };
 
 #endif

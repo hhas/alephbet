@@ -28,19 +28,17 @@
 typedef short _bs_field;
 
 enum {
-	_2byte	= -2,
-	_4byte	= -4
+    _2byte = -2,
+    _4byte = -4
 };
 
 #include <stddef.h>
+#include "cseries.hpp"
 
-extern void byte_swap_memory(
-	void *memory,
-	_bs_field type,
-	int fieldcount);
-
-#ifndef ALEPHBET_LITTLE_ENDIAN
-#define byte_swap_memory(memory,type,elcount) ((void)0)
+#ifdef ALEPHBET_LITTLE_ENDIAN
+extern void byte_swap_memory(void* memory, _bs_field type, int fieldcount);
+#else
+#define byte_swap_memory(memory, type, elcount) ((void)0)
 #endif
 
 #endif

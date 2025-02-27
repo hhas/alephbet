@@ -24,7 +24,7 @@
  *  and assets, nor to elements of any third-party scenarios.
  *
  */
-	
+
 /*
  *  Rasterizer Implementation Base Class
  *  To be subclassed for specific rasterizers (software, OpenGL, etc.)
@@ -36,31 +36,31 @@
 #endif
 
 
-class RasterizerClass
-{
-public:
-	
-	// Sets the rasterizer's view data;
-	// be sure to call it before doing any rendering
-	virtual void SetView(view_data& View) {}
-	
-	// Sets the rasterizer so that it will start rendering foreground objects
-	// like weapons in hand
-	virtual void SetForeground() {}
-	
-	// Sets the view of a foreground object;
-	// parameter is whether it is horizontally reflected
-	virtual void SetForegroundView(bool HorizReflect) {}
-	
-	// Rendering calls
-	virtual void Begin() {}
-	virtual void End() {}
-	
-	virtual void texture_horizontal_polygon(polygon_definition& textured_polygon) {}
+class RasterizerClass {
+  public:
 
-	virtual void texture_vertical_polygon(polygon_definition& textured_polygon) {}
+    // Sets the rasterizer's view data;
+    // be sure to call it before doing any rendering
+    virtual void SetView(view_data& View) {}
 
-	virtual void texture_rectangle(rectangle_definition& textured_rectangle) {}
+    // Sets the rasterizer so that it will start rendering foreground objects
+    // like weapons in hand
+    virtual void SetForeground() {}
+
+    // Sets the view of a foreground object;
+    // parameter is whether it is horizontally reflected
+    virtual void SetForegroundView(bool HorizReflect) {}
+
+    // Rendering calls
+    virtual void Begin() {}
+
+    virtual void End() {}
+
+    virtual void texture_horizontal_polygon(polygon_definition& textured_polygon) {}
+
+    virtual void texture_vertical_polygon(polygon_definition& textured_polygon) {}
+
+    virtual void texture_rectangle(rectangle_definition& textured_rectangle) {}
 };
 
 

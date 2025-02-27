@@ -32,28 +32,34 @@
 #include "Decoder.hpp"
 #include "sndfile.h"
 
-class SndfileDecoder : public Decoder
-{
-public:
-	bool Open(FileSpecifier& File);
-	int32 Decode(uint8* buffer, int32 max_length);
-	void Rewind();
-	void Close();
+class SndfileDecoder : public Decoder {
+  public:
 
-	AudioFormat GetAudioFormat() { return AudioFormat::_32_float; }
-	bool IsStereo() { return (sfinfo.channels == 2); }
-	int BytesPerFrame() { return 4 * (IsStereo() ? 2 : 1); }
-	float Rate() { return (float) sfinfo.samplerate; }
-	bool IsLittleEndian() { return PlatformIsLittleEndian(); }
+    bool Open(FileSpecifier& File);
+    int32 Decode(uint8* buffer, int32 max_length);
+    void Rewind();
+    void Close();
 
-	int32 Frames() { return sfinfo.frames; }
+    AudioFormat GetAudioFormat() { return AudioFormat::_32_float; }
 
-	SndfileDecoder();
-	~SndfileDecoder();
-private:
-	SNDFILE* sndfile;
-	SF_INFO sfinfo;
-	SDL_RWops* rwops;
+    bool IsStereo() { return (sfinfo.channels == 2); }
+
+    int BytesPerFrame() { return 4 * (IsStereo() ? 2 : 1); }
+
+    float Rate() { return (float)sfinfo.samplerate; }
+
+    bool IsLittleEndian() { return PlatformIsLittleEndian(); }
+
+    int32 Frames() { return sfinfo.frames; }
+
+    SndfileDecoder();
+    ~SndfileDecoder();
+
+  private:
+
+    SNDFILE* sndfile;
+    SF_INFO sfinfo;
+    SDL_RWops* rwops;
 };
 
 #endif

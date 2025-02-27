@@ -37,6 +37,6 @@ extern void ResetAllMMLValues(); // reset everything that's been changed to hard
 
 class FileSpecifier;
 extern bool ParseMMLFromFile(const FileSpecifier& filespec, bool load_menu_mml_only);
-extern bool ParseMMLFromData(const char *buffer, size_t buflen);
+extern bool ParseMMLFromData(const char* buffer, size_t buflen);
 
 #endif

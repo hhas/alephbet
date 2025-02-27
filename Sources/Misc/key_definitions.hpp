@@ -35,32 +35,28 @@
 #include "interface.hpp"
 #include "player.hpp"
 
-
 /* Constants */
 enum /* special flag types */
 {
-	_double_flag,
-	_latched_flag
+    _double_flag,
+    _latched_flag
 };
 
 /* Structures */
-struct blacklist_data
-{
-	int16 offset1, offset2; /* the combination of keys that should be blacklisted */
-	int16 mask1, mask2;     /* help for finding them in the keymap */
+struct blacklist_data {
+    int16 offset1, offset2; /* the combination of keys that should be blacklisted */
+    int16 mask1, mask2;     /* help for finding them in the keymap */
 };
 
-struct special_flag_data
-{
-	int16 type;
-	int32 flag, alternate_flag;
-	int16 persistence;
+struct special_flag_data {
+    int16 type;
+    int32 flag, alternate_flag;
+    int16 persistence;
 };
 
-struct key_definition
-{
-	SDL_Scancode offset;
-	uint32 action_flag;
+struct key_definition {
+    SDL_Scancode offset;
+    uint32 action_flag;
 };
 
 /*
@@ -70,50 +66,48 @@ struct key_definition
  *
  */
 
-#define NUMBER_OF_STANDARD_KEY_DEFINITIONS (sizeof(standard_key_definitions)/sizeof(struct key_definition))
-static struct key_definition standard_key_definitions[]=
-{
-	/* keypad */
-	{SDL_SCANCODE_KP_8, _moving_forward},
-	{SDL_SCANCODE_KP_5, _moving_backward},
-	{SDL_SCANCODE_KP_4, _turning_left},
-	{SDL_SCANCODE_KP_6, _turning_right},
-	
-	/* zx translation */
-	{SDL_SCANCODE_Z, _sidestepping_left},
-	{SDL_SCANCODE_X, _sidestepping_right},
+#define NUMBER_OF_STANDARD_KEY_DEFINITIONS (sizeof(standard_key_definitions) / sizeof(struct key_definition))
+static struct key_definition standard_key_definitions[] = {
+        /* keypad */
+        {SDL_SCANCODE_KP_8,   _moving_forward        },
+        {SDL_SCANCODE_KP_5,   _moving_backward       },
+        {SDL_SCANCODE_KP_4,   _turning_left          },
+        {SDL_SCANCODE_KP_6,   _turning_right         },
 
-	/* as looking */
-	{SDL_SCANCODE_A, _looking_left},
-	{SDL_SCANCODE_S, _looking_right},
+        /* zx translation */
+        {SDL_SCANCODE_Z,      _sidestepping_left     },
+        {SDL_SCANCODE_X,      _sidestepping_right    },
 
-	/* dcv vertical looking */
-	{SDL_SCANCODE_D, _looking_up},
-	{SDL_SCANCODE_C, _looking_down},
-	{SDL_SCANCODE_V, _looking_center},
-	
-	/* KP7/KP9 for weapon cycling */
-	{SDL_SCANCODE_KP_7, _cycle_weapons_backward},
-	{SDL_SCANCODE_KP_9, _cycle_weapons_forward},
-	
-	/* space for primary trigger, option for alternate trigger */
-	{SDL_SCANCODE_SPACE, _left_trigger_state},
-	{SDL_SCANCODE_LALT, _right_trigger_state},
-	
-	/* shift, control and command modifiers */
-	{SDL_SCANCODE_LSHIFT, _sidestep_dont_turn},
-	{SDL_SCANCODE_LCTRL, _run_dont_walk},
-	{SDL_SCANCODE_LGUI, _look_dont_turn},
-	
-	/* tab for action */
-	{SDL_SCANCODE_TAB, _action_trigger_state},
+        /* as looking */
+        {SDL_SCANCODE_A,      _looking_left          },
+        {SDL_SCANCODE_S,      _looking_right         },
 
-	/* m for toggle between normal and overhead map view */
-	{SDL_SCANCODE_M, _toggle_map},
-	
-	/* ` for using the microphone */
-	{SDL_SCANCODE_GRAVE, _microphone_button}
+        /* dcv vertical looking */
+        {SDL_SCANCODE_D,      _looking_up            },
+        {SDL_SCANCODE_C,      _looking_down          },
+        {SDL_SCANCODE_V,      _looking_center        },
+
+        /* KP7/KP9 for weapon cycling */
+        {SDL_SCANCODE_KP_7,   _cycle_weapons_backward},
+        {SDL_SCANCODE_KP_9,   _cycle_weapons_forward },
+
+        /* space for primary trigger, option for alternate trigger */
+        {SDL_SCANCODE_SPACE,  _left_trigger_state    },
+        {SDL_SCANCODE_LALT,   _right_trigger_state   },
+
+        /* shift, control and command modifiers */
+        {SDL_SCANCODE_LSHIFT, _sidestep_dont_turn    },
+        {SDL_SCANCODE_LCTRL,  _run_dont_walk         },
+        {SDL_SCANCODE_LGUI,   _look_dont_turn        },
+
+        /* tab for action */
+        {SDL_SCANCODE_TAB,    _action_trigger_state  },
+
+        /* m for toggle between normal and overhead map view */
+        {SDL_SCANCODE_M,      _toggle_map            },
+
+        /* ` for using the microphone */
+        {SDL_SCANCODE_GRAVE,  _microphone_button     }
 };
 
 #endif
-

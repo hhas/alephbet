@@ -27,16 +27,15 @@
 
 #include "cseries.hpp"
 
-extern "C"
-{
-#include "lua.h"
+extern "C" {
 #include "lauxlib.h"
+#include "lua.h"
 #include "lualib.h"
 }
 
+#include "lua_templates.hpp"
 #include "map.hpp"
 #include "monsters.hpp"
-#include "lua_templates.hpp"
 
 extern char Lua_Monster_Name[]; // "monster"
 typedef L_Class<Lua_Monster_Name> Lua_Monster;
@@ -50,6 +49,6 @@ typedef L_Enum<Lua_MonsterAction_Name> Lua_MonsterAction;
 extern char Lua_MonsterType_Name[]; // "monster_type"
 typedef L_Enum<Lua_MonsterType_Name> Lua_MonsterType;
 
-int Lua_Monsters_register(lua_State *L);
+int Lua_Monsters_register(lua_State* L);
 
 #endif

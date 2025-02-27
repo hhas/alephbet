@@ -63,13 +63,13 @@ bool OGL_SetInfravisionTint(short Collection, bool IsTinted, float Red, float Gr
 // The screen (gotten from its portRect)
 // The view (here, the main rendering view)
 // Whether to allocate a back buffer
-bool OGL_SetWindow(Rect &ScreenBounds, Rect &ViewBounds, bool UseBackBuffer);
+bool OGL_SetWindow(Rect& ScreenBounds, Rect& ViewBounds, bool UseBackBuffer);
 
 // Swap buffers (reveal rendered image)
 bool OGL_SwapBuffers();
 
 // Set view parameters; this is for proper perspective rendering
-bool OGL_SetView(view_data &View);
+bool OGL_SetView(view_data& View);
 
 // Sets the view to what's suitable for rendering foreground objects
 // like weapons in hand
@@ -78,7 +78,7 @@ bool OGL_SetForeground();
 // Sets whether a foreground object is horizontally reflected
 bool OGL_SetForegroundView(bool HorizReflect);
 
-// Start and end rendering of main view 
+// Start and end rendering of main view
 bool OGL_StartMain();
 bool OGL_EndMain();
 
@@ -92,7 +92,8 @@ bool OGL_RenderCrosshairs();
 
 // Rendering text; this takes it as a C string
 bool OGL_TextWidth(const char* Text, int count, int& width);
-bool OGL_RenderText(short BaseX, short BaseY, const char *Text, unsigned char r = 0xff, unsigned char g = 0xff, unsigned char b = 0xff);
+bool OGL_RenderText(short BaseX, short BaseY, const char* Text, unsigned char r = 0xff, unsigned char g = 0xff,
+                    unsigned char b = 0xff);
 
 // Render cursor for Lua/chat console
 bool OGL_RenderTextCursor(const SDL_Rect& rect, unsigned char r = 0xff, unsigned char g = 0xff, unsigned char b = 0xff);

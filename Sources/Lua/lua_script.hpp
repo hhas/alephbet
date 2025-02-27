@@ -25,15 +25,15 @@
  *
  */
 
-#include "cseries.hpp"
-#include "world.hpp"
 #include "ActionQueues.hpp"
+#include "cseries.hpp"
 #include "shape_descriptors.hpp"
+#include "world.hpp"
 
 #include <map>
 #include <string>
 
-void L_Error(const char *message);
+void L_Error(const char* message);
 void L_Call_Init(bool fRestoringSaved);
 void L_Call_Cleanup();
 void L_Call_Idle();
@@ -53,9 +53,12 @@ void L_Call_Platform_Activated(short index);
 void L_Call_Player_Revived(short player_index);
 void L_Call_Player_Killed(short player_index, short aggressor_player_index, short action, short projectile_index);
 void L_Call_Monster_Killed(short monster_index, short aggressor_player_index, short projectile_index);
-void L_Call_Monster_Damaged(short monster_index, short aggressor_monster_index, int16 damage_type, short damage_amount, short projectile_index);
-void L_Call_Player_Damaged(short player_index, short aggressor_player_index, short aggressor_monster_index, int16 damage_type, short damage_amount, short projectile_index);
-void L_Call_Projectile_Detonated(short type, short owner_index, short polygon, world_point3d location, uint16_t flags, int16_t obstruction_index, int16_t line_index);
+void L_Call_Monster_Damaged(short monster_index, short aggressor_monster_index, int16 damage_type, short damage_amount,
+                            short projectile_index);
+void L_Call_Player_Damaged(short player_index, short aggressor_player_index, short aggressor_monster_index,
+                           int16 damage_type, short damage_amount, short projectile_index);
+void L_Call_Projectile_Detonated(short type, short owner_index, short polygon, world_point3d location, uint16_t flags,
+                                 int16_t obstruction_index, int16_t line_index);
 void L_Call_Projectile_Created(short projectile_index);
 void L_Call_Item_Created(short item_index);
 bool L_Calculate_Completion_State(short& completion_state);
@@ -68,16 +71,16 @@ void L_Invalidate_Object(short object_index);
 void L_Invalidate_Ephemera(short ephemera_index);
 
 enum ScriptType {
-	_embedded_lua_script=0,
-	_lua_netscript,
-	_solo_lua_script,
-	_stats_lua_script,
-  _num_script_types
+    _embedded_lua_script = 0,
+    _lua_netscript,
+    _solo_lua_script,
+    _stats_lua_script,
+    _num_script_types
 };
 
-void *L_Persistent_Table_Key();
+void* L_Persistent_Table_Key();
 
-bool LoadLuaScript(const char *buffer, size_t len, ScriptType type);
+bool LoadLuaScript(const char* buffer, size_t len, ScriptType type);
 bool RunLuaScript();
 void CloseLuaScript();
 void ResetPassedLua();
@@ -112,40 +115,37 @@ bool LuaPlayerCanWieldWeapons(short player_index);
 
 /* Custom game scoring modes */
 enum {
-  _game_of_most_points,
-  _game_of_most_time,
-  _game_of_least_points,
-  _game_of_least_time,
-  NUMBER_OF_GAME_SCORING_MODES
+    _game_of_most_points,
+    _game_of_most_time,
+    _game_of_least_points,
+    _game_of_least_time,
+    NUMBER_OF_GAME_SCORING_MODES
 };
 
 /* Game end conditions */
 enum {
-  _game_normal_end_condition,
-  _game_no_end_condition,
-  _game_end_now_condition,
-  NUMBER_OF_GAME_END_CONDITIONS
+    _game_normal_end_condition,
+    _game_no_end_condition,
+    _game_end_now_condition,
+    NUMBER_OF_GAME_END_CONDITIONS
 };
 
 int GetLuaScoringMode();
 int GetLuaGameEndCondition();
 
 // camera data structures
-struct timed_point
-{
+struct timed_point {
     int polygon;
     world_point3d point;
-    int32 delta_time; //for REALLY long cutscenes
+    int32 delta_time; // for REALLY long cutscenes
 };
 
-struct timed_angle
-{
+struct timed_angle {
     short yaw, pitch;
     int32 delta_time;
 };
 
-struct lua_path
-{
+struct lua_path {
     short index;
     std::vector<timed_point> path_points;
     short current_point_index;
@@ -155,7 +155,7 @@ struct lua_path
     int32 last_angle_time;
 };
 
-struct lua_camera //an expanded version of script_camera; uses Lua's path scheme
+struct lua_camera // an expanded version of script_camera; uses Lua's path scheme
 {
     short index;
     lua_path path;

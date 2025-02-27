@@ -27,10 +27,9 @@
 
 #include "cseries.hpp"
 
-extern "C"
-{
-#include "lua.h"
+extern "C" {
 #include "lauxlib.h"
+#include "lua.h"
 #include "lualib.h"
 }
 

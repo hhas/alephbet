@@ -33,16 +33,17 @@ struct collection_definition;
 
 struct collection_header /* 32 bytes on disk */
 {
-	int16 status;
-	uint16 flags;
+    int16 status;
+    uint16 flags;
 
-	int32 offset, length;
-	int32 offset16, length16;
+    int32 offset, length;
+    int32 offset16, length16;
 
-	// LP: handles to pointers
-	collection_definition *collection;
-	std::vector<byte> shading_tables;
+    // LP: handles to pointers
+    collection_definition* collection;
+    std::vector<byte> shading_tables;
 };
+
 const int SIZEOF_collection_header = 32;
 
 /* ---------- globals */

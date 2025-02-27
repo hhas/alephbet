@@ -31,15 +31,15 @@
 #endif
 
 // IR note: consts in headers are slow and eat TOC space.
-//const int NONE = -1;
+// const int NONE = -1;
 enum {
-	NONE = -1,
-	UNONE = 65535
+    NONE  = -1,
+    UNONE = 65'535
 };
 
 // Integer types with specific bit size
 #include <SDL_types.h>
-#include <time.h>	// for time_t
+#include <time.h> // for time_t
 typedef Uint8 uint8;
 typedef Sint8 int8;
 typedef Uint16 uint16;
@@ -50,38 +50,38 @@ typedef time_t TimeType;
 
 // Minimum and maximum values for these types
 #ifndef INT16_MAX
-#define INT16_MAX 32767
+#define INT16_MAX 32'767
 #endif
 #ifndef UINT16_MAX
-#define UINT16_MAX 65535
+#define UINT16_MAX 65'535
 #endif
 #ifndef INT16_MIN
-#define INT16_MIN (-INT16_MAX-1)
+#define INT16_MIN (-INT16_MAX - 1)
 #endif
 #ifndef INT32_MAX
-#define INT32_MAX 2147483647
+#define INT32_MAX 2'147'483'647
 #endif
 #ifndef INT32_MIN
-#define INT32_MIN (-INT32_MAX-1)
+#define INT32_MIN (-INT32_MAX - 1)
 #endif
 
 // Fixed point (16.16) type
 // LP: changed to _fixed to get around MSVC namespace conflict
 typedef int32 _fixed;
 
-#define FIXED_FRACTIONAL_BITS 16
-#define INTEGER_TO_FIXED(i) ((_fixed)(i)<<FIXED_FRACTIONAL_BITS)
-#define FIXED_INTEGERAL_PART(f) ((f)>>FIXED_FRACTIONAL_BITS)
+#define FIXED_FRACTIONAL_BITS   16
+#define INTEGER_TO_FIXED(i)     ((_fixed)(i) << FIXED_FRACTIONAL_BITS)
+#define FIXED_INTEGERAL_PART(f) ((f) >> FIXED_FRACTIONAL_BITS)
 
-#define FIXED_ONE		(1L<<FIXED_FRACTIONAL_BITS)
-#define FIXED_ONE_HALF	(1L<<(FIXED_FRACTIONAL_BITS-1))
+#define FIXED_ONE      (1L << FIXED_FRACTIONAL_BITS)
+#define FIXED_ONE_HALF (1L << (FIXED_FRACTIONAL_BITS - 1))
 
 // Binary powers
-const int MEG = 0x100000;
+const int MEG  = 0x10'0000;
 const int KILO = 0x400L;
 
 // Construct four-character-code
-#define FOUR_CHARS_TO_INT(a,b,c,d) (((uint32)(a) << 24) | ((uint32)(b) << 16) | ((uint32)(c) << 8) | (uint32)(d))
+#define FOUR_CHARS_TO_INT(a, b, c, d) (((uint32)(a) << 24) | ((uint32)(b) << 16) | ((uint32)(c) << 8) | (uint32)(d))
 
 // Hmmm, this should be removed one day...
 typedef uint8 byte;

@@ -34,28 +34,31 @@ const Typecode WILDCARD_TYPE = _typecode_unknown;
 
 // File-finder base class
 class FileFinder {
-public:
-	FileFinder() {}
-	virtual ~FileFinder() {}
+  public:
 
-	bool Find(DirectorySpecifier &dir, Typecode type, bool recursive = true) {
-		return _Find(dir, type, recursive, 0);
-	}
+    FileFinder() {}
 
-protected:
-	bool _Find(DirectorySpecifier& dir, Typecode type, bool recursive, int depth);
-	// Gets called for each found file, returns true if search is to be aborted
-	virtual bool found(FileSpecifier &file) = 0;
+    virtual ~FileFinder() {}
+
+    bool Find(DirectorySpecifier& dir, Typecode type, bool recursive = true) { return _Find(dir, type, recursive, 0); }
+
+  protected:
+
+    bool _Find(DirectorySpecifier& dir, Typecode type, bool recursive, int depth);
+    // Gets called for each found file, returns true if search is to be aborted
+    virtual bool found(FileSpecifier& file) = 0;
 };
 
 // Find all files of given type and append them to a vector
 class FindAllFiles : public FileFinder {
-public:
-	FindAllFiles(vector<FileSpecifier> &v) : dest_vector(v) {dest_vector.clear();}
+  public:
 
-private:
-	bool found(FileSpecifier &file);
-	vector<FileSpecifier> &dest_vector;
+    FindAllFiles(vector<FileSpecifier>& v) : dest_vector(v) { dest_vector.clear(); }
+
+  private:
+
+    bool found(FileSpecifier& file);
+    vector<FileSpecifier>& dest_vector;
 };
 
 #endif

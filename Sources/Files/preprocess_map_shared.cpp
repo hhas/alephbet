@@ -24,10 +24,6 @@
 
 #include "interface.hpp"
 
-
 // The single-player quick save now works without presenting a dialog, and
 // uses (cruder but) similar overwrite logic, so we just use that now.
-bool
-save_game_full_auto(bool inOverwriteRecent) {
-        return save_game();
-}
+bool save_game_full_auto(bool inOverwriteRecent) { return save_game(); }

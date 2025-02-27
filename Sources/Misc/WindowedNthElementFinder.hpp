@@ -35,53 +35,54 @@
 
 template <typename tElementType>
 class WindowedNthElementFinder {
-public:
-        WindowedNthElementFinder() : mQueue(0) {}
-        
-        explicit WindowedNthElementFinder(unsigned int inWindowSize) : mQueue(inWindowSize) {}
+  public:
 
-	void	reset() { reset(window_size()); }
-        void	reset(unsigned int inWindowSize) { mQueue.reset(inWindowSize);  mSortedElements.clear(); }
+    WindowedNthElementFinder() : mQueue(0) {}
 
-        void	insert(const tElementType& inNewElement)
-        {
-                if(window_full())
-                {
-                        mSortedElements.erase(mSortedElements.find(mQueue.peek()));
-                        mQueue.dequeue();
-                }
-                mSortedElements.insert(inNewElement);
-                mQueue.enqueue(inNewElement);
+    explicit WindowedNthElementFinder(unsigned int inWindowSize) : mQueue(inWindowSize) {}
+
+    void reset() { reset(window_size()); }
+
+    void reset(unsigned int inWindowSize) {
+        mQueue.reset(inWindowSize);
+        mSortedElements.clear();
+    }
+
+    void insert(const tElementType& inNewElement) {
+        if (window_full()) {
+            mSortedElements.erase(mSortedElements.find(mQueue.peek()));
+            mQueue.dequeue();
         }
+        mSortedElements.insert(inNewElement);
+        mQueue.enqueue(inNewElement);
+    }
 
-        // 0-based indexing (not 1-based as name might imply)
-        const tElementType&	nth_smallest_element(unsigned int n)
-        {
-                assert(n < size());
-                typename std::multiset<tElementType>::const_iterator i = mSortedElements.begin();
-                for(unsigned int j = 0; j < n; ++j)
-                        ++i;
-                return *i;
-        }
+    // 0-based indexing (not 1-based as name might imply)
+    const tElementType& nth_smallest_element(unsigned int n) {
+        assert(n < size());
+        typename std::multiset<tElementType>::const_iterator i = mSortedElements.begin();
+        for (unsigned int j = 0; j < n; ++j) ++i;
+        return *i;
+    }
 
-        // 0-based indexing (not 1-based as name might imply)
-        const tElementType&	nth_largest_element(unsigned int n)
-        {
-                assert(n < size());
-		typename std::multiset<tElementType>::const_reverse_iterator i = mSortedElements.rbegin();
-                for(unsigned int j = 0; j < n; ++j)
-                        ++i;
-                return *i;
-        }
-        
-        bool	window_full()		{ return size() == window_size(); }
+    // 0-based indexing (not 1-based as name might imply)
+    const tElementType& nth_largest_element(unsigned int n) {
+        assert(n < size());
+        typename std::multiset<tElementType>::const_reverse_iterator i = mSortedElements.rbegin();
+        for (unsigned int j = 0; j < n; ++j) ++i;
+        return *i;
+    }
 
-        unsigned int size()		{ return mQueue.getCountOfElements(); }
-        unsigned int window_size()	{ return mQueue.getTotalSpace(); }
+    bool window_full() { return size() == window_size(); }
 
-private:
-        CircularQueue<tElementType>	mQueue;
-        std::multiset<tElementType>	mSortedElements;
+    unsigned int size() { return mQueue.getCountOfElements(); }
+
+    unsigned int window_size() { return mQueue.getTotalSpace(); }
+
+  private:
+
+    CircularQueue<tElementType> mQueue;
+    std::multiset<tElementType> mSortedElements;
 };
 
 #endif // WINDOWEDNTHELEMENTFINDER_H

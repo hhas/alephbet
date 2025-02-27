@@ -26,59 +26,50 @@
 #include "Decoder.hpp"
 #include "SoundManager.hpp"
 
-std::shared_ptr<SoundData> ExternalSoundHeader::LoadExternal(FileSpecifier& File)
-{
-	std::shared_ptr<SoundData> p;
-	std::unique_ptr<Decoder> decoder(Decoder::Get(File));
-	if (!decoder.get()) return p;
+std::shared_ptr<SoundData> ExternalSoundHeader::LoadExternal(FileSpecifier& File) {
+    std::shared_ptr<SoundData> p;
+    std::unique_ptr<Decoder> decoder(Decoder::Get(File));
+    if (!decoder.get())
+        return p;
 
-	length = decoder->Frames() * decoder->BytesPerFrame();
-	if (!length) return p;
+    length = decoder->Frames() * decoder->BytesPerFrame();
+    if (!length)
+        return p;
 
-	p = std::make_shared<SoundData>(length);
+    p = std::make_shared<SoundData>(length);
 
-	decoder->Rewind();
-	if (decoder->Decode(&(*p)[0], length) != length) 
-	{
-		p.reset();
-		length = 0;
-		return p;
-	}
-	
-	audio_format = decoder->GetAudioFormat();
-	stereo = decoder->IsStereo();
-	bytes_per_frame = decoder->BytesPerFrame();
-	little_endian = decoder->IsLittleEndian();
-	loop_start = loop_end = 0;
-	rate = (uint32 /* unsigned fixed */) (FIXED_ONE * decoder->Rate());
+    decoder->Rewind();
+    if (decoder->Decode(&(*p)[0], length) != length) {
+        p.reset();
+        length = 0;
+        return p;
+    }
 
-	return p;
+    audio_format    = decoder->GetAudioFormat();
+    stereo          = decoder->IsStereo();
+    bytes_per_frame = decoder->BytesPerFrame();
+    little_endian   = decoder->IsLittleEndian();
+    loop_start = loop_end = 0;
+    rate                  = (uint32 /* unsigned fixed */)(FIXED_ONE * decoder->Rate());
+
+    return p;
 }
 
-SoundOptions* SoundReplacements::GetSoundOptions(short Index, short Slot)
-{
-	auto it = m_hash.find(std::make_pair(Index, Slot));
-	if (it != m_hash.end()) 
-	{
-		return &it->second;
-	} 
-	else
-	{
-		return 0;
-	}
+SoundOptions* SoundReplacements::GetSoundOptions(short Index, short Slot) {
+    auto it = m_hash.find(std::make_pair(Index, Slot));
+    if (it != m_hash.end()) {
+        return &it->second;
+    } else {
+        return 0;
+    }
 }
 
-void SoundReplacements::Add(const SoundOptions& Data, short Index, short Slot)
-{
-	SoundManager::instance()->UnloadSound(Index);
-	m_hash[std::make_pair(Index, Slot)] = Data;
+void SoundReplacements::Add(const SoundOptions& Data, short Index, short Slot) {
+    SoundManager::instance()->UnloadSound(Index);
+    m_hash[std::make_pair(Index, Slot)] = Data;
 }
 
-void SoundReplacements::Reset()
-{
-	for (auto kvp : m_hash)
-	{
-		SoundManager::instance()->UnloadSound(kvp.first.first);
-	}
-	m_hash.clear();
+void SoundReplacements::Reset() {
+    for (auto kvp : m_hash) { SoundManager::instance()->UnloadSound(kvp.first.first); }
+    m_hash.clear();
 }

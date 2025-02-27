@@ -29,96 +29,60 @@
 
 #include "Message.hpp"
 
-#include <string.h>	// memcpy
+#include <string.h> // memcpy
 #include <vector>
 
 #include "AStream.hpp"
 
-
-
-enum
-{
-	kSmallMessageBufferSize = 4 * 1024
+enum {
+    kSmallMessageBufferSize = 4 * 1024
 };
 
-bool
-SmallMessageHelper::inflateFrom(const UninflatedMessage& inUninflated)
-{
-	AIStreamBE	theStream(inUninflated.buffer(), inUninflated.length());
-	return reallyInflateFrom(theStream);
+bool SmallMessageHelper::inflateFrom(const UninflatedMessage& inUninflated) {
+    AIStreamBE theStream(inUninflated.buffer(), inUninflated.length());
+    return reallyInflateFrom(theStream);
 }
 
-
-
-UninflatedMessage*
-SmallMessageHelper::deflate() const
-{
-	std::vector<byte> theBuffer(kSmallMessageBufferSize);
-	AOStreamBE	theStream(&(theBuffer[0]), theBuffer.size());
-	reallyDeflateTo(theStream);
-	UninflatedMessage* theDeflatedMessage = new UninflatedMessage(type(), theStream.tellp());
-	memcpy(theDeflatedMessage->buffer(), &(theBuffer[0]), theDeflatedMessage->length());
-	return theDeflatedMessage;
+UninflatedMessage* SmallMessageHelper::deflate() const {
+    std::vector<byte> theBuffer(kSmallMessageBufferSize);
+    AOStreamBE theStream(&(theBuffer[0]), theBuffer.size());
+    reallyDeflateTo(theStream);
+    UninflatedMessage* theDeflatedMessage = new UninflatedMessage(type(), theStream.tellp());
+    memcpy(theDeflatedMessage->buffer(), &(theBuffer[0]), theDeflatedMessage->length());
+    return theDeflatedMessage;
 }
-
-
 
 BigChunkOfDataMessage::BigChunkOfDataMessage(MessageTypeID inType, const byte* inBuffer, size_t inLength)
-	: mType(inType), mLength(0), mBuffer(NULL)
-{
-	copyBufferFrom(inBuffer, inLength);
+    : mType(inType), mLength(0), mBuffer(NULL) {
+    copyBufferFrom(inBuffer, inLength);
 }
 
-
-
-bool
-BigChunkOfDataMessage::inflateFrom(const UninflatedMessage& inUninflated)
-{
-	copyBufferFrom(inUninflated.buffer(), inUninflated.length());
-	return true;
+bool BigChunkOfDataMessage::inflateFrom(const UninflatedMessage& inUninflated) {
+    copyBufferFrom(inUninflated.buffer(), inUninflated.length());
+    return true;
 }
 
-
-
-UninflatedMessage*
-BigChunkOfDataMessage::deflate() const
-{
-	UninflatedMessage* theMessage = new UninflatedMessage(type(), length());
-	memcpy(theMessage->buffer(), buffer(), length());
-	return theMessage;
+UninflatedMessage* BigChunkOfDataMessage::deflate() const {
+    UninflatedMessage* theMessage = new UninflatedMessage(type(), length());
+    memcpy(theMessage->buffer(), buffer(), length());
+    return theMessage;
 }
 
-
-
-void
-BigChunkOfDataMessage::copyBufferFrom(const byte* inBuffer, size_t inLength)
-{
-	delete [] mBuffer;
-	mLength = inLength;
-	if(mLength > 0)
-	{
-		mBuffer = new byte[mLength];
-		memcpy(mBuffer, inBuffer, mLength);
-	}
-	else
-	{
-		mBuffer = NULL;
-	}
+void BigChunkOfDataMessage::copyBufferFrom(const byte* inBuffer, size_t inLength) {
+    delete[] mBuffer;
+    mLength = inLength;
+    if (mLength > 0) {
+        mBuffer = new byte[mLength];
+        memcpy(mBuffer, inBuffer, mLength);
+    } else {
+        mBuffer = NULL;
+    }
 }
 
-
-
-BigChunkOfDataMessage*
-BigChunkOfDataMessage::clone() const
-{
-	return new BigChunkOfDataMessage(type(), buffer(), length());
+BigChunkOfDataMessage* BigChunkOfDataMessage::clone() const {
+    return new BigChunkOfDataMessage(type(), buffer(), length());
 }
 
-
-
-BigChunkOfDataMessage::~BigChunkOfDataMessage()
-{
-	delete [] mBuffer;
-}
+BigChunkOfDataMessage::~BigChunkOfDataMessage() { delete[] mBuffer; }
 
 #endif // !defined(DISABLE_NETWORKING)

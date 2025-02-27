@@ -25,94 +25,100 @@
 #ifndef CONSOLE_H
 #define CONSOLE_H
 
-#include <functional>
-#include <string>
-#include <map>
 #include "preferences.hpp"
+#include <functional>
+#include <map>
+#include <string>
 
-class CommandParser
-{
-public:
-	CommandParser() { }
-	virtual ~CommandParser() = default;
-	void register_command(std::string command, std::function<void(const std::string&)> f);
-	void register_command(std::string command, const CommandParser& command_parser);
-	void unregister_command(std::string command);
+class CommandParser {
+  public:
 
-	virtual void parse_and_execute(const std::string& command_string);
-private:
-	typedef std::map<std::string, std::function<void(const std::string&)> > command_map;
-	command_map m_commands;
+    CommandParser() {}
+
+    virtual ~CommandParser() = default;
+    void register_command(std::string command, std::function<void(const std::string&)> f);
+    void register_command(std::string command, const CommandParser& command_parser);
+    void unregister_command(std::string command);
+
+    virtual void parse_and_execute(const std::string& command_string);
+
+  private:
+
+    typedef std::map<std::string, std::function<void(const std::string&)>> command_map;
+    command_map m_commands;
 };
 
-class Console : public CommandParser
-{
-public:
-	static Console* instance();
+class Console : public CommandParser {
+  public:
 
-	// called by key handlers
-	void enter();
-	void abort(); // callback is called with empty string
-	void del();
-	void backspace();
-	void clear();
-	void forward_clear();
-	void transpose();
-	void delete_word();
-	void textEvent(const SDL_Event &e);
-	void up_arrow();
-	void down_arrow();
-	void left_arrow();
-	void right_arrow();
-	void line_home();
-	void line_end();
-	const std::string &displayBuffer() { return m_displayBuffer; }
+    static Console* instance();
 
-	void activate_input(std::function<void (const std::string&)> callback,
-			    const std::string& prompt);
-	void deactivate_input(); // like abort, but no callback
+    // called by key handlers
+    void enter();
+    void abort(); // callback is called with empty string
+    void del();
+    void backspace();
+    void clear();
+    void forward_clear();
+    void transpose();
+    void delete_word();
+    void textEvent(const SDL_Event& e);
+    void up_arrow();
+    void down_arrow();
+    void left_arrow();
+    void right_arrow();
+    void line_home();
+    void line_end();
 
-	bool input_active() { return m_active; }
-	int cursor_position();
+    const std::string& displayBuffer() { return m_displayBuffer; }
 
-	void register_macro(std::string macro, std::string replacement);
-	void unregister_macro(std::string macro);
-	void clear_macros();
+    void activate_input(std::function<void(const std::string&)> callback, const std::string& prompt);
+    void deactivate_input(); // like abort, but no callback
 
-	// carnage reporting
-	void set_carnage_message(int16 projectile_type, const std::string& on_kill, const std::string& on_suicide = "");
-	void report_kill(int16 player_index, int16 aggressor_player_index, int16 projectile_index);
-	void clear_carnage_messages();
+    bool input_active() { return m_active; }
 
-	bool use_lua_console() { return m_use_lua_console || environment_preferences->use_solo_lua; };
-	void use_lua_console(bool f_use) { m_use_lua_console = f_use; }
+    int cursor_position();
 
-	// clear last saved level name
-	void clear_saves();
+    void register_macro(std::string macro, std::string replacement);
+    void unregister_macro(std::string macro);
+    void clear_macros();
 
-private:
-	Console();
+    // carnage reporting
+    void set_carnage_message(int16 projectile_type, const std::string& on_kill, const std::string& on_suicide = "");
+    void report_kill(int16 player_index, int16 aggressor_player_index, int16 projectile_index);
+    void clear_carnage_messages();
 
-	std::function<void (std::string)> m_callback;
-	std::string m_buffer;
-	std::string m_displayBuffer;
-	std::string m_prompt;
-	bool m_active;
-	
-	std::vector<std::string> m_prev_commands;
-	std::vector<std::string>::iterator m_command_iter;
-	void set_command(std::string command);
-	
-	int m_cursor_position;
+    bool use_lua_console() { return m_use_lua_console || environment_preferences->use_solo_lua; };
 
-	std::map<std::string, std::string> m_macros;
+    void use_lua_console(bool f_use) { m_use_lua_console = f_use; }
 
-	bool m_carnage_messages_exist;
-	std::vector<std::pair<std::string, std::string> > m_carnage_messages;
+    // clear last saved level name
+    void clear_saves();
 
-	bool m_use_lua_console;
+  private:
 
-	void register_save_commands();
+    Console();
+
+    std::function<void(std::string)> m_callback;
+    std::string m_buffer;
+    std::string m_displayBuffer;
+    std::string m_prompt;
+    bool m_active;
+
+    std::vector<std::string> m_prev_commands;
+    std::vector<std::string>::iterator m_command_iter;
+    void set_command(std::string command);
+
+    int m_cursor_position;
+
+    std::map<std::string, std::string> m_macros;
+
+    bool m_carnage_messages_exist;
+    std::vector<std::pair<std::string, std::string>> m_carnage_messages;
+
+    bool m_use_lua_console;
+
+    void register_save_commands();
 };
 
 class InfoTree;
@@ -120,5 +126,3 @@ void parse_mml_console(const InfoTree& root);
 void reset_mml_console();
 
 #endif
-
- 

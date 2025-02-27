@@ -33,29 +33,35 @@
 
 #ifdef HAVE_FFMPEG
 
-class FFmpegDecoder : public StreamDecoder
-{
-public:
-	bool Open(FileSpecifier& File);
-	int32 Decode(uint8* buffer, int32 max_length);
-	void Rewind();
-	void Close();
+class FFmpegDecoder : public StreamDecoder {
+  public:
 
-	AudioFormat GetAudioFormat() { return AudioFormat::_32_float; }
-	bool IsStereo() { return (channels == 2); }
-	int BytesPerFrame() { return 4 * (IsStereo() ? 2 : 1); }
-	float Rate() { return rate; }
-	bool IsLittleEndian() { return PlatformIsLittleEndian(); }
+    bool Open(FileSpecifier& File);
+    int32 Decode(uint8* buffer, int32 max_length);
+    void Rewind();
+    void Close();
 
-	FFmpegDecoder();
-	~FFmpegDecoder();
-private:
-	struct ffmpeg_vars *av;
+    AudioFormat GetAudioFormat() { return AudioFormat::_32_float; }
 
-	bool GetAudio();
-	
-	float rate;
-	int channels;
+    bool IsStereo() { return (channels == 2); }
+
+    int BytesPerFrame() { return 4 * (IsStereo() ? 2 : 1); }
+
+    float Rate() { return rate; }
+
+    bool IsLittleEndian() { return PlatformIsLittleEndian(); }
+
+    FFmpegDecoder();
+    ~FFmpegDecoder();
+
+  private:
+
+    struct ffmpeg_vars* av;
+
+    bool GetAudio();
+
+    float rate;
+    int channels;
 };
 
 #endif

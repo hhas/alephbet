@@ -26,44 +26,41 @@
  */
 
 enum { /* types */
-	systemError,
-	gameError,
-	NUMBER_OF_TYPES
+    systemError,
+    gameError,
+    NUMBER_OF_TYPES
 };
 
 enum { /* Game Errors */
-	errNone= 0,
-	errMapFileNotSet,
-	errIndexOutOfRange,
-	errTooManyOpenFiles,
-	errUnknownWadVersion,
-	errWadIndexOutOfRange,
-	errServerDied,
-	errUnsyncOnLevelChange,
-	NUMBER_OF_GAME_ERRORS
+    errNone = 0,
+    errMapFileNotSet,
+    errIndexOutOfRange,
+    errTooManyOpenFiles,
+    errUnknownWadVersion,
+    errWadIndexOutOfRange,
+    errServerDied,
+    errUnsyncOnLevelChange,
+    NUMBER_OF_GAME_ERRORS
 };
 
 void set_game_error(short type, short error_code);
-short get_game_error(short *type);
+short get_game_error(short* type);
 bool error_pending(void);
 void clear_game_error(void);
 
 // game_error system badly needs fixing (suggestion: use exceptions)
 // for now, you can use this RAII class before calls where you don't care about
 // the error, and it will restore the previous error when it is destroyed
-class ScopedGameError
-{
-public:
-	ScopedGameError() { 
-		_error = get_game_error(&_type);
-	}
+class ScopedGameError {
+  public:
 
-	~ScopedGameError() {
-		set_game_error(_type, _error);
-	}
+    ScopedGameError() { _error = get_game_error(&_type); }
 
-private:
-	short _error, _type;
+    ~ScopedGameError() { set_game_error(_type, _error); }
+
+  private:
+
+    short _error, _type;
 };
 
 #endif

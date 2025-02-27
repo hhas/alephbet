@@ -38,54 +38,52 @@ struct SDL_Surface;
 /* ---------- resources */
 
 enum {
-	strPROMPTS= 131,
-	_save_game_prompt= 0,
-	_save_replay_prompt,
-	_select_replay_prompt,
-	_default_prompt
+    strPROMPTS        = 131,
+    _save_game_prompt = 0,
+    _save_replay_prompt,
+    _select_replay_prompt,
+    _default_prompt
 };
 
-enum class BobbingType
-{
-	none,
-	camera_and_weapon,
-	weapon_only
+enum class BobbingType {
+    none,
+    camera_and_weapon,
+    weapon_only
 };
 
 /* ---------- structures */
 
-struct screen_mode_data
-{
-	short acceleration;
-	
-	bool high_resolution;
-	bool fullscreen;
-	bool draw_every_other_line;
-	
-	short bit_depth;  // currently 8 or 16
-	short gamma_level;
+struct screen_mode_data {
+    short acceleration;
 
-	short width;
-	short height;
-	bool auto_resolution;
-	bool high_dpi;
-	bool hud;
-	short hud_scale_level;
-	short term_scale_level;
-	bool fix_h_not_v;
-	bool translucent_map;
-	BobbingType bobbing_type;
+    bool high_resolution;
+    bool fullscreen;
+    bool draw_every_other_line;
 
-	int fov; // 0 = use default (or MML/plugin)
+    short bit_depth; // currently 8 or 16
+    short gamma_level;
+
+    short width;
+    short height;
+    bool auto_resolution;
+    bool high_dpi;
+    bool hud;
+    short hud_scale_level;
+    short term_scale_level;
+    bool fix_h_not_v;
+    bool translucent_map;
+    BobbingType bobbing_type;
+
+    int fov; // 0 = use default (or MML/plugin)
 };
 
-#define NUMBER_OF_KEYS 21
+#define NUMBER_OF_KEYS     21
 #define NUMBER_UNUSED_KEYS 10
 
 enum // input devices
 {
-	_keyboard_or_game_pad,
-	_mouse_yaw_pitch
+    _keyboard_or_game_pad,
+    _mouse_yaw_pitch
 };
 
 #define PREFERENCES_NAME_LENGTH 32
@@ -98,8 +96,8 @@ void global_idle_proc(void);
 void LoadBaseMMLScripts(bool load_menu_mml_only);
 
 // Application and directory info:
-char *expand_symbolic_paths(char *dest, const char *src, int maxlen);
-char *contract_symbolic_paths(char *dest, const char *src, int maxlen);
+char* expand_symbolic_paths(char* dest, const char* src, int maxlen);
+char* contract_symbolic_paths(char* dest, const char* src, int maxlen);
 
 /* ---------- prototypes/SHAPES.C */
 
@@ -118,17 +116,19 @@ void initialize_shape_handler(void);
 // If collection == NONE, shape is expected to convey information about all three elements (CLUT, collection,
 // low-level shape index).
 // Sigh, the extensions keep piling up... now we can also provide a quarter-sized surface from a shape.  It's hacky -
-// the shape is shrunk by nearest-neighbor-style scaling (no smoothing), even at 16-bit and above, and it only works for RLE shapes.
-SDL_Surface *get_shape_surface(int shape, int collection = NONE, byte** outPointerToPixelData = NULL, float inIllumination = -1.0f, bool inShrinkImage = false);
+// the shape is shrunk by nearest-neighbor-style scaling (no smoothing), even at 16-bit and above, and it only works for
+// RLE shapes.
+SDL_Surface* get_shape_surface(int shape, int collection = NONE, byte** outPointerToPixelData = NULL,
+                               float inIllumination = -1.0f, bool inShrinkImage = false);
 
 void open_shapes_file(FileSpecifier& File);
 
 /* ---------- prototypes/SCREEN_DRAWING.C */
 
-void _get_player_color(size_t color_index, RGBColor *color);
-void _get_interface_color(size_t color_index, RGBColor *color);
-void _get_player_color(size_t color_index, SDL_Color *color);
-void _get_interface_color(size_t color_index, SDL_Color *color);
+void _get_player_color(size_t color_index, RGBColor* color);
+void _get_interface_color(size_t color_index, RGBColor* color);
+void _get_player_color(size_t color_index, SDL_Color* color);
+void _get_interface_color(size_t color_index, SDL_Color* color);
 
 
 /* ---------- protoypes/INTERFACE_MACINTOSH.C */
@@ -139,7 +139,7 @@ void load_environment_from_preferences(void);
 
 // LP: displays a text message on the screen in "printf" fashion
 // Implemented in the "screen" routines
-void screen_printf(const char *format, ...);
+void screen_printf(const char* format, ...);
 
 void main_event_loop(void);
 void initialize_application(void);

@@ -33,7 +33,7 @@ void L_Call_HUDCleanup();
 void L_Call_HUDDraw();
 void L_Call_HUDResize();
 
-bool LoadLuaHUDScript(const char *buffer, size_t len);
+bool LoadLuaHUDScript(const char* buffer, size_t len);
 bool RunLuaHUDScript();
 bool LuaHUDRunning();
 void LoadHUDLua();

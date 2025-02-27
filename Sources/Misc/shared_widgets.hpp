@@ -34,113 +34,129 @@
 
 #include "binders.hpp"
 
-class CStringPref : public Bindable<std::string>
-{
-public:
-	CStringPref (char* pref, int length) : m_pref (pref), m_length (length) {};
+class CStringPref : public Bindable<std::string> {
+  public:
 
-	virtual std::string bind_export () { return string (m_pref); }
-	virtual void bind_import (std::string s) { copy_string_to_cstring (s, m_pref, m_length); }
+    CStringPref(char* pref, int length) : m_pref(pref), m_length(length) {};
 
-protected:
-	char* m_pref;
-	int m_length;
+    virtual std::string bind_export() { return string(m_pref); }
+
+    virtual void bind_import(std::string s) { copy_string_to_cstring(s, m_pref, m_length); }
+
+  protected:
+
+    char* m_pref;
+    int m_length;
 };
 
-class BoolPref : public Bindable<bool>
-{
-public:
-	BoolPref (bool& pref) : m_pref(pref) {}
+class BoolPref : public Bindable<bool> {
+  public:
 
-	virtual bool bind_export () { return m_pref; }
-	virtual void bind_import (bool value) { m_pref = value; }
+    BoolPref(bool& pref) : m_pref(pref) {}
 
-protected:
-	bool& m_pref;
+    virtual bool bind_export() { return m_pref; }
+
+    virtual void bind_import(bool value) { m_pref = value; }
+
+  protected:
+
+    bool& m_pref;
 };
 
-class BitPref : public Bindable<bool>
-{
-public:
-	BitPref (uint16& pref, uint16 mask, bool invert = false)
-		: m_pref (pref), m_mask (mask), m_invert (invert) {}
+class BitPref : public Bindable<bool> {
+  public:
 
-	virtual bool bind_export () { return (m_invert ? !(m_pref & m_mask) : (m_pref & m_mask)); }
-	virtual void bind_import (bool value) { (m_invert ? !value : value) ? m_pref |= m_mask : m_pref &= (m_mask ^ 0xFFFF); }
+    BitPref(uint16& pref, uint16 mask, bool invert = false) : m_pref(pref), m_mask(mask), m_invert(invert) {}
 
-protected:
-	uint16& m_pref;
-	uint16 m_mask;
-	bool m_invert;
+    virtual bool bind_export() { return (m_invert ? !(m_pref & m_mask) : (m_pref & m_mask)); }
+
+    virtual void bind_import(bool value) {
+        (m_invert ? !value : value) ? m_pref |= m_mask : m_pref &= (m_mask ^ 0xFFFF);
+    }
+
+  protected:
+
+    uint16& m_pref;
+    uint16 m_mask;
+    bool m_invert;
 };
 
-class Int16Pref : public Bindable<int>
-{
-public:
-	Int16Pref (int16& pref) : m_pref (pref) {}
-	
-	virtual int bind_export () { return m_pref; }
-	virtual void bind_import (int value) { m_pref = value; }
-	
-protected:
-	int16& m_pref;
+class Int16Pref : public Bindable<int> {
+  public:
+
+    Int16Pref(int16& pref) : m_pref(pref) {}
+
+    virtual int bind_export() { return m_pref; }
+
+    virtual void bind_import(int value) { m_pref = value; }
+
+  protected:
+
+    int16& m_pref;
 };
 
-class FilePref : public Bindable<FileSpecifier>
-{
-public:
-	// The buffer should be at least 256
-	FilePref (char* pref) : m_pref (pref) {}
+class FilePref : public Bindable<FileSpecifier> {
+  public:
 
-	virtual FileSpecifier bind_export () { FileSpecifier f (m_pref); return f; }
-	virtual void bind_import (FileSpecifier value) { strncpy (m_pref, value.GetPath (), 255); }
-	
-protected:
-	char* m_pref;
+    // The buffer should be at least 256
+    FilePref(char* pref) : m_pref(pref) {}
+
+    virtual FileSpecifier bind_export() {
+        FileSpecifier f(m_pref);
+        return f;
+    }
+
+    virtual void bind_import(FileSpecifier value) { strncpy(m_pref, value.GetPath(), 255); }
+
+  protected:
+
+    char* m_pref;
 };
 
-class ChatHistory
-{
-public:
-	class NotificationAdapter {
-	public:
-		virtual void contentAdded (const ColoredChatEntry& e) = 0;
-		virtual void contentCleared () = 0;
-		virtual ~NotificationAdapter() {}
-	};
+class ChatHistory {
+  public:
 
-	ChatHistory () : m_notificationAdapter (NULL) {}
-	
-	void append(const ColoredChatEntry& e);
-	void clear ();
-	const vector<ColoredChatEntry> getHistory() { return m_history; }
-	
-	void setObserver (NotificationAdapter* notificationAdapter)
-		{ m_notificationAdapter = notificationAdapter; }
+    class NotificationAdapter {
+      public:
 
-private:
-	vector<ColoredChatEntry> m_history;
-	NotificationAdapter* m_notificationAdapter;
+        virtual void contentAdded(const ColoredChatEntry& e) = 0;
+        virtual void contentCleared()                        = 0;
+
+        virtual ~NotificationAdapter() {}
+    };
+
+    ChatHistory() : m_notificationAdapter(NULL) {}
+
+    void append(const ColoredChatEntry& e);
+    void clear();
+
+    const vector<ColoredChatEntry> getHistory() { return m_history; }
+
+    void setObserver(NotificationAdapter* notificationAdapter) { m_notificationAdapter = notificationAdapter; }
+
+  private:
+
+    vector<ColoredChatEntry> m_history;
+    NotificationAdapter* m_notificationAdapter;
 };
 
-class ColorfulChatWidget : ChatHistory::NotificationAdapter
-{
-public:
-	ColorfulChatWidget(ColorfulChatWidgetImpl* componentWidget)
-		: m_componentWidget(componentWidget),
-		  m_history(NULL)
-		{}
+class ColorfulChatWidget : ChatHistory::NotificationAdapter {
+  public:
 
-	virtual ~ColorfulChatWidget();
+    ColorfulChatWidget(ColorfulChatWidgetImpl* componentWidget) : m_componentWidget(componentWidget), m_history(NULL) {}
 
-	void attachHistory(ChatHistory* history);
+    virtual ~ColorfulChatWidget();
 
-	virtual void contentAdded(const ColoredChatEntry& e);
-	virtual void contentCleared() { m_componentWidget->Clear(); }
+    void attachHistory(ChatHistory* history);
 
-private:
-	ColorfulChatWidgetImpl* m_componentWidget;
-	ChatHistory* m_history;
+    virtual void contentAdded(const ColoredChatEntry& e);
+
+    virtual void contentCleared() { m_componentWidget->Clear(); }
+
+  private:
+
+    ColorfulChatWidgetImpl* m_componentWidget;
+    ChatHistory* m_history;
 };
 
 #endif

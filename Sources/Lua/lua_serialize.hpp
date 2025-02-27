@@ -29,17 +29,16 @@
 
 #include <streambuf>
 
-extern "C"
-{
-#include "lua.h"
+extern "C" {
 #include "lauxlib.h"
+#include "lua.h"
 #include "lualib.h"
 }
 
 // saves object on top of the stack to s
-bool lua_save(lua_State *L, std::streambuf* sb);
+bool lua_save(lua_State* L, std::streambuf* sb);
 
 // restores object in s to top of the stack
-bool lua_restore(lua_State *L, std::streambuf* sb);
+bool lua_restore(lua_State* L, std::streambuf* sb);
 
 #endif

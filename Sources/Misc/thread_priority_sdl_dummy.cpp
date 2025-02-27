@@ -24,13 +24,12 @@
 
 #include "thread_priority_sdl.hpp"
 
-#include    <stdio.h>
+#include <stdio.h>
 
-bool
-BoostThreadPriority(SDL_Thread* inThread) {
+bool BoostThreadPriority(SDL_Thread* inThread) {
     static bool didPrintOutWarning = false;
-    
-    if(!didPrintOutWarning) {
+
+    if (!didPrintOutWarning) {
         printf("warning: BoostThreadPriority not implemented for this system.  Network performance may suffer.\n");
         didPrintOutWarning = true;
     }

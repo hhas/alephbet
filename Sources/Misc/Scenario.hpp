@@ -31,36 +31,41 @@
 using std::string;
 using std::vector;
 
-class Scenario
-{
-public:
-	static Scenario *instance();
-	
-	const string GetName() { return m_name; }
-	void SetName(const string name) { m_name = string(name, 0, 31); }
-	
-	const string GetVersion() { return m_version; }
-	void SetVersion(const string version) { m_version = string(version, 0, 7); }
+class Scenario {
+  public:
 
-	const string GetID() { return m_id; }
-	void SetID(const string id) { m_id = string(id, 0, 23); }
-	
-	bool IsCompatible(const string);
-	void AddCompatible(const string);
+    static Scenario* instance();
 
-	void SetAllowsClassicGameplay(bool allow) { m_allows_classic_gameplay = allow; }
-	bool AllowsClassicGameplay() const { return m_allows_classic_gameplay; }
-	
-private:
-	Scenario() : m_allows_classic_gameplay{false} { }
-	
-	string m_name;
-	string m_version;
-	string m_id;
-	
-	vector<string> m_compatibleVersions;
+    const string GetName() { return m_name; }
 
-	bool m_allows_classic_gameplay;
+    void SetName(const string name) { m_name = string(name, 0, 31); }
+
+    const string GetVersion() { return m_version; }
+
+    void SetVersion(const string version) { m_version = string(version, 0, 7); }
+
+    const string GetID() { return m_id; }
+
+    void SetID(const string id) { m_id = string(id, 0, 23); }
+
+    bool IsCompatible(const string);
+    void AddCompatible(const string);
+
+    void SetAllowsClassicGameplay(bool allow) { m_allows_classic_gameplay = allow; }
+
+    bool AllowsClassicGameplay() const { return m_allows_classic_gameplay; }
+
+  private:
+
+    Scenario() : m_allows_classic_gameplay{false} {}
+
+    string m_name;
+    string m_version;
+    string m_id;
+
+    vector<string> m_compatibleVersions;
+
+    bool m_allows_classic_gameplay;
 };
 
 class InfoTree;

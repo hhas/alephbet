@@ -29,17 +29,18 @@
 
 /* ------------ structures */
 struct static_preprocessed_terminal_data {
-	int16 total_length;
-	int16 flags;
-	int16 lines_per_page; /* Added for internationalization/sync problems */
-	int16 grouping_count;
-	int16 font_changes_count;
+    int16 total_length;
+    int16 flags;
+    int16 lines_per_page; /* Added for internationalization/sync problems */
+    int16 grouping_count;
+    int16 font_changes_count;
 };
+
 const int SIZEOF_static_preprocessed_terminal_data = 10;
 
 struct view_terminal_data {
-	short top, left, bottom, right;
-	short vertical_offset;
+    short top, left, bottom, right;
+    short vertical_offset;
 };
 
 // External-data size of current terminal state
@@ -52,7 +53,7 @@ void enter_computer_interface(short player_index, short text_number, short compl
 void _render_computer_interface(void);
 void update_player_for_terminal_mode(short player_index);
 void update_player_keys_for_terminal(short player_index, uint32 action_flags);
-uint32 build_terminal_action_flags(char *keymap);
+uint32 build_terminal_action_flags(char* keymap);
 void dirty_terminal_view(short player_index);
 void abort_terminal_mode(short player_index);
 
@@ -64,10 +65,10 @@ bool player_in_terminal_mode(short player_index);
 // "player terminal" means the terminal state for each player.
 // For the map terminal data, the "count" is number of packed bytes.
 
-extern void unpack_map_terminal_data(uint8 *Stream, size_t Count);
-extern void pack_map_terminal_data(uint8 *Stream, size_t Count);
-uint8 *unpack_player_terminal_data(uint8 *Stream, size_t Count);
-uint8 *pack_player_terminal_data(uint8 *Stream, size_t Count);
+extern void unpack_map_terminal_data(uint8* Stream, size_t Count);
+extern void pack_map_terminal_data(uint8* Stream, size_t Count);
+uint8* unpack_player_terminal_data(uint8* Stream, size_t Count);
+uint8* pack_player_terminal_data(uint8* Stream, size_t Count);
 
 extern size_t calculate_packed_terminal_data_length(void);
 

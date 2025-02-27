@@ -27,16 +27,15 @@
 
 #include "cseries.hpp"
 
-extern "C"
-{
-#include "lua.h"
+extern "C" {
 #include "lauxlib.h"
+#include "lua.h"
 #include "lualib.h"
 }
 
 #include "items.hpp"
-#include "map.hpp"
 #include "lua_templates.hpp"
+#include "map.hpp"
 
 extern char Lua_HUDPlayer_Name[]; // "Player"
 typedef L_Class<Lua_HUDPlayer_Name> Lua_HUDPlayer;
@@ -91,6 +90,6 @@ extern char Lua_TextureTypes_Name[]; // "TextureTypes";
 typedef L_EnumContainer<Lua_TextureTypes_Name, Lua_TextureType> Lua_TextureTypes;
 #define NUMBER_OF_LUA_TEXTURE_TYPES 5
 
-int Lua_HUDObjects_register(lua_State *L);
+int Lua_HUDObjects_register(lua_State* L);
 
 #endif

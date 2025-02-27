@@ -27,34 +27,32 @@
  */
 
 #include "Decoder.hpp"
-#include "SndfileDecoder.hpp"
 #include "FFmpegDecoder.hpp"
+#include "SndfileDecoder.hpp"
 #include <memory>
 
 using std::unique_ptr;
 
-unique_ptr<StreamDecoder> StreamDecoder::Get(FileSpecifier& File)
-{
-	unique_ptr<SndfileDecoder> sndfileDecoder(std::make_unique<SndfileDecoder>());
-	if (sndfileDecoder->Open(File))
-		return sndfileDecoder;
+unique_ptr<StreamDecoder> StreamDecoder::Get(FileSpecifier& File) {
+    unique_ptr<SndfileDecoder> sndfileDecoder(std::make_unique<SndfileDecoder>());
+    if (sndfileDecoder->Open(File))
+        return sndfileDecoder;
 
 #ifdef HAVE_FFMPEG
-	{
-		unique_ptr<FFmpegDecoder> ffmpegDecoder(std::make_unique<FFmpegDecoder>());
-		if (ffmpegDecoder->Open(File))
-			return ffmpegDecoder;
-	}
+    {
+        unique_ptr<FFmpegDecoder> ffmpegDecoder(std::make_unique<FFmpegDecoder>());
+        if (ffmpegDecoder->Open(File))
+            return ffmpegDecoder;
+    }
 #endif
 
-	return 0;
+    return 0;
 }
 
-Decoder* Decoder::Get(FileSpecifier& File)
-{
-	unique_ptr<SndfileDecoder> sndfileDecoder(std::make_unique<SndfileDecoder>());
-	if (sndfileDecoder->Open(File))
-		return sndfileDecoder.release();
+Decoder* Decoder::Get(FileSpecifier& File) {
+    unique_ptr<SndfileDecoder> sndfileDecoder(std::make_unique<SndfileDecoder>());
+    if (sndfileDecoder->Open(File))
+        return sndfileDecoder.release();
 
-	return 0;
+    return 0;
 }

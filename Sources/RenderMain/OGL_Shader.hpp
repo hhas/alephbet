@@ -29,122 +29,127 @@
  *  Implements OpenGL vertex/fragment shader class
  */
 
-#include <string>
-#include <map>
-#include "OGL_Headers.hpp"
 #include "FileHandler.hpp"
+#include "OGL_Headers.hpp"
+#include <map>
+#include <string>
 
 #ifdef HAVE_OPENGL
 
 class Shader {
 
-friend class XML_ShaderParser;
-friend class Shader_MML_Parser;
-public:
-	enum UniformName {
-		U_Texture0,
-		U_Texture1,
-		U_Texture2,
-		U_Texture3,
-		U_Time,
-		U_Pulsate,
-		U_Wobble,
-		U_Flare,
-		U_BloomScale,
-		U_BloomShift,
-		U_Repeat,
-		U_OffsetX,
-		U_OffsetY,
-		U_Pass,
-		U_FogMix,
-		U_Visibility,
+    friend class XML_ShaderParser;
+    friend class Shader_MML_Parser;
+
+  public:
+
+    enum UniformName {
+        U_Texture0,
+        U_Texture1,
+        U_Texture2,
+        U_Texture3,
+        U_Time,
+        U_Pulsate,
+        U_Wobble,
+        U_Flare,
+        U_BloomScale,
+        U_BloomShift,
+        U_Repeat,
+        U_OffsetX,
+        U_OffsetY,
+        U_Pass,
+        U_FogMix,
+        U_Visibility,
         U_TransferFadeOut,
-		U_Depth,
-		U_StrictDepthMode,
-		U_Glow,
-		U_LandscapeInverseMatrix,
-		U_ScaleX,
-		U_ScaleY,
-		U_Yaw,
-		U_Pitch,
-		U_SelfLuminosity,
-		U_GammaAdjust,
-		U_LogicalWidth,
-		U_LogicalHeight,
-		U_PixelWidth,
-		U_PixelHeight,
-		U_FogMode,
-		NUMBER_OF_UNIFORM_LOCATIONS
-	};
+        U_Depth,
+        U_StrictDepthMode,
+        U_Glow,
+        U_LandscapeInverseMatrix,
+        U_ScaleX,
+        U_ScaleY,
+        U_Yaw,
+        U_Pitch,
+        U_SelfLuminosity,
+        U_GammaAdjust,
+        U_LogicalWidth,
+        U_LogicalHeight,
+        U_PixelWidth,
+        U_PixelHeight,
+        U_FogMode,
+        NUMBER_OF_UNIFORM_LOCATIONS
+    };
 
-	enum ShaderType {
-		S_Error,
+    enum ShaderType {
+        S_Error,
         S_Blur,
-		S_Bloom,
-		S_Landscape,
-		S_LandscapeBloom,
-		S_LandscapeInfravision,
-		S_Sprite,
-		S_SpriteBloom,
-		S_SpriteInfravision,
-		S_Invincible,
-		S_InvincibleBloom,
-		S_Invisible,
-		S_InvisibleBloom,
-		S_Wall,
-		S_WallBloom,
-		S_WallInfravision,
-		S_Bump,
-		S_BumpBloom,
-		S_Gamma,
-		S_LandscapeSphere,
-		S_LandscapeSphereBloom,
-		S_LandscapeSphereInfravision,
-		NUMBER_OF_SHADER_TYPES
-	};
-private:
+        S_Bloom,
+        S_Landscape,
+        S_LandscapeBloom,
+        S_LandscapeInfravision,
+        S_Sprite,
+        S_SpriteBloom,
+        S_SpriteInfravision,
+        S_Invincible,
+        S_InvincibleBloom,
+        S_Invisible,
+        S_InvisibleBloom,
+        S_Wall,
+        S_WallBloom,
+        S_WallInfravision,
+        S_Bump,
+        S_BumpBloom,
+        S_Gamma,
+        S_LandscapeSphere,
+        S_LandscapeSphereBloom,
+        S_LandscapeSphereInfravision,
+        NUMBER_OF_SHADER_TYPES
+    };
 
-	GLhandleARB _programObj;
-	std::string _vert;
-	std::string _frag;
-	int16 _passes;
-	bool _loaded;
+  private:
 
-	static const char* _shader_names[NUMBER_OF_SHADER_TYPES];
-	static std::vector<Shader> _shaders;
+    GLhandleARB _programObj;
+    std::string _vert;
+    std::string _frag;
+    int16 _passes;
+    bool _loaded;
 
-	static const char* _uniform_names[NUMBER_OF_UNIFORM_LOCATIONS];
-	GLint _uniform_locations[NUMBER_OF_UNIFORM_LOCATIONS];
-	float _cached_floats[NUMBER_OF_UNIFORM_LOCATIONS];
+    static const char* _shader_names[NUMBER_OF_SHADER_TYPES];
+    static std::vector<Shader> _shaders;
 
-	GLint getUniformLocation(UniformName name) { 
-		if (_uniform_locations[name] == -1) {
-			_uniform_locations[name] = glGetUniformLocationARB(_programObj, _uniform_names[name]);
-		}
-		return _uniform_locations[name];
-	}
-	
-public:
+    static const char* _uniform_names[NUMBER_OF_UNIFORM_LOCATIONS];
+    GLint _uniform_locations[NUMBER_OF_UNIFORM_LOCATIONS];
+    float _cached_floats[NUMBER_OF_UNIFORM_LOCATIONS];
 
-	static Shader* get(ShaderType type) { return &_shaders[type]; }
-	static void loadAll();
-	static void unloadAll();
-	
-	Shader() : _programObj(0), _passes(-1), _loaded(false) {}
-	Shader(const std::string& name);
-	Shader(const std::string& name, FileSpecifier& vert, FileSpecifier& frag, int16& passes);
-	~Shader();
+    GLint getUniformLocation(UniformName name) {
+        if (_uniform_locations[name] == -1) {
+            _uniform_locations[name] = glGetUniformLocationARB(_programObj, _uniform_names[name]);
+        }
+        return _uniform_locations[name];
+    }
 
-	void load();
-	void init();
-	void enable();
-	void unload();
-	void setFloat(UniformName name, float); // shader must be enabled
-	void setMatrix4(UniformName name, float *f);
+  public:
 
-	int16 passes();
+    static Shader* get(ShaderType type) { return &_shaders[type]; }
 
-	static void disable();
+    static void loadAll();
+    static void unloadAll();
+
+    Shader() : _programObj(0), _passes(-1), _loaded(false) {}
+
+    Shader(const std::string& name);
+    Shader(const std::string& name, FileSpecifier& vert, FileSpecifier& frag, int16& passes);
+    ~Shader();
+
+    void load();
+    void init();
+    void enable();
+    void unload();
+    void setFloat(UniformName name, float); // shader must be enabled
+    void setMatrix4(UniformName name, float* f);
+
+    int16 passes();
+
+    static void disable();
 };
 
 

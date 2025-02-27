@@ -27,19 +27,18 @@
 
 #include "cseries.hpp"
 
-extern "C"
-{
-#include "lua.h"
+extern "C" {
 #include "lauxlib.h"
+#include "lua.h"
 #include "lualib.h"
 }
 
 #include "lua_templates.hpp"
 
-extern char Lua_Music_Name[]; //music
+extern char Lua_Music_Name[]; // music
 typedef L_Class<Lua_Music_Name> Lua_Music;
 
-extern char Lua_MusicManager_Name[]; //Music
+extern char Lua_MusicManager_Name[]; // Music
 typedef L_Container<Lua_MusicManager_Name, Lua_Music> Lua_MusicManager;
 
 int Lua_Music_register(lua_State* L);

@@ -33,25 +33,24 @@
 
 enum /* modes */
 {
-	_rendering_saved_game_preview,
-	_rendering_checkpoint_map,
-	_rendering_game_map
+    _rendering_saved_game_preview,
+    _rendering_checkpoint_map,
+    _rendering_game_map
 };
 
-struct overhead_map_data
-{
-	short mode;
-	short scale;
-	world_point2d origin;
-	short origin_polygon_index;
-	short half_width, half_height;
-	short width, height;
-	short top, left;
-	
-	bool draw_everything;
+struct overhead_map_data {
+    short mode;
+    short scale;
+    world_point2d origin;
+    short origin_polygon_index;
+    short half_width, half_height;
+    short width, height;
+    short top, left;
+
+    bool draw_everything;
 };
 
-void _render_overhead_map(struct overhead_map_data *data);
+void _render_overhead_map(struct overhead_map_data* data);
 
 class InfoTree;
 void parse_mml_overhead_map(const InfoTree& root);

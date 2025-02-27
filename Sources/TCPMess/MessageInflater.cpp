@@ -30,90 +30,66 @@
 #include "MessageInflater.hpp"
 #include "Logging.hpp"
 
-Message*
-MessageInflater::inflate(const UninflatedMessage& inSource)
-{
-	Message* theResult = NULL;
-	
-	MessageInflaterMap::iterator i = mMap.find(inSource.inflatedType());
-	if(i != mMap.end())
-	{
-		try
-		{
-			theResult = i->second->clone();
-			if(theResult != NULL)
-			{
-				bool successfulInflate = theResult->inflateFrom(inSource);
-				if(!successfulInflate)
-				{
-					logWarning("inflate failed of message type %i", inSource.inflatedType());
-					throw 1;
-				}
-			} else {
-				logWarning("clone() failed message type %i", inSource.inflatedType());
-			}
-		}
-		catch(...)
-		{
-			logWarning("exception caught in inflated() message type %i", inSource.inflatedType());
-			delete theResult;
-			theResult = NULL;
-		}
-	} else {
-		logAnomaly("do not know how to inflate message type %i", inSource.inflatedType());
-	}
+Message* MessageInflater::inflate(const UninflatedMessage& inSource) {
+    Message* theResult = NULL;
 
-	if(theResult == NULL)
-	{
-		// We should end up here in any of the following circumstances:
-		// 1. No entry in map
-		// 2. clone() returned NULL
-		// 3. exception thrown in clone()
-		// 4. inflateFrom() returned "false" meaning "unsuccessful inflate"
-		// 5. exception thrown in inflateFrom()
+    MessageInflaterMap::iterator i = mMap.find(inSource.inflatedType());
+    if (i != mMap.end()) {
+        try {
+            theResult = i->second->clone();
+            if (theResult != NULL) {
+                bool successfulInflate = theResult->inflateFrom(inSource);
+                if (!successfulInflate) {
+                    logWarning("inflate failed of message type %i", inSource.inflatedType());
+                    throw 1;
+                }
+            } else {
+                logWarning("clone() failed message type %i", inSource.inflatedType());
+            }
+        } catch (...) {
+            logWarning("exception caught in inflated() message type %i", inSource.inflatedType());
+            delete theResult;
+            theResult = NULL;
+        }
+    } else {
+        logAnomaly("do not know how to inflate message type %i", inSource.inflatedType());
+    }
 
-		// In any of these cases, we were unable to inflate the message, so we return
-		// a new copy of the uninflated message.
-		theResult = inSource.clone();
-	}
+    if (theResult == NULL) {
+        // We should end up here in any of the following circumstances:
+        // 1. No entry in map
+        // 2. clone() returned NULL
+        // 3. exception thrown in clone()
+        // 4. inflateFrom() returned "false" meaning "unsuccessful inflate"
+        // 5. exception thrown in inflateFrom()
 
-	return theResult;
+        // In any of these cases, we were unable to inflate the message, so we return
+        // a new copy of the uninflated message.
+        theResult = inSource.clone();
+    }
+
+    return theResult;
 }
 
+void MessageInflater::learnPrototypeForType(MessageTypeID inType, const Message& inPrototype) {
+    Message* theClone = inPrototype.clone();
 
+    Message* theExistingPrototype = mMap[inType];
+    delete theExistingPrototype;
 
-void
-MessageInflater::learnPrototypeForType(MessageTypeID inType, const Message& inPrototype)
-{
-	Message* theClone = inPrototype.clone();
-
-	Message* theExistingPrototype = mMap[inType];
-	delete theExistingPrototype;
-	
-	mMap[inType] = theClone;
+    mMap[inType] = theClone;
 }
 
-
-
-void
-MessageInflater::removePrototypeForType(MessageTypeID inType)
-{
-	MessageInflaterMap::iterator i = mMap.find(inType);
-	if(i != mMap.end())
-	{
-		delete i->second;
-		mMap.erase(i);
-	}
+void MessageInflater::removePrototypeForType(MessageTypeID inType) {
+    MessageInflaterMap::iterator i = mMap.find(inType);
+    if (i != mMap.end()) {
+        delete i->second;
+        mMap.erase(i);
+    }
 }
 
-
-
-MessageInflater::~MessageInflater()
-{
-	for(MessageInflaterMap::iterator i = mMap.begin(); i != mMap.end(); i++)
-	{
-		delete i->second;
-	}
+MessageInflater::~MessageInflater() {
+    for (MessageInflaterMap::iterator i = mMap.begin(); i != mMap.end(); i++) { delete i->second; }
 }
 
 #endif // !defined(DISABLE_NETWORKING)

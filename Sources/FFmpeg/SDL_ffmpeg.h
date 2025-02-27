@@ -23,8 +23,11 @@
 #ifndef SDL_FFMPEG_INCLUDED
 #define SDL_FFMPEG_INCLUDED
 
-#include <SDL_thread.h>
-#include <SDL.h>
+#include <SDL2/SDL_thread.h>
+#include <SDL2/SDL.h>
+
+#include "libavcodec/avcodec.h"
+#include "libavformat/avformat.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -47,7 +50,7 @@ enum SDL_ffmpegStreamType
     SDL_ffmpegInputStream
 };
 
-typedef void (*SDL_ffmpegCallback)(void *userdata, Uint8 *stream, int len);
+typedef void (*SDL_ffmpegCallback)(void *userdata, uint8_t *stream, int len);
 
 typedef struct SDL_ffmpegConversionContext
 {
@@ -110,8 +113,8 @@ typedef struct
     uint32_t size;
     /** Size of the complete audio frame. */
     uint32_t capacity;
-	/** Value indicating wheter or not this is the last frame before EOF */
-	int last;
+    /** Value indicating wheter or not this is the last frame before EOF */
+    int last;
 } SDL_ffmpegAudioFrame;
 
 
@@ -126,8 +129,8 @@ typedef struct
 //    SDL_Overlay *overlay;
     /** Value indicating if this frame holds data, or that it can be overwritten. */
     int ready;
-	/** Value indicating wheter or not this is the last frame before EOF */
-	int last;
+    /** Value indicating wheter or not this is the last frame before EOF */
+    int last;
 } SDL_ffmpegVideoFrame;
 
 /** This is the basic stream for SDL_ffmpeg */
@@ -213,9 +216,9 @@ typedef struct
 } SDL_ffmpegFile;
 
 /* error handling */
-EXPORT const char* SDL_ffmpegGetError();
+EXPORT const char* SDL_ffmpegGetError(void);
 
-EXPORT void SDL_ffmpegClearError();
+EXPORT void SDL_ffmpegClearError(void);
 
 /* SDL_ffmpegFile create / destroy */
 EXPORT SDL_ffmpegFile* SDL_ffmpegOpen( const char* filename );
@@ -243,7 +246,7 @@ EXPORT SDL_ffmpegStream* SDL_ffmpegGetVideoStream( SDL_ffmpegFile *file, uint32_
 EXPORT int SDL_ffmpegSelectVideoStream( SDL_ffmpegFile* file, int videoID);
 
 /* video frame */
-EXPORT SDL_ffmpegVideoFrame* SDL_ffmpegCreateVideoFrame();
+EXPORT SDL_ffmpegVideoFrame* SDL_ffmpegCreateVideoFrame(void);
 
 EXPORT int SDL_ffmpegAddVideoFrame( SDL_ffmpegFile *file, SDL_Surface *sdlFrame, int32_t frameNumber, int32_t lastFrame );
 
@@ -287,7 +290,7 @@ EXPORT uint64_t SDL_ffmpegAudioDuration( SDL_ffmpegFile *file );
 /** \cond */
 
 /* these functions are not public */
-EXPORT SDL_ffmpegFile* SDL_ffmpegCreateFile();
+EXPORT SDL_ffmpegFile* SDL_ffmpegCreateFile(void);
 
 EXPORT int SDL_ffmpegFlush( SDL_ffmpegFile *file );
 

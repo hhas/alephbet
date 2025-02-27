@@ -31,73 +31,61 @@
  *  from render.c. Works from RenderSortPoly stuff.
  */
 
-#include <vector>
-#include "world.hpp"
+#include "RenderSortPoly.hpp"
 #include "interface.hpp"
 #include "render.hpp"
-#include "RenderSortPoly.hpp"
-
+#include "world.hpp"
+#include <vector>
 
 /* ---------- render objects */
 
-struct render_object_data
-{
-	struct sorted_node_data *node; /* node we are being drawn inside */
-	struct clipping_window_data *clipping_windows; /* our privately calculated clipping window */
-	
-	struct render_object_data *next_object; /* the next object in this chain */
-	
-	struct rectangle_definition rectangle;
-	
-	int16 ymedia;
+struct render_object_data {
+    struct sorted_node_data* node;                 /* node we are being drawn inside */
+    struct clipping_window_data* clipping_windows; /* our privately calculated clipping window */
+
+    struct render_object_data* next_object; /* the next object in this chain */
+
+    struct rectangle_definition rectangle;
+
+    int16 ymedia;
 };
 
+class RenderPlaceObjsClass {
+    struct span_data;
 
-class RenderPlaceObjsClass
-{
-	struct span_data;
+    void initialize_render_object_list();
 
-	void initialize_render_object_list();
-	
-	render_object_data* build_render_object(
-		object_data* object,
-		_fixed floor_intensity,
-		_fixed ceiling_intensity,
-		float Opacity,
-		long_point3d* origin,
-		long_point3d* rel_origin);
-	
-	void sort_render_object_into_tree(render_object_data* new_render_object, const span_data& span);
+    render_object_data* build_render_object(object_data* object, _fixed floor_intensity, _fixed ceiling_intensity,
+                                            float Opacity, long_point3d* origin, long_point3d* rel_origin);
 
-	span_data build_base_node_list(const render_object_data* render_object, short origin_polygon_index);
-	
-	void build_aggregate_render_object_clipping_window(render_object_data* render_object, const span_data& span);
-		
-	bool add_object_to_sorted_nodes(
-		object_data* object,
-		_fixed floor_intensity,
-		_fixed ceiling_intensity,
-		float Opacity);
-	
-	shape_information_data *rescale_shape_information(shape_information_data *unscaled,
-		shape_information_data *scaled, uint16 flags);
+    void sort_render_object_into_tree(render_object_data* new_render_object, const span_data& span);
 
-public:
+    span_data build_base_node_list(const render_object_data* render_object, short origin_polygon_index);
 
-	// LP additions: growable list of render objects; these are all the inhabitants
-	// Length changed in build_render_object()
-	// keep SortedNodes in sync
-	vector<render_object_data> RenderObjects;
-	
-	// Pointers to view and calculated visibility tree and sorted polygons
-	view_data *view;
-	RenderVisTreeClass *RVPtr;
-	RenderSortPolyClass *RSPtr;
-	
-	void build_render_object_list();
-	
-  	// Inits everything
- 	RenderPlaceObjsClass();
+    void build_aggregate_render_object_clipping_window(render_object_data* render_object, const span_data& span);
+
+    bool add_object_to_sorted_nodes(object_data* object, _fixed floor_intensity, _fixed ceiling_intensity,
+                                    float Opacity);
+
+    shape_information_data* rescale_shape_information(shape_information_data* unscaled, shape_information_data* scaled,
+                                                      uint16 flags);
+
+  public:
+
+    // LP additions: growable list of render objects; these are all the inhabitants
+    // Length changed in build_render_object()
+    // keep SortedNodes in sync
+    vector<render_object_data> RenderObjects;
+
+    // Pointers to view and calculated visibility tree and sorted polygons
+    view_data* view;
+    RenderVisTreeClass* RVPtr;
+    RenderSortPolyClass* RSPtr;
+
+    void build_render_object_list();
+
+    // Inits everything
+    RenderPlaceObjsClass();
 };
 
 #endif

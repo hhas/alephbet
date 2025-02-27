@@ -39,15 +39,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <SDL.h>
-#include <SDL_thread.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_thread.h>
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
-#include "libavcodec/avcodec.h"
-#include "libavformat/avformat.h"
 #include "libavutil/mathematics.h"
 #include "libavutil/imgutils.h"
 #include "libswscale/swscale.h"
@@ -98,7 +96,7 @@ struct SwsContext* getContext( SDL_ffmpegConversionContext **context, int inWidt
             {
                 return ctx->context;
             }
-			
+            
             ctx = ctx->next;
         }
 
@@ -109,7 +107,7 @@ struct SwsContext* getContext( SDL_ffmpegConversionContext **context, int inWidt
 
         /* allocate a new context */
         ctx->next = ( struct SDL_ffmpegConversionContext* ) malloc( sizeof( SDL_ffmpegConversionContext ) );
-		ctx = ctx->next;
+        ctx = ctx->next;
     }
     else
     {
@@ -153,7 +151,7 @@ int SDL_ffmpegDecodeAudioFrame( SDL_ffmpegFile*, AVPacket*, SDL_ffmpegAudioFrame
 
 int SDL_ffmpegDecodeVideoFrame( SDL_ffmpegFile*, AVPacket*, SDL_ffmpegVideoFrame* );
 
-SDL_ffmpegFile* SDL_ffmpegCreateFile()
+SDL_ffmpegFile* SDL_ffmpegCreateFile(void)
 {
     /* create SDL_ffmpegFile pointer */
     SDL_ffmpegFile *file = ( SDL_ffmpegFile* )malloc( sizeof( SDL_ffmpegFile ) );
@@ -377,7 +375,7 @@ SDL_ffmpegFile* SDL_ffmpegOpen( const char* filename )
                 stream->_ffmpeg = file->_ffmpeg->streams[i];
 
                 /* get the correct decoder for this stream */
-                AVCodec *codec = avcodec_find_decoder( stream->_ffmpeg->codecpar->codec_id );
+               const  AVCodec *codec = avcodec_find_decoder( stream->_ffmpeg->codecpar->codec_id );
 
                 if ( !codec )
                 {
@@ -386,7 +384,7 @@ SDL_ffmpegFile* SDL_ffmpegOpen( const char* filename )
                     continue;
                 }
                 stream->_ctx = avcodec_alloc_context3(codec);
-                if (!stream->_ctx || avcodec_parameters_to_context(stream->_ctx, stream->_ffmpeg->codecpar) < 0 
+                if (!stream->_ctx || avcodec_parameters_to_context(stream->_ctx, stream->_ffmpeg->codecpar) < 0
                     || avcodec_open2(stream->_ctx, NULL, NULL ) < 0 || avcodec_parameters_from_context(stream->_ffmpeg->codecpar, stream->_ctx) < 0)
                 {
                     free( stream );
@@ -427,7 +425,7 @@ SDL_ffmpegFile* SDL_ffmpegOpen( const char* filename )
                 stream->_ffmpeg = file->_ffmpeg->streams[i];
 
                 /* get the correct decoder for this stream */
-                AVCodec *codec = avcodec_find_decoder( file->_ffmpeg->streams[i]->codecpar->codec_id );
+                const AVCodec *codec = avcodec_find_decoder( file->_ffmpeg->streams[i]->codecpar->codec_id );
 
                 if ( !codec )
                 {
@@ -436,7 +434,7 @@ SDL_ffmpegFile* SDL_ffmpegOpen( const char* filename )
                     continue;
                 }
                 stream->_ctx = avcodec_alloc_context3(codec);
-                if (!stream->_ctx || avcodec_parameters_to_context(stream->_ctx, stream->_ffmpeg->codecpar) < 0 
+                if (!stream->_ctx || avcodec_parameters_to_context(stream->_ctx, stream->_ffmpeg->codecpar) < 0
                     || avcodec_open2(stream->_ctx, NULL, NULL) < 0 || avcodec_parameters_from_context(stream->_ffmpeg->codecpar, stream->_ctx) < 0)
                 {
                     free( stream );
@@ -444,7 +442,7 @@ SDL_ffmpegFile* SDL_ffmpegOpen( const char* filename )
                 }
                 else
                 {
-                    int channel_layout = stream->_ffmpeg->codecpar->channel_layout ? stream->_ffmpeg->codecpar->channel_layout : 
+                    int channel_layout = stream->_ffmpeg->codecpar->channel_layout ? stream->_ffmpeg->codecpar->channel_layout :
                         (stream->_ffmpeg->codecpar->channels == 2 ? AV_CH_LAYOUT_STEREO : AV_CH_LAYOUT_MONO);
 
                     stream->swr_context = swr_alloc_set_opts(stream->swr_context, channel_layout, AV_SAMPLE_FMT_FLT,
@@ -497,7 +495,7 @@ SDL_ffmpegFile* SDL_ffmpegCreate( const char* filename )
     file->_ffmpeg = avformat_alloc_context();
 
     file->_ffmpeg->oformat = av_guess_format( "webm", 0, 0 );
-    file->_ffmpeg->url = filename;
+    file->_ffmpeg->url = (char*)filename;
 
     /* open the output file, if needed */
     if (avio_open(&file->_ffmpeg->pb, file->_ffmpeg->url, AVIO_FLAG_WRITE ) < 0 )
@@ -744,9 +742,9 @@ int SDL_ffmpegAddAudioFrame( SDL_ffmpegFile *file, SDL_ffmpegAudioFrame *frame, 
 */
 SDL_ffmpegAudioFrame* SDL_ffmpegCreateAudioFrame( SDL_ffmpegFile *file, uint32_t bytes )
 {
-	if (!file) {
-		return 0;
-	}
+    if (!file) {
+        return 0;
+    }
     /* when accesing audio/video stream, streamMutex should be locked */
     SDL_LockMutex( file->streamMutex );
 
@@ -792,7 +790,7 @@ SDL_ffmpegAudioFrame* SDL_ffmpegCreateAudioFrame( SDL_ffmpegFile *file, uint32_t
             SDL_ffmpegVideoFrame.overlay need to be set by user.
 \returns    Pointer to SDL_ffmpegVideoFrame, or NULL if no frame could be created
 */
-SDL_ffmpegVideoFrame* SDL_ffmpegCreateVideoFrame()
+SDL_ffmpegVideoFrame* SDL_ffmpegCreateVideoFrame(void)
 {
     SDL_ffmpegVideoFrame *frame = ( SDL_ffmpegVideoFrame* )malloc( sizeof( SDL_ffmpegVideoFrame ) );
     // TODO return failure if frame could not be allocated, unsure how that should look
@@ -812,9 +810,9 @@ SDL_ffmpegVideoFrame* SDL_ffmpegCreateVideoFrame()
 */
 int SDL_ffmpegGetVideoFrame( SDL_ffmpegFile* file, SDL_ffmpegVideoFrame *frame )
 {
-	if (!file) {
-		return 0;
-	}
+    if (!file) {
+        return 0;
+    }
     /* when accesing audio/video stream, streamMutex should be locked */
     SDL_LockMutex( file->streamMutex );
 
@@ -954,8 +952,8 @@ int SDL_ffmpegSelectAudioStream( SDL_ffmpegFile* file, int audioID )
         for ( int i = 0; i < audioID && file->audioStream; i++ ) file->audioStream = file->audioStream->next;
 
         /* active stream need not be discarded */
-		if (file->audioStream && file->audioStream->_ffmpeg)
-			file->audioStream->_ffmpeg->discard = AVDISCARD_DEFAULT;
+        if (file->audioStream && file->audioStream->_ffmpeg)
+            file->audioStream->_ffmpeg->discard = AVDISCARD_DEFAULT;
     }
 
     SDL_UnlockMutex( file->streamMutex );
@@ -1040,8 +1038,8 @@ int SDL_ffmpegSelectVideoStream( SDL_ffmpegFile* file, int videoID )
         for ( int i = 0; i < videoID && file->videoStream; i++ ) file->videoStream = file->videoStream->next;
 
         /* active stream need not be discarded */
-		if (file->videoStream && file->videoStream->_ffmpeg)
-			file->videoStream->_ffmpeg->discard = AVDISCARD_DEFAULT;
+        if (file->videoStream && file->videoStream->_ffmpeg)
+            file->videoStream->_ffmpeg->discard = AVDISCARD_DEFAULT;
     }
 
     SDL_UnlockMutex( file->streamMutex );
@@ -1795,7 +1793,7 @@ SDL_ffmpegStream* SDL_ffmpegAddAudioStream( SDL_ffmpegFile *file, SDL_ffmpegCode
 
 \returns    non-zero when an error occured
 */
-int SDL_ffmpegError()
+int SDL_ffmpegError(void)
 {
     return SDL_ffmpegErrorMessage[ 0 ];
 }
@@ -1805,7 +1803,7 @@ int SDL_ffmpegError()
 
 \returns    When no error was found, NULL is returned
 */
-const char* SDL_ffmpegGetError()
+const char* SDL_ffmpegGetError(void)
 {
     return SDL_ffmpegErrorMessage;
 }
@@ -1814,7 +1812,7 @@ const char* SDL_ffmpegGetError()
 /** \brief  Use this function to clear all standing errors
 
 */
-void SDL_ffmpegClearError()
+void SDL_ffmpegClearError(void)
 {
     SDL_ffmpegErrorMessage[ 0 ] = 0;
 }
@@ -2021,7 +2019,7 @@ int SDL_ffmpegDecodeAudioFrame( SDL_ffmpegFile *file, AVPacket *pack, SDL_ffmpeg
 
     while (avcodec_receive_frame(avctx, dframe) == 0) {
 
-        dframe->channel_layout |= dframe->channels == 2 ? AV_CH_LAYOUT_STEREO : AV_CH_LAYOUT_MONO; 
+        dframe->channel_layout |= dframe->channels == 2 ? AV_CH_LAYOUT_STEREO : AV_CH_LAYOUT_MONO;
         convertedFrame->nb_samples = dframe->nb_samples;
         convertedFrame->channel_layout = dframe->channel_layout;
         convertedFrame->sample_rate = dframe->sample_rate;
@@ -2036,7 +2034,7 @@ int SDL_ffmpegDecodeAudioFrame( SDL_ffmpegFile *file, AVPacket *pack, SDL_ffmpeg
         int planar = av_sample_fmt_is_planar(convertedFrame->format);
         int plane_size;
 
-        int data_size = av_samples_get_buffer_size(&plane_size, convertedFrame->channels, convertedFrame->nb_samples, convertedFrame->format, 1);
+        /*int data_size =*/ av_samples_get_buffer_size(&plane_size, convertedFrame->channels, convertedFrame->nb_samples, convertedFrame->format, 1);
 
         memcpy(file->audioStream->sampleBuffer, convertedFrame->extended_data[0], plane_size);
         audioSize = plane_size;

@@ -27,44 +27,45 @@
 
 #include "cseries.hpp"
 
-#include <string>
 #include <map>
+#include <string>
 
 using std::string;
 
 typedef std::map<string, uint32> capabilities_t;
 
-class Capabilities : public capabilities_t
-{
- public:
-  enum { kMaxKeySize = 1024 };
+class Capabilities : public capabilities_t {
+  public:
 
-  static const int kGameworldVersion = 5;
-  static const int kGameworldM1Version = 4;
-  static const int kStarVersion = 6;
-  static const int kRingVersion = 2;
-  static const int kLuaVersion = 2;
-  static const int kGatherableVersion = 1;
-  static const int kZippedDataVersion = 1; // map, lua, physics
-  static const int kNetworkStatsVersion = 1; // latency, jitter, errors
-  static const int kRugbyVersion = 1; // sane score limit
+    enum {
+        kMaxKeySize = 1024
+    };
 
-  static const string kGameworld;    // the PRNG, physics, etc.
-  static const string kGameworldM1;  // like gameworld, but for Marathon 1 compatibility
-  static const string kStar;         // the star network protocol
-  static const string kRing;         // the ring network protocol
-  static const string kLua;          // Lua script support
-  static const string kGatherable;   // joiner's response indicating he can be
-                                     // gathered
-  static const string kZippedData;   // can receive zipped data
-  static const string kNetworkStats; // can receive network stats
-  static const string kRugby;        // rugby version
-  
-  uint32& operator[](const string& k) { 
-    assert(k.length() < kMaxKeySize);
-    return capabilities_t::operator[](k);
-  }
+    static const int kGameworldVersion    = 5;
+    static const int kGameworldM1Version  = 4;
+    static const int kStarVersion         = 6;
+    static const int kRingVersion         = 2;
+    static const int kLuaVersion          = 2;
+    static const int kGatherableVersion   = 1;
+    static const int kZippedDataVersion   = 1; // map, lua, physics
+    static const int kNetworkStatsVersion = 1; // latency, jitter, errors
+    static const int kRugbyVersion        = 1; // sane score limit
+
+    static const string kGameworld;    // the PRNG, physics, etc.
+    static const string kGameworldM1;  // like gameworld, but for Marathon 1 compatibility
+    static const string kStar;         // the star network protocol
+    static const string kRing;         // the ring network protocol
+    static const string kLua;          // Lua script support
+    static const string kGatherable;   // joiner's response indicating he can be
+                                       // gathered
+    static const string kZippedData;   // can receive zipped data
+    static const string kNetworkStats; // can receive network stats
+    static const string kRugby;        // rugby version
+
+    uint32& operator[](const string& k) {
+        assert(k.length() < kMaxKeySize);
+        return capabilities_t::operator[](k);
+    }
 };
 
 #endif
-

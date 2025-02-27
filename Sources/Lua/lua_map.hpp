@@ -27,15 +27,14 @@
 
 #include "cseries.hpp"
 
-extern "C"
-{
-#include "lua.h"
+extern "C" {
 #include "lauxlib.h"
+#include "lua.h"
 #include "lualib.h"
 }
 
-#include "map.hpp"
 #include "lightsource.hpp"
+#include "map.hpp"
 
 #include "lua_templates.hpp"
 
@@ -150,6 +149,6 @@ typedef L_Container<Lua_Medias_Name, Lua_Media> Lua_Medias;
 extern char Lua_CompletionState_Name[];
 typedef L_Enum<Lua_CompletionState_Name> Lua_CompletionState;
 
-int Lua_Map_register (lua_State *L);
+int Lua_Map_register(lua_State* L);
 
 #endif

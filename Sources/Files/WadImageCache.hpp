@@ -32,102 +32,111 @@
 #include "FileHandler.hpp"
 #include "wad.hpp"
 
-#include <tuple>
 #include <list>
 #include <map>
+#include <tuple>
 
 struct WadImageDescriptor {
-	FileSpecifier file;
-	uint32 checksum;
-	short index;
-	WadDataType tag;
-	
-	bool operator<(const WadImageDescriptor& other) const
-	{
-		if (file != other.file)
-			return strcmp(file.GetPath(), other.file.GetPath()) < 0;
-		else if (checksum != other.checksum)
-			return checksum < other.checksum;
-		else if (index != other.index)
-			return index < other.index;
-		else if (tag != other.tag)
-			return tag < other.tag;
-		return false;
-	}
-	
-	bool operator==(const WadImageDescriptor& other) const {
-		return file == other.file &&
-		       checksum == other.checksum &&
-			   index == other.index &&
-			   tag == other.tag;
-	}
+    FileSpecifier file;
+    uint32 checksum;
+    short index;
+    WadDataType tag;
+
+    bool operator<(const WadImageDescriptor& other) const {
+        if (file != other.file)
+            return strcmp(file.GetPath(), other.file.GetPath()) < 0;
+        else if (checksum != other.checksum)
+            return checksum < other.checksum;
+        else if (index != other.index)
+            return index < other.index;
+        else if (tag != other.tag)
+            return tag < other.tag;
+        return false;
+    }
+
+    bool operator==(const WadImageDescriptor& other) const {
+        return file == other.file && checksum == other.checksum && index == other.index && tag == other.tag;
+    }
 };
 
 class WadImageCache {
-public:
-	typedef std::tuple<WadImageDescriptor, int, int> cache_key_t;
-	typedef std::pair<std::string, size_t> cache_value_t;
-	typedef std::pair<cache_key_t, cache_value_t> cache_pair_t;
-	typedef std::list<cache_pair_t>::iterator cache_iter_t;
+  public:
 
-	static WadImageCache* instance();
-	
-	// Call this at startup, before any other calls.
-	void initialize_cache();
-	
-	// Reads an image from a wad and returns it at original size.
-	// Does not touch the cache.
-	static SDL_Surface *image_from_desc(WadImageDescriptor& desc);
-	
-	// Returns true if image is in cache. Does not change LRU info.
-	bool is_cached(WadImageDescriptor& desc, int width, int height) const;
-	
-	// Add image to cache if it doesn't exist (and original is at
-	// a different size). Updates LRU info if already cached.
-	// If "surface" is provided, uses that for caching instead of
-	// reading wadfile directly.
-	void cache_image(WadImageDescriptor& desc, int width, int height, SDL_Surface *surface = NULL);
-	
-	// Deletes cache data for this image. If width and height are zero,
-	// removes any cached sizes for image.
-	void remove_image(WadImageDescriptor& desc, int width = 0, int height = 0);
-	
-	// Loads surface for cached image. Returns NULL if not in cache.
-	// If return value is not NULL, surface must be freed by caller.
-	SDL_Surface *retrieve_image(WadImageDescriptor& desc, int width, int height);
-	
-	// Loads surface for image, caching it if necessary.
-	// If return value is not NULL, surface must be freed by caller.
-	// If "surface" is provided, uses that for caching instead of
-	// reading wad file directly.
-	SDL_Surface *get_image(WadImageDescriptor& desc, int width, int height, SDL_Surface *surface = NULL);
+    typedef std::tuple<WadImageDescriptor, int, int> cache_key_t;
+    typedef std::pair<std::string, size_t> cache_value_t;
+    typedef std::pair<cache_key_t, cache_value_t> cache_pair_t;
+    typedef std::list<cache_pair_t>::iterator cache_iter_t;
 
-	void save_cache();
-	void set_cache_autosave(bool enabled) { m_autosave = enabled; }
-	
-	size_t size() { return m_cachesize; }
-	size_t limit() { return m_sizelimit; }
-	void set_limit(size_t bytes) { m_sizelimit = bytes; if (apply_cache_limit()) autosave_cache(); }
-	
+    static WadImageCache* instance();
 
-private:
-	WadImageCache() { }
-	
-	SDL_Surface *image_from_name(std::string& name) const;
-	void delete_storage_for_name(std::string& name) const;
-	SDL_Surface *resize_image(SDL_Surface *original, int width, int height) const;
-	std::string image_to_new_name(SDL_Surface *image, int32 *filesize = NULL) const;
-	std::string add_to_cache(cache_key_t key, SDL_Surface *surface);
-	bool apply_cache_limit();
-	std::string retrieve_name(WadImageDescriptor& desc, int width, int height, bool mark_accessed = true);
-	void autosave_cache() { if (m_autosave) save_cache(); }
-	
-	std::list<cache_pair_t> m_used;
-	std::map<cache_key_t, cache_iter_t> m_cacheinfo;
-	size_t m_cachesize = 0;
-	size_t m_sizelimit = 300000000;
-	bool m_autosave = true;
-	bool m_cache_dirty = false;
+    // Call this at startup, before any other calls.
+    void initialize_cache();
+
+    // Reads an image from a wad and returns it at original size.
+    // Does not touch the cache.
+    static SDL_Surface* image_from_desc(WadImageDescriptor& desc);
+
+    // Returns true if image is in cache. Does not change LRU info.
+    bool is_cached(WadImageDescriptor& desc, int width, int height) const;
+
+    // Add image to cache if it doesn't exist (and original is at
+    // a different size). Updates LRU info if already cached.
+    // If "surface" is provided, uses that for caching instead of
+    // reading wadfile directly.
+    void cache_image(WadImageDescriptor& desc, int width, int height, SDL_Surface* surface = NULL);
+
+    // Deletes cache data for this image. If width and height are zero,
+    // removes any cached sizes for image.
+    void remove_image(WadImageDescriptor& desc, int width = 0, int height = 0);
+
+    // Loads surface for cached image. Returns NULL if not in cache.
+    // If return value is not NULL, surface must be freed by caller.
+    SDL_Surface* retrieve_image(WadImageDescriptor& desc, int width, int height);
+
+    // Loads surface for image, caching it if necessary.
+    // If return value is not NULL, surface must be freed by caller.
+    // If "surface" is provided, uses that for caching instead of
+    // reading wad file directly.
+    SDL_Surface* get_image(WadImageDescriptor& desc, int width, int height, SDL_Surface* surface = NULL);
+
+    void save_cache();
+
+    void set_cache_autosave(bool enabled) { m_autosave = enabled; }
+
+    size_t size() { return m_cachesize; }
+
+    size_t limit() { return m_sizelimit; }
+
+    void set_limit(size_t bytes) {
+        m_sizelimit = bytes;
+        if (apply_cache_limit())
+            autosave_cache();
+    }
+
+
+  private:
+
+    WadImageCache() {}
+
+    SDL_Surface* image_from_name(std::string& name) const;
+    void delete_storage_for_name(std::string& name) const;
+    SDL_Surface* resize_image(SDL_Surface* original, int width, int height) const;
+    std::string image_to_new_name(SDL_Surface* image, int32* filesize = NULL) const;
+    std::string add_to_cache(cache_key_t key, SDL_Surface* surface);
+    bool apply_cache_limit();
+    std::string retrieve_name(WadImageDescriptor& desc, int width, int height, bool mark_accessed = true);
+
+    void autosave_cache() {
+        if (m_autosave)
+            save_cache();
+    }
+
+    std::list<cache_pair_t> m_used;
+    std::map<cache_key_t, cache_iter_t> m_cacheinfo;
+    size_t m_cachesize = 0;
+    size_t m_sizelimit = 300'000'000;
+    bool m_autosave    = true;
+    bool m_cache_dirty = false;
 };
 
 

@@ -32,25 +32,23 @@ class LoadedResource;
 struct RGBColor;
 
 typedef struct rgb_color {
-	uint16 red;
-	uint16 green;
-	uint16 blue;
+    uint16 red;
+    uint16 green;
+    uint16 blue;
 } rgb_color;
 
 typedef struct color_table {
-	short color_count;
-	rgb_color colors[256];
+    short color_count;
+    rgb_color colors[256];
 } color_table;
 
-extern void build_color_table(
-	color_table *table,
-	LoadedResource &clut);
+extern void build_color_table(color_table* table, LoadedResource& clut);
 
 enum {
-	gray15Percent,
-	windowHighlight,
+    gray15Percent,
+    windowHighlight,
 
-	NUM_SYSTEM_COLORS
+    NUM_SYSTEM_COLORS
 };
 
 extern RGBColor rgb_black;

@@ -28,26 +28,25 @@
 #include "cstypes.hpp"
 #include <string>
 
-const int styleNormal = 0;
-const int styleBold = 1;
-const int styleItalic = 2;
+const int styleNormal    = 0;
+const int styleBold      = 1;
+const int styleItalic    = 2;
 const int styleUnderline = 4;
 // const int styleOutline = 8; -- can't be used with TTF
 const int styleShadow = 16;
 
 struct TextSpec {
-	int16 font;
+    int16 font;
 
-	uint16 style;
-	int16 size;
-	int16 adjust_height;
+    uint16 style;
+    int16 size;
+    int16 adjust_height;
 
-	// paths to fonts
-	std::string normal;
-	std::string oblique;
-	std::string bold;
-	std::string bold_oblique;
+    // paths to fonts
+    std::string normal;
+    std::string oblique;
+    std::string bold;
+    std::string bold_oblique;
 };
 
 #endif
-

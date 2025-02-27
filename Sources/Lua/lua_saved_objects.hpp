@@ -27,15 +27,14 @@
 
 #include "cseries.hpp"
 
-extern "C"
-{
-#include "lua.h"
+extern "C" {
 #include "lauxlib.h"
+#include "lua.h"
 #include "lualib.h"
 }
 
-#include "map.hpp"
 #include "lua_templates.hpp"
+#include "map.hpp"
 
 extern char Lua_Goal_Name[]; // "goal"
 typedef L_Class<Lua_Goal_Name> Lua_Goal;

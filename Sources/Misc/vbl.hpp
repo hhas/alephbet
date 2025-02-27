@@ -36,10 +36,10 @@ void start_recording(void);
 
 bool find_replay_to_use(bool ask_user, FileSpecifier& File);
 
-void set_recording_header_data(short number_of_players, short level_number, uint32 map_checksum,
-	short version, struct player_start_data *starts, struct game_data *game_information);
-void get_recording_header_data(short *number_of_players, short *level_number, uint32 *map_checksum,
-	short *version, struct player_start_data *starts, struct game_data *game_information);
+void set_recording_header_data(short number_of_players, short level_number, uint32 map_checksum, short version,
+                               struct player_start_data* starts, struct game_data* game_information);
+void get_recording_header_data(short* number_of_players, short* level_number, uint32* map_checksum, short* version,
+                               struct player_start_data* starts, struct game_data* game_information);
 
 bool input_controller(void);
 void increment_heartbeat_count(int value = 1);
@@ -56,12 +56,12 @@ bool setup_replay_from_random_resource(uint32 map_checksum);
 
 #ifdef DEBUG_REPLAY
 struct recorded_flag {
-	uint32 flag;
-	int16 player_index;
+    uint32 flag;
+    int16 player_index;
 };
 
 void open_stream_file(void);
-void write_flags(struct recorded_flag *buffer, int32 count);
+void write_flags(struct recorded_flag* buffer, int32 count);
 static void debug_stream_of_flags(uint32 action_flag, short player_index);
 static void close_stream_file(void);
 #endif

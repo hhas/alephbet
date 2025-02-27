@@ -22,45 +22,40 @@
  *
  */
 
-#include "cseries.hpp"
 #include "byte_swapping.hpp"
 
 
 #ifdef ALEPHBET_LITTLE_ENDIAN
 
 // Fieldcount is "int" because it can become negative in the code
-void byte_swap_memory(
-	void *memory,
-	_bs_field type,
-	int fieldcount)
-{
-	uint8 *walk;
-	int tmp;
+void byte_swap_memory(void* memory, _bs_field type, int fieldcount) {
+    uint8* walk;
+    int tmp;
 
-	walk=(uint8 *)memory;
-	switch (type) {
-	case _2byte:
-		while (fieldcount>0) {
-			tmp=walk[0];
-			walk[0]=walk[1];
-			walk[1]=tmp;
-			walk+=2;
-			fieldcount--;
-		}
-		break;
-	case _4byte:
-		while (fieldcount>0) {
-			tmp=walk[0];
-			walk[0]=walk[3];
-			walk[3]=tmp;
-			tmp=walk[1];
-			walk[1]=walk[2];
-			walk[2]=tmp;
-			walk+=4;
-			fieldcount--;
-		}
-		break;
-	}
+    walk = (uint8*)memory;
+    switch (type) {
+        case _2byte:
+            while (fieldcount > 0) {
+                tmp      = walk[0];
+                walk[0]  = walk[1];
+                walk[1]  = tmp;
+                walk    += 2;
+                fieldcount--;
+            }
+            break;
+        case _4byte:
+            while (fieldcount > 0) {
+                tmp      = walk[0];
+                walk[0]  = walk[3];
+                walk[3]  = tmp;
+                tmp      = walk[1];
+                walk[1]  = walk[2];
+                walk[2]  = tmp;
+                walk    += 4;
+                fieldcount--;
+            }
+            break;
+    }
 }
 
 #endif

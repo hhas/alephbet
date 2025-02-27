@@ -27,21 +27,20 @@
 
 #include "cstypes.hpp"
 
-
 // Limit types:
 enum {
-	_dynamic_limit_objects,				// Objects (every possible kind)
-	_dynamic_limit_monsters,			// NPC's
-	_dynamic_limit_paths,				// Paths for NPC's to follow (determines how many may be active)
-	_dynamic_limit_projectiles,			// Projectiles
-	_dynamic_limit_effects,				// Currently-active effects (blood splatters, explosions, etc.)
-	_dynamic_limit_rendered,			// Number of objects to render
-	_dynamic_limit_local_collision,		// [16] Local collision buffer (target visibility, NPC-NPC collisions, etc.)
-	_dynamic_limit_global_collision,	// [64] Global collision buffer (projectiles with other objects)
-	_dynamic_limit_ephemera,			// [1024] Ephemeral objects (render effects)
-	_dynamic_limit_garbage,				// Garbage objects (corpses) across the whole map
-	_dynamic_limit_garbage_per_polygon, // Garbage objects (corpses) within a single polygon
-	NUMBER_OF_DYNAMIC_LIMITS
+    _dynamic_limit_objects,             // Objects (every possible kind)
+    _dynamic_limit_monsters,            // NPC's
+    _dynamic_limit_paths,               // Paths for NPC's to follow (determines how many may be active)
+    _dynamic_limit_projectiles,         // Projectiles
+    _dynamic_limit_effects,             // Currently-active effects (blood splatters, explosions, etc.)
+    _dynamic_limit_rendered,            // Number of objects to render
+    _dynamic_limit_local_collision,     // [16] Local collision buffer (target visibility, NPC-NPC collisions, etc.)
+    _dynamic_limit_global_collision,    // [64] Global collision buffer (projectiles with other objects)
+    _dynamic_limit_ephemera,            // [1024] Ephemeral objects (render effects)
+    _dynamic_limit_garbage,             // Garbage objects (corpses) across the whole map
+    _dynamic_limit_garbage_per_polygon, // Garbage objects (corpses) within a single polygon
+    NUMBER_OF_DYNAMIC_LIMITS
 };
 
 

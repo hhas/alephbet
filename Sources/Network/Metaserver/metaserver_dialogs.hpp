@@ -25,8 +25,8 @@
  *
  */
 
-#include "network_metaserver.hpp"
 #include "metaserver_messages.hpp"
+#include "network_metaserver.hpp"
 #include "shared_widgets.hpp"
 
 
@@ -36,80 +36,81 @@ const IPaddress run_network_metaserver_ui();
 void setupAndConnectClient(MetaserverClient& client, bool use_remote_hub);
 
 
-
 struct game_info;
 
-class GameAvailableMetaserverAnnouncer
-{
-public:
-	GameAvailableMetaserverAnnouncer(const game_info& info, uint16 remote_hub_id = 0);
-	void Start(int32 time_limit);
+class GameAvailableMetaserverAnnouncer {
+  public:
 
-private:
-	// using gMetaserverClient instead
-	// MetaserverClient	m_client;
+    GameAvailableMetaserverAnnouncer(const game_info& info, uint16 remote_hub_id = 0);
+    void Start(int32 time_limit);
+
+  private:
+
+    // using gMetaserverClient instead
+    // MetaserverClient	m_client;
 };
 
-class GlobalMetaserverChatNotificationAdapter : public MetaserverClient::NotificationAdapter
-{
-public:
-	virtual void playersInRoomChanged(const std::vector<MetaserverPlayerInfo>&);
-	virtual void gamesInRoomChanged(const std::vector<GameListMessage::GameListEntry>&);
-	virtual void receivedChatMessage(const std::string& senderName, uint32 senderID, const std::string& message);
-	virtual void receivedLocalMessage(const std::string& message);
-	virtual void receivedBroadcastMessage(const std::string& message);
-	virtual void receivedPrivateMessage(const std::string& senderName, uint32 senderID, const std::string& message);
-	virtual void roomDisconnected();
+class GlobalMetaserverChatNotificationAdapter : public MetaserverClient::NotificationAdapter {
+  public:
+
+    virtual void playersInRoomChanged(const std::vector<MetaserverPlayerInfo>&);
+    virtual void gamesInRoomChanged(const std::vector<GameListMessage::GameListEntry>&);
+    virtual void receivedChatMessage(const std::string& senderName, uint32 senderID, const std::string& message);
+    virtual void receivedLocalMessage(const std::string& message);
+    virtual void receivedBroadcastMessage(const std::string& message);
+    virtual void receivedPrivateMessage(const std::string& senderName, uint32 senderID, const std::string& message);
+    virtual void roomDisconnected();
 };
 
 // Eventually this may disappear behind the facade of run_network_metaserver_ui()
 // Or maybe it will disappear instead, leaving this.  Unsure.
-class MetaserverClientUi : public GlobalMetaserverChatNotificationAdapter
-{
-public:
-	// Abstract factory; concrete type determined at link-time
-	static std::unique_ptr<MetaserverClientUi> Create();
+class MetaserverClientUi : public GlobalMetaserverChatNotificationAdapter {
+  public:
 
-	const IPaddress GetJoinAddressByRunning();
+    // Abstract factory; concrete type determined at link-time
+    static std::unique_ptr<MetaserverClientUi> Create();
 
-	virtual ~MetaserverClientUi () {};
+    const IPaddress GetJoinAddressByRunning();
 
-protected:
-	MetaserverClientUi() : m_used (false), m_lastGameSelected(0) {}
+    virtual ~MetaserverClientUi() {};
 
-	void delete_widgets ();
+  protected:
 
-	virtual int Run() = 0;
-	virtual void Stop() = 0;
+    MetaserverClientUi() : m_used(false), m_lastGameSelected(0) {}
 
-	void GameSelected(GameListMessage::GameListEntry game);
-	void JoinGame(const GameListMessage::GameListEntry&);
-	void PlayerSelected(MetaserverPlayerInfo info);
-	void MuteClicked();
-	void JoinClicked();
-	virtual void InfoClicked() { };
-	void playersInRoomChanged(const std::vector<MetaserverPlayerInfo> &playerChanges);
-	void gamesInRoomChanged(const std::vector<GameListMessage::GameListEntry> &gamesChanges);
-	void sendChat();
-	void ChatTextEntered (char character);
-	void handleCancel();
-	void UpdatePlayerButtons();
-	void UpdateGameButtons();
-	
-	PlayerListWidget*				m_playersInRoomWidget;
-	GameListWidget*					m_gamesInRoomWidget;
-	EditTextWidget*					m_chatEntryWidget;
-//	HistoricTextboxWidget*				m_textboxWidget;
-	ColorfulChatWidget*                             m_chatWidget;
-	ButtonWidget*					m_cancelWidget;
-	IPaddress					m_joinAddress;
-	bool						m_used;
-	ButtonWidget*                                   m_muteWidget;
-	ButtonWidget*                                   m_joinWidget;
-	ButtonWidget*                                   m_gameInfoWidget;
+    void delete_widgets();
 
-	Uint32 m_lastGameSelected;
-	bool m_stay_selected; // doesn't deselect after PM
+    virtual int Run()   = 0;
+    virtual void Stop() = 0;
+
+    void GameSelected(GameListMessage::GameListEntry game);
+    void JoinGame(const GameListMessage::GameListEntry&);
+    void PlayerSelected(MetaserverPlayerInfo info);
+    void MuteClicked();
+    void JoinClicked();
+    virtual void InfoClicked() {};
+    void playersInRoomChanged(const std::vector<MetaserverPlayerInfo>& playerChanges);
+    void gamesInRoomChanged(const std::vector<GameListMessage::GameListEntry>& gamesChanges);
+    void sendChat();
+    void ChatTextEntered(char character);
+    void handleCancel();
+    void UpdatePlayerButtons();
+    void UpdateGameButtons();
+
+    PlayerListWidget* m_playersInRoomWidget;
+    GameListWidget* m_gamesInRoomWidget;
+    EditTextWidget* m_chatEntryWidget;
+    //	HistoricTextboxWidget*				m_textboxWidget;
+    ColorfulChatWidget* m_chatWidget;
+    ButtonWidget* m_cancelWidget;
+    IPaddress m_joinAddress;
+    bool m_used;
+    ButtonWidget* m_muteWidget;
+    ButtonWidget* m_joinWidget;
+    ButtonWidget* m_gameInfoWidget;
+
+    Uint32 m_lastGameSelected;
+    bool m_stay_selected; // doesn't deselect after PM
 };
 
 #endif // METASERVER_DIALOGS_H

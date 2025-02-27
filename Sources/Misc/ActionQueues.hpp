@@ -27,54 +27,65 @@
  *  explicitly choose one.
  */
 
-#ifndef	ACTIONQUEUES_H
-#define	ACTIONQUEUES_H
+#ifndef ACTIONQUEUES_H
+#define ACTIONQUEUES_H
 
 #include "cseries.hpp"
 
 class ActionQueues {
-public:
+  public:
+
     ActionQueues(unsigned int inNumPlayers, unsigned int inQueueSize, bool inZombiesControllable);
-    
-    void		reset();
-    void		resetQueue(int inPlayerIndex);
 
-    void		enqueueActionFlags(int inPlayerIndex, const uint32* inFlags, int inFlagsCount);
-    uint32		dequeueActionFlags(int inPlayerIndex);
-    uint32		peekActionFlags(int inPlayerIndex, size_t inElementsFromHead);
-    unsigned int	countActionFlags(int inPlayerIndex);
-    unsigned int	totalCapacity(int inPlayerIndex) { return mQueueSize - 1; }
-    unsigned int	availableCapacity(int inPlayerIndex) { return totalCapacity(inPlayerIndex) - countActionFlags(inPlayerIndex); }
-    bool		zombiesControllable();
-    void		setZombiesControllable(bool inZombiesControllable);
-    
+    void reset();
+    void resetQueue(int inPlayerIndex);
+
+    void enqueueActionFlags(int inPlayerIndex, const uint32* inFlags, int inFlagsCount);
+    uint32 dequeueActionFlags(int inPlayerIndex);
+    uint32 peekActionFlags(int inPlayerIndex, size_t inElementsFromHead);
+    unsigned int countActionFlags(int inPlayerIndex);
+
+    unsigned int totalCapacity(int inPlayerIndex) { return mQueueSize - 1; }
+
+    unsigned int availableCapacity(int inPlayerIndex) {
+        return totalCapacity(inPlayerIndex) - countActionFlags(inPlayerIndex);
+    }
+
+    bool zombiesControllable();
+    void setZombiesControllable(bool inZombiesControllable);
+
     ~ActionQueues();
-    
-protected:
-    struct action_queue {
-	    unsigned int read_index, write_index;
 
-	    uint32 *buffer;
+  protected:
+
+    struct action_queue {
+        unsigned int read_index, write_index;
+
+        uint32* buffer;
     };
 
-    unsigned int	mNumPlayers;
-    unsigned int	mQueueSize;
-    action_queue*	mQueueHeaders;
-    uint32*		mFlagsBuffer;
-    bool		mZombiesControllable;
+    unsigned int mNumPlayers;
+    unsigned int mQueueSize;
+    action_queue* mQueueHeaders;
+    uint32* mFlagsBuffer;
+    bool mZombiesControllable;
 
-// Hide these until they have valid implementation
-private:
+    // Hide these until they have valid implementation
+
+  private:
+
     ActionQueues(ActionQueues&);
-    ActionQueues& operator =(ActionQueues&);
+    ActionQueues& operator=(ActionQueues&);
 };
 
 class ModifiableActionQueues : public ActionQueues {
-public:
-	ModifiableActionQueues(unsigned int inNumPlayers, unsigned int inQueueSize, bool inZombiesControllable) : ActionQueues(inNumPlayers, inQueueSize, inZombiesControllable) { }
+  public:
 
-	// modifies action flags at the head of the queue
-	void modifyActionFlags(int inPlayerIndex, uint32 inFlags, uint32 inFlagsMask);
+    ModifiableActionQueues(unsigned int inNumPlayers, unsigned int inQueueSize, bool inZombiesControllable)
+        : ActionQueues(inNumPlayers, inQueueSize, inZombiesControllable) {}
+
+    // modifies action flags at the head of the queue
+    void modifyActionFlags(int inPlayerIndex, uint32 inFlags, uint32 inFlagsMask);
 };
 
 #endif // ACTIONQUEUES_H

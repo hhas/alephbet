@@ -24,7 +24,7 @@
  *  and assets, nor to elements of any third-party scenarios.
  *
  */
-	
+
 /*
  *  Animated-textures-interface file.
  */

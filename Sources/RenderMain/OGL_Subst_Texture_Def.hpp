@@ -37,20 +37,17 @@
 
 
 // Options for wall textures and sprites
-struct OGL_TextureOptions: public OGL_TextureOptionsBase
-{
-	bool VoidVisible;		// Can see the void through texture if semitransparent
-	short TileRatioExp;		// Tile replacement walls to 2^n x 2^n WU
-	
-	// Parameters for mapping substitute sprites (inhabitants, weapons in hand)
-	
-	OGL_TextureOptions():
-		VoidVisible(false),TileRatioExp{0} {}
+struct OGL_TextureOptions : public OGL_TextureOptionsBase {
+    bool VoidVisible;   // Can see the void through texture if semitransparent
+    short TileRatioExp; // Tile replacement walls to 2^n x 2^n WU
+
+    // Parameters for mapping substitute sprites (inhabitants, weapons in hand)
+
+    OGL_TextureOptions() : VoidVisible(false), TileRatioExp{0} {}
 };
 
-
 // Get the texture options that are currently set
-OGL_TextureOptions *OGL_GetTextureOptions(short Collection, short CLUT, short Bitmap);
+OGL_TextureOptions* OGL_GetTextureOptions(short Collection, short CLUT, short Bitmap);
 
 // for managing the texture loading and unloading;
 int OGL_CountTextures(short Collection);

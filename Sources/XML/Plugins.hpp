@@ -42,94 +42,106 @@
 #include "FileHandler.hpp"
 
 struct ScenarioInfo {
-	std::string name;
-	std::string scenario_id;
-	std::string version;
-};
-struct ShapesPatch {
-	bool requires_opengl;
-	std::string path;
+    std::string name;
+    std::string scenario_id;
+    std::string version;
 };
 
-struct MapPatch
-{
-	std::set<uint32_t> parent_checksums;
-	using resource_key_t = std::pair<uint32_t, int>;
-	std::map<resource_key_t, std::string> resource_map;
+struct ShapesPatch {
+    bool requires_opengl;
+    std::string path;
+};
+
+struct MapPatch {
+    std::set<uint32_t> parent_checksums;
+    using resource_key_t = std::pair<uint32_t, int>;
+    std::map<resource_key_t, std::string> resource_map;
 };
 
 struct Plugin {
-	DirectorySpecifier directory;
-	std::string name;
-	std::string description;
-	std::string version;
-	std::vector<std::string> mmls;
-	std::string hud_lua;
-	std::string solo_lua;
-	std::string stats_lua;
-	std::string theme;
-	std::string required_version;
-	std::vector<ShapesPatch> shapes_patches;
-	std::vector<ScenarioInfo> required_scenarios;
-	std::vector<MapPatch> map_patches;
+    DirectorySpecifier directory;
+    std::string name;
+    std::string description;
+    std::string version;
+    std::vector<std::string> mmls;
+    std::string hud_lua;
+    std::string solo_lua;
+    std::string stats_lua;
+    std::string theme;
+    std::string required_version;
+    std::vector<ShapesPatch> shapes_patches;
+    std::vector<ScenarioInfo> required_scenarios;
+    std::vector<MapPatch> map_patches;
 
-	bool auto_enable;
-	bool enabled;
-	bool overridden;
-	bool overridden_solo;
-	bool compatible() const;
-	bool allowed() const;
-	bool valid() const;
+    bool auto_enable;
+    bool enabled;
+    bool overridden;
+    bool overridden_solo;
+    bool compatible() const;
+    bool allowed() const;
+    bool valid() const;
 
-	bool operator<(const Plugin& other) const {
-		return name < other.name;
-	}
+    bool operator<(const Plugin& other) const { return name < other.name; }
 
-	bool get_resource(uint32_t checksum, uint32_t type, int id, LoadedResource& rsrc) const;
+    bool get_resource(uint32_t checksum, uint32_t type, int id, LoadedResource& rsrc) const;
 };
 
 class Plugins {
-	friend class PluginLoader;
-public:
-	static Plugins* instance();
-	typedef std::vector<Plugin>::iterator iterator;
-	
-	enum GameMode { kMode_Menu, kMode_Solo, kMode_Net };
-	
-	void enumerate();
-	void invalidate() { m_validated = false; }
-	void set_mode(GameMode mode) { m_mode = mode; }
-	GameMode mode() { return m_mode; }
-	void load_mml(bool load_menu_mml_only);
+    friend class PluginLoader;
 
-	void load_shapes_patches(bool opengl);
+  public:
 
-	bool disable(const std::filesystem::path& path);
-	bool enable(const std::filesystem::path& path);
+    static Plugins* instance();
+    typedef std::vector<Plugin>::iterator iterator;
 
-	iterator begin() { return m_plugins.begin(); }
-	iterator end() { return m_plugins.end(); }
+    enum GameMode {
+        kMode_Menu,
+        kMode_Solo,
+        kMode_Net
+    };
 
-	const Plugin* find_hud_lua();
-	const Plugin* find_solo_lua();
-	const Plugin* find_stats_lua();
-	const Plugin* find_theme();
+    void enumerate();
 
-	bool get_resource(uint32_t type, int id, LoadedResource& rsrc);
-	void set_map_checksum(uint32_t checksum);
-private:
-	Plugins() { }
+    void invalidate() { m_validated = false; }
 
-	void add(const Plugin& plugin) { m_plugins.push_back(plugin); }
-	void validate();
+    void set_mode(GameMode mode) { m_mode = mode; }
 
-	std::vector<Plugin> m_plugins;
-	bool m_validated = false;
-	GameMode m_mode = kMode_Menu;
+    GameMode mode() { return m_mode; }
 
-	std::stack<ScopedSearchPath, std::list<ScopedSearchPath>> m_search_paths;
+    void load_mml(bool load_menu_mml_only);
 
-	uint32_t m_map_checksum;
+    void load_shapes_patches(bool opengl);
+
+    bool disable(const std::filesystem::path& path);
+    bool enable(const std::filesystem::path& path);
+
+    iterator begin() { return m_plugins.begin(); }
+
+    iterator end() { return m_plugins.end(); }
+
+    const Plugin* find_hud_lua();
+    const Plugin* find_solo_lua();
+    const Plugin* find_stats_lua();
+    const Plugin* find_theme();
+
+    bool get_resource(uint32_t type, int id, LoadedResource& rsrc);
+    void set_map_checksum(uint32_t checksum);
+
+  private:
+
+    Plugins() {}
+
+    void add(const Plugin& plugin) { m_plugins.push_back(plugin); }
+
+    void validate();
+
+    std::vector<Plugin> m_plugins;
+    bool m_validated = false;
+    GameMode m_mode  = kMode_Menu;
+
+    std::stack<ScopedSearchPath, std::list<ScopedSearchPath>> m_search_paths;
+
+    uint32_t m_map_checksum;
 };
 
 

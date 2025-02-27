@@ -31,8 +31,8 @@
 
 #include "FileHandler.hpp"
 #include <string>
-#include <vector>
 #include <time.h>
+#include <vector>
 
 struct QuickSave {
     FileSpecifier save_file;
@@ -44,28 +44,31 @@ struct QuickSave {
     std::string formatted_ticks;
     int16 players;
 
-    bool operator<(const QuickSave& other) const {
-        return save_time < other.save_time;
-    }
+    bool operator<(const QuickSave& other) const { return save_time < other.save_time; }
 };
 
 class QuickSaves {
     friend class QuickSaveLoader;
-public:
+
+  public:
+
     static QuickSaves* instance();
     typedef std::vector<QuickSave>::iterator iterator;
-    
+
     void enumerate();
     void clear();
     void delete_surplus_saves(size_t max_saves);
-    
+
     iterator begin() { return m_saves.begin(); }
+
     iterator end() { return m_saves.end(); }
-    
-private:
-    QuickSaves() { }
+
+  private:
+
+    QuickSaves() {}
+
     void add(const QuickSave& save) { m_saves.push_back(save); }
-    
+
     std::vector<QuickSave> m_saves;
 };
 

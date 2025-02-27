@@ -28,88 +28,71 @@
   SOFTWARE.
 */
 
-//#include <unistd.h>
+// #include <unistd.h>
 #include <cstdlib>
 
 class Message;
 class CommunicationsChannel;
 
+class MessageHandler {
+  public:
 
+    virtual void handle(Message* inMessage, CommunicationsChannel* inChannel) = 0;
 
-class MessageHandler
-{
-public:
-	virtual void handle(Message* inMessage, CommunicationsChannel* inChannel) = 0;
-	virtual ~MessageHandler() {}
+    virtual ~MessageHandler() {}
 };
 
+template <typename tMessage, typename tChannel = CommunicationsChannel>
+class TypedMessageHandlerFunction : public MessageHandler {
+  public:
 
+    typedef void (*FunctionType)(tMessage* inMessage, tChannel* inChannel);
 
-template<typename tMessage, typename tChannel = CommunicationsChannel>
-class TypedMessageHandlerFunction : public MessageHandler
-{
-public:
-	typedef void (*FunctionType)(tMessage* inMessage, tChannel* inChannel);
+    TypedMessageHandlerFunction(FunctionType inFunction) : mFunction(inFunction) {}
 
-	TypedMessageHandlerFunction(FunctionType inFunction)
-		: mFunction(inFunction)
-	{}
+    void handle(Message* inMessage, CommunicationsChannel* inChannel) {
+        if (mFunction != NULL)
+            mFunction(dynamic_cast<tMessage*>(inMessage), dynamic_cast<tChannel*>(inChannel));
+    }
 
-	void handle(Message* inMessage, CommunicationsChannel* inChannel)
-	{
-		if(mFunction != NULL)
-			mFunction(dynamic_cast<tMessage*>(inMessage), dynamic_cast<tChannel*>(inChannel));
-	}
+    FunctionType function() const { return mFunction; }
 
-	FunctionType function() const { return mFunction; }
-	void setFunction(FunctionType inFunction) { mFunction = inFunction; }
+    void setFunction(FunctionType inFunction) { mFunction = inFunction; }
 
-private:
-	FunctionType	mFunction;
+  private:
+
+    FunctionType mFunction;
 };
 
+template <typename tTargetClass, typename tMessage = Message, typename tChannel = CommunicationsChannel>
+class MessageHandlerMethod : public MessageHandler {
+  public:
 
+    typedef void (tTargetClass::*MethodType)(tMessage* inMessage, tChannel* inChannel);
+    typedef tMessage MessageType;
+    typedef tChannel ChannelType;
 
-template<typename tTargetClass, typename tMessage = Message, typename tChannel = CommunicationsChannel>
-class MessageHandlerMethod : public MessageHandler
-{
-public:
-	typedef void (tTargetClass::*MethodType)(tMessage* inMessage, tChannel* inChannel);
-	typedef tMessage MessageType;
-	typedef tChannel ChannelType;
+    MessageHandlerMethod(tTargetClass* inObject, MethodType inMethod) : mObject(inObject), mMethod(inMethod) {}
 
-	MessageHandlerMethod(tTargetClass* inObject, MethodType inMethod)
-		: mObject(inObject), mMethod(inMethod)
-	{}
+    void handle(Message* inMessage, CommunicationsChannel* inChannel) {
+        if (mObject != NULL && mMethod != NULL)
+            (mObject->*(mMethod))(dynamic_cast<tMessage*>(inMessage), dynamic_cast<tChannel*>(inChannel));
+    }
 
-	void handle(Message* inMessage, CommunicationsChannel* inChannel)
-	{
-		if(mObject != NULL && mMethod != NULL)
-			(mObject->*(mMethod))(dynamic_cast<tMessage*>(inMessage), dynamic_cast<tChannel*>(inChannel));
-	}
+    tTargetClass* mObject;
+    MethodType mMethod;
 
-	tTargetClass*	mObject;
-	MethodType	mMethod;
-
-private:
+  private:
 };
 
-
-
-template<typename tTargetClass, typename tMessage, typename tChannel>
+template <typename tTargetClass, typename tMessage, typename tChannel>
 static inline MessageHandlerMethod<tTargetClass, tMessage, tChannel>*
-newMessageHandlerMethod(
-			tTargetClass* targetObject,
-			void (tTargetClass::*targetMethod)(tMessage* inMessage, tChannel* inChannel)
-			)
-{
-	return new MessageHandlerMethod<tTargetClass, tMessage, tChannel>(targetObject, targetMethod);
+        newMessageHandlerMethod(tTargetClass* targetObject,
+                                void (tTargetClass::*targetMethod)(tMessage* inMessage, tChannel* inChannel)) {
+    return new MessageHandlerMethod<tTargetClass, tMessage, tChannel>(targetObject, targetMethod);
 }
 
-
-
 typedef TypedMessageHandlerFunction<Message> MessageHandlerFunction;
-
 
 
 #endif // MESSAGEHANDLER_H

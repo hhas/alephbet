@@ -30,5 +30,3 @@
 #include "MessageHandler.hpp"
 
 #endif // !defined(DISABLE_NETWORKING)
-
-

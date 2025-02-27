@@ -31,186 +31,200 @@
  */
 
 #include "DDS.hpp"
-#include <vector>
-#include "cseries.hpp"
 #include "FileHandler.hpp"
+#include "cseries.hpp"
+#include <vector>
 
 // Need an object to hold the read-in image.
-class ImageDescriptor
-{
-	int Width;	    // along scanlines
-	int Height;	    // scanline to scanline
+class ImageDescriptor {
+    int Width;  // along scanlines
+    int Height; // scanline to scanline
 
-	double VScale;
-	double UScale;
+    double VScale;
+    double UScale;
 
-	uint32 *Pixels;
-	int Size;
+    uint32* Pixels;
+    int Size;
 
-	int MipMapCount;
-	
-public:
-	
-	bool IsPresent() const {return (Pixels != NULL); }
-	bool IsPremultiplied() const { return (IsPresent() ? PremultipliedAlpha : false); }
+    int MipMapCount;
 
-	bool LoadFromFile(FileSpecifier& File, int ImgMode, int flags, int actual_width = 0, int actual_height = 0, int maxSize = 0);
+  public:
 
-	// Size of level 0 image
-	int GetWidth() const {return Width;}
-	int GetHeight() const {return Height;}
-	int GetNumPixels() const {return Width*Height;}
+    bool IsPresent() const { return (Pixels != NULL); }
 
-	int GetMipMapCount() const { return MipMapCount; }
-	int GetTotalBytes() const { return Size; }
-	int GetBufferSize() const { return Size; }
-	int GetFormat() const { return Format; }
+    bool IsPremultiplied() const { return (IsPresent() ? PremultipliedAlpha : false); }
 
-	double GetVScale() const { return VScale; }
-	double GetUScale() const { return UScale; }
+    bool LoadFromFile(FileSpecifier& File, int ImgMode, int flags, int actual_width = 0, int actual_height = 0,
+                      int maxSize = 0);
 
-	// Pixel accessors
-	uint32& GetPixel(int Horiz, int Vert) {return Pixels[Width*(Vert%Height) + (Horiz%Width)];}
-	uint32 *GetPixelBasePtr() {return Pixels;}
-	const uint32 *GetBuffer() const { return Pixels; }
-	uint32 *GetBuffer() { return Pixels; }
+    // Size of level 0 image
+    int GetWidth() const { return Width; }
 
-	uint32 *GetMipMapPtr(int Level);
-	const uint32 *GetMipMapPtr(int Level) const;
-	int GetMipMapSize(int level) const;
-	
-	// Reallocation
-	void Resize(int _Width, int _Height);
+    int GetHeight() const { return Height; }
 
-	// mipmappy operations
-	void Resize(int _Width, int _Height, int _TotalBytes);
+    int GetNumPixels() const { return Width * Height; }
 
-	bool Minify();
+    int GetMipMapCount() const { return MipMapCount; }
 
-	bool MakeRGBA();
-	bool MakeDXTC3();
+    int GetTotalBytes() const { return Size; }
 
-	void PremultiplyAlpha();
-	bool PremultipliedAlpha; // public so find silhouette version can unset
+    int GetBufferSize() const { return Size; }
 
-	// Clearing
-	void Clear()
-		{Width = Height = Size = 0; delete []Pixels; Pixels = NULL;}
+    int GetFormat() const { return Format; }
 
-	ImageDescriptor(const ImageDescriptor &CopyFrom);
-	
-ImageDescriptor(): Width(0), Height(0), VScale(1.0), UScale(1.0), Pixels(NULL), Size(0), PremultipliedAlpha(false) {}
+    double GetVScale() const { return VScale; }
 
-	// asumes RGBA8
-	ImageDescriptor(int width, int height, uint32 *pixels);
+    double GetUScale() const { return UScale; }
 
-	enum ImageFormat {
-		RGBA8,
-		DXTC1,
-		DXTC3,
-		DXTC5,
-		Unknown
-	};
+    // Pixel accessors
+    uint32& GetPixel(int Horiz, int Vert) { return Pixels[Width * (Vert % Height) + (Horiz % Width)]; }
 
-	~ImageDescriptor()
-	{
-		delete []Pixels;
-		Pixels = NULL;
-	}
-			
-private:
-	bool LoadDDSFromFile(FileSpecifier& File, int flags, int actual_width = 0, int actual_height = 0, int maxSize = 0);
-	bool LoadMipMapFromFile(OpenedFile &File, int flags, int level, DDSURFACEDESC2 &ddsd, int skip);
-	bool SkipMipMapFromFile(OpenedFile &File, int flags, int level, DDSURFACEDESC2 &ddsd);
+    uint32* GetPixelBasePtr() { return Pixels; }
 
-	ImageFormat Format;
+    const uint32* GetBuffer() const { return Pixels; }
+
+    uint32* GetBuffer() { return Pixels; }
+
+    uint32* GetMipMapPtr(int Level);
+    const uint32* GetMipMapPtr(int Level) const;
+    int GetMipMapSize(int level) const;
+
+    // Reallocation
+    void Resize(int _Width, int _Height);
+
+    // mipmappy operations
+    void Resize(int _Width, int _Height, int _TotalBytes);
+
+    bool Minify();
+
+    bool MakeRGBA();
+    bool MakeDXTC3();
+
+    void PremultiplyAlpha();
+    bool PremultipliedAlpha; // public so find silhouette version can unset
+
+    // Clearing
+    void Clear() {
+        Width = Height = Size = 0;
+        delete[] Pixels;
+        Pixels = NULL;
+    }
+
+    ImageDescriptor(const ImageDescriptor& CopyFrom);
+
+    ImageDescriptor()
+        : Width(0), Height(0), VScale(1.0), UScale(1.0), Pixels(NULL), Size(0), PremultipliedAlpha(false) {}
+
+    // asumes RGBA8
+    ImageDescriptor(int width, int height, uint32* pixels);
+
+    enum ImageFormat {
+        RGBA8,
+        DXTC1,
+        DXTC3,
+        DXTC5,
+        Unknown
+    };
+
+    ~ImageDescriptor() {
+        delete[] Pixels;
+        Pixels = NULL;
+    }
+
+  private:
+
+    bool LoadDDSFromFile(FileSpecifier& File, int flags, int actual_width = 0, int actual_height = 0, int maxSize = 0);
+    bool LoadMipMapFromFile(OpenedFile& File, int flags, int level, DDSURFACEDESC2& ddsd, int skip);
+    bool SkipMipMapFromFile(OpenedFile& File, int flags, int level, DDSURFACEDESC2& ddsd);
+
+    ImageFormat Format;
 };
 
 template <typename T>
-class copy_on_edit
-{
-public:
-	copy_on_edit() : _original(NULL), _copy(NULL) { };
+class copy_on_edit {
+  public:
 
-	void set(const T* original) {
-		if (_copy) {
-			delete _copy;
-			_copy = NULL;
-		}
-		_original = original;
-	}
+    copy_on_edit() : _original(NULL), _copy(NULL) {};
 
-	void set(T* original) {
-		if (_copy) {
-			delete _copy;
-			_copy= NULL;
-		}
-		_original = original;
-	}
+    void set(const T* original) {
+        if (_copy) {
+            delete _copy;
+            _copy = NULL;
+        }
+        _original = original;
+    }
 
+    void set(T* original) {
+        if (_copy) {
+            delete _copy;
+            _copy = NULL;
+        }
+        _original = original;
+    }
 
-	const T* get() {
-		if (_copy)
-			return (const T*) _copy;
-		else
-			return (const T*) _original;
-	}
+    const T* get() {
+        if (_copy)
+            return (const T*)_copy;
+        else
+            return (const T*)_original;
+    }
 
-	T* edit() {
-		if (!_original) {
-			return _copy;
-		} else {
-			if (!_copy) {
-				_copy = new T(*_original);
-			}
-			return _copy;
-		}
-	}
+    T* edit() {
+        if (!_original) {
+            return _copy;
+        } else {
+            if (!_copy) {
+                _copy = new T(*_original);
+            }
+            return _copy;
+        }
+    }
 
-	// takes possession of copy
-	T* edit(T* copy) {
-		if (_copy) {
-			delete _copy;
-		}
-		_original = NULL;
-		_copy = copy;
+    // takes possession of copy
+    T* edit(T* copy) {
+        if (_copy) {
+            delete _copy;
+        }
+        _original = NULL;
+        _copy     = copy;
         return _copy;
-	}
+    }
 
-	~copy_on_edit() {
-		if (_copy) {
-			delete _copy;
-			_copy = NULL;
-		}
-	}
+    ~copy_on_edit() {
+        if (_copy) {
+            delete _copy;
+            _copy = NULL;
+        }
+    }
 
-private:
-	T* _original;
-	T* _copy;
+  private:
+
+    T* _original;
+    T* _copy;
 };
 
 typedef copy_on_edit<ImageDescriptor> ImageDescriptorManager;
-		
 
 // What to load: image colors (must be loaded first)
 // or image opacity (replaces the default, which is 100% opaque everywhere).
 // The image-opacity image must have the same size as the color image;
 // it is interpreted as a grayscale image.
 enum {
-	ImageLoader_Colors,
-	ImageLoader_Opacity
+    ImageLoader_Colors,
+    ImageLoader_Opacity
 };
 
 enum {
-	ImageLoader_ResizeToPowersOfTwo = 0x1,
-	ImageLoader_CanUseDXTC = 0x2,
-	ImageLoader_LoadMipMaps = 0x4,
-	ImageLoader_LoadDXTC1AsDXTC3 = 0x8,
-	ImageLoader_ImageIsAlreadyPremultiplied = 0x10
+    ImageLoader_ResizeToPowersOfTwo         = 0x1,
+    ImageLoader_CanUseDXTC                  = 0x2,
+    ImageLoader_LoadMipMaps                 = 0x4,
+    ImageLoader_LoadDXTC1AsDXTC3            = 0x8,
+    ImageLoader_ImageIsAlreadyPremultiplied = 0x10
 };
-// Returns whether or not the loading was successful
-//bool LoadImageFromFile(ImageDescriptor& Img, FileSpecifier& File, int ImgMode, int flags, int maxSize = 0);
 
-uint32 *GetMipMapPtr(uint32 *pixels, int size, int level, int width, int height, int format);
+// Returns whether or not the loading was successful
+// bool LoadImageFromFile(ImageDescriptor& Img, FileSpecifier& File, int ImgMode, int flags, int maxSize = 0);
+
+uint32* GetMipMapPtr(uint32* pixels, int size, int level, int width, int height, int format);
 
 #endif

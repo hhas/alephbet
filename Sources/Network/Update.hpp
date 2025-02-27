@@ -29,44 +29,47 @@
  *  Checks for updates online
  */
 
-#include <string>
-#include <SDL_thread.h>
 #include "cseries.hpp"
+#include <SDL_thread.h>
+#include <string>
 
-class Update
-{
-public:
-	static Update *instance() { 
-		static Update *m_instance = nullptr;
-		if (!m_instance) 
-			m_instance = new Update(); 
-		return m_instance; 
-	}
+class Update {
+  public:
 
-	enum Status
-	{
-		CheckingForUpdate,
-		UpdateCheckFailed,
-		UpdateAvailable,
-		NoUpdateAvailable
-	};
+    static Update* instance() {
+        static Update* m_instance = nullptr;
+        if (!m_instance)
+            m_instance = new Update();
+        return m_instance;
+    }
 
-	Status GetStatus() { return m_status; }
-	std::string NewDisplayVersion() { assert(m_status == UpdateAvailable); return m_new_display_version; }
+    enum Status {
+        CheckingForUpdate,
+        UpdateCheckFailed,
+        UpdateAvailable,
+        NoUpdateAvailable
+    };
 
-private:
-	Update();
-	~Update();
+    Status GetStatus() { return m_status; }
 
-	void StartUpdateCheck();
-	static int update_thread(void *);
-	int Thread();
+    std::string NewDisplayVersion() {
+        assert(m_status == UpdateAvailable);
+        return m_new_display_version;
+    }
 
-	Status m_status;
-	std::string m_new_date_version;
-	std::string m_new_display_version;
-	SDL_Thread *m_thread;
+  private:
 
+    Update();
+    ~Update();
+
+    void StartUpdateCheck();
+    static int update_thread(void*);
+    int Thread();
+
+    Status m_status;
+    std::string m_new_date_version;
+    std::string m_new_display_version;
+    SDL_Thread* m_thread;
 };
 
 #endif

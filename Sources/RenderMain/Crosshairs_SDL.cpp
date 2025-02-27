@@ -22,8 +22,8 @@
  *
  */
 
-#include "cseries.hpp"
 #include "Crosshairs.hpp"
+#include "cseries.hpp"
 #include "screen_drawing.hpp"
 #include "world.hpp" // for struct world_point2d :(
 
@@ -36,122 +36,111 @@ extern bool use_lua_hud_crosshairs;
 
 static bool _Crosshairs_IsActive = false;
 
-bool Crosshairs_IsActive(void)
-{
-	return _Crosshairs_IsActive;
-}
+bool Crosshairs_IsActive(void) { return _Crosshairs_IsActive; }
 
-bool Crosshairs_SetActive(bool NewState)
-{
-	return _Crosshairs_IsActive = NewState;
-}
-
+bool Crosshairs_SetActive(bool NewState) { return _Crosshairs_IsActive = NewState; }
 
 /*
  *  Draw crosshairs in center of surface
  */
 
-bool Crosshairs_Render(SDL_Surface *s)
-{
-	if (!_Crosshairs_IsActive)
-		return false;
-	if (use_lua_hud_crosshairs)
-		return false;
+bool Crosshairs_Render(SDL_Surface* s) {
+    if (!_Crosshairs_IsActive)
+        return false;
+    if (use_lua_hud_crosshairs)
+        return false;
 
-	// Get the crosshair data
-	CrosshairData &Crosshairs = GetCrosshairData();
+    // Get the crosshair data
+    CrosshairData& Crosshairs = GetCrosshairData();
 
-	// Get color
-	uint32 pixel = SDL_MapRGB(s->format, Crosshairs.Color.red >> 8, Crosshairs.Color.green >> 8, Crosshairs.Color.blue >> 8);
+    // Get color
+    uint32 pixel
+            = SDL_MapRGB(s->format, Crosshairs.Color.red >> 8, Crosshairs.Color.green >> 8, Crosshairs.Color.blue >> 8);
 
-	// Get coordinates
-	int xcen = s->w / 2 - 1, ycen = s->h / 2 - 1;
+    // Get coordinates
+    int xcen = s->w / 2 - 1, ycen = s->h / 2 - 1;
 
-	if (Crosshairs.Shape == CHShape_RealCrosshairs)
-	{
+    if (Crosshairs.Shape == CHShape_RealCrosshairs) {
 
-		// Left
-		SDL_Rect r = {xcen - Crosshairs.FromCenter - Crosshairs.Length, ycen - Crosshairs.Thickness / 2, Crosshairs.Length, Crosshairs.Thickness};
-		SDL_FillRect(s, &r, pixel);
-		
-		// Right
-		r.x = xcen + Crosshairs.FromCenter;
-		SDL_FillRect(s, &r, pixel);
-		
-		// Top
-		r.x = xcen - Crosshairs.Thickness / 2;
-		r.y = ycen - Crosshairs.FromCenter - Crosshairs.Length;
-		r.w = Crosshairs.Thickness;
-		r.h = Crosshairs.Length;
-		SDL_FillRect(s, &r, pixel);
-		
-		// Bottom
-		r.y = ycen + Crosshairs.FromCenter;
-		SDL_FillRect(s, &r, pixel);
-	}
-	else if (Crosshairs.Shape == CHShape_Circle)
-	{
+        // Left
+        SDL_Rect r = {xcen - Crosshairs.FromCenter - Crosshairs.Length, ycen - Crosshairs.Thickness / 2,
+                      Crosshairs.Length, Crosshairs.Thickness};
+        SDL_FillRect(s, &r, pixel);
 
-		// This will really be an octagon, for OpenGL-rendering convenience
-		
-		// Precalculate the line endpoints, for convenience
+        // Right
+        r.x = xcen + Crosshairs.FromCenter;
+        SDL_FillRect(s, &r, pixel);
 
-		short octa_points[2][6];
-		short len;
+        // Top
+        r.x = xcen - Crosshairs.Thickness / 2;
+        r.y = ycen - Crosshairs.FromCenter - Crosshairs.Length;
+        r.w = Crosshairs.Thickness;
+        r.h = Crosshairs.Length;
+        SDL_FillRect(s, &r, pixel);
 
-		len = Crosshairs.Length;
-		octa_points[0][0] = xcen - len;
-		octa_points[0][5] = xcen + len;
-		octa_points[1][0] = ycen - len;
-		octa_points[1][5] = ycen + len;
+        // Bottom
+        r.y = ycen + Crosshairs.FromCenter;
+        SDL_FillRect(s, &r, pixel);
+    } else if (Crosshairs.Shape == CHShape_Circle) {
 
-		len = len / 2;
-		octa_points[0][1] = xcen - len;
-		octa_points[0][4] = xcen + len;
-		octa_points[1][1] = ycen - len;
-		octa_points[1][4] = ycen + len;
+        // This will really be an octagon, for OpenGL-rendering convenience
 
-		len = std::min(len, Crosshairs.FromCenter);
-		octa_points[0][2] = xcen - len;
-		octa_points[0][3] = xcen + len;
-		octa_points[1][2] = ycen - len;
-		octa_points[1][3] = ycen + len;
+        // Precalculate the line endpoints, for convenience
 
-		// We need to do 12 line segments, so we do them in 2*2*3 fashion
-		for (int ix = 0; ix < 2; ix++)
-		{
-			int ixi = (ix > 0) ? 5 : 0;
-			int ixid = (ix > 0) ? -1 : 1;
-			for (int iy = 0; iy < 2; iy++)
-			{
-				int iyi = (iy > 0) ? 5 : 0;
-				int iyid = (iy > 0) ? -1 : 1;
+        short octa_points[2][6];
+        short len;
 
-				world_point2d p1;
-				world_point2d p2;
+        len               = Crosshairs.Length;
+        octa_points[0][0] = xcen - len;
+        octa_points[0][5] = xcen + len;
+        octa_points[1][0] = ycen - len;
+        octa_points[1][5] = ycen + len;
 
-				// Vertical
-				p1.x = octa_points[0][ixi];
-				p1.y = octa_points[1][iyi + 2 * iyid];
-				p2.x = octa_points[0][ixi];
-				p2.y = octa_points[1][iyi+iyid];
+        len               = len / 2;
+        octa_points[0][1] = xcen - len;
+        octa_points[0][4] = xcen + len;
+        octa_points[1][1] = ycen - len;
+        octa_points[1][4] = ycen + len;
 
-				draw_line(s, &p1, &p2, pixel, Crosshairs.Thickness);
+        len               = std::min(len, Crosshairs.FromCenter);
+        octa_points[0][2] = xcen - len;
+        octa_points[0][3] = xcen + len;
+        octa_points[1][2] = ycen - len;
+        octa_points[1][3] = ycen + len;
 
-				// Diagonal
-				p1 = p2;
-				p2.x = octa_points[0][ixi+ixid];
-				p2.y = octa_points[1][iyi];
-				draw_line(s, &p1, &p2, pixel, Crosshairs.Thickness);
+        // We need to do 12 line segments, so we do them in 2*2*3 fashion
+        for (int ix = 0; ix < 2; ix++) {
+            int ixi  = (ix > 0) ? 5 : 0;
+            int ixid = (ix > 0) ? -1 : 1;
+            for (int iy = 0; iy < 2; iy++) {
+                int iyi  = (iy > 0) ? 5 : 0;
+                int iyid = (iy > 0) ? -1 : 1;
 
-				// Horizontal
-				p1 = p2;
-				p2.x = octa_points[0][ixi + 2*ixid];
-				p2.y = octa_points[1][iyi];
-				draw_line(s, &p1, &p2, pixel, Crosshairs.Thickness);
-			}
-		}
-	}
+                world_point2d p1;
+                world_point2d p2;
 
-	return true;
+                // Vertical
+                p1.x = octa_points[0][ixi];
+                p1.y = octa_points[1][iyi + 2 * iyid];
+                p2.x = octa_points[0][ixi];
+                p2.y = octa_points[1][iyi + iyid];
+
+                draw_line(s, &p1, &p2, pixel, Crosshairs.Thickness);
+
+                // Diagonal
+                p1   = p2;
+                p2.x = octa_points[0][ixi + ixid];
+                p2.y = octa_points[1][iyi];
+                draw_line(s, &p1, &p2, pixel, Crosshairs.Thickness);
+
+                // Horizontal
+                p1   = p2;
+                p2.x = octa_points[0][ixi + 2 * ixid];
+                p2.y = octa_points[1][iyi];
+                draw_line(s, &p1, &p2, pixel, Crosshairs.Thickness);
+            }
+        }
+    }
+
+    return true;
 }

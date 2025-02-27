@@ -514,6 +514,7 @@
 		4FBA8DC22D70C5BF00D15335 /* Model3D.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4FBA8DB12D70C5BF00D15335 /* Model3D.hpp */; };
 		4FBA8DC32D70C5BF00D15335 /* ModelRenderer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4FBA8DB32D70C5BF00D15335 /* ModelRenderer.hpp */; };
 		4FBA8DC42D70C5BF00D15335 /* WavefrontLoader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4FBA8DB72D70C5BF00D15335 /* WavefrontLoader.hpp */; };
+		4FBA8DC62D70DC1B00D15335 /* AlephBet.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4FBA8DC52D70DC1B00D15335 /* AlephBet.icns */; };
 		AE9974FE2661D49E00DDD370 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE9974FD2661D49E00DDD370 /* AudioToolbox.framework */; };
 		AE9975002661D4DD00DDD370 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE9974FF2661D4DD00DDD370 /* Carbon.framework */; };
 		AE9975022661D50F00DDD370 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE9975012661D50F00DDD370 /* ForceFeedback.framework */; };
@@ -527,7 +528,6 @@
 		AE9975142661D91600DDD370 /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AE99750C2661D71000DDD370 /* libcurl.tbd */; };
 		AE9975162661D91D00DDD370 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AE99750F2661D81600DDD370 /* libz.tbd */; };
 		AEC3C7C309AD68AC003258E4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
-		AEC3C7C409AD68AC003258E4 /* AlephBet.icns in Resources */ = {isa = PBXBuildFile; fileRef = F53AB44B01F3CB1D01EF2901 /* AlephBet.icns */; };
 		AEC3C7C509AD68AC003258E4 /* ImagesIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = F56AEB6B01F8AA1201780311 /* ImagesIcon.icns */; };
 		AEC3C7C609AD68AC003258E4 /* ShapesIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = F56AEB6C01F8AA1201780311 /* ShapesIcon.icns */; };
 		AEC3C7C709AD68AC003258E4 /* SoundsIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = F56AEB6D01F8AA1201780311 /* SoundsIcon.icns */; };
@@ -1024,7 +1024,7 @@
 		4FBA8B9B2D70C53E00D15335 /* StreamPlayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StreamPlayer.cpp; sourceTree = "<group>"; };
 		4FBA8B9D2D70C53E00D15335 /* CommunicationsChannel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CommunicationsChannel.hpp; sourceTree = "<group>"; };
 		4FBA8B9E2D70C53E00D15335 /* CommunicationsChannel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CommunicationsChannel.cpp; sourceTree = "<group>"; };
-		4FBA8B9F2D70C53E00D15335 /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		4FBA8B9F2D70C53E00D15335 /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = file; path = Makefile.am; sourceTree = "<group>"; };
 		4FBA8BA02D70C53E00D15335 /* Message.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Message.hpp; sourceTree = "<group>"; };
 		4FBA8BA12D70C53E00D15335 /* Message.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Message.cpp; sourceTree = "<group>"; };
 		4FBA8BA22D70C53E00D15335 /* MessageDispatcher.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MessageDispatcher.hpp; sourceTree = "<group>"; };
@@ -1046,7 +1046,6 @@
 		4FBA8BB42D70C53E00D15335 /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		4FBA8DAE2D70C5BF00D15335 /* Dim3_Loader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Dim3_Loader.hpp; sourceTree = "<group>"; };
 		4FBA8DAF2D70C5BF00D15335 /* Dim3_Loader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Dim3_Loader.cpp; sourceTree = "<group>"; };
-		4FBA8DB02D70C5BF00D15335 /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		4FBA8DB12D70C5BF00D15335 /* Model3D.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Model3D.hpp; sourceTree = "<group>"; };
 		4FBA8DB22D70C5BF00D15335 /* Model3D.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Model3D.cpp; sourceTree = "<group>"; };
 		4FBA8DB32D70C5BF00D15335 /* ModelRenderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ModelRenderer.hpp; sourceTree = "<group>"; };
@@ -1055,6 +1054,7 @@
 		4FBA8DB62D70C5BF00D15335 /* StudioLoader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StudioLoader.cpp; sourceTree = "<group>"; };
 		4FBA8DB72D70C5BF00D15335 /* WavefrontLoader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WavefrontLoader.hpp; sourceTree = "<group>"; };
 		4FBA8DB82D70C5BF00D15335 /* WavefrontLoader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WavefrontLoader.cpp; sourceTree = "<group>"; };
+		4FBA8DC52D70DC1B00D15335 /* AlephBet.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AlephBet.icns; sourceTree = "<group>"; };
 		AE1F1B912662C5A500E6390E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AE941DE713E783F30077218A /* Info-AlephBet.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-AlephBet.plist"; sourceTree = "<group>"; };
 		AE9974FD2661D49E00DDD370 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -1071,7 +1071,6 @@
 		AE9975122661D85000DDD370 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		AEA85F5324DF26F800BB7827 /* Aleph Bet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Aleph Bet.entitlements"; sourceTree = "<group>"; };
 		AEC3C89609AD68AE003258E4 /* Aleph Bet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Aleph Bet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F53AB44B01F3CB1D01EF2901 /* AlephBet.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AlephBet.icns; sourceTree = "<group>"; };
 		F56AEB6B01F8AA1201780311 /* ImagesIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = ImagesIcon.icns; sourceTree = "<group>"; };
 		F56AEB6C01F8AA1201780311 /* ShapesIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = ShapesIcon.icns; sourceTree = "<group>"; };
 		F56AEB6D01F8AA1201780311 /* SoundsIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = SoundsIcon.icns; sourceTree = "<group>"; };
@@ -1128,12 +1127,12 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4FBA8DC52D70DC1B00D15335 /* AlephBet.icns */,
 				AEA85F5324DF26F800BB7827 /* Aleph Bet.entitlements */,
 				AE941DE713E783F30077218A /* Info-AlephBet.plist */,
 				F56AEB6B01F8AA1201780311 /* ImagesIcon.icns */,
 				F56AEB6C01F8AA1201780311 /* ShapesIcon.icns */,
 				F56AEB6D01F8AA1201780311 /* SoundsIcon.icns */,
-				F53AB44B01F3CB1D01EF2901 /* AlephBet.icns */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				F5CFAD3D0200FA6B01D80110 /* FilmIcon.icns */,
 				F5CFAD3E0200FA6B01D80110 /* MapIcon.icns */,
@@ -1799,7 +1798,6 @@
 			children = (
 				4FBA8DAE2D70C5BF00D15335 /* Dim3_Loader.hpp */,
 				4FBA8DAF2D70C5BF00D15335 /* Dim3_Loader.cpp */,
-				4FBA8DB02D70C5BF00D15335 /* Makefile.am */,
 				4FBA8DB12D70C5BF00D15335 /* Model3D.hpp */,
 				4FBA8DB22D70C5BF00D15335 /* Model3D.cpp */,
 				4FBA8DB32D70C5BF00D15335 /* ModelRenderer.hpp */,
@@ -2156,7 +2154,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AEC3C7C309AD68AC003258E4 /* InfoPlist.strings in Resources */,
-				AEC3C7C409AD68AC003258E4 /* AlephBet.icns in Resources */,
 				4FBA8C932D70C53E00D15335 /* sprite.vert in Resources */,
 				4FBA8C942D70C53E00D15335 /* landscape_sphere.frag in Resources */,
 				4FBA8C952D70C53E00D15335 /* bump_bloom.frag in Resources */,
@@ -2190,6 +2187,7 @@
 				AEC3C7C909AD68AC003258E4 /* MapIcon.icns in Resources */,
 				AEC3C7CA09AD68AC003258E4 /* MMLIcon.icns in Resources */,
 				AEC3C7CB09AD68AC003258E4 /* MusakIcon.icns in Resources */,
+				4FBA8DC62D70DC1B00D15335 /* AlephBet.icns in Resources */,
 				AEC3C7CD09AD68AC003258E4 /* PhysIcon.icns in Resources */,
 				AEC3C7CE09AD68AC003258E4 /* SaveIcon.icns in Resources */,
 			);
@@ -2547,6 +2545,7 @@
 					"$(SRCROOT)/../vcpkg/installed-arm64-osx/arm64-osx/include",
 					"$(SRCROOT)/../vcpkg/installed-arm64-osx/arm64-osx/include/SDL2",
 					"$(SRCROOT)/../vcpkg/installed-arm64-osx/arm64-osx/include/miniupnpc",
+					"$(SRCROOT)/../vcpkg/installed-arm64-osx/arm64-osx/include/libavformat",
 				);
 				"HEADER_SEARCH_PATHS[arch=x86_64]" = "$(SRCROOT)/../vcpkg/installed-x64-osx/x64-osx/include";
 				INFOPLIST_FILE = "Info-AlephBet.plist";

@@ -25,61 +25,66 @@
  *
  */
 
-#include "cseries.hpp"
-#include "map.hpp"
-#include "RenderRasterize.hpp"
 #include "OGL_FBO.hpp"
 #include "OGL_Textures.hpp"
 #include "Rasterizer_Shader.hpp"
+#include "RenderRasterize.hpp"
+#include "cseries.hpp"
+#include "map.hpp"
 
 #include <memory>
 
 #ifdef HAVE_OPENGL
 
 class Blur;
+
 class RenderRasterize_Shader : public RenderRasterizerClass {
 
-	std::unique_ptr<Blur> blur;
-	Rasterizer_Shader_Class *RasPtr;
-	
-	int objectCount;
-	world_distance objectY;
-	float weaponFlare;
-	float selfLuminosity;
-	
-	long_vector2d leftmost_clip, rightmost_clip;
+    std::unique_ptr<Blur> blur;
+    Rasterizer_Shader_Class* RasPtr;
 
-protected:
-	virtual void render_node(sorted_node_data *node, bool SeeThruLiquids, RenderStep renderStep);	
-	virtual void store_endpoint(endpoint_data *endpoint, long_vector2d& p);
+    int objectCount;
+    world_distance objectY;
+    float weaponFlare;
+    float selfLuminosity;
 
-	virtual void render_node_floor_or_ceiling(
-		  clipping_window_data *window, polygon_data *polygon, horizontal_surface_data *surface,
-		  bool void_present, bool ceil, RenderStep renderStep);
-	virtual void render_node_side(
-		  clipping_window_data *window, vertical_surface_data *surface,
-		  bool void_present, RenderStep renderStep);
+    long_vector2d leftmost_clip, rightmost_clip;
 
-	virtual void render_node_object(render_object_data *object, bool other_side_of_media, RenderStep renderStep);
-	
-	virtual void clip_to_window(clipping_window_data *win);
-	virtual void _render_node_object_helper(render_object_data *object, RenderStep renderStep);
+  protected:
+
+    virtual void render_node(sorted_node_data* node, bool SeeThruLiquids, RenderStep renderStep);
+    virtual void store_endpoint(endpoint_data* endpoint, long_vector2d& p);
+
+    virtual void render_node_floor_or_ceiling(clipping_window_data* window, polygon_data* polygon,
+                                              horizontal_surface_data* surface, bool void_present, bool ceil,
+                                              RenderStep renderStep);
+    virtual void render_node_side(clipping_window_data* window, vertical_surface_data* surface, bool void_present,
+                                  RenderStep renderStep);
+
+    virtual void render_node_object(render_object_data* object, bool other_side_of_media, RenderStep renderStep);
+
+    virtual void clip_to_window(clipping_window_data* win);
+    virtual void _render_node_object_helper(render_object_data* object, RenderStep renderStep);
 
     void render_viewer_sprite_layer(RenderStep renderStep);
     void render_viewer_sprite(rectangle_definition& RenderRectangle, RenderStep renderStep);
-	
-public:
 
-	RenderRasterize_Shader();
-	~RenderRasterize_Shader();
+  public:
 
-	virtual void setupGL(Rasterizer_Shader_Class& Rasterizer);
+    RenderRasterize_Shader();
+    ~RenderRasterize_Shader();
 
-	virtual void render_tree(void);
-        bool renders_viewer_sprites_in_tree() { return true; }
+    virtual void setupGL(Rasterizer_Shader_Class& Rasterizer);
 
-	std::unique_ptr<TextureManager> setupWallTexture(const shape_descriptor& Texture, short transferMode, float pulsate, float wobble, float intensity, float offset, RenderStep renderStep);
-	std::unique_ptr<TextureManager> setupSpriteTexture(const rectangle_definition& rect, short type, float offset, RenderStep renderStep);
+    virtual void render_tree(void);
+
+    bool renders_viewer_sprites_in_tree() { return true; }
+
+    std::unique_ptr<TextureManager> setupWallTexture(const shape_descriptor& Texture, short transferMode, float pulsate,
+                                                     float wobble, float intensity, float offset,
+                                                     RenderStep renderStep);
+    std::unique_ptr<TextureManager> setupSpriteTexture(const rectangle_definition& rect, short type, float offset,
+                                                       RenderStep renderStep);
 };
 
 #endif

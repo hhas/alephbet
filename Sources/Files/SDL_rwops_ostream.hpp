@@ -29,9 +29,9 @@
  *  SDL_rwops_ostream.h - create an SDL_RWops structure from an ostream
  */
 
-#include <sstream>
 #include <SDL_rwops.h>
+#include <sstream>
 
-SDL_RWops *SDL_RWFromOStream(std::ostream& strm);
+SDL_RWops* SDL_RWFromOStream(std::ostream& strm);
 
 #endif

@@ -33,7 +33,7 @@
 
 // object owner flags are unused, so we can re-use them to specify behavior
 enum {
-	_ephemera_end_when_animation_loops = 0x0004
+    _ephemera_end_when_animation_loops = 0x0004
 };
 
 void allocate_ephemera_storage(int max_ephemera);

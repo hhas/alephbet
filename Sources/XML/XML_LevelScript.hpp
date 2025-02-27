@@ -57,7 +57,7 @@ void FindLevelMovie(short index);
 // Gets the pointer of a movie to play at a level, as a pointer to the file specifier.
 // A NULL pointer means no movie to play.
 // Its arg is the playback size, which will not be changed if not specified explicitly.
-FileSpecifier *GetLevelMovie(float& PlaybackSize);
+FileSpecifier* GetLevelMovie(float& PlaybackSize);
 
 // handle new embedded MML and Lua scripts
 void SetMMLS(uint8* data, size_t length);
@@ -67,7 +67,7 @@ uint8* GetLUAS(size_t& length);
 
 // For selecting the end-of-game screens --
 // what fake level index for them, and how many to display
-// (resource numbers increasing in sequence) 
+// (resource numbers increasing in sequence)
 extern short EndScreenIndex;
 extern short NumEndScreens;
 

@@ -26,40 +26,38 @@ bool chat_input_mode = false;
 
 #include "cseries.hpp"
 
+#include "InfoTree.hpp"
+#include "Music.hpp"
+#include "TextStrings.hpp"
 #include "XML_ParseTreeRoot.hpp"
 #include "interface.hpp"
-#include "world.hpp"
-#include "screen.hpp"
-#include "map.hpp"
-#include "shell.hpp"
-#include "preferences.hpp"
-#include "vbl.hpp"
-#include "player.hpp"
-#include "Music.hpp"
 #include "items.hpp"
-#include "TextStrings.hpp"
-#include "InfoTree.hpp"
+#include "map.hpp"
+#include "player.hpp"
+#include "preferences.hpp"
+#include "screen.hpp"
+#include "shell.hpp"
+#include "vbl.hpp"
+#include "world.hpp"
 
 #include <ctype.h>
 
 
 extern void process_new_item_for_reloading(short player_index, short item_type);
-extern bool try_and_add_player_item(short player_index,	short type);
+extern bool try_and_add_player_item(short player_index, short type);
 extern void mark_shield_display_as_dirty();
 extern void mark_oxygen_display_as_dirty();
-extern void accelerate_monster(short monster_index,	world_distance vertical_velocity, 
-							   angle direction, world_distance velocity);
+extern void accelerate_monster(short monster_index, world_distance vertical_velocity, angle direction,
+                               world_distance velocity);
 extern void update_interface(short time_elapsed);
-
 
 /*
  *  Called regularly during event loops
  */
 
-void global_idle_proc(void)
-{
-	Music::instance()->Idle();
-	SoundManager::instance()->Idle();
+void global_idle_proc(void) {
+    Music::instance()->Idle();
+    SoundManager::instance()->Idle();
 }
 
 /*
@@ -67,22 +65,18 @@ void global_idle_proc(void)
  *  memory if possible
  */
 
-void *level_transition_malloc(
-	size_t size)
-{
-	void *ptr= malloc(size);
-	if (!ptr)
-	{
-		SoundManager::instance()->UnloadAllSounds();
-		
-		ptr= malloc(size);
-		if (!ptr)
-		{
-			unload_all_collections();
-			
-			ptr= malloc(size);
-		}
-	}
-	
-	return ptr;
+void* level_transition_malloc(size_t size) {
+    void* ptr = malloc(size);
+    if (!ptr) {
+        SoundManager::instance()->UnloadAllSounds();
+
+        ptr = malloc(size);
+        if (!ptr) {
+            unload_all_collections();
+
+            ptr = malloc(size);
+        }
+    }
+
+    return ptr;
 }

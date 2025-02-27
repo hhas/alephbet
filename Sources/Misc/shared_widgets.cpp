@@ -22,56 +22,46 @@
  *
  */
 
-#include "cseries.hpp"
-#include "preferences.hpp"
-#include "player.hpp"
 #include "shared_widgets.hpp"
-#include <vector>
+#include "cseries.hpp"
+#include "player.hpp"
+#include "preferences.hpp"
 #include <algorithm>
-	
-	
-void ChatHistory::append(const ColoredChatEntry& e)
-{
-	m_history.push_back(e);
-	if (m_notificationAdapter)
-		m_notificationAdapter->contentAdded(e);
+#include <vector>
+
+void ChatHistory::append(const ColoredChatEntry& e) {
+    m_history.push_back(e);
+    if (m_notificationAdapter)
+        m_notificationAdapter->contentAdded(e);
 }
 
-void ChatHistory::clear ()
-{
-	m_history.clear ();
-	if (m_notificationAdapter)
-		m_notificationAdapter->contentCleared ();
+void ChatHistory::clear() {
+    m_history.clear();
+    if (m_notificationAdapter)
+        m_notificationAdapter->contentCleared();
 }
 
-ColorfulChatWidget::~ColorfulChatWidget()
-{
-	if (m_history) m_history->setObserver(0);
-	delete m_componentWidget;
+ColorfulChatWidget::~ColorfulChatWidget() {
+    if (m_history)
+        m_history->setObserver(0);
+    delete m_componentWidget;
 }
 
-void ColorfulChatWidget::attachHistory(ChatHistory* history)
-{
-	if (m_history)
-		m_history->setObserver(0);
+void ColorfulChatWidget::attachHistory(ChatHistory* history) {
+    if (m_history)
+        m_history->setObserver(0);
 
-	m_history = history;
+    m_history = history;
 
-	m_componentWidget->Clear();
-	if (m_history) {
-		const vector<ColoredChatEntry> &history_vector = m_history->getHistory();
-		for(vector<ColoredChatEntry>::const_iterator it = history_vector.begin(); it != history_vector.end(); ++it)
-		{
-			m_componentWidget->Append(*it);
-		}
+    m_componentWidget->Clear();
+    if (m_history) {
+        const vector<ColoredChatEntry>& history_vector = m_history->getHistory();
+        for (vector<ColoredChatEntry>::const_iterator it = history_vector.begin(); it != history_vector.end(); ++it) {
+            m_componentWidget->Append(*it);
+        }
 
-		m_history->setObserver(this);
-	}
+        m_history->setObserver(this);
+    }
 }
 
-void ColorfulChatWidget::contentAdded(const ColoredChatEntry& e)
-{
-	m_componentWidget->Append(e);
-}
-
-
+void ColorfulChatWidget::contentAdded(const ColoredChatEntry& e) { m_componentWidget->Append(e); }

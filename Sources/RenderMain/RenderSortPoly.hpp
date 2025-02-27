@@ -31,64 +31,60 @@
  *  from render.c. Works from RenderVisTree stuff.
  */
 
-#include <vector>
-#include "world.hpp"
-#include "render.hpp"
 #include "RenderVisTree.hpp"
-
+#include "render.hpp"
+#include "world.hpp"
+#include <vector>
 
 /* ---------- sorted nodes */
 
-struct sorted_node_data
-{
-	short polygon_index;
-	
-	struct render_object_data *interior_objects;
-	struct render_object_data *exterior_objects;
-	
-	struct clipping_window_data *clipping_windows;
+struct sorted_node_data {
+    short polygon_index;
+
+    struct render_object_data* interior_objects;
+    struct render_object_data* exterior_objects;
+
+    struct clipping_window_data* clipping_windows;
 };
 
+class RenderSortPolyClass {
+    // Auxiliary data and routines:
 
-class RenderSortPolyClass
-{
-	// Auxiliary data and routines:
+    void initialize_sorted_render_tree();
 
-	void initialize_sorted_render_tree();
-	
-	clipping_window_data *build_clipping_windows(node_data *ChainBegin);
+    clipping_window_data* build_clipping_windows(node_data* ChainBegin);
 
-	void calculate_vertical_clip_data(line_clip_data **accumulated_line_clips,
-		size_t accumulated_line_clip_count, clipping_window_data *window, short x0, short x1);
-		
-public:
-	
-	 /* converts map polygon indexes to sorted nodes (only valid if _polygon_is_visible) */
-	vector<sorted_node_data *> polygon_index_to_sorted_node;
-	
-	// LP additions: growable list of sorted nodes
-	// Length changed in initialize_sorted_render_tree() and sort_render_tree()
-	// When being built, the render objects are yet to be listed
-	vector<sorted_node_data> SortedNodes;
-	
-	// LP addition: growable lists of accumulations of endpoint and line clips
-	// used in build_clipping_windows()
-	vector<endpoint_clip_data *> AccumulatedEndpointClips;
-	vector<line_clip_data *> AccumulatedLineClips;
+    void calculate_vertical_clip_data(line_clip_data** accumulated_line_clips, size_t accumulated_line_clip_count,
+                                      clipping_window_data* window, short x0, short x1);
 
-	// Pointers to view and calculated visibility tree
-	view_data *view;
-	RenderVisTreeClass *RVPtr;
-	
-	// Resizes all the objects defined inside;
-	// the resizing is lazy
-	void Resize(size_t NumPolygons);
+  public:
 
-	// Does the sorting
-	void sort_render_tree();
-  	
-  	// Inits everything
- 	RenderSortPolyClass();
+    /* converts map polygon indexes to sorted nodes (only valid if _polygon_is_visible) */
+    vector<sorted_node_data*> polygon_index_to_sorted_node;
+
+    // LP additions: growable list of sorted nodes
+    // Length changed in initialize_sorted_render_tree() and sort_render_tree()
+    // When being built, the render objects are yet to be listed
+    vector<sorted_node_data> SortedNodes;
+
+    // LP addition: growable lists of accumulations of endpoint and line clips
+    // used in build_clipping_windows()
+    vector<endpoint_clip_data*> AccumulatedEndpointClips;
+    vector<line_clip_data*> AccumulatedLineClips;
+
+    // Pointers to view and calculated visibility tree
+    view_data* view;
+    RenderVisTreeClass* RVPtr;
+
+    // Resizes all the objects defined inside;
+    // the resizing is lazy
+    void Resize(size_t NumPolygons);
+
+    // Does the sorting
+    void sort_render_tree();
+
+    // Inits everything
+    RenderSortPolyClass();
 };
 
 // Historical note: cause of too-many-transparent-line errors

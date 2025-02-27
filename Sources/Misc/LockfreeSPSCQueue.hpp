@@ -28,30 +28,36 @@
 #include <atomic>
 #include <thread>
 
-template <class T, unsigned int CAPACITY> class LockfreeSPSCQueue {
+template <class T, unsigned int CAPACITY>
+class LockfreeSPSCQueue {
     T buffer[CAPACITY];
     std::atomic<size_t> read_index, write_index;
-public:
+
+  public:
+
     LockfreeSPSCQueue() {}
+
     ~LockfreeSPSCQueue() {}
+
     // Push an element to the queue. If the queue is full, block until there's
     // room.
     void push_blocking(T element) {
-        auto cur_index = write_index.load();
+        auto cur_index  = write_index.load();
         auto next_index = (write_index + 1) % CAPACITY;
-        while(read_index.load(std::memory_order_relaxed) == next_index) {
+        while (read_index.load(std::memory_order_relaxed) == next_index) {
             // Queue is full. Yield some CPU time and hope it gets drained.
             std::this_thread::yield();
         }
         buffer[cur_index] = std::move(element);
         write_index.store(next_index);
     }
+
     // Pop an element from the front of the queue. Return whether an element
     // was popped, and if it was, it gets written to `out`.
     bool pop_nonblocking(T& out) {
-        auto cur_read_index = read_index.load();
+        auto cur_read_index  = read_index.load();
         auto cur_write_index = write_index.load();
-        if(cur_read_index == cur_write_index) {
+        if (cur_read_index == cur_write_index) {
             return false;
         } else {
             out = std::move(buffer[read_index]);

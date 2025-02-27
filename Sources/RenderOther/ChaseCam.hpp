@@ -30,26 +30,25 @@
 enum // Chase-cam flags
 
 {
-	_ChaseCam_OnWhenEntering = 0x0004,
-	_ChaseCam_NeverActive = 0x0002,
-	_ChaseCam_ThroughWalls = 0x0001
+    _ChaseCam_OnWhenEntering = 0x0004,
+    _ChaseCam_NeverActive    = 0x0002,
+    _ChaseCam_ThroughWalls   = 0x0001
 };
 
-struct ChaseCamData
-{
-	short Behind;
-	short Upward;
-	short Rightward;
-	short Flags;
-	float Damping;
-	float Spring;
-	float Opacity;
+struct ChaseCamData {
+    short Behind;
+    short Upward;
+    short Rightward;
+    short Flags;
+    float Damping;
+    float Spring;
+    float Opacity;
 };
 
 // True for OK, false for cancel;
 // the structure will not be changed if this was canceled
 // Implemented in PlayerDialogs.c
-bool Configure_ChaseCam(ChaseCamData &Data);
+bool Configure_ChaseCam(ChaseCamData& Data);
 
 // Gotten from preferences
 // Implemented in preferences.c
@@ -81,8 +80,6 @@ bool ChaseCam_SwitchSides();
 
 // This function calls everything as references; it does not change the outputs
 // if the chase-cam is inactive. It will return everything necessary to set the chase-cam's view.
-bool ChaseCam_GetPosition(world_point3d &position,
-	short &polygon_index, angle &yaw, angle &pitch);
+bool ChaseCam_GetPosition(world_point3d& position, short& polygon_index, angle& yaw, angle& pitch);
 
 #endif
-

@@ -30,4 +30,3 @@
 #include "MessageDispatcher.hpp"
 
 #endif // !defined(DISABLE_NETWORKING)
-
