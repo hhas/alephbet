@@ -1,0 +1,103 @@
+# clang-format
+# https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+#
+# cd alephbet
+# clang-format -i --style='file:dev/ab-clang-format.txt' --verbose **/*.hpp **/*.cpp
+#
+
+Language: Cpp
+Standard: c++17
+
+BasedOnStyle: LLVM
+
+IndentWidth: 4
+
+TabWidth:        4
+
+ColumnLimit:     120
+
+MaxEmptyLinesToKeep: 2
+
+
+
+# Force pointers to the type for C++.
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+AlignConsecutiveAssignments:
+  Enabled:         true
+  AlignCompound:   true
+
+AlignConsecutiveBitFields:
+  Enabled:         true
+
+AlignConsecutiveMacros:
+  Enabled:         true
+
+AlignConsecutiveShortCaseStatements:
+  Enabled:         true
+
+AlignEscapedNewlines: Left
+
+AllowAllParametersOfDeclarationOnNextLine: false
+
+AllowShortBlocksOnASingleLine: Always
+
+AllowShortEnumsOnASingleLine: false
+
+AllowShortLoopsOnASingleLine: true
+
+BreakAfterReturnType: Automatic
+
+BreakBeforeBinaryOperators: All
+
+BreakBeforeBraces: Attach
+
+# BreakConstructorInitializers: AfterColon
+# BreakInheritanceList: AfterComma
+
+BreakTemplateDeclarations: Yes
+
+ConstructorInitializerIndentWidth: 4
+# TBD
+ContinuationIndentWidth: 8
+
+# TBD: Never?
+EmptyLineAfterAccessModifier: Always
+# TBD: LogicalBlock?
+EmptyLineBeforeAccessModifier: Always
+
+# TBD
+IndentCaseLabels: true
+
+IndentExternBlock: Indent
+
+# TBD
+IndentGotoLabels: false
+
+# TBD: ideally true, but all changes need manually reviewed
+InsertBraces:    false
+
+InsertNewlineAtEOF: true
+
+# can't use this, unfortunately (doesn't work with bin packing)
+#InsertTrailingCommas: Wrapped
+
+IntegerLiteralSeparator:
+  Binary:          4
+  BinaryMinDigits: 0
+  Decimal:         3
+  DecimalMinDigits: 5
+  Hex:             4
+  HexMinDigits:    0
+
+# TBD: right might be nice, putting `const` after type, but leave for now
+QualifierAlignment: Leave
+
+
+SeparateDefinitionBlocks: Always
+
+
+IndentWrappedFunctionNames: true
+
+AlignArrayOfStructures: Left
