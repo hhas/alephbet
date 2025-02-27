@@ -108,7 +108,7 @@ static time_t convert_to_timetype(const fs::file_time_type& time) {
 	const auto system_time = std::chrono::system_clock::now();
 	const auto file_time = fs::file_time_type::clock::now();
 	const auto converted_time_point = time - file_time + system_time;
-	return std::chrono::system_clock::to_time_t(converted_time_point);
+    return 0; // std::chrono::system_clock::to_time_t(converted_time_point); // TO DO: FIX
 }
 
 #ifdef __WIN32__

@@ -55,7 +55,7 @@ namespace {
 			) {
 				++ending;
 			}
-			view = std::string_view(position, ending);
+			//view = std::string_view(position, ending); // TO DO: FIX
 		}
 	public:
 		line_split_iterator& operator=(line_split_iterator&& rhs) {
