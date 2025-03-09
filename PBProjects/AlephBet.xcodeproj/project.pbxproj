@@ -1147,6 +1147,7 @@
 		4FBA89C72D70C53E00D15335 /* CSeries */ = {
 			isa = PBXGroup;
 			children = (
+				4FBA89B72D70C53E00D15335 /* cseries.hpp */,
 				4FBA89AC2D70C53E00D15335 /* BStream.hpp */,
 				4FBA89AD2D70C53E00D15335 /* BStream.cpp */,
 				4FBA89AE2D70C53E00D15335 /* byte_swapping.hpp */,
@@ -1158,7 +1159,6 @@
 				4FBA89B42D70C53E00D15335 /* cscluts_sdl.cpp */,
 				4FBA89B52D70C53E00D15335 /* csdialogs.hpp */,
 				4FBA89B62D70C53E00D15335 /* csdialogs_sdl.cpp */,
-				4FBA89B72D70C53E00D15335 /* cseries.hpp */,
 				4FBA89B82D70C53E00D15335 /* csfonts.hpp */,
 				4FBA89B92D70C53E00D15335 /* csmacros.hpp */,
 				4FBA89BA2D70C53E00D15335 /* csmisc.hpp */,
@@ -2485,6 +2485,9 @@
 					HAVE_CONFIG_H,
 				);
 				INFOPLIST_FILE = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				"MACOSX_DEPLOYMENT_TARGET[arch=arm64]" = 11.0;
+				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bungie.source.AlephBet;
 				PRODUCT_NAME = "Aleph Bet";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2547,7 +2550,12 @@
 					"$(SRCROOT)/../vcpkg/installed-arm64-osx/arm64-osx/include/miniupnpc",
 					"$(SRCROOT)/../vcpkg/installed-arm64-osx/arm64-osx/include/libavformat",
 				);
-				"HEADER_SEARCH_PATHS[arch=x86_64]" = "$(SRCROOT)/../vcpkg/installed-x64-osx/x64-osx/include";
+				"HEADER_SEARCH_PATHS[arch=x86_64]" = (
+					"$(SRCROOT)/../vcpkg/installed-x64-osx/x64-osx/include",
+					"$(SRCROOT)/../vcpkg/installed-x64-osx/x64-osx/include/SDL2",
+					"$(SRCROOT)/../vcpkg/installed-x64-osx/x64-osx/include/miniupnpc",
+					"$(SRCROOT)/../vcpkg/installed-x64-osx/x64-osx/include/libavformat",
+				);
 				INFOPLIST_FILE = "Info-AlephBet.plist";
 				"LIBRARY_SEARCH_PATHS[arch=arm64]" = "$(SRCROOT)/../vcpkg/installed-arm64-osx/arm64-osx/lib";
 				"LIBRARY_SEARCH_PATHS[arch=x86_64]" = "$(SRCROOT)/../vcpkg/installed-x64-osx/x64-osx/lib";
@@ -2639,6 +2647,9 @@
 					HAVE_CONFIG_H,
 				);
 				INFOPLIST_FILE = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				"MACOSX_DEPLOYMENT_TARGET[arch=arm64]" = 11.0;
+				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bungie.source.AlephBet;
 				PRODUCT_NAME = "Aleph Bet";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2695,8 +2706,18 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				"HEADER_SEARCH_PATHS[arch=arm64]" = "$(SRCROOT)/../vcpkg/installed-arm64-osx/arm64-osx/include";
-				"HEADER_SEARCH_PATHS[arch=x86_64]" = "$(SRCROOT)/../vcpkg/installed-x64-osx/x64-osx/include";
+				"HEADER_SEARCH_PATHS[arch=arm64]" = (
+					"$(SRCROOT)/../vcpkg/installed-arm64-osx/arm64-osx/include",
+					"$(SRCROOT)/../vcpkg/installed-arm64-osx/arm64-osx/include/SDL2",
+					"$(SRCROOT)/../vcpkg/installed-arm64-osx/arm64-osx/include/miniupnpc",
+					"$(SRCROOT)/../vcpkg/installed-arm64-osx/arm64-osx/include/libavformat",
+				);
+				"HEADER_SEARCH_PATHS[arch=x86_64]" = (
+					"$(SRCROOT)/../vcpkg/installed-x64-osx/x64-osx/include",
+					"$(SRCROOT)/../vcpkg/installed-x64-osx/x64-osx/include/SDL2",
+					"$(SRCROOT)/../vcpkg/installed-x64-osx/x64-osx/include/miniupnpc",
+					"$(SRCROOT)/../vcpkg/installed-x64-osx/x64-osx/include/libavformat",
+				);
 				INFOPLIST_FILE = "Info-AlephBet.plist";
 				"LIBRARY_SEARCH_PATHS[arch=arm64]" = "$(SRCROOT)/../vcpkg/installed-arm64-osx/arm64-osx/lib";
 				"LIBRARY_SEARCH_PATHS[arch=x86_64]" = "$(SRCROOT)/../vcpkg/installed-x64-osx/x64-osx/lib";
