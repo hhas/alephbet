@@ -1398,6 +1398,11 @@ bool process_map_wad(struct wad_data* wad, bool restoring_game, short version) {
             }
         }
     }
+    // make sure no lights are malformed
+    for (count = 0; count<LightList.size(); ++count)
+    {
+        sanity_check_light(count);
+    }
 
     /* Extract the annotations */
     data  = (uint8*)extract_type_from_wad(wad, ANNOTATION_TAG, &data_length);
